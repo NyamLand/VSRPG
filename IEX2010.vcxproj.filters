@@ -28,6 +28,45 @@
     <Filter Include="ソース ファイル\Scene\sceneMain">
       <UniqueIdentifier>{a6a15a66-b0c6-467f-9e78-3cfc4b91b5a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\BaseChara">
+      <UniqueIdentifier>{7c019095-29dd-45e5-a398-76a553d66835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction">
+      <UniqueIdentifier>{8cffdb75-c62c-4bba-ada8-9295cb2c0516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{58883473-3f1a-4395-9ab0-3b1ea9d13e4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{03221c5b-e905-4498-84b8-480851c5bfc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction\Interplation">
+      <UniqueIdentifier>{3dd55e06-08f3-42a7-8ffc-6ba308be2f30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction\DrawShape">
+      <UniqueIdentifier>{9302b336-38de-461e-bbe1-b42ff5c6d7b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerManager">
+      <UniqueIdentifier>{77506897-7908-408f-91bb-b023226ee860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\ItemManager">
+      <UniqueIdentifier>{a34e4882-0676-4b3a-b754-7d30afaa479d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\EnemyManager">
+      <UniqueIdentifier>{1faaeb81-3b5f-4590-92f2-3accc9590922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\UIManager">
+      <UniqueIdentifier>{b6ca3635-f395-463b-81bc-f95e840d7ace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\EffectManager">
+      <UniqueIdentifier>{7c5b1f10-48ed-4acc-9ed8-5d3441625212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\StageManager">
+      <UniqueIdentifier>{c49b9daf-ee64-428e-a018-fb8cd8fa7963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{4a747b28-29bc-4552-aaab-eec04ba1e80a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -90,6 +129,18 @@
     <ClCompile Include="source\sceneMain.cpp">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
     </ClCompile>
+    <ClCompile Include="source\BaseChara.cpp">
+      <Filter>ソース ファイル\BaseChara</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GlobalFunction.cpp">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DrawShape.cpp">
+      <Filter>ソース ファイル\GlobalFunction\DrawShape</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -106,6 +157,21 @@
     </ClInclude>
     <ClInclude Include="source\sceneMain.h">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BaseChara.h">
+      <Filter>ソース ファイル\BaseChara</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GlobalFunction.h">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Interpolation.h">
+      <Filter>ソース ファイル\GlobalFunction\Interplation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DrawShape.h">
+      <Filter>ソース ファイル\GlobalFunction\DrawShape</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Camera.h">
+      <Filter>ソース ファイル\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

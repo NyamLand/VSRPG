@@ -111,6 +111,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\BaseChara.cpp" />
+    <ClCompile Include="source\Camera.cpp" />
+    <ClCompile Include="source\DrawShape.cpp" />
+    <ClCompile Include="source\GlobalFunction.cpp" />
     <ClCompile Include="source\sceneMain.cpp" />
     <ClCompile Include="source\system\Framework.cpp" />
     <ClCompile Include="source\system\System.cpp" />
@@ -133,6 +137,11 @@
     <ClCompile Include="IEX\IEX_View.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\BaseChara.h" />
+    <ClInclude Include="source\Camera.h" />
+    <ClInclude Include="source\DrawShape.h" />
+    <ClInclude Include="source\GlobalFunction.h" />
+    <ClInclude Include="source\Interpolation.h" />
     <ClInclude Include="source\system\Framework.h" />
     <ClInclude Include="source\system\Scene.h" />
     <ClInclude Include="source\sceneMain.h" />
