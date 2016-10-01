@@ -9,6 +9,7 @@
 
 //	include
 #include	"iextreme.h"
+#include	"Singleton.h"
 
 //	class
 class Interpolation
@@ -20,11 +21,6 @@ public:
 		EASE_OUT,	//	後ゆったり
 	};
 	
-private:
-	//	初期化・開放
-	Interpolation( void ){};
-	~Interpolation( void ){};
-
 public:
 	//	パラメータ更新
 	static bool PercentageUpdate( float& percentage, float addParam )

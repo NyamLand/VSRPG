@@ -1,6 +1,5 @@
 
-#ifndef	 __GLOBALFUNCTION_H__
-#define	 __GLOBALFUNCTION_H__
+#pragma once
 
 //******************************************************************************
 //
@@ -131,5 +130,3 @@
 	bool isMiddle(const int& value, const int& min, const int& max);
 	bool isMiddle(const float& value, const float& min, const float& max);
 
-//******************************************************************************
-#endif // !__GROBALFUNCTION_H__

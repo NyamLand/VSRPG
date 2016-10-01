@@ -258,14 +258,3 @@
 	{
 		DrawCubeMesh( iexSystem::Device, D3DXVECTOR3( pos.x, pos.y, pos.z ), D3DXVECTOR3( size.x, size.y, size.z ), color );
 	}
-
-//-------------------------------------------------------------------------
-//	ê}å`ï`âÊ
-//-------------------------------------------------------------------------
-
-	//	é¿ëÃéÊìæ
-	DrawShape*	DrawShape::GetInstance( void )
-	{
-		static DrawShape out;
-		return	&out;
-	}

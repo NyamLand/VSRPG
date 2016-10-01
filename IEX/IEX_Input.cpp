@@ -1,5 +1,5 @@
 #include	"iextreme.h"
-#include	"GamePad.h"
+//#include	"GamePad.h"
 //*****************************************************************************
 //
 //		入力デバイス管理
@@ -460,7 +460,7 @@ void KEY_SetInfo()
 	for ( int i = 0; i < MAX; i++ )
 	{
 		input[i]->SetInfo();
-		gamePad[i]->UpdateControllerState();
+		//gamePad[i]->UpdateControllerState();
 	}
 }
 
@@ -483,7 +483,7 @@ BOOL	IEX_InitInput()
 	for ( int i = 0; i < 4; i++ )
 	{
 		input[i] = new iexInput( i );
-		gamePad[i] = new GamePad( i );
+		//gamePad[i] = new GamePad( i );
 	}
 
 	return TRUE;
@@ -503,10 +503,10 @@ void	IEX_ReleaseInput()
 	input[3]->Vibration(0, 0);
 	if (input[3])		delete	input[3];
 
-	for ( int i = 0; i < 4; i++ )
-	{
-		if( gamePad[i] )	delete gamePad[i];
-	}
+	//for ( int i = 0; i < 4; i++ )
+	//{
+	//	if( gamePad[i] )	delete gamePad[i];
+	//}
 
 	iexInputManager::Release();
 }

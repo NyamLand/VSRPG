@@ -1,6 +1,8 @@
 
 #include	"iextreme.h"
 #include	"system/system.h"
+#include	"GlobalFunction.h"
+#include	"GameManager.h"
 #include	"Camera.h"
 
 #include	"sceneMain.h"
@@ -31,20 +33,18 @@ bool	sceneMain::Initialize( void )
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
 	//	カメラ設定
+	mainView = new Camera();
 	mainView->Initialize(
 		Camera::VIEW_MODE::TRACKING_VIEW,
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
-
-
-
 
 	return true;
 }
 
 sceneMain::~sceneMain( void )
 {
-	mainView->Release();
+	SafeDelete( mainView );
 
 
 
@@ -57,12 +57,11 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
+	//	gameManager更新
+	gameManager->Update();
+
 	//	camera更新
 	mainView->Update( Vector3( 0.0f, 2.0f, 0.0f ) );
-
-
-
-
 }
 
 //*****************************************************************************************************************************

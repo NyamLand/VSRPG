@@ -33,12 +33,11 @@ private:
 	void( Camera::*ViewUpdate[MAX] )( void );
 
 private:
-	//	‰Šú‰»E‰ğ•ú
-	Camera( void );
-	~Camera( void );
 
 public:
 	//	‰Šú‰»E‰ğ•ú
+	Camera( void );
+	~Camera( void );
 	bool Initialize( VIEW_MODE view_mode, const Vector3& Pos, const Vector3& Target  );
 	void Release( void );
 
@@ -66,4 +65,4 @@ public:
 	Matrix	GetMatrix( void )const;
 };
 
-#define	mainView ( Camera::GetInstance() )
+extern Camera* mainView;

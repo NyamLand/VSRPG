@@ -7,18 +7,26 @@
 //
 //**********************************************************************
 
-class DrawShape
+//	include
+#include	"Singleton.h"
+
+//	class
+class DrawShape : public Singleton<DrawShape>
 {
+	friend Singleton<DrawShape>;
+
 private:
 	LPD3DXMESH cube;
-	LPD3DXMESH	sphere;
+	LPD3DXMESH	sphere;	
+	
+	//	‰Šú‰»E‰ğ•ú
+	DrawShape( void );
+	~DrawShape( void )override;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
-	DrawShape( void );
-	~DrawShape( void );
-	bool	Initialize( void );
-	void	Release( void );
+	bool	Initialize( void )override;
+	void	Release( void )override;
 
 	//---------------}Œ`•`‰æ---------------//
 
@@ -41,9 +49,6 @@ public:
 	//	—§•û‘Ì•`‰æ
 	void		DrawCubeMesh( LPDIRECT3DDEVICE9 d3dd, CONST D3DXVECTOR3& pos, CONST D3DXVECTOR3& size, D3DCOLOR c );
 	void		DrawCubeMesh( const Vector3& pos, const Vector3& size, DWORD color );
-
-	//	î•ñæ“¾
-	static DrawShape*	GetInstance( void );
 };
 
 #define	drawShape ( DrawShape::GetInstance() )
