@@ -114,7 +114,7 @@
 				ANGLE_ADJUST_SPEED );
 
 			//	ˆÚ“®
-			SetMove( Vector3( sinf( axisX ), 0.0f, cosf( axisY ) ) * speed );
+			SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
 		}
 		else
 		{

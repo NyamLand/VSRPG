@@ -14,6 +14,7 @@
 //
 //*****************************************************************************************************************************
 
+iexMesh*	stage = nullptr;	//	‰¼(â‘ÎÁ‚·)
 
 
 
@@ -43,12 +44,15 @@ bool	sceneMain::Initialize( void )
 	//	playerİ’è
 	playerManager->Initialize();
 
+	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
+
 	return true;
 }
 
 sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
+	SafeDelete( stage );
 	playerManager->Release();
 
 
@@ -82,6 +86,8 @@ void	sceneMain::Render( void )
 	//	‰æ–ÊƒNƒŠƒA
 	mainView->Activate();
 	mainView->Clear();
+
+	stage->Render();
 
 	//	player•`‰æ
 	playerManager->Render();
