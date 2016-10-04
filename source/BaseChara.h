@@ -18,7 +18,9 @@ protected:
 
 	//	ƒpƒ‰ƒ[ƒ^
 	Vector3		pos;
+	Vector3		move;
 	float			angle;
+	float			speed;
 	float			scale;
 
 public:
@@ -32,11 +34,15 @@ public:
 	virtual void	Update( void );
 	virtual void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr );
 	void	UpdateInfo( void );
+	void	AddMove( void );
 
 	//	“®ìŠÖ”
+	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
+	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
 
 	//	î•ñİ’è
 	void	SetPos( const Vector3& Pos );
+	void	SetMove( const Vector3& Move );
 	void	SetAngle( float Angle );
 	void	SetScale( float Scale );
 	void	SetMotion( int motion );
