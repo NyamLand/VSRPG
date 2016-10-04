@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"Camera.h"
 #include	"BaseChara.h"
 
 //***************************************************************
@@ -8,6 +9,9 @@
 //	BaseCharaクラス
 //
 //***************************************************************
+
+//	定数値
+#define	MOVE_RESISTANCE	0.9f
 
 //------------------------------------------------------------------------------------
 //	グローバル
@@ -19,8 +23,8 @@
 
 	//	コンストラクタ
 	BaseChara::BaseChara( void ) : obj( nullptr ),
-		pos( 0.0f, 0.0f, 0.0f ), 
-		angle( 0.0f ), scale( 1.0f )
+		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
+		angle( 0.0f ), scale( 1.0f ), speed( 0.0f )
 	{
 	
 	}
@@ -44,8 +48,6 @@
 		return	true;
 	}
 
-	//	初期化
-
 	//	解放
 
 //------------------------------------------------------------------------------------
@@ -55,6 +57,10 @@
 	//	更新
 	void	BaseChara::Update( void )
 	{
+		//	各種処理
+		AddMove();
+
+		//	情報更新
 		UpdateInfo();
 	}
 
@@ -87,9 +93,71 @@
 		obj->Update();
 	}
 
+	//	移動値加算
+	void	BaseChara::AddMove( void )
+	{
+		//	移動値加算
+		pos += move;
+		
+		//	抵抗値計算
+		move *= MOVE_RESISTANCE;
+	}
+
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
+
+	//	向き調整
+	void	BaseChara::AngleAdjust( const Vector3& targetVec, float adjustSpeed )
+	{
+		//	カメラの前方方向を求める
+		Vector3	vEye = mainView->GetTarget() - mainView->GetPos();
+		float	viewAngle = atan2f( vEye.x, vEye.z );
+
+		//	移動方向を求める
+		float	moveAngle = atan2f( targetVec.x, targetVec.z );
+
+		//	目標の角度を求める
+		float	targetAngle = viewAngle + moveAngle;
+
+		//	親に投げる
+		AngleAdjustParent(
+			Vector3( sinf( targetAngle ), 0.0f, cosf( targetAngle ) ),
+			adjustSpeed );
+	}
+
+	//	向き調整（親）
+	void	BaseChara::AngleAdjustParent( const Vector3& direction, float adjustSpeed )
+	{
+		//	現在の向きと目標の向きの差を求める
+		float	targetAngle( atan2f( direction.x, direction.z ) );
+
+		//	角度差を求める
+		float	dAngle( targetAngle - GetAngle() );
+
+		//	差の正規化
+		if ( dAngle > 1.0f * D3DX_PI )		dAngle -= 2.0f * D3DX_PI;
+		if ( dAngle < -1.0f * D3DX_PI )	dAngle += 2.0f * D3DX_PI;
+
+		//	差をspeed分縮める
+		if ( dAngle > 0.0f )
+		{
+			dAngle -= adjustSpeed;
+			if ( dAngle < 0.0f )	dAngle = 0.0f;
+		}
+		else
+		{
+			dAngle += adjustSpeed;
+			if ( dAngle > 0.0f )	dAngle = 0.0f;
+		}
+
+		//	向きに反映
+		SetAngle( targetAngle - dAngle );
+
+		//	キャラクターの向きがPI以上にならないようにする
+		if ( GetAngle() >= 1.0f * D3DX_PI )	angle -= 2.0f * D3DX_PI;
+		if ( GetAngle() <= -1.0f * D3DX_PI ) angle += 2.0f * D3DX_PI;
+	}
 
 //------------------------------------------------------------------------------------
 //	情報設定
@@ -99,6 +167,12 @@
 	void	BaseChara::SetPos( const Vector3& Pos )
 	{
 		pos = Pos;
+	}
+
+	//	移動値設定
+	void	BaseChara::SetMove( const Vector3& Move )
+	{
+		move = Move;
 	}
 
 	//	向き設定

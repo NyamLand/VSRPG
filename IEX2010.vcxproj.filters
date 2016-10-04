@@ -165,6 +165,12 @@
     <ClCompile Include="source\Singleton.cpp">
       <Filter>ソース ファイル\Manager\Singleton</Filter>
     </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerManager.cpp">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -208,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="source\Singleton.h">
       <Filter>ソース ファイル\Manager\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerManager.h">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

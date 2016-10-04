@@ -4,6 +4,7 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Camera.h"
+#include	"PlayerManager.h"
 
 #include	"sceneMain.h"
 
@@ -39,12 +40,16 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	player設定
+	playerManager->Initialize();
+
 	return true;
 }
 
 sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
+	playerManager->Release();
 
 
 
@@ -60,8 +65,11 @@ void	sceneMain::Update( void )
 	//	gameManager更新
 	gameManager->Update();
 
+	//	player更新
+	playerManager->Update();
+
 	//	camera更新
-	mainView->Update( Vector3( 0.0f, 2.0f, 0.0f ) );
+	mainView->Update( playerManager->GetPlayer()->GetPos() );
 }
 
 //*****************************************************************************************************************************
@@ -75,12 +83,8 @@ void	sceneMain::Render( void )
 	mainView->Activate();
 	mainView->Clear();
 
-
-
-
-
-
-
+	//	player描画
+	playerManager->Render();
 
 }
 
