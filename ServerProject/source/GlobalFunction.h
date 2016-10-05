@@ -1,6 +1,5 @@
 
-#ifndef	 __GLOBALFUNCTION_H__
-#define	 __GLOBALFUNCTION_H__
+#pragma once
 
 //******************************************************************************
 //
@@ -12,9 +11,6 @@
 //	íËêî
 //----------------------------------------------------------------------
 
-#define	ZERO_VECTOR3		Vector3( 0.0f, 0.0f, 0.0f )
-#define	FOR( minValue, maxValue )	for( int value = minValue; value < maxValue; value++ )
-#define	FOR_LIST( minValue, maxValue )	for( auto it = minValue; it != maxValue; it++ )
 #define	SUM( value ) ( value / 2 ) * ( value + 1 )
 
 //----------------------------------------------------------------------
@@ -134,5 +130,3 @@
 	bool isMiddle(const int& value, const int& min, const int& max);
 	bool isMiddle(const float& value, const float& min, const float& max);
 
-//******************************************************************************
-#endif // !__GROBALFUNCTION_H__

@@ -1,7 +1,5 @@
 
 #include	"iextreme.h"
-#include	"Camera.h"
-#include	"DrawShape.h"
 #include	"GlobalFunction.h"
 
 //*****************************************************************************
@@ -124,8 +122,6 @@
 
 		//	メッシュへレイを飛ばし、当たった座標をかえす
 		targetMesh->RayPick( &out, &pos, &vec, &dist );
-
-		drawShape->DrawLine( out, pos, 0xFFFFFFFF );
 	}
 
 	//	前フレームからの経過時間取得
