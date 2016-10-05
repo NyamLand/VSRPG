@@ -4,10 +4,15 @@
 //
 //*****************************************************************************************************************************
 
+//	ƒNƒ‰ƒX‘O•ûéŒ¾
+class GameParam;
+
 class	sceneMain : public Scene
 {
 private:
 	iexView*	view;
+	GameParam*	gameParam;
+	
 public:
 	~sceneMain();
 	//	‰Šú‰»
