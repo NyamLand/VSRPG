@@ -1,6 +1,9 @@
 
 #include	"iextreme.h"
 #include	"system/system.h"
+#include	"GameParam.h"
+#include	"GlobalFunction.h"
+#include	"PlayerManager.h"
 
 #include	"sceneMain.h"
 
@@ -33,15 +36,23 @@ bool	sceneMain::Initialize( void )
 	view = new iexView();
 	view->Set( Vector3( 0, 3, -5 ), Vector3( 0, 0, 0 ) );
 
+	//	ゲームパラメータ初期化
+	gameParam = new GameParam();
 
+	//	プレイヤー初期化
+	playerManager->Initialize( gameParam );
 
+	//	サーバー初期化
+	gameParam->InitializeServer();
 
 	return true;
 }
 
 sceneMain::~sceneMain( void )
 {
-
+	playerManager->Release();
+	SafeDelete( view );
+	SafeDelete( gameParam );
 
 
 
@@ -54,10 +65,13 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
+	int	client = gameParam->Receive();
 
-
-
-
+	if ( client != -1 )
+	{
+		playerManager->Update( client );
+		gameParam->Send( client );
+	}
 }
 
 //*****************************************************************************************************************************
