@@ -388,7 +388,7 @@ public:
 //
 //*****************************************************************************
 class iexView {
-private:
+protected:
 	Matrix	matView;
 	Matrix	matProj;
 
@@ -600,6 +600,10 @@ public:
 	void	Render(s32 x, s32 y, s32 w, s32 h, s32 sx, s32 sy, s32 sw, s32 sh, POINT p,
 		float angle, u32 dwFlags = RS_COPY, COLOR color = 0xFFFFFFFF, float z = 0.0f);
 
+
+	//	‰æ‘œƒTƒCƒYŽæ“¾
+	int		GetWidth( void )const;
+	int		GetHeight( void )const;
 };
 
 
