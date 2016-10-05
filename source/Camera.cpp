@@ -19,8 +19,8 @@ Camera* mainView = nullptr;
 #define	MIN_INPUT_STICK	0.3f
 
 //	HERFTOP_VIEWÉpÉâÉÅÅ[É^íËêî
-#define HERFTOP_VIEW_DIST						35.0f
-#define	HERFTOP_VIEW_HEIGHT				30.0f
+#define HERFTOP_VIEW_DIST						20.0f
+#define	HERFTOP_VIEW_HEIGHT				15.0f
 #define	HERFTOP_VIEW_ROTATE_SPEED		D3DX_PI * 0.015f
 
 //----------------------------------------------------------------------------------

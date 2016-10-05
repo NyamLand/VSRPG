@@ -4,6 +4,7 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Camera.h"
+#include	"PlayerManager.h"
 
 #include	"sceneMain.h"
 
@@ -13,6 +14,7 @@
 //
 //*****************************************************************************************************************************
 
+iexMesh*	stage = nullptr;	//	仮(絶対消す)
 
 
 
@@ -39,12 +41,19 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	player設定
+	playerManager->Initialize();
+
+	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
+
 	return true;
 }
 
 sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
+	SafeDelete( stage );
+	playerManager->Release();
 
 
 
@@ -60,8 +69,11 @@ void	sceneMain::Update( void )
 	//	gameManager更新
 	gameManager->Update();
 
+	//	player更新
+	playerManager->Update();
+
 	//	camera更新
-	mainView->Update( Vector3( 0.0f, 2.0f, 0.0f ) );
+	mainView->Update( playerManager->GetPlayer()->GetPos() );
 }
 
 //*****************************************************************************************************************************
@@ -75,12 +87,10 @@ void	sceneMain::Render( void )
 	mainView->Activate();
 	mainView->Clear();
 
+	stage->Render();
 
-
-
-
-
-
+	//	player描画
+	playerManager->Render();
 
 }
 
