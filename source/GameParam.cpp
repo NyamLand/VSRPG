@@ -72,7 +72,9 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::Update( void )
 	{
 		//	全データ受信
-		Receive();	
+		Receive();
+
+		//int a = 0;
 	}
 
 //----------------------------------------------------------------------------------
@@ -86,9 +88,16 @@ GameParam*	gameParam = nullptr;
 
 		//	データを受信
 		int	size = SocketClient::Receive( data, 256 );
-		if ( size <= 0 )	return;
-		if ( data[0] == -1 )	return;
-
+		if ( size <= 0 )
+		{
+			int a = 0;
+			return;
+		}
+		if ( data[0] == -1 )
+		{
+			int a = 0;
+			return;
+		}
 		//	先頭バイトで分岐
 		switch ( data[0] )
 		{

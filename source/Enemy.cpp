@@ -34,7 +34,7 @@ Enemy::Enemy(void)
 }
 
 //	デストラクタ
-Enemy::~Enemy(void)override
+Enemy::~Enemy(void)
 {
 
 }

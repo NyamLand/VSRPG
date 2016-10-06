@@ -89,7 +89,7 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	m_GameParam->Update();
+	//m_GameParam->Update();
 
 	//	gameManagerXV
 	gameManager->Update();
