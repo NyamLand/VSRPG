@@ -46,9 +46,11 @@
 	enum RECEIVE_MODE
 	{
 		MOVE,
+		POS,
 		CHAT,
 		SIGN_UP = 10,
 		SIGN_OUT = 11,
+		RECEIVE_MAX
 	};
 
 	//	КоЦ{ПоХс
@@ -81,4 +83,11 @@
 		char  com;
 		float vx;
 		float vz;
+	};
+
+	//	И ТuПоХс
+	struct NET_POS
+	{
+		char com;
+		Vector3	pos;
 	};

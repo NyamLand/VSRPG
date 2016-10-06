@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"PlayerManager.h"
 #include	"GameParam.h"
 
 //***************************************************************
@@ -74,6 +75,12 @@ GameParam*	gameParam = nullptr;
 		//	全データ受信
 		Receive();
 
+		//	位置データ送信
+		NET_POS	netData;
+
+		netData.com = POS;
+		netData.pos = playerManager->GetPlayer()->GetPos();
+		SocketClient::Send( ( char* )&netData, sizeof( netData ) );
 		//int a = 0;
 	}
 
@@ -90,12 +97,10 @@ GameParam*	gameParam = nullptr;
 		int	size = SocketClient::Receive( data, 256 );
 		if ( size <= 0 )
 		{
-			int a = 0;
 			return;
 		}
 		if ( data[0] == -1 )
 		{
-			int a = 0;
 			return;
 		}
 		//	先頭バイトで分岐
@@ -155,6 +160,7 @@ GameParam*	gameParam = nullptr;
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle = param.angle;
 		playerParam[id].motion = param.motion;
+		printf("x = %f y = %f z = %f\n", playerParam[id].pos.x, playerParam[id].pos.y, playerParam[id].pos.z );
 	}
 
 //----------------------------------------------------------------------------------

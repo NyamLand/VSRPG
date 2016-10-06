@@ -28,6 +28,13 @@
 			playerParam[id].angle = 0.0f;
 			playerParam[id].motion = 0;
 		}
+
+		//	関数ポインタ登録
+		ReceiveFunction[RECEIVE_MODE::POS] = &GameParam::PosReceive;
+		ReceiveFunction[RECEIVE_MODE::MOVE] = &GameParam::MoveReceive;
+		ReceiveFunction[RECEIVE_MODE::CHAT] = &GameParam::ChatReceive;
+		ReceiveFunction[RECEIVE_MODE::SIGN_UP] = &GameParam::SignUpReceive;
+		ReceiveFunction[RECEIVE_MODE::SIGN_OUT] = &GameParam::SignOutReceive;
 	}
 
 	//	デストラクタ
@@ -91,92 +98,107 @@
 		
 		if ( client == -1 )		return	-1;
 
-		//	dataの０番目によって処理を変える
-		switch ( data[0] )
+		//	各受信動作
+		int out = ( this->*ReceiveFunction[data[0]] )( client, data );
+
+		return	out;
+	}
+
+//-------------------------------------------------------------------------------------
+//	各受信動作関数
+//-------------------------------------------------------------------------------------
+
+	//	移動情報受信
+	int		GameParam::MoveReceive( int client, LPSTR data )
+	{
+		NET_MOVE* d = ( NET_MOVE* )data;
+		playerParam[client].move = Vector3( d->vx, 0.0f, d->vz );
+
+		return	client;
+	}
+
+	//	位置情報取得
+	int		GameParam::PosReceive( int client, LPSTR data )
+	{
+		NET_POS* d = ( NET_POS* )data;
+		playerParam[client].pos = d->pos;
+
+		return	client;
+	}
+
+	//	チャット情報取得
+	int		GameParam::ChatReceive( int client, LPSTR data )
+	{
+		//	idにクライアントIDをセット
+		NET_CHAT*	chat = ( NET_CHAT* )data;
+		chat->id = client;
+
+		//	全員にメッセージを送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			//	移動情報受信
-			case RECEIVE_MODE::MOVE:
-				{
-					NET_MOVE* d = ( NET_MOVE* )data;
-					playerParam[client].move = Vector3( d->vx, 0.0f, d->vz );
-				}
-				break;
+			//	いなければスキップ
+			if ( playerInfo[p].active == false )continue;
 
-			//	チャット
-			case RECEIVE_MODE::CHAT:
-				{
+			UDPServer::Send( p, ( LPSTR )chat, sizeof( NET_CHAT ) );
+		}
 
-					//	idにクライアントIDをセット
-					NET_CHAT*	chat = ( NET_CHAT* )data;
-					chat->id = client;
+		//	chatならば-1をかえす
+		return	-1;
+	}
 
-					//	全員にメッセージを送信
-					for ( int p = 0; p < PLAYER_MAX; p++ )
-					{
-						//	いなければスキップ
-						if ( playerInfo[p].active == false )continue;
+	//	サインアップ情報取得
+	int		GameParam::SignUpReceive( int client, LPSTR data )
+	{
+		//	プレイヤーを登録する
+		NET_INFO*	d = ( NET_INFO* )data;
+		SetPlayer( client, d->name, d->type );
 
-						UDPServer::Send( p, ( LPSTR )chat, sizeof( NET_CHAT ) );
-					}
+		//	構造体のidメンバを設定し送信者へ送信する
+		d->id = client;
+		UDPServer::Send( d->id, ( LPSTR )d, sizeof( NET_INFO ) );
 
-					//	チャットの場合クライアントではなく-１を返す
-					return	-1;
-				}
-				break;
+		//	全員に情報送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( !playerInfo[p].active )continue;
+			UDPServer::Send( p, ( LPSTR )d, sizeof( NET_INFO ) );
 
-			case RECEIVE_MODE::SIGN_UP:
-				{
-					//	プレイヤーを登録する
-					NET_INFO*	d = ( NET_INFO* )data;
-					SetPlayer( client, d->name, d->type );
+			//	全員の情報を新規プレイヤーに送信
+			for ( int p = 0; p < PLAYER_MAX; p++ )
+			{
+				//	プレイヤーがいなければスキップ
+				if ( !playerInfo[p].active )continue;
 
-					//	構造体のidメンバを設定し送信者へ送信する
-					d->id = client;
-					UDPServer::Send( d->id, ( LPSTR )d, sizeof( NET_INFO ) );
+				//	構造体にコピー
+				d->id = p;
+				d->type = playerInfo[p].type;
+				strcpy( d->name, playerInfo[p].name );
 
-					//	全員に情報送信
-					for ( int p = 0; p < PLAYER_MAX; p++ )
-					{
-						if ( playerInfo[p].active == false )continue;
-						UDPServer::Send( p, ( LPSTR )d, sizeof( NET_INFO ) );
+				//	送信
+				UDPServer::Send( client, ( LPSTR )d, sizeof( NET_INFO ) );
+			}
+		}
 
-						//	全員の情報を新規プレイヤーに送信
-						for ( int p = 0; p < PLAYER_MAX; p++ )
-						{
-							//	プレイヤーがいなければスキップ
-							if ( playerInfo[p].active == false )continue;
+		return	client;
+	}
 
-							//	構造体にコピー
-							d->id = p;
-							d->type = playerInfo[p].type;
-							strcpy( d->name, playerInfo[p].name );
-						
-							//	送信
-							UDPServer::Send( client, ( LPSTR )d, sizeof( NET_INFO ) );
-						}
-					}
-				}
-				break;
+	//	サインアウト情報取得
+	int		GameParam::SignOutReceive( int client, LPSTR data )
+	{
+		//	クライアント脱退
+		playerInfo[client].active = false;
+		CloseClient( client );
 
-			case RECEIVE_MODE::SIGN_OUT:
-				{
-					//	クライアント脱退
-					playerInfo[client].active = false;
-					CloseClient( client );
-				
-					//	脱退情報を全クライアントへ送信
-					NET_OUT	d;
-					d.com = SIGN_OUT;
-					d.id = client;
+		//	脱退情報を全クライアントへ送信
+		NET_OUT	d;
+		d.com = SIGN_OUT;
+		d.id = client;
 
-					//	全員にデータ送信
-					for ( int p = 0; p < PLAYER_MAX; p++ )
-					{
-						if ( playerInfo[p].active == false )	continue;
-						UDPServer::Send( p, ( LPSTR )&d, sizeof( NET_OUT ) );
-					}
-				}
-				break;
+		//	全員にデータ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( !playerInfo[p].active )	continue;
+			UDPServer::Send( p, ( LPSTR )&d, sizeof( NET_OUT ) );
 		}
 
 		return	client;

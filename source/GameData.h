@@ -51,6 +51,7 @@
 	enum RECEIVE_MODE
 	{
 		MOVE,
+		POS,
 		CHAT,
 		SIGN_UP = 10,
 		SIGN_OUT = 11,
@@ -78,4 +79,11 @@
 		char	com;
 		int		id;
 		char	msg[50];
+	};
+
+	//	à íuèÓïÒ
+	struct NET_POS
+	{
+		char com;
+		Vector3	pos;
 	};
