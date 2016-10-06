@@ -79,6 +79,12 @@
     <Filter Include="ソース ファイル\Manager\Singleton">
       <UniqueIdentifier>{a4926207-131a-46e3-9201-f1829cefb9ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameParam">
+      <UniqueIdentifier>{6fa65174-a628-4b5c-b237-a50570419a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction\GameData">
+      <UniqueIdentifier>{0e784b56-40b3-4f9f-a343-de896644d38a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -171,6 +177,9 @@
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>ソース ファイル\Manager\PlayerManager</Filter>
     </ClCompile>
+    <ClCompile Include="source\GameParam.cpp">
+      <Filter>ソース ファイル\GameParam</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -220,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
       <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameParam.h">
+      <Filter>ソース ファイル\GameParam</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameData.h">
+      <Filter>ソース ファイル\GlobalFunction\GameData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
