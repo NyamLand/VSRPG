@@ -43,3 +43,5 @@ public:
 	//	î•ñæ“¾
 	PlayerParam& GetPlayerParam( int id );
 };
+
+extern	GameParam*	gameParam;
