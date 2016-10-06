@@ -85,6 +85,15 @@
     <Filter Include="ソース ファイル\GlobalFunction\GameData">
       <UniqueIdentifier>{0e784b56-40b3-4f9f-a343-de896644d38a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Enemy">
+      <UniqueIdentifier>{5a1c5791-146c-47a2-adcc-4f3f9b6a964f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\SmallEnemy">
+      <UniqueIdentifier>{2a8d11d2-8d68-4a08-92ee-e0a3cf914554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\BigEnemy">
+      <UniqueIdentifier>{4d4541a1-7b96-4a6f-8e5b-a568267a9f9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -180,6 +189,9 @@
     <ClCompile Include="source\GameParam.cpp">
       <Filter>ソース ファイル\GameParam</Filter>
     </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -235,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="source\GameData.h">
       <Filter>ソース ファイル\GlobalFunction\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
+      <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
