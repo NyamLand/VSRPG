@@ -6,6 +6,8 @@
 #include	"Camera.h"
 #include	"PlayerManager.h"
 
+#pragma comment( lib, "WSOCK32.lib" )
+
 #include	"sceneMain.h"
 
 //*****************************************************************************************************************************
@@ -87,11 +89,11 @@ void	sceneMain::Render( void )
 	mainView->Activate();
 	mainView->Clear();
 
+	//	stage•`‰æ
 	stage->Render();
 
 	//	player•`‰æ
 	playerManager->Render();
-
 }
 
 
