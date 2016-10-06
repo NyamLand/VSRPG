@@ -20,7 +20,10 @@
 //-------------------------------------------------------------------------------------
 	
 	//	コンストラクタ
-	Player::Player( void )
+	Player::Player( void ) : 
+		pos( 0.0f, 0.0f, 0.0f ),
+		angle( 0.0f ),
+		type( 0 ), motion( 0 )
 	{
 	
 	}
@@ -28,6 +31,7 @@
 	//	デストラクタ
 	Player::~Player( void )
 	{
+
 
 	}
 
@@ -38,9 +42,10 @@
 	//	更新
 	bool	Player::Update( PlayerParam& param )
 	{
-		pos = param.pos;
-		angle = param.angle;
-		motion = param.motion;
+		int a = 0;
+		//pos = param.pos;
+		//angle = param.angle;
+		//motion = param.motion;
 		//move = param.move;
 		return	true;
 	}
