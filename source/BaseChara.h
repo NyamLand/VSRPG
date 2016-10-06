@@ -22,6 +22,7 @@ protected:
 	float			angle;
 	float			speed;
 	float			scale;
+	int				mode;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
