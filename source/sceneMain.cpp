@@ -60,7 +60,7 @@ bool	sceneMain::Initialize( void )
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
 	//	クライアント初期化
-	if ( !m_GameParam->InitializeClient( LPSTR( "127.0.0.1" ), PORT_NUM, LPSTR( "aaa" ), 0 ) )
+	if ( !m_GameParam->InitializeClient( "127.0.0.1", PORT_NUM, LPSTR( "aaa" ), 0 ) )
 	{
 		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
 		PostQuitMessage( 0 );
