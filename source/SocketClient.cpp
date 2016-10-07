@@ -14,9 +14,9 @@
 //-------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	SocketClient::SocketClient( void )
+	SocketClient::SocketClient( void ) : sock( INVALID_SOCKET )
 	{
-		sock = INVALID_SOCKET;
+		
 	}
 	
 	//	デストラクタ
@@ -59,7 +59,7 @@
 		server.sin_family = AF_INET;
 		server.sin_port = htons( port );
 
-		struct	hostent*	host = gethostbyname( addr );
+		struct	 hostent*	host = gethostbyname( addr );
 		server.sin_addr.S_un.S_addr = *( ( ULONG* )host->h_addr_list[0] );
 
 		//	UDPソケット作成

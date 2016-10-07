@@ -28,6 +28,27 @@
     <Filter Include="ソース ファイル\SYSTEM">
       <UniqueIdentifier>{188586ad-3818-4e68-816a-e6427b522bc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UDPServer">
+      <UniqueIdentifier>{b75ca8d5-ecc4-4a2e-a63d-00ec06d05155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{1424fda5-a8a4-4996-a6bd-d684891f0a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerManager">
+      <UniqueIdentifier>{e2b93c4d-4b9d-43e0-808b-ba463c991ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{419266e5-52c4-4507-9af3-77691f088402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Singleton">
+      <UniqueIdentifier>{d16ba9a8-8977-43e2-8d73-8f26fe429254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData">
+      <UniqueIdentifier>{27ab2221-4938-46f3-a7d5-8ceab547f42f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameParam">
+      <UniqueIdentifier>{fe2d756e-5490-4c03-8cd9-d057a4d94df5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -90,6 +111,21 @@
     <ClCompile Include="source\sceneMain.cpp">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
     </ClCompile>
+    <ClCompile Include="source\UDPServer.cpp">
+      <Filter>ソース ファイル\UDPServer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerManager.cpp">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Singleton.cpp">
+      <Filter>ソース ファイル\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameParam.cpp">
+      <Filter>ソース ファイル\GameParam</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -106,6 +142,24 @@
     </ClInclude>
     <ClInclude Include="source\sceneMain.h">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UDPServer.h">
+      <Filter>ソース ファイル\UDPServer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerManager.h">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Singleton.h">
+      <Filter>ソース ファイル\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameData.h">
+      <Filter>ソース ファイル\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameParam.h">
+      <Filter>ソース ファイル\GameParam</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

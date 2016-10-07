@@ -112,6 +112,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
+    <ClCompile Include="source\Enemy.cpp" />
+    <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
     <ClCompile Include="source\Singleton.cpp" />
@@ -144,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
+    <ClInclude Include="source\Enemy.h" />
+    <ClInclude Include="source\GameData.h" />
+    <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
     <ClInclude Include="source\Singleton.h" />

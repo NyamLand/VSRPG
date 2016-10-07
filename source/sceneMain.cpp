@@ -2,9 +2,13 @@
 #include	"iextreme.h"
 #include	"system/system.h"
 #include	"GlobalFunction.h"
+#include	"GameParam.h"
+#include	"GameData.h"
 #include	"GameManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
+
+#pragma comment( lib, "WSOCK32.lib" )
 
 #include	"sceneMain.h"
 
@@ -26,6 +30,10 @@ iexMesh*	stage = nullptr;	//	仮(絶対消す)
 
 bool	sceneMain::Initialize( void )
 {
+	//	WinSock初期化
+	WSADATA	wsaData;
+	WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
+
 	//	環境設定
 	iexLight::SetAmbient( 0x404040 );
 	iexLight::SetFog( 800, 1000, 0 );
@@ -33,6 +41,10 @@ bool	sceneMain::Initialize( void )
 	Vector3 dir( 1.0f, -1.0f, -0.5f );
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
+	
+	//	GameParam初期化
+	m_GameParam = new GameParam();
+	gameParam = m_GameParam;
 
 	//	カメラ設定
 	mainView = new Camera();
@@ -44,8 +56,18 @@ bool	sceneMain::Initialize( void )
 	//	player設定
 	playerManager->Initialize();
 
+	//	stage設定
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
+	//	クライアント初期化
+	if ( !m_GameParam->InitializeClient( LPSTR( "127.0.0.1" ), PORT_NUM, LPSTR( "aaa" ), 0 ) )
+	{
+		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
+		PostQuitMessage( 0 );
+		return	true;
+	}
+
+	
 	return true;
 }
 
@@ -53,10 +75,11 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
+	SafeDelete( m_GameParam );
 	playerManager->Release();
 
-
-
+	//	WinSock終了
+	WSACleanup();
 }
 
 //*****************************************************************************************************************************
@@ -66,6 +89,8 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
+	m_GameParam->Update();
+
 	//	gameManager更新
 	gameManager->Update();
 
@@ -87,11 +112,11 @@ void	sceneMain::Render( void )
 	mainView->Activate();
 	mainView->Clear();
 
+	//	stage描画
 	stage->Render();
 
 	//	player描画
 	playerManager->Render();
-
 }
 
 
