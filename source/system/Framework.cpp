@@ -21,7 +21,7 @@ Framework::Framework( int FPSMode )
 
 	scene = NULL;
 
-	dwGameFrame = 0;
+	dwUIFrame = 0;
 	dwFrameTime = clock();
 }
 
@@ -49,7 +49,7 @@ bool Framework::Update()
 	//	スキップタイプ 
 	switch( FPSMode ){
 	case FPS_60:	bRender = TRUE;	break;
-	case FPS_30:	if( dwGameFrame & 0x01 ) bRender=TRUE; else bRender=FALSE;
+	case FPS_30:	if( dwUIFrame & 0x01 ) bRender=TRUE; else bRender=FALSE;
 					break;
 	case FPS_FLEX:	if( dTime > 167*2 ) bRender = FALSE; else bRender = TRUE;
 					break;
@@ -67,7 +67,7 @@ bool Framework::Update()
 		dwSec += 10000;
 	}
 	dwCurFrame ++;	//	フレーム数更新
-	dwGameFrame++;	//	ゲームフレーム数更新
+	dwUIFrame++;	//	ゲームフレーム数更新
 
 	//	更新処理
 	KEY_SetInfo();

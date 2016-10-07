@@ -142,7 +142,9 @@
     <ClCompile Include="IEX\IEX_System.cpp" />
     <ClCompile Include="IEX\IEX_Texture.cpp" />
     <ClCompile Include="IEX\IEX_View.cpp" />
+    <ClCompile Include="source\TImerUI.cpp" />
     <ClCompile Include="source\UDPServer.cpp" />
+    <ClCompile Include="source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
@@ -163,7 +165,9 @@
     <ClInclude Include="source\sceneMain.h" />
     <ClInclude Include="source\system\System.h" />
     <ClInclude Include="IEX\iextreme.h" />
+    <ClInclude Include="source\TimerUI.h" />
     <ClInclude Include="source\UDPServer.h" />
+    <ClInclude Include="source\UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx" />

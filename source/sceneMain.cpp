@@ -5,6 +5,7 @@
 #include	"GameParam.h"
 #include	"GameData.h"
 #include	"GameManager.h"
+#include	"UIManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
 
@@ -59,6 +60,12 @@ bool	sceneMain::Initialize( void )
 	//	stage設定
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
+	//	uiの設定
+	uiManager->Initialize();
+
+	//	GameManagerの初期化
+	gameManager->Initialize();
+
 	//	クライアント初期化
 	if ( !m_GameParam->InitializeClient( "127.0.0.1", PORT_NUM, LPSTR( "aaa" ), 0 ) )
 	{
@@ -77,6 +84,7 @@ sceneMain::~sceneMain( void )
 	SafeDelete( stage );
 	SafeDelete( m_GameParam );
 	playerManager->Release();
+	uiManager->Release();
 
 	//	WinSock終了
 	WSACleanup();
@@ -91,11 +99,14 @@ void	sceneMain::Update( void )
 {
 	m_GameParam->Update();
 
-	//	gameManager更新
+	//	GameManager更新
 	gameManager->Update();
 
 	//	player更新
 	playerManager->Update();
+
+	//	ui更新
+	uiManager->Update();
 
 	//	camera更新
 	mainView->Update( playerManager->GetPlayer()->GetPos() );
@@ -117,6 +128,9 @@ void	sceneMain::Render( void )
 
 	//	player描画
 	playerManager->Render();
+
+	//	ui描画
+	uiManager->Render();
 }
 
 

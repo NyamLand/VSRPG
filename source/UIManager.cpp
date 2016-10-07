@@ -1,11 +1,11 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	"GameManager.h"
+#include	"UIManager.h"
 
 //***************************************************************
 //
-//	GameManagerクラス
+//	UIManagerクラス
 //
 //***************************************************************
 
@@ -17,50 +17,51 @@
 //	初期化・解放
 //---------------------------------------------------------------------------------------
 
-	//	コンストラクタ
-	GameManager::GameManager( void ) : timer( 0.0f )
-	{
-	
-	}
+//	コンストラクタ
+UIManager::UIManager(void)
+{
 
-	//	デストラクタ
-	GameManager::~GameManager( void )
-	{
+}
 
-	}
+//	デストラクタ
+UIManager::~UIManager(void)
+{
+	Release();
+}
 
-	//	初期化
-	bool	GameManager::Initialize( void )
-	{
-		timer = TIME_MAX;
-		return	true;
-	}
+//	初期化
+bool	UIManager::Initialize( void )
+{
+	timerUI = new TimerUI();
+	return	true;
+}
 
-	//	解放
-	void	GameManager::Release( void )
-	{
-
-	}
+//	解放
+void	UIManager::Release(void)
+{
+	SafeDelete( timerUI );
+}
 
 //---------------------------------------------------------------------------------------
 //	更新・描画
 //---------------------------------------------------------------------------------------
 
-	//	更新
-	void	GameManager::Update( void )
-	{
-		TimerCount();
-	}
+//	更新
+void	UIManager::Update(void)
+{
+	timerUI->Update();
+}
+
+//	描画
+void	UIManager::Render(void)
+{
+	timerUI->Render();
+}
 
 //---------------------------------------------------------------------------------------
 //	動作関数
 //---------------------------------------------------------------------------------------
 
-	//	タイマーカウント
-	void	GameManager::TimerCount()
-	{
-		timer -= GetElapseTime();
-	}
 //---------------------------------------------------------------------------------------
 //	情報設定
 //---------------------------------------------------------------------------------------
