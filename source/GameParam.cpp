@@ -2,11 +2,11 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"PlayerManager.h"
-#include	"UIParam.h"
+#include	"GameParam.h"
 
 //***************************************************************
 //
-//	UIParamクラス
+//	GameParamクラス
 //
 //***************************************************************
 
@@ -14,14 +14,14 @@
 //	グローバル
 //----------------------------------------------------------------------------------
 
-UIParam*	UIParam = nullptr;
+GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	UIParam::UIParam( void )
+	GameParam::GameParam( void )
 	{
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ ) playerInfo[id].active = false;
@@ -30,13 +30,13 @@ UIParam*	UIParam = nullptr;
 	}
 
 	//	デストラクタ
-	UIParam::~UIParam( void )
+	GameParam::~GameParam( void )
 	{
 		CloseClient();
 	}
 
 	//	クライアント初期化
-	bool	UIParam::InitializeClient( LPSTR addr, int nPort, LPSTR name, int type )
+	bool	GameParam::InitializeClient( LPSTR addr, int nPort, LPSTR name, int type )
 	{
 		//	クライアント初期化
 		InitializeUDP( nPort, addr );
@@ -59,7 +59,7 @@ UIParam*	UIParam = nullptr;
 	}
 
 	//	脱退
-	void	UIParam::CloseClient( void )
+	void	GameParam::CloseClient( void )
 	{
 		char	com = RECEIVE_MODE::SIGN_OUT;
 		SocketClient::Send( &com, sizeof( char ) );
@@ -70,7 +70,7 @@ UIParam*	UIParam = nullptr;
 //----------------------------------------------------------------------------------
 
 	//	更新
-	void	UIParam::Update( void )
+	void	GameParam::Update( void )
 	{
 		//	全データ受信
 		Receive();
@@ -89,7 +89,7 @@ UIParam*	UIParam = nullptr;
 //----------------------------------------------------------------------------------
 
 	//	受信
-	void	UIParam::Receive( void )
+	void	GameParam::Receive( void )
 	{
 		char data[256];
 
@@ -129,7 +129,7 @@ UIParam*	UIParam = nullptr;
 	}
 
 	//	送信
-	//void	UIParam::Send( PlayerParam playerParam )
+	//void	GameParam::Send( PlayerParam playerParam )
 	//{
 	//	
 	//}
@@ -139,7 +139,7 @@ UIParam*	UIParam = nullptr;
 //----------------------------------------------------------------------------------
 
 	//	プレイヤー情報設定
-	void	UIParam::SetPlayerInfo( int id, LPSTR name, int type )
+	void	GameParam::SetPlayerInfo( int id, LPSTR name, int type )
 	{
 		playerInfo[id].active = true;
 		playerInfo[id].type = type;
@@ -147,7 +147,7 @@ UIParam*	UIParam = nullptr;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	UIParam::SetPlayerParam( int id, Vector3& pos, float angle, int motion )
+	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle, int motion )
 	{
 		playerParam[id].pos = pos;
 		playerParam[id].angle = angle;
@@ -155,7 +155,7 @@ UIParam*	UIParam = nullptr;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	UIParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
 	{
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle = param.angle;

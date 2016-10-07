@@ -47,7 +47,7 @@ void	TimerUI::Render(void)
 {
 	char str[64];
 	sprintf_s(str, "timer = %f",timer);
-	IEX_DrawText(str, 20, 20, 100, 100, 0xFFFFFF);
+	IEX_DrawText(str, 20, 20, 400, 100, 0xFF00FF00);
 }
 
 //---------------------------------------------------------------------------------------

@@ -40,7 +40,7 @@ public:
 	void	Update( void );
 
 	//	動作関数
-	void	TimerCount( int );
+	void	TimerCount();
 
 	//	ゲッター・セッター
 	float	GetTimer( void ){ return timer; }

@@ -37,7 +37,7 @@ void iexInputManager::Initialize()
 	pDI->Initialize( GetModuleHandle(NULL), DIRECTINPUT_VERSION);
 	//	ゲームパッドの列挙
 	NumDevice = 0;
-	pDI->EnumDevices( DI8DEVCLASS_UICTRL, EnumDeviceCallback, pDI, DIEDFL_ATTACHEDONLY );
+	pDI->EnumDevices( DI8DEVCLASS_GAMECTRL, EnumDeviceCallback, pDI, DIEDFL_ATTACHEDONLY );
 }
 
 

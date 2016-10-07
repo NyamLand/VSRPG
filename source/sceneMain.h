@@ -5,12 +5,12 @@
 //*****************************************************************************************************************************
 
 //	ƒNƒ‰ƒX‘O•ûéŒ¾
-class UIParam;
+class GameParam;
 
 class	sceneMain : public Scene
 {
 private:
-	UIParam*	m_UIParam;
+	GameParam*	m_GameParam;
 
 public:
 	~sceneMain();

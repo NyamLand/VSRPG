@@ -2,8 +2,9 @@
 #include	"iextreme.h"
 #include	"system/system.h"
 #include	"GlobalFunction.h"
-#include	"UIParam.h"
-#include	"UIData.h"
+#include	"GameParam.h"
+#include	"GameData.h"
+#include	"GameManager.h"
 #include	"UIManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
@@ -42,9 +43,9 @@ bool	sceneMain::Initialize( void )
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 	
-	//	UIParam初期化
-	m_UIParam = new UIParam();
-	UIParam = m_UIParam;
+	//	GameParam初期化
+	m_GameParam = new GameParam();
+	gameParam = m_GameParam;
 
 	//	カメラ設定
 	mainView = new Camera();
@@ -59,8 +60,14 @@ bool	sceneMain::Initialize( void )
 	//	stage設定
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
+	//	uiの設定
+	uiManager->Initialize();
+
+	//	GameManagerの初期化
+	gameManager->Initialize();
+
 	//	クライアント初期化
-	if ( !m_UIParam->InitializeClient( LPSTR( "127.0.0.1" ), PORT_NUM, LPSTR( "aaa" ), 0 ) )
+	if ( !m_GameParam->InitializeClient( LPSTR( "127.0.0.1" ), PORT_NUM, LPSTR( "aaa" ), 0 ) )
 	{
 		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
 		PostQuitMessage( 0 );
@@ -75,8 +82,9 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	SafeDelete( m_UIParam );
+	SafeDelete( m_GameParam );
 	playerManager->Release();
+	uiManager->Release();
 
 	//	WinSock終了
 	WSACleanup();
@@ -89,13 +97,16 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	m_UIParam->Update();
+	m_GameParam->Update();
 
-	//	UIManager更新
-	UIManager->Update();
+	//	GameManager更新
+	gameManager->Update();
 
 	//	player更新
 	playerManager->Update();
+
+	//	ui更新
+	uiManager->Update();
 
 	//	camera更新
 	mainView->Update( playerManager->GetPlayer()->GetPos() );
@@ -117,6 +128,9 @@ void	sceneMain::Render( void )
 
 	//	player描画
 	playerManager->Render();
+
+	//	ui描画
+	uiManager->Render();
 }
 
 

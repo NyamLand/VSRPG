@@ -32,6 +32,7 @@
 	//	初期化
 	bool	GameManager::Initialize( void )
 	{
+		timer = TIME_MAX;
 		return	true;
 	}
 
@@ -48,7 +49,7 @@
 	//	更新
 	void	GameManager::Update( void )
 	{
-		
+		TimerCount();
 	}
 
 //---------------------------------------------------------------------------------------
@@ -56,9 +57,9 @@
 //---------------------------------------------------------------------------------------
 
 	//	タイマーカウント
-	void	GameManager::TimerCount( int t )
+	void	GameManager::TimerCount()
 	{
-		timer = GetElapseTime();
+		timer -= GetElapseTime();
 	}
 //---------------------------------------------------------------------------------------
 //	情報設定
