@@ -3,17 +3,17 @@
 
 //***************************************************************
 //
-//	GameParamクラス
+//	UIParamクラス
 //
 //***************************************************************
 
 //	include
-#include	"GameData.h"
+#include	"UIData.h"
 //#include	"winsock.h"
 #include	"SocketClient.h"
 
 //	class
-class GameParam : public SocketClient
+class UIParam : public SocketClient
 {
 private:
 	int	myIndex;
@@ -24,8 +24,8 @@ private:
 	
 public:
 	//	初期化・解放
-	GameParam( void );
-	~GameParam( void );
+	UIParam( void );
+	~UIParam( void );
 	bool	InitializeClient( LPSTR addr, int nPort, LPSTR name, int type );
 	void	CloseClient( void );
 
@@ -44,4 +44,4 @@ public:
 	PlayerParam& GetPlayerParam( int id );
 };
 
-extern	GameParam*	gameParam;
+extern	UIParam*	UIParam;

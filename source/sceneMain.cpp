@@ -2,9 +2,9 @@
 #include	"iextreme.h"
 #include	"system/system.h"
 #include	"GlobalFunction.h"
-#include	"GameParam.h"
-#include	"GameData.h"
-#include	"GameManager.h"
+#include	"UIParam.h"
+#include	"UIData.h"
+#include	"UIManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
 
@@ -42,9 +42,9 @@ bool	sceneMain::Initialize( void )
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 	
-	//	GameParam初期化
-	m_GameParam = new GameParam();
-	gameParam = m_GameParam;
+	//	UIParam初期化
+	m_UIParam = new UIParam();
+	UIParam = m_UIParam;
 
 	//	カメラ設定
 	mainView = new Camera();
@@ -60,7 +60,7 @@ bool	sceneMain::Initialize( void )
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
 	//	クライアント初期化
-	if ( !m_GameParam->InitializeClient( LPSTR( "127.0.0.1" ), PORT_NUM, LPSTR( "aaa" ), 0 ) )
+	if ( !m_UIParam->InitializeClient( LPSTR( "127.0.0.1" ), PORT_NUM, LPSTR( "aaa" ), 0 ) )
 	{
 		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
 		PostQuitMessage( 0 );
@@ -75,7 +75,7 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	SafeDelete( m_GameParam );
+	SafeDelete( m_UIParam );
 	playerManager->Release();
 
 	//	WinSock終了
@@ -89,10 +89,10 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	m_GameParam->Update();
+	m_UIParam->Update();
 
-	//	gameManager更新
-	gameManager->Update();
+	//	UIManager更新
+	UIManager->Update();
 
 	//	player更新
 	playerManager->Update();

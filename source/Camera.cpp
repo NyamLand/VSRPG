@@ -142,8 +142,8 @@ Camera* mainView = nullptr;
 	void	Camera::HerfTopViewRotate( void )
 	{
 		////	“ü—ÍŽæ“¾
-		//bool	pushR1 = gamePad[0]->GetR1Button( GamePad::BUTTON_STATE::STAY );
-		//bool	pushL1 = gamePad[0]->GetL1Button( GamePad::BUTTON_STATE::STAY );
+		//bool	pushR1 = UIPad[0]->GetR1Button( UIPad::BUTTON_STATE::STAY );
+		//bool	pushL1 = UIPad[0]->GetL1Button( UIPad::BUTTON_STATE::STAY );
 
 		////	‰ñ“]
 		//if ( pushR1 )

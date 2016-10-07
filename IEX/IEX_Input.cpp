@@ -1,5 +1,5 @@
 #include	"iextreme.h"
-//#include	"GamePad.h"
+//#include	"UIPad.h"
 //*****************************************************************************
 //
 //		入力デバイス管理
@@ -37,7 +37,7 @@ void iexInputManager::Initialize()
 	pDI->Initialize( GetModuleHandle(NULL), DIRECTINPUT_VERSION);
 	//	ゲームパッドの列挙
 	NumDevice = 0;
-	pDI->EnumDevices( DI8DEVCLASS_GAMECTRL, EnumDeviceCallback, pDI, DIEDFL_ATTACHEDONLY );
+	pDI->EnumDevices( DI8DEVCLASS_UICTRL, EnumDeviceCallback, pDI, DIEDFL_ATTACHEDONLY );
 }
 
 
@@ -460,7 +460,7 @@ void KEY_SetInfo()
 	for ( int i = 0; i < MAX; i++ )
 	{
 		input[i]->SetInfo();
-		//gamePad[i]->UpdateControllerState();
+		//UIPad[i]->UpdateControllerState();
 	}
 }
 
@@ -483,7 +483,7 @@ BOOL	IEX_InitInput()
 	for ( int i = 0; i < 4; i++ )
 	{
 		input[i] = new iexInput( i );
-		//gamePad[i] = new GamePad( i );
+		//UIPad[i] = new UIPad( i );
 	}
 
 	return TRUE;
@@ -505,7 +505,7 @@ void	IEX_ReleaseInput()
 
 	//for ( int i = 0; i < 4; i++ )
 	//{
-	//	if( gamePad[i] )	delete gamePad[i];
+	//	if( UIPad[i] )	delete UIPad[i];
 	//}
 
 	iexInputManager::Release();
