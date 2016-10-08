@@ -44,6 +44,9 @@ private:
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );
 
+	iex2DObj*	texture;
+
+
 public:
 	//	初期化・解放
 	Player( void );
@@ -52,6 +55,7 @@ public:
 	
 	//	更新・描画
 	void	Update( void )override;
+	void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr )override;
 
 	//	各モード動作関数
 	void	MoveMode( void );

@@ -76,11 +76,14 @@
 			{
 				//	アクティブ情報設定
 				strcat( str, "active  " );
+
+				//	名前設定
+				strcat( str, playerInfo[p].name );
 				
 				//	座標設定
 				Vector3 pos = playerParam[p].pos;
 				char posInfo[256];
-				sprintf_s( posInfo, "pos : %.2f, %.2f, %.2f", pos.x, pos.y, pos.z );
+				sprintf_s( posInfo, "  pos : %.2f, %.2f, %.2f", pos.x, pos.y, pos.z );
 				strcat( str, posInfo );
 			}
 
