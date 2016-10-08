@@ -48,13 +48,14 @@
 //	データ送受信用構造体
 //----------------------------------------------------------------------------
 
-	enum RECEIVE_MODE
+	enum DATA_MODE
 	{
 		MOVE,
 		POS,
 		CHAT,
 		SIGN_UP = 10,
 		SIGN_OUT = 11,
+		DATA_MAX
 	};
 
 	//	新規参加情報
@@ -85,5 +86,6 @@
 	struct NET_POS
 	{
 		char com;
+		int		id;
 		Vector3	pos;
 	};

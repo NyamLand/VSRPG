@@ -54,7 +54,6 @@
 
 		//	ä÷êîÉ|ÉCÉìÉ^
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;
-		//ModeFunction[MODE::MOVE] = &Player::PostureMode;
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 
