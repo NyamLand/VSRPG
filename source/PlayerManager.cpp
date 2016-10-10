@@ -1,7 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	"GameManager.h"
+#include	"UIManager.h"
 #include	"PlayerManager.h"
 
 //***************************************************************

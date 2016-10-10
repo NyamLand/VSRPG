@@ -4,17 +4,24 @@
 //
 //*****************************************************************************************************************************
 
+//	クラス前方宣言
+class GameParam;
+
 class	sceneMain : public Scene
 {
 private:
-	iexView*	view;
+	GameParam*	m_GameParam;
+
 public:
-	~sceneMain();
+	~sceneMain( void );
 	//	初期化
-	bool Initialize();
+	bool Initialize( void );
 	//	更新・描画
-	void Update();	//	更新
-	void Render();	//	描画
+	void Update( void );	//	更新
+	void Render( void );	//	描画
+
+	//	情報取得
+	void	MyInfoRender( void );
 };
 
 

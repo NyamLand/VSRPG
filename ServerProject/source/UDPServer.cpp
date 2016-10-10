@@ -76,7 +76,10 @@
 		memcpy( &fd_work, &fds, sizeof( fd_set ) );
 
 		//	受信状態ソケットの検索
-		select( 0, &fd_work, NULL, NULL, &tv );
+		int n = select( 0, &fd_work, NULL, NULL, &tv );
+
+		//	タイムアウトの場合にselectは0をかえす
+		if ( n <= 0 )	return	-1;
 
 		//	データ受信用変数準備
 		int		i,	recvsize;

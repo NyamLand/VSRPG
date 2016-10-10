@@ -14,7 +14,7 @@
 //	class
 class SocketClient
 {
-private:
+//private:
 protected:
 	SOCKET	sock;
 	struct	sockaddr_in		server;

@@ -27,6 +27,25 @@ iex2DObj::iex2DObj( char* filename )
 	lpTexture->GetSurfaceLevel( 0, &lpSurface );
 }
 
+iex2DObj::iex2DObj( Texture2D* texture )
+{
+	//	情報初期化
+	width = height = 0;
+	lpSurface = NULL;
+
+	//	テクスチャ読み込み
+	lpTexture = texture;
+	if (lpTexture == NULL) return;
+
+	//	サイズ保存
+	D3DSURFACE_DESC	sd;
+	lpTexture->GetLevelDesc( 0, &sd );
+	width = sd.Width;
+	height = sd.Height;
+	//	メインサーフェス取得
+	lpTexture->GetSurfaceLevel( 0, &lpSurface );
+}
+
 iex2DObj::iex2DObj( u32 width, u32 height, u8 flag )
 {
 	//	情報初期化

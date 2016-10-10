@@ -43,12 +43,14 @@
 //-------------------------------------------------------------------------------------
 
 	//	“®ì’è”
-	enum RECEIVE_MODE
+	enum DATA_MODE
 	{
 		MOVE,
+		POS,
 		CHAT,
 		SIGN_UP = 10,
 		SIGN_OUT = 11,
+		DATA_MAX
 	};
 
 	//	Šî–{î•ñ
@@ -81,4 +83,12 @@
 		char  com;
 		float vx;
 		float vz;
+	};
+
+	//	ˆÊ’uî•ñ
+	struct NET_POS
+	{
+		char com;
+		int id;
+		Vector3	pos;
 	};

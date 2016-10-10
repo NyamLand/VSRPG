@@ -28,7 +28,7 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void )
+	Player::Player( void ) : texture( nullptr )
 	{
 	
 	}
@@ -36,7 +36,7 @@
 	//	デストラクタ
 	Player::~Player( void )
 	{
-
+		SafeDelete( texture );
 	}
 
 	//	初期化
@@ -50,11 +50,15 @@
 		SetScale( Y2009_SCALE );
 		SetMotion( 1 );	//	数値仮
 		speed = MOVE_SPEED;
+		SetMode(MODE::MOVE);
+
+		//	テクスチャテスト
+		obj->SetTexture( 0, "DATA/CHR/Y2009/testTexture.png" );
 
 		//	関数ポインタ
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;
-		//ModeFunction[MODE::MOVE] = &Player::PostureMode;
-		//ModeFunction[MODE::MOVE] = &Player::MoveMode;
+		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
+		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 
 		//	情報更新
 		UpdateInfo();
@@ -73,10 +77,16 @@
 	void	Player::Update( void )
 	{
 		//	各モードに応じた動作関数
-		( this->*ModeFunction[MOVE/*仮*/] )();
+		( this->*ModeFunction[mode] )();
 
 		//	更新
 		BaseChara::Update();
+	}
+
+	void	Player::Render( iexShader* shader, LPSTR technique )
+	{
+		BaseChara::Render();
+
 	}
 
 //------------------------------------------------------------------------------------
@@ -88,6 +98,36 @@
 	{
 		//	スティックによる移動
 		Move();
+		if (KEY_Get(KEY_A) == 3) SetMode(MODE::SWOADATTACK);		//仮
+		if (KEY_Get(KEY_B) == 3) SetMode(MODE::MAGICATTACK);	
+	}
+
+	void	Player::ModeSwordAttack( void )
+	{
+		int param = SwordAttack();
+
+		switch (param)
+		{
+		case 1:
+			SetMode(MODE::MOVE);
+			break;
+		case 2:
+			break;
+		}
+	}
+
+	void	Player::ModeMagicAttack( void )
+	{
+		int param = MagicAttack();
+
+		switch (param)
+		{
+		case 1:
+			SetMode(MODE::MOVE);
+			break;
+		case 2:
+			break;
+		}
 	}
 
 //------------------------------------------------------------------------------------
@@ -95,7 +135,7 @@
 //------------------------------------------------------------------------------------
 
 	//	移動
-	void	Player::Move( void )
+	int		Player::Move( void )
 	{
 		//	左スティックの入力チェック
 		float	axisX = ( float )input[0]->Get( KEY_AXISX );
@@ -106,7 +146,7 @@
 		if ( length >= MIN_INPUT_STICK )
 		{
 			//	モーション設定
-			SetMotion( 4 );	//	走りモーション
+			SetMotion( MOTION::MOVE );	//	走りモーション
 
 			//	向き調整
 			AngleAdjust( 
@@ -119,13 +159,57 @@
 		else
 		{
 			//	モーション設定
-			SetMotion( 1 );	//	待機モーション
+			SetMotion( MOTION::WAIT );	//	待機モーション
 		}
+		return 1;
+	}
+
+	//剣攻撃
+	int		Player::SwordAttack(void)
+	{
+		SetMotion( MOTION::ATTACK );
+
+
+		//仮
+		if (obj->GetFrame() == 413)return 1;	//攻撃動作が終われば
+
+		return false;
+	}
+
+
+	//魔法攻撃
+	int		Player::MagicAttack(void)
+	{
+		SetMotion(MOTION::ATTACK2);
+
+		move = Vector3(0, 0, 0);
+
+		//	左スティックの入力チェック
+		float	axisX = (float)input[0]->Get(KEY_AXISX);
+		float	axisY = -(float)input[0]->Get(KEY_AXISY);
+		float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
+
+		//	入力があれば移動処理
+		if (length >= MIN_INPUT_STICK)
+		{
+			angle += 0.1f; //☆作業途中
+		}
+
+		return false;
 	}
 
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
+
+	void	Player::SetMode(int mode)
+	{
+		if (this->mode != mode)
+		{
+			this->mode = mode;
+		}
+	}
+
 
 //------------------------------------------------------------------------------------
 //	情報取得

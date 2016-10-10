@@ -35,7 +35,7 @@ Texture2D* iexTexture::Load( char* filename, int flag )
 	for( i=0 ; i<MAX_TEXTURE ; i++ ){
 		if( !TexInfo[i].lpTexture ) continue;
 		//	ファイル名の比較
-		if( lstrcmpi( TexInfo[i].filename, filename ) != 0 ) continue; 
+		if( lstrcmpi( TexInfo[i].filename, filename ) != 0 )	continue;
 		no = i;
 		break;
 	}
@@ -70,7 +70,12 @@ void iexTexture::Release( Texture2D* lpTexture )
 	//	テクスチャの検索 
 	for( i=0 ; i<MAX_TEXTURE ; i++ ){
 		if( !TexInfo[i].lpTexture ) continue;
-		if( TexInfo[i].lpTexture != lpTexture ) continue;
+		int a = 0;
+		if( TexInfo[i].lpTexture != lpTexture )
+		{
+			int b = 0;
+			continue;
+		}
 		no = i;
 		break;
 	}
@@ -93,3 +98,6 @@ void iexTexture::Release( Texture2D* lpTexture )
 	}
 }
 
+//------------------------------------------------------
+//	情報設定
+//------------------------------------------------------

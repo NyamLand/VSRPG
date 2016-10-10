@@ -145,6 +145,12 @@ void iexMesh::SetScale( Vector3& scale )
 	bChanged = TRUE;
 }
 
+//	テクスチャ設定( 変えたいテクスチャ番号、ファイル名 )
+void	iexMesh::SetTexture( int n, LPSTR filename )
+{
+	lpTexture[n] = iexTexture::Load( filename );
+}
+
 //**************************************************************************************************
 //
 //		更新処理
