@@ -100,6 +100,9 @@
     <Filter Include="シェーダー">
       <UniqueIdentifier>{5fc7559b-c141-4ecd-b664-927ab910afda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{217a4d1b-ee75-48be-94b6-3db739daa5e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -204,6 +207,9 @@
     <ClCompile Include="source\TImerUI.cpp">
       <Filter>ソース ファイル\UI\TimerUI</Filter>
     </ClCompile>
+    <ClCompile Include="source\Collision.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -268,6 +274,15 @@
     </ClInclude>
     <ClInclude Include="source\TimerUI.h">
       <Filter>ソース ファイル\UI\TimerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SmallEnemy.h">
+      <Filter>ソース ファイル\Enemy\SmallEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BigEnemy.h">
+      <Filter>ソース ファイル\Enemy\BigEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Collision.h">
+      <Filter>ソース ファイル\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
