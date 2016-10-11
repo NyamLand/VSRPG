@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"DrawShape.h"
 #include	"Enemy.h"
 
 //***************************************************************
@@ -23,6 +24,7 @@
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
 
+
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
@@ -34,7 +36,7 @@ Enemy::Enemy(void)
 }
 
 //	デストラクタ
-Enemy::~Enemy(void)override
+Enemy::~Enemy(void)
 {
 
 }
@@ -45,7 +47,7 @@ bool	Enemy::Initialize(void)
 	//	読み込み
 	Load("DATA/CHR/Y2009/Y2009.IEM");
 
-	SetPos(Vector3(0.0f, 0.0f, 0.0f));
+	SetPos(Vector3(10.0f, 0.0f, 0.0f));
 	SetAngle(0.0f);
 	SetScale(Y2009_SCALE);
 	SetMotion(1);	//	数値仮
@@ -77,6 +79,12 @@ void	Enemy::Update(void)
 
 	//	更新
 	BaseChara::Update();
+}
+
+//	描画
+void	Enemy::Render(iexShader* shader , LPSTR technique )
+{
+	drawShape->DrawSphere(GetPos(), 5.0f, 0xFFFFFFFF);
 }
 
 //------------------------------------------------------------------------------------

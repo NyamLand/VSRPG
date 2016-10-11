@@ -7,6 +7,7 @@
 #include	"GameManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
+#include	"Enemy.h"
 
 #pragma comment( lib, "WSOCK32.lib" )
 
@@ -20,7 +21,7 @@
 
 iexMesh*	stage = nullptr;	//	仮(絶対消す)
 
-
+Enemy* enemy;
 
 //*****************************************************************************************************************************
 //
@@ -56,6 +57,10 @@ bool	sceneMain::Initialize( void )
 	//	player設定
 	playerManager->Initialize();
 
+	// enemy
+	enemy = new Enemy;
+	enemy->Initialize();
+
 	//	stage設定
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
@@ -76,6 +81,7 @@ sceneMain::~sceneMain( void )
 	SafeDelete( mainView );
 	SafeDelete( stage );
 	SafeDelete( m_GameParam );
+	SafeDelete(enemy);
 	playerManager->Release();
 
 	//	WinSock終了
@@ -97,6 +103,7 @@ void	sceneMain::Update( void )
 	//	player更新
 	playerManager->Update();
 
+	enemy->Update();
 	//	camera更新
 	mainView->Update( playerManager->GetPlayer()->GetPos() );
 }
@@ -117,6 +124,8 @@ void	sceneMain::Render( void )
 
 	//	player描画
 	playerManager->Render();
+
+	enemy->Render();
 }
 
 
