@@ -1,6 +1,9 @@
 
 #include	"iextreme.h"
 #include	"system/system.h"
+#include	<fstream>
+#include	<iostream>
+#include	<string>
 #include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"GameData.h"
@@ -66,8 +69,13 @@ bool	sceneMain::Initialize( void )
 	//	GameManagerの初期化
 	gameManager->Initialize();
 
+	char addr[64], name[64];
+	std::ifstream	ifs( "onlineInfo.txt" );
+	ifs >> addr;
+	ifs >> name;
+
 	//	クライアント初期化( serverと接続 )
-	if ( !m_GameParam->InitializeClient( "127.0.0.1", PORT_NUM, "マイネーム", 0 ) )
+	if ( !m_GameParam->InitializeClient( addr, PORT_NUM, name, 0 ) )
 	{
 		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
 		PostQuitMessage( 0 );
