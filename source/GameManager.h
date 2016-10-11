@@ -15,6 +15,9 @@ class GameManager : public Singleton<GameManager>
 {
 	//	コンストラクタを呼ぶためにfriend設定
 	friend Singleton<GameManager>;
+public:
+	//	定数
+	static const int TIME_MAX = 120;
 
 private:
 	float timer;
@@ -25,16 +28,10 @@ private:
 	~GameManager( void )override;
 
 public:
-	//enum TIMER
-	//{
-	//	TIME_MAX = 120
-	//};
-	static const int TIME_MAX = 120;
-
-public:
 	//	初期化・解放
 	bool	Initialize( void )override;
 	void	Release( void )override;
+	void	InitializeClient( void );
 
 	//	更新・描画
 	void	Update( void );

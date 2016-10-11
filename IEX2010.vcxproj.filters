@@ -16,9 +16,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="シェーダー">
-      <UniqueIdentifier>{5fc7559b-c141-4ecd-b664-927ab910afda}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IEX">
       <UniqueIdentifier>{38fbec0a-1dc8-4967-afe0-3a6584026b2f}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,9 @@
     </Filter>
     <Filter Include="ソース ファイル\UI\TimerUI">
       <UniqueIdentifier>{45679040-927a-4145-ae10-f1de2decad47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー">
+      <UniqueIdentifier>{5fc7559b-c141-4ecd-b664-927ab910afda}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

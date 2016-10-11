@@ -455,7 +455,6 @@ public:
 	//	読み込み・解放
 	static Texture2D* Load( char* filename, int flag = 0 );
 	static void	Release( Texture2D* lpTexture );
-
 };
 
 extern	Texture2D*	lpLastTexture;
@@ -574,6 +573,10 @@ public:
 	iex2DObj(){};
 	//	ファイルから作成
 	iex2DObj( char* filename );
+
+	//	Teture2Dから作成
+	iex2DObj( Texture2D* texture );
+
 	//	作成
 	iex2DObj( u32 width, u32 height, u8 flag );
 	//	解放
@@ -586,6 +589,7 @@ public:
 	//	設定・取得
 	//------------------------------------------------------
 	void RenderTarget( int index = 0 );
+	void SetTexture( Texture2D* texture ){ lpTexture = texture; }
 	Texture2D*	GetTexture(){ return lpTexture; }
 
 	//------------------------------------------------------
@@ -773,6 +777,9 @@ public:
 	void SetScale( float scale );
 	void SetScale( float x, float y, float z );
 	inline Vector3	GetScale(){ return Scale; }
+
+	//	テクスチャ設定
+	void	SetTexture( int n, LPSTR filename );
 
 	//	情報
 	LPD3DXMESH	GetMesh(){ return lpMesh; }

@@ -28,7 +28,7 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void )
+	Player::Player( void ) : texture( nullptr )
 	{
 	
 	}
@@ -36,7 +36,7 @@
 	//	デストラクタ
 	Player::~Player( void )
 	{
-
+		SafeDelete( texture );
 	}
 
 	//	初期化
@@ -52,9 +52,11 @@
 		speed = MOVE_SPEED;
 		SetMode(MODE::MOVE);
 
+		//	テクスチャテスト
+		obj->SetTexture( 0, "DATA/CHR/Y2009/testTexture.png" );
+
 		//	関数ポインタ
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;
-		//ModeFunction[MODE::MOVE] = &Player::PostureMode;
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 
@@ -79,6 +81,12 @@
 
 		//	更新
 		BaseChara::Update();
+	}
+
+	void	Player::Render( iexShader* shader, LPSTR technique )
+	{
+		BaseChara::Render();
+
 	}
 
 //------------------------------------------------------------------------------------

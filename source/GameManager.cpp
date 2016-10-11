@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 
@@ -42,6 +43,21 @@
 
 	}
 
+	//	クライアント初期化
+	void	GameManager::InitializeClient( void )
+	{
+		WSADATA	wsaData;
+		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
+
+		////	クライアント初期化( serverと接続 )
+		//if ( !m_GameParam->InitializeClient( "127.0.0.1", PORT_NUM, "マイネーム", 0 ) )
+		//{
+		//	MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
+		//	PostQuitMessage(0);
+		//	return	false;
+		//}
+	}
+
 //---------------------------------------------------------------------------------------
 //	更新・描画
 //---------------------------------------------------------------------------------------
@@ -61,6 +77,7 @@
 	{
 		timer -= GetElapseTime();
 	}
+
 //---------------------------------------------------------------------------------------
 //	情報設定
 //---------------------------------------------------------------------------------------

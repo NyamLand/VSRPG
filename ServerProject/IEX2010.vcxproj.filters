@@ -49,6 +49,9 @@
     <Filter Include="ソース ファイル\GameParam">
       <UniqueIdentifier>{fe2d756e-5490-4c03-8cd9-d057a4d94df5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\GameManager">
+      <UniqueIdentifier>{63a8984e-5daf-4427-9fb0-ab5e1bc3cffc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -126,6 +129,9 @@
     <ClCompile Include="source\GameParam.cpp">
       <Filter>ソース ファイル\GameParam</Filter>
     </ClCompile>
+    <ClCompile Include="source\GameManager.cpp">
+      <Filter>ソース ファイル\Manager\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -160,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="source\GameParam.h">
       <Filter>ソース ファイル\GameParam</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameManager.h">
+      <Filter>ソース ファイル\Manager\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

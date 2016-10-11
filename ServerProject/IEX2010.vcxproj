@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\GameManager.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\GameData.h" />
+    <ClInclude Include="source\GameManager.h" />
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />

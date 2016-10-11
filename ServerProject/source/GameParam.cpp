@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"GameManager.h"
 #include	"GameParam.h"
 
 //***************************************************************
@@ -20,21 +21,22 @@
 	//	コンストラクタ
 	GameParam::GameParam( void )
 	{
+		//	初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
 		{
 			playerInfo[id].active = false;
-
+			
 			playerParam[id].pos = Vector3( -10.0f + 5.0f * id, 0.0f, 0.0f );
 			playerParam[id].angle = 0.0f;
 			playerParam[id].motion = 0;
 		}
 
 		//	関数ポインタ登録
-		ReceiveFunction[RECEIVE_MODE::POS] = &GameParam::PosReceive;
-		ReceiveFunction[RECEIVE_MODE::MOVE] = &GameParam::MoveReceive;
-		ReceiveFunction[RECEIVE_MODE::CHAT] = &GameParam::ChatReceive;
-		ReceiveFunction[RECEIVE_MODE::SIGN_UP] = &GameParam::SignUpReceive;
-		ReceiveFunction[RECEIVE_MODE::SIGN_OUT] = &GameParam::SignOutReceive;
+		ReceiveFunction[DATA_MODE::POS] = &GameParam::PosReceive;
+		ReceiveFunction[DATA_MODE::MOVE] = &GameParam::MoveReceive;
+		ReceiveFunction[DATA_MODE::CHAT] = &GameParam::ChatReceive;
+		ReceiveFunction[DATA_MODE::SIGN_UP] = &GameParam::SignUpReceive;
+		ReceiveFunction[DATA_MODE::SIGN_OUT] = &GameParam::SignOutReceive;
 	}
 
 	//	デストラクタ
@@ -58,6 +60,39 @@
 	}
 
 //-------------------------------------------------------------------------------------
+//	更新・描画
+//-------------------------------------------------------------------------------------
+
+	//	描画
+	void	GameParam::Render( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			char str[256];
+			sprintf_s( str, "%dP ", p + 1 );
+
+			//	アクティブ状態なら情報表示
+			if ( playerInfo[p].active )
+			{
+				//	アクティブ情報設定
+				strcat( str, "active  " );
+
+				//	名前設定
+				strcat( str, playerInfo[p].name );
+				
+				//	座標設定
+				Vector3 pos = playerParam[p].pos;
+				char posInfo[256];
+				sprintf_s( posInfo, "  pos : %.2f, %.2f, %.2f", pos.x, pos.y, pos.z );
+				strcat( str, posInfo );
+			}
+
+			IEX_DrawText( str, 20, 100 + p * 30, 500, 200, 0xFFFFFF00 );
+		}
+
+	}
+
+//-------------------------------------------------------------------------------------
 //	受信・送信
 //-------------------------------------------------------------------------------------
 
@@ -71,7 +106,7 @@
 			if ( playerInfo[p].active == false )		continue;
 
 			char	data[256];
-			data[0] = 0;
+			data[0] = DATA_MODE::POS;
 
 			//	一番目にプレイヤー番号保存
 			*( int* )&data[1] = p;
@@ -157,6 +192,12 @@
 		d->id = client;
 		UDPServer::Send( d->id, ( LPSTR )d, sizeof( NET_INFO ) );
 
+		//	初期座標を送信
+		NET_POS*	netPos = ( NET_POS* )data;
+		netPos->id = client;
+		netPos->pos = gameManager->GetInitPos( client );
+		UDPServer::Send( client, ( LPSTR )netPos, sizeof( NET_POS ) );
+
 		//	全員に情報送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -175,7 +216,7 @@
 				strcpy( d->name, playerInfo[p].name );
 
 				//	送信
-				UDPServer::Send( client, ( LPSTR )d, sizeof( NET_INFO ) );
+				UDPServer::Send( p, ( LPSTR )d, sizeof( NET_INFO ) );
 			}
 		}
 
@@ -249,11 +290,6 @@
 	{
 		return	playerParam[id];
 	}
-
-//-------------------------------------------------------------------------------------
-//	更新・描画
-//-------------------------------------------------------------------------------------
-
 //-------------------------------------------------------------------------------------
 //	更新・描画
 //-------------------------------------------------------------------------------------

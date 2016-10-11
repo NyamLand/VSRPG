@@ -85,7 +85,7 @@ void	sceneMain::Render( void )
 	view->Activate();
 	view->Clear();
 
-
+	gameParam->Render();
 
 
 

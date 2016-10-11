@@ -65,7 +65,6 @@
 	void	PlayerManager::Update( int id )
 	{
 		PlayerParam param = gameParam->GetPlayerParam( id );
-		int a = 0;
 		if ( !player[id]->Update( param ) ) 
 		{
 			SafeDelete( player[id] );
