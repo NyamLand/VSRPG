@@ -100,7 +100,7 @@
 	int		GameParam::Send( int client )
 	{
 		//	全クライアントに各プレイヤーの情報を送信する
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for ( int p = 0; p < 1; p++ )
 		{
 			//	プレイヤーがアクティブ状態でなければスキップ
 			if ( playerInfo[p].active == false )		continue;
@@ -133,9 +133,31 @@
 		
 		if ( client == -1 )		return	-1;
 
-		//	各受信動作
-		int out = ( this->*ReceiveFunction[data[0]] )( client, data );
+		int out;
 
+		//	各受信動作
+		switch ( data[0] )
+		{
+		case DATA_MODE::MOVE:
+			out = MoveReceive( client, data );
+			break;
+			
+		case DATA_MODE::POS:
+			out = PosReceive( client, data );
+			break;
+
+		case DATA_MODE::CHAT:
+			out = ChatReceive( client, data );
+			break;
+
+		case DATA_MODE::SIGN_UP:
+			out = SignUpReceive( client, data );
+			break;
+
+		case DATA_MODE::SIGN_OUT:
+			out = SignOutReceive( client, data );
+			break;
+		}
 		return	out;
 	}
 
@@ -188,7 +210,7 @@
 		NET_INFO*	d = ( NET_INFO* )data;
 		SetPlayer( client, d->name, d->type );
 
-		//	構造体のidメンバを設定し送信者へ送信する
+		//	構造体のidメンバを設定し送信者へ返信する
 		d->id = client;
 		UDPServer::Send( d->id, ( LPSTR )d, sizeof( NET_INFO ) );
 
@@ -203,23 +225,23 @@
 		{
 			if ( !playerInfo[p].active )continue;
 			UDPServer::Send( p, ( LPSTR )d, sizeof( NET_INFO ) );
-
-			//	全員の情報を新規プレイヤーに送信
-			for ( int p = 0; p < PLAYER_MAX; p++ )
-			{
-				//	プレイヤーがいなければスキップ
-				if ( !playerInfo[p].active )continue;
-
-				//	構造体にコピー
-				d->id = p;
-				d->type = playerInfo[p].type;
-				strcpy( d->name, playerInfo[p].name );
-
-				//	送信
-				UDPServer::Send( client, ( LPSTR )d, sizeof( NET_INFO ) );
-			}
 		}
+		
+		//	全員の情報を新規プレイヤーに送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			//	プレイヤーがいなければスキップ
+			if ( !playerInfo[p].active )continue;
 
+			//	構造体にコピー
+			d->id = p;
+			d->type = playerInfo[p].type;
+			strcpy( d->name, playerInfo[p].name );
+
+			//	送信
+			UDPServer::Send( client, ( LPSTR )d, sizeof( NET_INFO ) );
+		}
+		
 		return	client;
 	}
 

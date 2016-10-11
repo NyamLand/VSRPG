@@ -53,6 +53,7 @@ GameParam*	gameParam = nullptr;
 		//	タイプと名前の送信
 		NET_INFO	info;
 		info.com = DATA_MODE::SIGN_UP;
+		info.id = -1;
 		info.type = type;
 		strcpy( info.name, name );
 
@@ -114,7 +115,24 @@ GameParam*	gameParam = nullptr;
 		if ( data[0] == -1 )	return;
 
 		//	先頭バイトで分岐
-		( this->*ReceiveFunction[data[0]] )( data );
+		switch ( data[0] )
+		{
+		case DATA_MODE::MOVE:
+			MoveReceive( data );
+			break;
+
+		case DATA_MODE::POS:
+			PosReceive( data );
+			break;
+
+		case DATA_MODE::SIGN_UP:
+			SignUpReceive( data );
+			break;
+
+		case DATA_MODE::SIGN_OUT:
+			SignOutReceive( data );
+			break;
+		}
 	}
 
 	//	送信
@@ -160,7 +178,8 @@ GameParam*	gameParam = nullptr;
 	//	退室情報受信
 	void	GameParam::SignOutReceive( LPSTR data )
 	{
-
+		//	クライアント脱退
+		
 	}
 
 //----------------------------------------------------------------------------------
