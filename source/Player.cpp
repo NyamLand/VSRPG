@@ -17,7 +17,8 @@
 #define	Y2009_SCALE	0.02f
 
 //	“®ìƒXƒs[ƒh
-#define	ANGLE_ADJUST_SPEED	0.3f
+#define	ANGLE_ADJUST_MOVE_SPEED	0.3f
+#define	ANGLE_ADJUST_MAGIC_SPEED	0.05f
 #define	MOVE_SPEED		0.5f
 
 //	“ü—Íî•ñ
@@ -151,7 +152,7 @@
 			//	Œü‚«’²®
 			AngleAdjust( 
 				Vector3( axisX, 0.0f, axisY ), 
-				ANGLE_ADJUST_SPEED );
+				ANGLE_ADJUST_MOVE_SPEED );
 
 			//	ˆÚ“®
 			SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
@@ -164,6 +165,8 @@
 		return 1;
 	}
 
+
+
 	//Œ•UŒ‚
 	int		Player::SwordAttack(void)
 	{
@@ -175,6 +178,9 @@
 
 		return false;
 	}
+
+
+
 
 
 	//–‚–@UŒ‚
@@ -192,8 +198,17 @@
 		//	“ü—Í‚ª‚ ‚ê‚ÎˆÚ“®ˆ—
 		if (length >= MIN_INPUT_STICK)
 		{
-			angle += 0.1f; //™ì‹Æ“r’†
+			//	Œü‚«’²®
+			AngleAdjust(
+				Vector3(axisX, 0.0f, axisY),
+				ANGLE_ADJUST_MAGIC_SPEED);
+
+			//if (axisX > 0)	angle += 0.1f; 
+			//else			angle -= 0.1f;
 		}
+
+		if (KEY_Get(KEY_B) == 2) return 1;
+
 
 		return false;
 	}
