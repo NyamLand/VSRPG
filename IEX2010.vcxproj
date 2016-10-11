@@ -112,6 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
+    <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
@@ -148,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
+    <ClInclude Include="source\BigEnemy.h" />
+    <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
@@ -159,6 +162,7 @@
     <ClInclude Include="source\GameManager.h" />
     <ClInclude Include="source\GlobalFunction.h" />
     <ClInclude Include="source\Interpolation.h" />
+    <ClInclude Include="source\SmallEnemy.h" />
     <ClInclude Include="source\SocketClient.h" />
     <ClInclude Include="source\system\Framework.h" />
     <ClInclude Include="source\system\Scene.h" />

@@ -24,14 +24,14 @@
 		//	初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
 		{
-			playerInfo[id].active = false;
-			
+			ZeroMemory( &playerInfo[id], sizeof( playerInfo[id] ) );			
+			ZeroMemory( &playerParam[id], sizeof( playerInfo[id] ) );
 			playerParam[id].pos = Vector3( -10.0f + 5.0f * id, 0.0f, 0.0f );
 			playerParam[id].angle = 0.0f;
 			playerParam[id].motion = 0;
 		}
 
-		//	関数ポインタ登録
+		//	関数ポインタ
 		ReceiveFunction[DATA_MODE::POS] = &GameParam::PosReceive;
 		ReceiveFunction[DATA_MODE::MOVE] = &GameParam::MoveReceive;
 		ReceiveFunction[DATA_MODE::CHAT] = &GameParam::ChatReceive;
@@ -216,7 +216,7 @@
 				strcpy( d->name, playerInfo[p].name );
 
 				//	送信
-				UDPServer::Send( p, ( LPSTR )d, sizeof( NET_INFO ) );
+				UDPServer::Send( client, ( LPSTR )d, sizeof( NET_INFO ) );
 			}
 		}
 

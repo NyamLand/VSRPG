@@ -1,4 +1,6 @@
 
+#ifndef		__ENEMY_H__
+#define		__ENEMY_H__
 #pragma once
 
 //***************************************************************
@@ -32,7 +34,7 @@ public:
 
 	//	更新・描画
 	void	Update(void)override;
-
+	void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)override;
 	//	各モード動作関数
 	void	MoveMode(void);
 	//void	PostureMode( void );
@@ -47,3 +49,4 @@ public:
 
 
 };
+#endif // !__ENEMY_H__
