@@ -26,7 +26,7 @@ GameParam*	gameParam = nullptr;
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
 		{
-			playerInfo[id].active = false;
+			ZeroMemory( &playerInfo[id], sizeof( playerInfo[id] ) );
 			ZeroMemory( &playerParam[id], sizeof( playerParam[id] ) );
 		}
 
