@@ -1,2 +1,2 @@
-127.0.0.1
-username
+172.22.101.14
+hametarou
