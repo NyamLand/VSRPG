@@ -11,7 +11,7 @@ class	sceneMain : public Scene
 {
 private:
 	iexView*	view;
-	GameParam*	gameParam;
+	static	GameParam*	gameParam;
 	
 public:
 	~sceneMain();
@@ -20,6 +20,10 @@ public:
 	//	更新・描画
 	void Update();	//	更新
 	void Render();	//	描画
+
+	//	thread test
+	static void	ThreadFunc( int& client );
+	static	void	ThreadFunc2( int client );
 };
 
 
