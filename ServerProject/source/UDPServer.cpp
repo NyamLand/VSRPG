@@ -94,22 +94,29 @@
 
 		//	クライアント検索
 		//	アドレスを比較し、クライアントを検索する
-		for ( i = 0; i < PLAYER_MAX; i++ )
+		//	IDが未割り当てだと新規受け入れ
+		if( data[1] != -1 )
 		{
-			if ( client_addr[i].sin_addr.S_un.S_addr == 0 )	continue;
+			for ( i = 0; i < PLAYER_MAX; i++ )
+			{
+				if ( client_addr[i].sin_addr.S_un.S_addr == 0 )	continue;
 
-			//	受信元と比較
-			if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return i;
+				//	受信元と比較
+				if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return	i;
+			}
+		}
+		else
+		{
+			//	新規受け入れ
+			//	検索でヒットしない場合は新規クライアントとして受け入れる
+			for ( i = 0; i < PLAYER_MAX; i++ )
+			{
+				if ( client_addr[i].sin_addr.S_un.S_addr != 0 )	continue;
+				client_addr[i] = addr;
+				return	i;
+			}
 		}
 
-		//	新規受け入れ
-		//	検索でヒットしない場合は新規クライアントとして受け入れる
-		for ( i = 0; i < PLAYER_MAX; i++ )
-		{
-			if ( client_addr[i].sin_addr.S_un.S_addr != 0 )	continue;
-			client_addr[i] = addr;
-			return	i;
-		}
 
 		return	-1;
 	}

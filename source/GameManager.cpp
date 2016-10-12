@@ -49,13 +49,7 @@
 		WSADATA	wsaData;
 		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
 
-		////	クライアント初期化( serverと接続 )
-		//if ( !m_GameParam->InitializeClient( "127.0.0.1", PORT_NUM, "マイネーム", 0 ) )
-		//{
-		//	MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
-		//	PostQuitMessage(0);
-		//	return	false;
-		//}
+
 	}
 
 //---------------------------------------------------------------------------------------

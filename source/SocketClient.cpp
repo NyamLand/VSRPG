@@ -9,6 +9,8 @@
 //
 //********************************************************************
 
+#define	TIME_OUT	1000
+
 //-------------------------------------------------------------------------------
 //	初期化・解放
 //-------------------------------------------------------------------------------
@@ -41,7 +43,7 @@
 		if ( sock == INVALID_SOCKET )	return	false;
 
 		//	タイムアウト設定( 1000ms )
-		int	timeout = 5000;
+		int	timeout = TIME_OUT;
 		if ( setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, ( LPSTR )&timeout, sizeof( timeout ) ) == SOCKET_ERROR )
 			return	false;
 
@@ -67,7 +69,7 @@
 		if ( sock == INVALID_SOCKET )	return	false;
 
 		//	タイムアウト設定( 1000ms )
-		int	timeout = 1000;
+		int	timeout = TIME_OUT;
 		if ( setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, ( LPSTR )&timeout, sizeof( timeout ) ) == SOCKET_ERROR )
 			return	false;
 

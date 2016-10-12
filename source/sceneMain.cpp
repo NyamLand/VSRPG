@@ -69,6 +69,7 @@ bool	sceneMain::Initialize( void )
 	//	GameManagerの初期化
 	gameManager->Initialize();
 
+	//	テキスト読み込み
 	char addr[64], name[64];
 	std::ifstream	ifs( "onlineInfo.txt" );
 	ifs >> addr;
