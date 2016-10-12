@@ -18,13 +18,9 @@ private:
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
 
-	//	モード別関数ポインタ
-	int( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX])( int client, LPSTR data );
-
 public:
 	//	初期化・解放
 	GameParam( void );
-	~GameParam( void );
 	bool	InitializeServer( void );
 
 	//	描画

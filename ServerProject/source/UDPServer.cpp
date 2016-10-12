@@ -14,11 +14,8 @@
 //-------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	UDPServer::UDPServer( void )
+	UDPServer::UDPServer( void ) : sock( INVALID_SOCKET )
 	{
-		//	サーバーソケット初期化
-		sock = INVALID_SOCKET;
-
 		//	全クライアントアドレス初期化
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
@@ -40,7 +37,7 @@
 		//	サーバー情報設定
 		server.sin_family = AF_INET;
 		server.sin_addr.s_addr = INADDR_ANY;
-		server.sin_port = htons( PORT_NUM );
+		server.sin_port = htons( port );
 
 		//	UDPソケット作成
 		sock = socket( AF_INET, SOCK_DGRAM, 0 );
@@ -63,14 +60,14 @@
 	//	送信
 	void	UDPServer::Send( int client, LPSTR data, int size )
 	{
-		sendto( sock, data, size, 0, ( struct sockaddr* )&client_addr[client], size );
+		sendto( sock, data, size, 0, ( struct sockaddr* )&client_addr[client], sizeof( client_addr[client] ) );
 	}
 
 	//	受信
 	int	UDPServer::Receive( LPSTR data, int* size )
 	{
 		//	タイムアウト設定
-		struct	timeval	tv = { 0, 1000 };
+		struct	timeval	tv = { 0, 0 };
 
 		//	ソケットリスト初期化
 		fd_set	fd_work;
@@ -103,19 +100,19 @@
 				if ( client_addr[i].sin_addr.S_un.S_addr == 0 )	continue;
 
 				//	受信元と比較
-				if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return	i;
+				//if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return	i;
+
+				return	data[1];
 			}
 		}
-		else
+
+		//	新規受け入れ
+		//	検索でヒットしない場合は新規クライアントとして受け入れる
+		for ( i = 0; i < PLAYER_MAX; i++ )
 		{
-			//	新規受け入れ
-			//	検索でヒットしない場合は新規クライアントとして受け入れる
-			for ( i = 0; i < PLAYER_MAX; i++ )
-			{
-				if ( client_addr[i].sin_addr.S_un.S_addr != 0 )	continue;
-				client_addr[i] = addr;
-				return	i;
-			}
+			if ( client_addr[i].sin_addr.S_un.S_addr != 0 )	continue;
+			client_addr[i] = addr;
+			return	i;
 		}
 
 

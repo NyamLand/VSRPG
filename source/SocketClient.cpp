@@ -93,9 +93,7 @@
 		recvSize = recv( sock, data, size, 0 );
 
 		//	エラー(タイムアウト)判定
-		if ( recvSize == SOCKET_ERROR )
-		{
-			return -1;
-		}
+		if ( recvSize == SOCKET_ERROR )	return	0;
+
 		return	recvSize;
 	}

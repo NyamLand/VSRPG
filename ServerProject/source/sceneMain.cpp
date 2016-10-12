@@ -92,20 +92,6 @@ void	sceneMain::Render( void )
 
 }
 
-//	スレッド　テスト
-void 	sceneMain::ThreadFunc( int& client )
-{
-	
-}
-
-void	sceneMain::ThreadFunc2( int client )
-{
-	if ( client != -1 )
-	{
-		playerManager->Update( client );
-		gameParam->Send( client );
-	}
-}
 
 
 

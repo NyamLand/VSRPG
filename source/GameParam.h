@@ -24,7 +24,7 @@ private:
 	PlayerParam	playerParam[PLAYER_MAX];
 
 	//	受信関数ポインタ
-	void( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX] )( LPSTR data );
+	//void( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX] )( LPSTR data );
 
 public:
 	//	初期化・解放

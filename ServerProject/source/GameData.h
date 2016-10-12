@@ -34,8 +34,6 @@
 		Vector3	pos;
 		float		angle;
 		int			motion;
-
-		Vector3	move;
 	};
 
 //-------------------------------------------------------------------------------------
@@ -43,14 +41,14 @@
 //-------------------------------------------------------------------------------------
 
 	//	“®ì’è”
-	enum DATA_MODE
+	enum COMMANDS
 	{
-		MOVE,
-		POS,
+		NO_COMMAND = -1,
+		CHARA_INFO,
 		CHAT,
 		SIGN_UP = 10,
-		SIGN_OUT = 11,
-		DATA_MAX
+		SIGN_OUT,
+		COMMAND_MAX
 	};
 
 	//	Šî–{î•ñ
@@ -77,18 +75,18 @@
 		int		id;
 	};
 
-	//	ˆÚ“®î•ñ
-	struct NET_MOVE
-	{
-		char  com;
-		float vx;
-		float vz;
-	};
-
 	//	ˆÊ’uî•ñ
 	struct NET_POS
 	{
 		char com;
 		int id;
 		Vector3	pos;
+	};
+
+	//	ˆÚ“®î•ñ
+	struct NET_MOVE
+	{
+		char	com;
+		int		id;
+		float	x, y, z;
 	};

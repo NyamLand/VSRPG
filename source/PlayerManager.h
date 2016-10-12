@@ -33,6 +33,9 @@ public:
 	void	Update( void );
 	void	Render( void );
 
+	//	î•ñİ’è
+	void	SetPlayer( int id, int type );
+
 	//	î•ñæ“¾
 	Player*	GetPlayer( void );
 };
