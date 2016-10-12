@@ -1,5 +1,6 @@
 
 #include	"UDPServer.h"
+#include	"GameParam.h"
 #pragma comment( lib, "wsock32.lib" )
 
 //********************************************************************

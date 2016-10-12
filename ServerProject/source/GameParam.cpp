@@ -100,7 +100,7 @@
 	int		GameParam::Send( int client )
 	{
 		//	全クライアントに各プレイヤーの情報を送信する
-		for ( int p = 0; p < 1; p++ )
+		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			//	プレイヤーがアクティブ状態でなければスキップ
 			if ( playerInfo[p].active == false )		continue;
@@ -114,6 +114,11 @@
 			//	五番目以降にパラメータ情報保存
 			CopyMemory( &data[5], &playerParam[p], sizeof( PlayerParam ) );
 			UDPServer::Send( client, data, sizeof( PlayerParam )+5 );
+
+			if ( client == 1 )
+			{
+				printf( "aaan\n" );
+			}
 		}
 
 		char	end = -1;
@@ -130,6 +135,11 @@
 
 		int	size = sizeof( data );
 		client = UDPServer::Receive( data, &size );
+
+		if ( client == 1 )
+		{
+			printf( "aaaa\n" );
+		}
 		
 		if ( client == -1 )		return	-1;
 

@@ -98,6 +98,8 @@ GameParam*	gameParam = nullptr;
 		netData.com = POS;
 		netData.pos = playerManager->GetPlayer()->GetPos();
 		SocketClient::Send( ( char* )&netData, sizeof( netData ) );
+
+		printf( "aaaan" );
 	}
 
 //----------------------------------------------------------------------------------
