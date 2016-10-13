@@ -146,6 +146,7 @@
 				//	クライアントに返信
 				UDPServer::Send( client, ( LPSTR )info, sizeof( NET_INFO ) );
 
+				int a = 0;
 				//	初期座標を送信
 				NET_MOVE*	netMove = ( NET_MOVE* )data;
 				netMove->com = COMMANDS::CHARA_INFO;
