@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
     <ClCompile Include="source\Collision.cpp" />
+    <ClCompile Include="source\CSVReader.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="source\BaseChara.h" />
     <ClInclude Include="source\BigEnemy.h" />
     <ClInclude Include="source\Collision.h" />
+    <ClInclude Include="source\CSVReader.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />

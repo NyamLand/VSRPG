@@ -103,6 +103,9 @@
     <Filter Include="ソース ファイル\Collision">
       <UniqueIdentifier>{217a4d1b-ee75-48be-94b6-3db739daa5e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\CSVReader">
+      <UniqueIdentifier>{e1a4464a-ac8f-4037-a7fa-a5763d44e7df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -210,6 +213,9 @@
     <ClCompile Include="source\Collision.cpp">
       <Filter>ソース ファイル\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="source\CSVReader.cpp">
+      <Filter>ソース ファイル\CSVReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -283,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="source\Collision.h">
       <Filter>ソース ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CSVReader.h">
+      <Filter>ソース ファイル\CSVReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

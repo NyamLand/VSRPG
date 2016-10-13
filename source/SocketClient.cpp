@@ -67,7 +67,7 @@
 		if ( sock == INVALID_SOCKET )	return	false;
 
 		//	タイムアウト設定( 1000ms )
-		int	timeout = 1000;
+		int	timeout = 5000;
 		if ( setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, ( LPSTR )&timeout, sizeof( timeout ) ) == SOCKET_ERROR )
 			return	false;
 
