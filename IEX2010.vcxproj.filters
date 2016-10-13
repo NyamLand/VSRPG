@@ -103,6 +103,9 @@
     <Filter Include="ソース ファイル\GameData">
       <UniqueIdentifier>{0e784b56-40b3-4f9f-a343-de896644d38a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Equipment">
+      <UniqueIdentifier>{d41b38a0-bda3-45df-a068-7163ee11f4dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -210,6 +213,12 @@
     <ClCompile Include="source\Collision.cpp">
       <Filter>ソース ファイル\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="source\CSVReader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BaseEquipment.cpp">
+      <Filter>ソース ファイル\Equipment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -283,6 +292,12 @@
     </ClInclude>
     <ClInclude Include="source\Collision.h">
       <Filter>ソース ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CSVReader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BaseEquipment.h">
+      <Filter>ソース ファイル\Equipment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
