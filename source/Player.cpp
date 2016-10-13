@@ -5,6 +5,7 @@
 #include	"GlobalFunction.h"
 #include	"Player.h"
 #include	"CSVReader.h"
+#include	"BaseEquipment.h"
 
 //***************************************************************
 //

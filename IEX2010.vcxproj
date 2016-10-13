@@ -115,6 +115,7 @@
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\CSVReader.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
+    <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\CSVReader.h" />
     <ClInclude Include="source\Enemy.h" />
+    <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\Player.h" />

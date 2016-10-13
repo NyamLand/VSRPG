@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<thread>
 #include	"GlobalFunction.h"
 #include	"PlayerManager.h"
 #include	"GameParam.h"
@@ -92,9 +93,11 @@ GameParam*	gameParam = nullptr;
 		netMove.com = COMMANDS::CHARA_INFO;
 		netMove.id = myIndex;
 		netMove.x = playerManager->GetPlayer()->GetPos().x;
-		//netMove.y = playerManager->GetPlayer()->GetPos().y;
+		netMove.y = playerManager->GetPlayer()->GetPos().y;
 		netMove.z = playerManager->GetPlayer()->GetPos().z;
 		SocketClient::Send( ( LPSTR )&netMove, sizeof( NET_MOVE ) );
+
+		printf( "座標を送信しました。\n" );
 	}
 
 //----------------------------------------------------------------------------------
@@ -107,16 +110,16 @@ GameParam*	gameParam = nullptr;
 		char data[256];
 
 		//	データを受信
-		for (;;)
+		//for (;;)
 		{
 			//	受信
 			int	size = SocketClient::Receive( data, 256 );
 
 			//	受信出来るサイズがなければループを抜ける
-			if ( size <= 0 )	{ break; }
+			if ( size <= 0 )	{ return; }
 
 			//	先頭アドレスが不正ならばループを抜ける
-			if ( data[0] == -1 )	{ break; }
+			if ( data[0] == -1 )	{ return; }
 
 			//	先頭バイトで分岐
 			switch ( data[0] )
@@ -125,6 +128,7 @@ GameParam*	gameParam = nullptr;
 				{
 					NET_MOVE*	netMove = ( NET_MOVE* )data;
 					SetPlayerParam( netMove->id, Vector3( netMove->x, 0.0f, netMove->z ), 0.0f, 0 );
+					printf( "座標受信しました。\n" );
 				}
 				break;
 
@@ -134,6 +138,8 @@ GameParam*	gameParam = nullptr;
 					info = ( NET_INFO* )data;
 
 					SetPlayerInfo( info->id, info->name, info->type );
+
+					printf( "サインアップしました。\n" );
 				}
 				break;
 

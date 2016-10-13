@@ -12,6 +12,12 @@
 #include	"Camera.h"
 #include	"PlayerManager.h"
 
+
+
+//
+#include	"BaseEquipment.h"
+//
+
 #pragma comment( lib, "WSOCK32.lib" )
 
 #include	"sceneMain.h"
@@ -23,6 +29,7 @@
 //*****************************************************************************************************************************
 
 iexMesh*	stage = nullptr;	//	‰¼(â‘ÎÁ‚·)
+BaseEquipment* baseEquipment;	//	‰¼(â‘ÎÁ‚·)
 
 
 
@@ -82,6 +89,12 @@ bool	sceneMain::Initialize( void )
 		PostQuitMessage( 0 );
 		return	false;
 	}
+
+
+
+
+	//‰¼
+	baseEquipment = new BaseEquipment();
 	
 	return true;
 }

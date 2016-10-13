@@ -97,10 +97,12 @@
 			netMove.com = COMMANDS::CHARA_INFO;
 			netMove.id = p;
 			netMove.x = playerParam[p].pos.x;
-			//netMove.y = playerParam[p].pos.y;
+			netMove.y = playerParam[p].pos.y;
 			netMove.z = playerParam[p].pos.z;
 
 			UDPServer::Send( client, ( LPSTR )&netMove, sizeof( NET_MOVE ) );
+
+			printf( "%dPに座標送信しました。\n", p + 1 );
 		}
 
 		//	コマンド終端を伝える
@@ -131,6 +133,8 @@
 			{
 				NET_MOVE*	move = ( NET_MOVE* )data;
 				playerParam[client].pos = Vector3( move->x, 0.0f, move->z );
+				
+				printf( "%dPから座標を受信しました。\n", client + 1 );
 			}
 			break;
 
@@ -172,6 +176,8 @@
 					strcpy( info->name, playerInfo[p].name );
 					UDPServer::Send( client, ( LPSTR )info, sizeof( NET_INFO ) );
 				}
+
+				printf( "%dPが参戦しました。\n", client + 1 );
 			}
 			break;
 
@@ -193,6 +199,8 @@
 					if ( playerInfo[p].active == false )	continue;
 					UDPServer::Send( p, ( LPSTR )&out, sizeof( NET_OUT ) );
 				}
+
+				printf( "%dPが脱退しました。\n", client + 1 );
 			}
 			break;
 		}
@@ -216,7 +224,6 @@
 		playerParam[id].pos = pos;
 		playerParam[id].angle = 0.0f;
 		playerParam[id].motion = 1;
-		//playerParam[id].move = Vector3( 0.0f, 0.0f, 0.0f );
 	}
 
 	//	プレイヤーパラメータの設定
