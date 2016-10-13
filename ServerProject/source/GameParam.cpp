@@ -97,7 +97,7 @@
 			netMove.com = COMMANDS::CHARA_INFO;
 			netMove.id = p;
 			netMove.x = playerParam[p].pos.x;
-			netMove.y = playerParam[p].pos.y;
+			//netMove.y = playerParam[p].pos.y;
 			netMove.z = playerParam[p].pos.z;
 
 			UDPServer::Send( client, ( LPSTR )&netMove, sizeof( NET_MOVE ) );
@@ -130,7 +130,7 @@
 		case COMMANDS::CHARA_INFO:
 			{
 				NET_MOVE*	move = ( NET_MOVE* )data;
-				playerParam[client].pos = Vector3( move->x, move->y, move->z );
+				playerParam[client].pos = Vector3( move->x, 0.0f, move->z );
 			}
 			break;
 
@@ -146,7 +146,6 @@
 				//	クライアントに返信
 				UDPServer::Send( client, ( LPSTR )info, sizeof( NET_INFO ) );
 
-				int a = 0;
 				//	初期座標を送信
 				NET_MOVE*	netMove = ( NET_MOVE* )data;
 				netMove->com = COMMANDS::CHARA_INFO;
@@ -205,7 +204,7 @@
 //-------------------------------------------------------------------------------------
 
 	//	プレイヤー情報の設定
-	void	GameParam::SetPlayer( int id, LPSTR name, int type )
+	void	GameParam::SetPlayer( int id, const LPSTR name, int type )
 	{
 		//	id番目のプレイヤーをアクティブにし、情報を受け取る
 		playerInfo[id].active = true;
@@ -221,7 +220,7 @@
 	}
 
 	//	プレイヤーパラメータの設定
-	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle, int motion )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
 	{
 		playerParam[id].pos = pos;
 		playerParam[id].angle = angle;
@@ -229,7 +228,7 @@
 	}
 
 	//	プレイヤーパラメータの設定
-	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle = param.angle;

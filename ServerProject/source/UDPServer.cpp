@@ -58,13 +58,13 @@
 //-------------------------------------------------------------------------------
 	
 	//	送信
-	void	UDPServer::Send( int client, LPSTR data, int size )
+	void	UDPServer::Send( int client, const LPSTR data, int size )
 	{
 		sendto( sock, data, size, 0, ( struct sockaddr* )&client_addr[client], sizeof( client_addr[client] ) );
 	}
 
 	//	受信
-	int	UDPServer::Receive( LPSTR data, int* size )
+	int	UDPServer::Receive( const LPSTR data, int* size )
 	{
 		//	タイムアウト設定
 		struct	timeval	tv = { 0, 0 };
@@ -100,12 +100,12 @@
 				if ( client_addr[i].sin_addr.S_un.S_addr == 0 )	continue;
 
 				//	受信元と比較
-				//if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return	i;
+				if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return	i;
 
-				return	data[1];
+				//return	data[1];
 			}
 		}
-
+		
 		//	新規受け入れ
 		//	検索でヒットしない場合は新規クライアントとして受け入れる
 		for ( i = 0; i < PLAYER_MAX; i++ )
@@ -114,7 +114,7 @@
 			client_addr[i] = addr;
 			return	i;
 		}
-
+		
 
 		return	-1;
 	}

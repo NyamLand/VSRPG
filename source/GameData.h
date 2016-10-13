@@ -64,7 +64,7 @@
 	{
 		char	com;
 		int		id;
-		float	x, y, z;
+		float	x, y, z; 
 	};
 
 	//	V‹KQ‰Áî•ñ

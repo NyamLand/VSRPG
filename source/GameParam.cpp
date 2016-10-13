@@ -52,7 +52,7 @@ GameParam*	gameParam = nullptr;
 
 		//	サーバーにプレイヤー情報を送信
 		SocketClient::Send( ( LPSTR )&info, sizeof( info ) );
-		int a = 0;
+
 		//	個人ＩＤ取得
 		int	size = SocketClient::Receive( ( LPSTR )&info, sizeof( info ) );
 		if ( size <= 0 )	return	false;
@@ -64,7 +64,7 @@ GameParam*	gameParam = nullptr;
 		netMove.com = COMMANDS::CHARA_INFO;
 		netMove.id = myIndex;
 		SocketClient::Receive( ( LPSTR )&netMove, sizeof( netMove ) );
-		playerManager->GetPlayer()->SetPos( Vector3( netMove.x, netMove.y, netMove.z ) );
+		playerManager->GetPlayer()->SetPos( Vector3( netMove.x, 0.0f, netMove.z ) );
 		return	true;
 	}
 
@@ -92,7 +92,7 @@ GameParam*	gameParam = nullptr;
 		netMove.com = COMMANDS::CHARA_INFO;
 		netMove.id = myIndex;
 		netMove.x = playerManager->GetPlayer()->GetPos().x;
-		netMove.y = playerManager->GetPlayer()->GetPos().y;
+		//netMove.y = playerManager->GetPlayer()->GetPos().y;
 		netMove.z = playerManager->GetPlayer()->GetPos().z;
 		SocketClient::Send( ( LPSTR )&netMove, sizeof( NET_MOVE ) );
 	}
@@ -124,7 +124,7 @@ GameParam*	gameParam = nullptr;
 			case COMMANDS::CHARA_INFO:
 				{
 					NET_MOVE*	netMove = ( NET_MOVE* )data;
-					SetPlayerParam( netMove->id, Vector3( netMove->x, netMove->y, netMove->z ), 0.0f, 0 );
+					SetPlayerParam( netMove->id, Vector3( netMove->x, 0.0f, netMove->z ), 0.0f, 0 );
 				}
 				break;
 
