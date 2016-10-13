@@ -4,7 +4,9 @@
 #include	<fstream>
 #include	<iostream>
 #include	<string>
+#include	<thread>
 #include	"GlobalFunction.h"
+#include	"DrawShape.h"
 #include	"GameParam.h"
 #include	"GameData.h"
 #include	"GameManager.h"
@@ -29,8 +31,8 @@
 //*****************************************************************************************************************************
 
 iexMesh*	stage = nullptr;	//	仮(絶対消す)
-BaseEquipment* baseEquipment;	//	仮(絶対消す)
-
+//BaseEquipment* baseEquipment;	//	仮(絶対消す)
+GameParam*	sceneMain::m_GameParam = nullptr;
 
 
 //*****************************************************************************************************************************
@@ -94,7 +96,7 @@ bool	sceneMain::Initialize( void )
 
 
 	//仮
-	baseEquipment = new BaseEquipment();
+	//baseEquipment = new BaseEquipment();
 	
 	return true;
 }
@@ -118,19 +120,11 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	m_GameParam->Update();
-
-	//	GameManager更新
-	gameManager->Update();
-
-	//	player更新
-	playerManager->Update();
-
-	//	ui更新
-	uiManager->Update();
-
-	//	camera更新
-	mainView->Update( playerManager->GetPlayer()->GetPos() );
+	//	受信処理は別スレッドで回しておく
+	std::thread		threadFunc1( ThreadFunc1 );
+	std::thread		threadFunc2( ThreadFunc2 );
+	threadFunc1.join();
+	threadFunc2.join();
 }
 
 //*****************************************************************************************************************************
@@ -157,10 +151,21 @@ void	sceneMain::Render( void )
 	{
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			Vector3	p_pos = m_GameParam->GetPlayerParam( p ).pos;
+			PlayerParam	playerParam = m_GameParam->GetPlayerParam( p );
+			Vector3	p_pos = playerParam.pos;
 			char	str[256];
 			sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
 			IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
+
+			//	自分はスキップ
+			if ( m_GameParam->GetMyIndex() == p )	continue;
+
+			//	仮で球体描画
+			if ( m_GameParam->GetPlayerInfo(p).active )
+			{
+				//	球体描画
+				drawShape->DrawSphereMesh( playerParam.pos, 1.5f, 0xFFFFFF00 );
+			}
 		}
 	}
 
@@ -185,6 +190,29 @@ void	sceneMain::MyInfoRender( void )
 	char	str[256];
 	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
+}
+
+void	sceneMain::ThreadFunc1( void )
+{
+	m_GameParam->Receive();
+}
+
+void	sceneMain::ThreadFunc2( void )
+{
+	//	サーバーへの情報送信
+	m_GameParam->Update();
+
+	//	GameManager更新
+	gameManager->Update();
+
+	//	player更新
+	playerManager->Update();
+
+	//	ui更新
+	uiManager->Update();
+
+	//	camera更新
+	mainView->Update( playerManager->GetPlayer()->GetPos() );
 }
 
 

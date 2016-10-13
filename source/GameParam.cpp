@@ -84,7 +84,7 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::Update( void )
 	{
 		//	全データ受信
-		Receive();
+		//Receive();
 
 		//	位置データ送信
 		NET_MOVE	netMove;
@@ -110,7 +110,7 @@ GameParam*	gameParam = nullptr;
 		char data[256];
 
 		//	データを受信
-		//for (;;)
+		for (;;)
 		{
 			//	受信
 			int	size = SocketClient::Receive( data, 256 );
@@ -188,6 +188,12 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------
 
 	//	各プレイヤー情報取得
+	PlayerInfo	GameParam::GetPlayerInfo( int id )const
+	{
+		return	playerInfo[id];
+	}
+
+	//	各プレイヤーパラメータ取得
 	PlayerParam GameParam::GetPlayerParam( int id )const
 	{
 		return	playerParam[id];

@@ -46,6 +46,7 @@ public:
 	void	SetPlayerParam( int id, Vector3& pos, float angle, int motion );
 	
 	//	î•ñæ“¾
+	PlayerInfo	GetPlayerInfo( int id )const;
 	PlayerParam GetPlayerParam( int id )const;
 	PlayerInfo	GetMyInfo( int id )const;
 	int		GetMyIndex( void )const;
