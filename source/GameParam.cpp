@@ -90,6 +90,7 @@ GameParam*	gameParam = nullptr;
 
 		//	プレイヤーの位置情報送信( 後で関数化 )
 		netMove.com = COMMANDS::CHARA_INFO;
+		netMove.id = myIndex;
 		netMove.x = playerManager->GetPlayer()->GetPos().x;
 		netMove.y = playerManager->GetPlayer()->GetPos().y;
 		netMove.z = playerManager->GetPlayer()->GetPos().z;
@@ -137,7 +138,6 @@ GameParam*	gameParam = nullptr;
 				break;
 
 			case COMMANDS::SIGN_OUT:
-				//SignOutReceive( data );
 				break;
 			}
 		}
@@ -147,47 +147,6 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::Send( void )
 	{
 
-	}
-
-//----------------------------------------------------------------------------------
-//	各データ受信
-//----------------------------------------------------------------------------------
-	
-	//	座標受信
-	void	GameParam::PosReceive( LPSTR data )
-	{
-		SetPlayerParam(
-			*( ( int* )&data[1] ),
-			*( ( PlayerParam* )&data[5] ) );
-	}
-
-	//	移動値受信
-	void	GameParam::MoveReceive( LPSTR data )
-	{
-		SetPlayerParam(
-			*( ( int* )&data[1] ),
-			*( ( PlayerParam* )&data[5] ) );
-	}
-
-	//	チャットデータ受信
-	void	GameParam::ChatReceive( LPSTR data )
-	{
-
-	}
-
-	//	参加情報受信
-	void	GameParam::SignUpReceive( LPSTR data )
-	{
-		NET_INFO*	info;
-		info = ( NET_INFO* )data;
-		SetPlayerInfo( info->id, info->name, info->type );
-	}
-
-	//	退室情報受信
-	void	GameParam::SignOutReceive( LPSTR data )
-	{
-		//	クライアント脱退
-		
 	}
 
 //----------------------------------------------------------------------------------

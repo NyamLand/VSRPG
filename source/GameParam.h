@@ -40,13 +40,6 @@ public:
 	void	Send( void );
 	void	Receive( void );
 
-	//	óMŠÖ”
-	void	PosReceive( LPSTR data );
-	void	MoveReceive( LPSTR data );
-	void	ChatReceive( LPSTR data );
-	void	SignUpReceive( LPSTR data );
-	void	SignOutReceive( LPSTR data );
-
 	//	î•ñİ’è
 	void	SetPlayerInfo( int id, LPSTR name, int type );
 	void	SetPlayerParam( int id, PlayerParam& param );

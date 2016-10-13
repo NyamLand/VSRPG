@@ -79,9 +79,6 @@
     <Filter Include="ソース ファイル\GameParam">
       <UniqueIdentifier>{6fa65174-a628-4b5c-b237-a50570419a3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GlobalFunction\GameData">
-      <UniqueIdentifier>{0e784b56-40b3-4f9f-a343-de896644d38a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Enemy">
       <UniqueIdentifier>{5a1c5791-146c-47a2-adcc-4f3f9b6a964f}</UniqueIdentifier>
     </Filter>
@@ -102,6 +99,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Collision">
       <UniqueIdentifier>{217a4d1b-ee75-48be-94b6-3db739daa5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData">
+      <UniqueIdentifier>{0e784b56-40b3-4f9f-a343-de896644d38a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,7 +264,7 @@
       <Filter>ソース ファイル\GameParam</Filter>
     </ClInclude>
     <ClInclude Include="source\GameData.h">
-      <Filter>ソース ファイル\GlobalFunction\GameData</Filter>
+      <Filter>ソース ファイル\GameData</Filter>
     </ClInclude>
     <ClInclude Include="source\Enemy.h">
       <Filter>ソース ファイル\Enemy</Filter>

@@ -35,13 +35,6 @@ public:
 	void	SetPlayerParam( int id, PlayerParam& param );
 	void	SetPlayerParam( int id, Vector3& pos, float angle, int motion );
 
-	//	Šeƒ‚[ƒh“®ì
-	int		PosReceive( int client, LPSTR data );
-	int		MoveReceive( int client, LPSTR data );
-	int		ChatReceive( int client, LPSTR data );
-	int		SignUpReceive( int client, LPSTR data );
-	int		SignOutReceive( int client, LPSTR data );
-
 	//	î•ñæ“¾
 	bool	GetPlayerActive( int id );
 	PlayerParam& GetPlayerParam( int id );

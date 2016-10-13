@@ -10,7 +10,6 @@
 //	include&define
 #include	"GameData.h"
 #include	<winsock.h>
-//#include	"define.h"
 
 //	class
 class UDPServer
@@ -24,7 +23,7 @@ protected:
 public:
 	//	‰Šú‰»E‰ğ•ú
 	UDPServer( void );
-	virtual ~UDPServer(void);
+	virtual ~UDPServer( void );
 	bool	Initialize( WORD port );
 
 	//	‘—óM
