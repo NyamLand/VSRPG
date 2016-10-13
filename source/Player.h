@@ -18,6 +18,7 @@ namespace MODE
 		//POSTURE,
 		SWOADATTACK,
 		MAGICATTACK,
+		AVOID,
 		MODE_MAX
 	};
 }
@@ -30,7 +31,7 @@ namespace MOTION
 		HOPPING,
 		RIGOR,
 		WAIT,
-		HOPPING2,
+		AVOID,
 		MOVE,
 		ATTACK,
 		ATTACK2 = 7,
@@ -46,6 +47,7 @@ private:
 
 	iex2DObj*	texture;
 
+	int hp;
 
 public:
 	//	初期化・解放
@@ -62,12 +64,15 @@ public:
 	//void	PostureMode( void );
 	void	ModeSwordAttack(void);
 	void	ModeMagicAttack( void );
+	void	ModeAvoid( void );			//回避
 
 
 	//	動作関数
-	int		Move( void );
-	int		SwordAttack(void);		//行動が終了すれば1を返し、中断されれば2を返す
-	int		MagicAttack( void );
+	bool		Move( void );
+	bool		SwordAttack(void);		//行動が終了すれば1を返し、中断されれば2を返す
+	bool		MagicAttack( void );
+	bool		Avoid( void );
+
 
 
 	//情報設定
