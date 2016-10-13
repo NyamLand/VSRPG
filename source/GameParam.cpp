@@ -52,7 +52,7 @@ GameParam*	gameParam = nullptr;
 
 		//	サーバーにプレイヤー情報を送信
 		SocketClient::Send( ( LPSTR )&info, sizeof( info ) );
-
+		int a = 0;
 		//	個人ＩＤ取得
 		int	size = SocketClient::Receive( ( LPSTR )&info, sizeof( info ) );
 		if ( size <= 0 )	return	false;

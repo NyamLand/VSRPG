@@ -69,22 +69,22 @@ Player::Player(void) : texture(nullptr), hp(0)
 		UpdateInfo();
 
 		//----------------‰¼-------------
-		std::fstream r("DATA\\test.csv", std::ios::in);
+		//std::fstream r("DATA\\test.csv", std::ios::in);
 
-		CSVReader csv(r);
-		vector<string> tokens;
-		while (!csv.Read(tokens))
-		{
-			for (unsigned int i = 0; i<tokens.size(); i++)
-			{
-				if (tokens[0] == "HP")
-				{
-					hp = std::atoi(tokens[1].c_str());
-				}
-			}
-		}
-		csv.Close();
-		return 0;
+		//CSVReader csv(r);
+		//vector<string> tokens;
+		//while (!csv.Read(tokens))
+		//{
+		//	for (unsigned int i = 0; i<tokens.size(); i++)
+		//	{
+		//		if (tokens[0] == "HP")
+		//		{
+		//			hp = std::atoi(tokens[1].c_str());
+		//		}
+		//	}
+		//}
+		//csv.Close();
+		//return 0;
 		//---------------------------------
 
 
