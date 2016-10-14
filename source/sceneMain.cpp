@@ -119,9 +119,22 @@ void	sceneMain::Update( void )
 {
 	//	受信処理は別スレッドで回しておく
 	std::thread		threadFunc1( ThreadFunc1 );
-	std::thread		threadFunc2( ThreadFunc2 );
 	threadFunc1.join();
-	threadFunc2.join();
+
+	//	サーバーへの情報送信
+	//m_GameParam->Update();
+
+	//	GameManager更新
+	gameManager->Update();
+
+	//	player更新
+	playerManager->Update();
+
+	//	ui更新
+	uiManager->Update();
+
+	//	camera更新
+	mainView->Update( playerManager->GetPlayer()->GetPos() );
 }
 
 //*****************************************************************************************************************************
@@ -192,6 +205,7 @@ void	sceneMain::MyInfoRender( void )
 void	sceneMain::ThreadFunc1( void )
 {
 	m_GameParam->Receive();
+	m_GameParam->Update();
 }
 
 void	sceneMain::ThreadFunc2( void )
