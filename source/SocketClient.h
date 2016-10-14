@@ -27,8 +27,8 @@ public:
 	bool	InitializeUDP( WORD port, LPSTR addr );
 
 	//	‘—óM
-	void	Send( LPSTR data, int size );
-	int	Receive( LPSTR data, int size );
+	void	Send( const LPSTR data, int size );
+	int	Receive( const LPSTR data, int size );
 
 	//	“®ìŠÖ”
 

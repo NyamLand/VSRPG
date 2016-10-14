@@ -10,7 +10,6 @@
 //	include&define
 #include	"GameData.h"
 #include	<winsock.h>
-//#include	"define.h"
 
 //	class
 class UDPServer
@@ -24,12 +23,12 @@ protected:
 public:
 	//	初期化・解放
 	UDPServer( void );
-	virtual ~UDPServer(void);
+	virtual ~UDPServer( void );
 	bool	Initialize( WORD port );
 
 	//	送受信
-	void	Send( int client, LPSTR data, int size );
-	int		Receive( LPSTR data, int* size );
+	void	Send( int client, const LPSTR data, int size );
+	int		Receive( const LPSTR data, int* size );
 
 	//	クライアント終了
 	void	CloseClient( int client );

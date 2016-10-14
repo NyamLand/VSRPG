@@ -32,6 +32,8 @@
 	//	プレイヤーパラメータ
 	struct PlayerParam
 	{
+		char	com;
+		int		id;
 		Vector3	pos;
 		float		angle;
 		int			motion;
@@ -48,14 +50,21 @@
 //	データ送受信用構造体
 //----------------------------------------------------------------------------
 
-	enum DATA_MODE
+	enum COMMANDS
 	{
-		MOVE,
-		POS,
+		NO_COMMAND = -1,
+		CHARA_INFO,
 		CHAT,
 		SIGN_UP = 10,
-		SIGN_OUT = 11,
-		DATA_MAX
+		SIGN_OUT,
+		COMMAND_MAX
+	};
+
+	struct NET_MOVE
+	{
+		char	com;
+		int		id;
+		float	x, y, z; 
 	};
 
 	//	新規参加情報

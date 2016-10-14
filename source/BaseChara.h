@@ -23,6 +23,9 @@ protected:
 	float			speed;
 	float			scale;
 	int				mode;
+	int				timer;
+	int				step;
+	bool			initflag;
 
 public:
 	//	‰Šú‰»E‰ğ•ú

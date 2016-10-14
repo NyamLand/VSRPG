@@ -24,7 +24,8 @@
 	//	コンストラクタ
 	BaseChara::BaseChara( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		angle(0.0f), scale(1.0f), speed(0.0f), mode(0)
+		angle(0.0f), scale(1.0f), speed(0.0f), mode(0), timer(0), step(0),
+		initflag(false)
 	{
 		
 	}

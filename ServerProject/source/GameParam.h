@@ -18,13 +18,9 @@ private:
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
 
-	//	モード別関数ポインタ
-	int( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX])( int client, LPSTR data );
-
 public:
 	//	初期化・解放
 	GameParam( void );
-	~GameParam( void );
 	bool	InitializeServer( void );
 
 	//	描画
@@ -35,16 +31,9 @@ public:
 	int		Send( int client );
 
 	//	情報設定
-	void	SetPlayer( int id, LPSTR name, int type );
-	void	SetPlayerParam( int id, PlayerParam& param );
-	void	SetPlayerParam( int id, Vector3& pos, float angle, int motion );
-
-	//	各モード動作
-	int		PosReceive( int client, LPSTR data );
-	int		MoveReceive( int client, LPSTR data );
-	int		ChatReceive( int client, LPSTR data );
-	int		SignUpReceive( int client, LPSTR data );
-	int		SignOutReceive( int client, LPSTR data );
+	void	SetPlayer( int id, const LPSTR name, int type );
+	void	SetPlayerParam( int id, const PlayerParam& param );
+	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
 
 	//	情報取得
 	bool	GetPlayerActive( int id );

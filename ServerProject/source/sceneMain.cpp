@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<thread>
 #include	"system/system.h"
 #include	"GameParam.h"
 #include	"GlobalFunction.h"
@@ -13,8 +14,7 @@
 //
 //*****************************************************************************************************************************
 
-
-
+GameParam*	sceneMain::gameParam;
 
 //*****************************************************************************************************************************
 //
@@ -54,8 +54,6 @@ sceneMain::~sceneMain( void )
 	SafeDelete( view );
 	SafeDelete( gameParam );
 
-
-
 }
 
 //*****************************************************************************************************************************
@@ -65,7 +63,7 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	int	client = gameParam->Receive();
+	int client = gameParam->Receive();
 
 	if ( client != -1 )
 	{
@@ -93,6 +91,7 @@ void	sceneMain::Render( void )
 
 
 }
+
 
 
 

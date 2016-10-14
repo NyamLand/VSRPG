@@ -24,7 +24,7 @@ private:
 	PlayerParam	playerParam[PLAYER_MAX];
 
 	//	受信関数ポインタ
-	void( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX] )( LPSTR data );
+	//void( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX] )( LPSTR data );
 
 public:
 	//	初期化・解放
@@ -40,19 +40,13 @@ public:
 	void	Send( void );
 	void	Receive( void );
 
-	//	受信関数
-	void	PosReceive( LPSTR data );
-	void	MoveReceive( LPSTR data );
-	void	ChatReceive( LPSTR data );
-	void	SignUpReceive( LPSTR data );
-	void	SignOutReceive( LPSTR data );
-
 	//	情報設定
 	void	SetPlayerInfo( int id, LPSTR name, int type );
 	void	SetPlayerParam( int id, PlayerParam& param );
 	void	SetPlayerParam( int id, Vector3& pos, float angle, int motion );
 	
 	//	情報取得
+	PlayerInfo	GetPlayerInfo( int id )const;
 	PlayerParam GetPlayerParam( int id )const;
 	PlayerInfo	GetMyInfo( int id )const;
 	int		GetMyIndex( void )const;
