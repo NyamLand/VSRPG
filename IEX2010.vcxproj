@@ -119,6 +119,7 @@
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
+    <ClCompile Include="source\sceneTitle.cpp" />
     <ClCompile Include="source\Singleton.cpp" />
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DrawShape.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
+    <ClInclude Include="source\sceneTitle.h" />
     <ClInclude Include="source\Singleton.h" />
     <ClInclude Include="source\Camera.h" />
     <ClInclude Include="source\DrawShape.h" />

@@ -1,5 +1,6 @@
 #include	"iextreme.h"
 #include	"Framework.h"
+#include	"sceneTitle.h"
 #include	"sceneMain.h"
 
 //*****************************************************************************************************************************
@@ -30,6 +31,7 @@ BOOL	InitApp( HWND hWnd )
 	SYSTEM_Initialize();
 	//	メインフレームワーク生成
 	MainFrame = new Framework();
+
 	//	初期シーン登録
 	MainFrame->ChangeScene( new sceneMain() );
 
