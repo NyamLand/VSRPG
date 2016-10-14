@@ -106,6 +106,12 @@
     <Filter Include="ソース ファイル\Equipment">
       <UniqueIdentifier>{d41b38a0-bda3-45df-a068-7163ee11f4dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\sceneTitle">
+      <UniqueIdentifier>{0ad2bbf3-abee-418d-9fa9-902ccddc077e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\sceneResult">
+      <UniqueIdentifier>{14dca739-1d2c-45f6-b34b-6e933fb22ce2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -219,6 +225,9 @@
     <ClCompile Include="source\BaseEquipment.cpp">
       <Filter>ソース ファイル\Equipment</Filter>
     </ClCompile>
+    <ClCompile Include="source\sceneTitle.cpp">
+      <Filter>ソース ファイル\Scene\sceneTitle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -298,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="source\BaseEquipment.h">
       <Filter>ソース ファイル\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneTitle.h">
+      <Filter>ソース ファイル\Scene\sceneTitle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

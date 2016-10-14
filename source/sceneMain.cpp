@@ -3,7 +3,6 @@
 #include	"system/system.h"
 #include	<fstream>
 #include	<iostream>
-#include	<string>
 #include	<thread>
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
@@ -13,8 +12,6 @@
 #include	"UIManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
-
-
 
 //
 #include	"BaseEquipment.h"
@@ -57,7 +54,7 @@ bool	sceneMain::Initialize( void )
 	
 	//	GameParam‰Šú‰»
 	m_GameParam = new GameParam();
-	gameParam = m_GameParam;
+	//gameParam = m_GameParam;
 
 	//	ƒJƒƒ‰İ’è
 	mainView = new Camera();
