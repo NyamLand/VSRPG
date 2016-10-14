@@ -110,7 +110,7 @@ GameParam*	gameParam = nullptr;
 		char data[256];
 
 		//	データを受信
-		for (;;)
+		//for (;;)
 		{
 			//	受信
 			int	size = SocketClient::Receive( data, 256 );
