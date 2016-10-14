@@ -122,7 +122,7 @@ void	sceneMain::Update( void )
 	threadFunc1.join();
 
 	//	サーバーへの情報送信
-	//m_GameParam->Update();
+	m_GameParam->Update();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -205,7 +205,7 @@ void	sceneMain::MyInfoRender( void )
 void	sceneMain::ThreadFunc1( void )
 {
 	m_GameParam->Receive();
-	m_GameParam->Update();
+	//m_GameParam->Update();
 }
 
 void	sceneMain::ThreadFunc2( void )
