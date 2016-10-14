@@ -28,7 +28,7 @@
 	}
 
 	//	TCPクライアント初期化
-	bool	SocketClient::InitializeTCP( WORD port, LPSTR addr )
+	bool	SocketClient::InitializeTCP( WORD port, const LPSTR addr )
 	{
 		//	ポート＆アドレス指定
 		ZeroMemory( &server, sizeof( server ) );
@@ -54,7 +54,7 @@
 	}
 
 	//	UDPクライアント初期化
-	bool	SocketClient::InitializeUDP( WORD port, LPSTR addr )
+	bool	SocketClient::InitializeUDP( WORD port, const LPSTR addr )
 	{
 		//	ポート＆アドレス指定
 		ZeroMemory( &server, sizeof( server ) );
@@ -81,13 +81,13 @@
 //-------------------------------------------------------------------------------
 	
 	//	データ送信
-	void	SocketClient::Send( LPSTR data, int size )
+	void	SocketClient::Send( const LPSTR data, int size )
 	{
 		sendto( sock, data, size, 0, ( struct sockaddr* )&server, sizeof( server ) );
 	}
 
 	//	データ受信
-	int	SocketClient::Receive( LPSTR data, int size )
+	int	SocketClient::Receive( const LPSTR data, int size )
 	{
 		int	recvSize;
 		recvSize = recv( sock, data, size, 0 );
