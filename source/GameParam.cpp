@@ -116,7 +116,11 @@ GameParam*	gameParam = nullptr;
 			int	size = SocketClient::Receive( data, 256 );
 
 			//	受信出来るサイズがなければループを抜ける
-			if ( size <= 0 )	{ return; }
+			if ( size <= 0 )	
+			{ 
+				printf( "size = %d\n", size );
+				return; 
+			}
 
 			//	先頭アドレスが不正ならばループを抜ける
 			if ( data[0] == -1 )	{ return; }
