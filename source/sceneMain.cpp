@@ -194,7 +194,7 @@ void	sceneMain::MyInfoRender( void )
 	LPSTR name = m_GameParam->GetMyInfo( id ).name;
 	
 	//	Ž©•ª‚ÌÀ•W
-	Vector3	pos = m_GameParam->GetPlayerParam( id ).pos;
+	Vector3	pos = playerManager->GetPlayer()->GetPos();
 
 	//	•\Ž¦
 	char	str[256];

@@ -23,12 +23,12 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	SocketClient( void );
 	~SocketClient( void );
-	bool	InitializeTCP( WORD port, LPSTR addr );
-	bool	InitializeUDP( WORD port, LPSTR addr );
+	bool	InitializeTCP( WORD port, const LPSTR addr );
+	bool	InitializeUDP( WORD port, const LPSTR addr );
 
 	//	‘—óM
 	void	Send( const LPSTR data, int size );
-	int	Receive( const LPSTR data, int size );
+	int		Receive( const LPSTR data, int size );
 
 	//	“®ìŠÖ”
 
