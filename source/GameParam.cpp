@@ -46,7 +46,6 @@ GameParam*	gameParam = nullptr;
 
 		//	タイプと名前の送信
 		NET_IN		netIn;
-		netIn.com = COMMANDS::SIGN_UP;
 		netIn.id = -1;
 		strcpy( netIn.name, name );
 
@@ -62,7 +61,7 @@ GameParam*	gameParam = nullptr;
 		//	初期座標取得
 		NET_CHARA netChara;
 		SocketClient::Receive( ( LPSTR )&netChara, sizeof( netChara ) );
-		playerManager->GetPlayer()->SetPos( Vector3( netChara.x, netChara.y, netChara.z ) );
+		playerManager->GetPlayer()->SetPos( netChara.pos );
 		return	true;
 	}
 
@@ -70,7 +69,6 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::CloseClient( void )
 	{
 		NET_OUT	netOut;
-		netOut.com = SIGN_OUT;
 		netOut.id = myIndex;
 		SocketClient::Send( ( LPSTR )&netOut, sizeof( NET_OUT ) );
 	}
@@ -89,11 +87,8 @@ GameParam*	gameParam = nullptr;
 		NET_CHARA	netChara;
 
 		//	プレイヤーの位置情報送信( 後で関数化 )
-		netChara.com = COMMANDS::CHARA_INFO;
 		netChara.id = myIndex;
-		netChara.x = playerManager->GetPlayer()->GetPos().x;
-		netChara.y = playerManager->GetPlayer()->GetPos().y;
-		netChara.z = playerManager->GetPlayer()->GetPos().z;
+		netChara.pos = playerManager->GetPlayer()->GetPos();
 		netChara.angle = playerManager->GetPlayer()->GetAngle();
 		SocketClient::Send( ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 	}
@@ -129,7 +124,7 @@ GameParam*	gameParam = nullptr;
 			case COMMANDS::CHARA_INFO:
 				{
 					NET_CHARA*	netChara = ( NET_CHARA* )&data;
-					SetPlayerParam( netChara->id, Vector3( netChara->x, netChara->y, netChara->z ), netChara->angle );
+					SetPlayerParam( netChara->id, netChara->pos, netChara->angle );
 				}
 				break;
 
@@ -161,6 +156,11 @@ GameParam*	gameParam = nullptr;
 	{
 
 	}
+
+//----------------------------------------------------------------------------------
+//	受信処理
+//----------------------------------------------------------------------------------
+
 
 //----------------------------------------------------------------------------------
 //	情報設定

@@ -10,7 +10,6 @@ class GameParam;
 class	sceneMain : public Scene
 {
 private:
-	static	GameParam*	m_GameParam;
 
 public:
 	~sceneMain( void );

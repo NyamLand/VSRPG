@@ -61,7 +61,7 @@
 		char	com;
 		int		id;
 		float	angle;
-		float x, y, z;
+		Vector3	pos;
 	};
 
 	//	サインアウト

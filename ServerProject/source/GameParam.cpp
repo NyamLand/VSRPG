@@ -94,11 +94,8 @@
 			//	プレイヤーがアクティブ状態でなければスキップ
 			if ( playerInfo[p].active == false )		continue;
 
-			Vector3	pos = playerParam[p].pos;
+			netChara.pos = playerParam[p].pos;
 			netChara.id = p;
-			netChara.x = pos.x;
-			netChara.y = pos.y;
-			netChara.z = pos.z;
 			netChara.angle = playerParam[p].angle;
 
 			UDPServer::Send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
@@ -132,7 +129,7 @@
 		case COMMANDS::CHARA_INFO:
 			{
 				NET_CHARA*	netChara = ( NET_CHARA* )&data;
-				playerParam[client].pos = Vector3( netChara->x, netChara->y, netChara->z );
+				playerParam[client].pos = netChara->pos;
 				playerParam[client].angle = netChara->angle;
 			}
 			break;
@@ -153,9 +150,7 @@
 				NET_CHARA	netChara;
 				netChara.com = COMMANDS::CHARA_INFO;
 				netChara.id = client;
-				netChara.x = gameManager->GetInitPos( client ).x;
-				netChara.y = gameManager->GetInitPos( client ).y;
-				netChara.z = gameManager->GetInitPos( client ).z;
+				netChara.pos = gameManager->GetInitPos( client );
 				netChara.angle = 0.0f;
 				UDPServer::Send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 
@@ -205,6 +200,11 @@
 		}
 		return	client;
 	}
+
+//-------------------------------------------------------------------------------------
+//	受信処理
+//-------------------------------------------------------------------------------------
+
 
 //-------------------------------------------------------------------------------------
 //	情報設定

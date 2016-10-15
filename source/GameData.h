@@ -59,23 +59,36 @@
 	//	キャラ情報
 	struct NET_CHARA
 	{
-		char	com;
+		char	com = COMMANDS::CHARA_INFO;
 		int		id;
 		float	angle;
-		float x, y, z;
+		Vector3	pos;
+
+		//	座標設定
+		void	SetPos( const Vector3& pos )
+		{
+			this->pos = pos;
+		}
+
+		//	座標取得
+		Vector3	GetPos( void )const
+		{
+			return	pos;
+		}
+
 	};
 
 	//	サインアウト
 	struct NET_OUT
 	{
-		char	com;
+		char	com = COMMANDS::SIGN_OUT;
 		int		id;
 	};
 
 	//	サインイン
 	struct NET_IN
 	{
-		char	com;
+		char	com = COMMANDS::SIGN_UP;
 		int		id;
 		char	name[17];
 	};
