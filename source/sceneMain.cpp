@@ -135,6 +135,8 @@ void	sceneMain::Update( void )
 
 	//	cameraXV
 	mainView->Update( playerManager->GetPlayer()->GetPos() );
+	
+	//threadFunc1.detach();
 }
 
 //*****************************************************************************************************************************

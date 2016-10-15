@@ -52,6 +52,9 @@
     <Filter Include="ソース ファイル\Manager\GameManager">
       <UniqueIdentifier>{63a8984e-5daf-4427-9fb0-ab5e1bc3cffc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{6ba5386a-9c7f-4d5f-90d9-0e4200318560}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">

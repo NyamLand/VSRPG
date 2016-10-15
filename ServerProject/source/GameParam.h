@@ -31,9 +31,9 @@ public:
 	int		Send( int client );
 
 	//	î•ñİ’è
-	void	SetPlayer( int id, const LPSTR name, int type );
+	void	SetPlayer( int id, const LPSTR name );
 	void	SetPlayerParam( int id, const PlayerParam& param );
-	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
+	void	SetPlayerParam( int id, const Vector3& pos, float angle );
 
 	//	î•ñæ“¾
 	bool	GetPlayerActive( int id );

@@ -45,35 +45,34 @@ GameParam*	gameParam = nullptr;
 		InitializeUDP( nPort, addr );
 
 		//	タイプと名前の送信
-		NET_INFO	info;
-		info.com = COMMANDS::SIGN_UP;
-		info.id = -1;
-		info.type = type;
-		strcpy( info.name, name );
+		NET_IN		netIn;
+		netIn.com = COMMANDS::SIGN_UP;
+		netIn.id = -1;
+		strcpy( netIn.name, name );
 
 		//	サーバーにプレイヤー情報を送信
-		SocketClient::Send( ( LPSTR )&info, sizeof( info ) );
+		SocketClient::Send( ( LPSTR )&netIn, sizeof( netIn ) );
 
 		//	個人ＩＤ取得
-		int	size = SocketClient::Receive( ( LPSTR )&info, sizeof( info ) );
+		int	size = SocketClient::Receive( ( LPSTR )&netIn, sizeof( netIn ) );
 		if ( size <= 0 )	return	false;
-		myIndex = info.id;
-		SetPlayerInfo( info.id, info.name, info.type );
+		myIndex = netIn.id;
+		SetPlayerInfo( netIn.id, netIn.name );
 
 		//	初期座標取得
-		NET_MOVE netMove;
-		netMove.com = COMMANDS::CHARA_INFO;
-		netMove.id = myIndex;
-		SocketClient::Receive( ( LPSTR )&netMove, sizeof( netMove ) );
-		playerManager->GetPlayer()->SetPos( Vector3( netMove.x, 0.0f, netMove.z ) );
+		NET_CHARA netChara;
+		SocketClient::Receive( ( LPSTR )&netChara, sizeof( netChara ) );
+		playerManager->GetPlayer()->SetPos( Vector3( netChara.x, netChara.y, netChara.z ) );
 		return	true;
 	}
 
 	//	脱退
 	void	GameParam::CloseClient( void )
 	{
-		char	com = COMMANDS::SIGN_OUT;
-		SocketClient::Send( &com, sizeof( char ) );
+		NET_OUT	netOut;
+		netOut.com = SIGN_OUT;
+		netOut.id = myIndex;
+		SocketClient::Send( ( LPSTR )&netOut, sizeof( NET_OUT ) );
 	}
 
 //----------------------------------------------------------------------------------
@@ -87,17 +86,16 @@ GameParam*	gameParam = nullptr;
 		//Receive();
 
 		//	位置データ送信
-		NET_MOVE	netMove;
+		NET_CHARA	netChara;
 
 		//	プレイヤーの位置情報送信( 後で関数化 )
-		netMove.com = COMMANDS::CHARA_INFO;
-		netMove.id = myIndex;
-		netMove.x = playerManager->GetPlayer()->GetPos().x;
-		netMove.y = playerManager->GetPlayer()->GetPos().y;
-		netMove.z = playerManager->GetPlayer()->GetPos().z;
-		SocketClient::Send( ( LPSTR )&netMove, sizeof( NET_MOVE ) );
-
-		printf( "座標を送信しました。\n" );
+		netChara.com = COMMANDS::CHARA_INFO;
+		netChara.id = myIndex;
+		netChara.x = playerManager->GetPlayer()->GetPos().x;
+		netChara.y = playerManager->GetPlayer()->GetPos().y;
+		netChara.z = playerManager->GetPlayer()->GetPos().z;
+		netChara.angle = playerManager->GetPlayer()->GetAngle();
+		SocketClient::Send( ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 	}
 
 //----------------------------------------------------------------------------------
@@ -110,7 +108,7 @@ GameParam*	gameParam = nullptr;
 		char data[256];
 
 		//	データを受信
-		//for (;;)
+		for (;;)
 		{
 			//	受信
 			int	size = SocketClient::Receive( data, 256 );
@@ -123,31 +121,36 @@ GameParam*	gameParam = nullptr;
 			}
 
 			//	先頭アドレスが不正ならばループを抜ける
-			if ( data[0] == -1 )	{ return; }
+			if ( data[COMMAND] == NO_COMMAND )	{ return; }
 
 			//	先頭バイトで分岐
-			switch ( data[0] )
+			switch ( data[COMMAND] )
 			{
 			case COMMANDS::CHARA_INFO:
 				{
-					NET_MOVE*	netMove = ( NET_MOVE* )data;
-					SetPlayerParam( netMove->id, Vector3( netMove->x, 0.0f, netMove->z ), 0.0f, 0 );
-					printf( "座標受信しました。\n" );
+					NET_CHARA*	netChara = ( NET_CHARA* )&data;
+					SetPlayerParam( netChara->id, Vector3( netChara->x, netChara->y, netChara->z ), netChara->angle );
 				}
 				break;
 
 			case COMMANDS::SIGN_UP:
 				{
-					NET_INFO*	info;
-					info = ( NET_INFO* )data;
-
-					SetPlayerInfo( info->id, info->name, info->type );
-
-					printf( "サインアップしました。\n" );
+					NET_IN*	netIn = ( NET_IN* )&data;
+					SetPlayerInfo( netIn->id, netIn->name );
+					printf( "%dP %sが参加しました。\n", netIn->id, netIn->name );
 				}
 				break;
 
 			case COMMANDS::SIGN_OUT:
+				{
+					NET_OUT*	netOut = ( NET_OUT* )&data;
+					playerInfo[netOut->id].active = false;
+					printf( "%dP %sさんがログアウトしました。\n", netOut->id, playerInfo[netOut->id].name );
+				}
+				break;
+
+			default:
+				printf( "????\n" );
 				break;
 			}
 		}
@@ -164,19 +167,17 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------
 
 	//	プレイヤー情報設定
-	void	GameParam::SetPlayerInfo( int id, LPSTR name, int type )
+	void	GameParam::SetPlayerInfo( int id, const LPSTR name )
 	{
 		playerInfo[id].active = true;
-		playerInfo[id].type = type;
 		strcpy( playerInfo[id].name, name );
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle, int motion )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle )
 	{
 		playerParam[id].pos = pos;
 		playerParam[id].angle = angle;
-		playerParam[id].motion = motion;
 	}
 
 	//	プレイヤーパラメータ設定
@@ -184,7 +185,6 @@ GameParam*	gameParam = nullptr;
 	{
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle = param.angle;
-		playerParam[id].motion = param.motion;
 	}
 
 //----------------------------------------------------------------------------------

@@ -27,8 +27,6 @@
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );			
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			playerParam[id].pos = Vector3( -10.0f + 5.0f * id, 0.0f, 0.0f );
-			playerParam[id].angle = 0.0f;
-			playerParam[id].motion = 0;
 		}
 	}
 	
@@ -42,9 +40,9 @@
 		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
 
 		//	UDPサーバー初期化
-		Initialize( PORT_NUM );
+		bool out = Initialize( PORT_NUM );
 
-		return	true;
+		return	out;
 	}
 
 //-------------------------------------------------------------------------------------
@@ -87,20 +85,23 @@
 	//	送信
 	int		GameParam::Send( int client )
 	{
+		NET_CHARA	netChara;
+		netChara.com = COMMANDS::CHARA_INFO;
+		
 		//	全クライアントに各プレイヤーの情報を送信する
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			//	プレイヤーがアクティブ状態でなければスキップ
 			if ( playerInfo[p].active == false )		continue;
 
-			NET_MOVE	netMove;
-			netMove.com = COMMANDS::CHARA_INFO;
-			netMove.id = p;
-			netMove.x = playerParam[p].pos.x;
-			netMove.y = playerParam[p].pos.y;
-			netMove.z = playerParam[p].pos.z;
+			Vector3	pos = playerParam[p].pos;
+			netChara.id = p;
+			netChara.x = pos.x;
+			netChara.y = pos.y;
+			netChara.z = pos.z;
+			netChara.angle = playerParam[p].angle;
 
-			UDPServer::Send( client, ( LPSTR )&netMove, sizeof( NET_MOVE ) );
+			UDPServer::Send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 
 			printf( "%dPに座標送信しました。\n", p + 1 );
 		}
@@ -119,62 +120,60 @@
 		char	data[256];
 
 		//	データサイズ取得
-		int	size = sizeof( data );
-
 		//	クライアントからのデータ受信とクライアント番号の受信
+		int	size = sizeof( data );
 		client = UDPServer::Receive( data, &size );
+		if ( size <= 0 )	return	-1;
+		if ( client < 0 )	return	-1;
 		
-		if ( client == -1 )		return	-1;
-
 		//	各受信動作
-		switch ( data[0] )
+		switch ( data[DATA_INFO::COMMAND] )
 		{
 		case COMMANDS::CHARA_INFO:
 			{
-				NET_MOVE*	move = ( NET_MOVE* )data;
-				playerParam[client].pos = Vector3( move->x, 0.0f, move->z );
-				
-				printf( "%dPから座標を受信しました。\n", client + 1 );
+				NET_CHARA*	netChara = ( NET_CHARA* )&data;
+				playerParam[client].pos = Vector3( netChara->x, netChara->y, netChara->z );
+				playerParam[client].angle = netChara->angle;
 			}
 			break;
 
 		case COMMANDS::SIGN_UP:
 			{
 				//	受け取ったデータをクライアント情報に変換
-				NET_INFO*	info = ( NET_INFO* )&data;
-				SetPlayer( client, info->name, info->type );
+				NET_IN* netIn= ( NET_IN* )&data;
+				SetPlayer( client, netIn->name );
 
 				//	構造体のidメンバを設定
-				info->id = client;
+				netIn->id = client;
 
 				//	クライアントに返信
-				UDPServer::Send( client, ( LPSTR )info, sizeof( NET_INFO ) );
+				UDPServer::Send( client, ( LPSTR )netIn, sizeof( NET_IN ) );
 
 				//	初期座標を送信
-				NET_MOVE*	netMove = ( NET_MOVE* )data;
-				netMove->com = COMMANDS::CHARA_INFO;
-				netMove->id = client;
-				netMove->x = gameManager->GetInitPos( client ).x;
-				netMove->y = gameManager->GetInitPos( client ).y;
-				netMove->z = gameManager->GetInitPos( client ).z;
-				UDPServer::Send( client, ( LPSTR )netMove, sizeof( NET_MOVE ) );
+				NET_CHARA	netChara;
+				netChara.com = COMMANDS::CHARA_INFO;
+				netChara.id = client;
+				netChara.x = gameManager->GetInitPos( client ).x;
+				netChara.y = gameManager->GetInitPos( client ).y;
+				netChara.z = gameManager->GetInitPos( client ).z;
+				netChara.angle = 0.0f;
+				UDPServer::Send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 
 				//	クライアント全員にデータを送信
 				for ( int p = 0; p < PLAYER_MAX; p++ )
 				{
 					if ( playerInfo[p].active == false )	continue;
-					UDPServer::Send( p, ( LPSTR )info, sizeof( NET_INFO ) );
+					UDPServer::Send( p, ( LPSTR )netIn, sizeof( NET_IN ) );
 				}
 
 				//	新規のクライアントに全員のデータを送信
 				for ( int p = 0; p < PLAYER_MAX; p++ )
 				{
 					if ( playerInfo[p].active == false )	continue;
-					info->id = p;
-					info->type = playerInfo[p].type;
 
-					strcpy( info->name, playerInfo[p].name );
-					UDPServer::Send( client, ( LPSTR )info, sizeof( NET_INFO ) );
+					netIn->id = p;
+					strcpy( netIn->name, playerInfo[p].name );
+					UDPServer::Send( client, ( LPSTR )netIn, sizeof( NET_IN ) );
 				}
 
 				printf( "%dPが参戦しました。\n", client + 1 );
@@ -212,26 +211,23 @@
 //-------------------------------------------------------------------------------------
 
 	//	プレイヤー情報の設定
-	void	GameParam::SetPlayer( int id, const LPSTR name, int type )
+	void	GameParam::SetPlayer( int id, const LPSTR name )
 	{
 		//	id番目のプレイヤーをアクティブにし、情報を受け取る
 		playerInfo[id].active = true;
-		playerInfo[id].type = type;
 		strcpy( playerInfo[id].name, name );
 		
 		//	初期位置設定
 		Vector3	pos = gameManager->GetInitPos( id );
 		playerParam[id].pos = pos;
 		playerParam[id].angle = 0.0f;
-		playerParam[id].motion = 1;
 	}
 
 	//	プレイヤーパラメータの設定
-	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle )
 	{
 		playerParam[id].pos = pos;
 		playerParam[id].angle = angle;
-		playerParam[id].motion = motion;
 	}
 
 	//	プレイヤーパラメータの設定
@@ -239,7 +235,6 @@
 	{
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle = param.angle;
-		playerParam[id].motion = param.motion;
 	}
 
 //-------------------------------------------------------------------------------------
@@ -251,6 +246,7 @@
 	{
 		return	playerParam[id];
 	}
+
 //-------------------------------------------------------------------------------------
 //	更新・描画
 //-------------------------------------------------------------------------------------

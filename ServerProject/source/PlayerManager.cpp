@@ -72,7 +72,7 @@
 		else
 		{
 			//	プレイヤー更新
-			gameParam->SetPlayerParam( id, param.pos, param.angle, param.motion );
+			gameParam->SetPlayerParam( id, param.pos, param.angle );
 		}
 	}
 
