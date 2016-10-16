@@ -80,17 +80,6 @@ GameParam*	gameParam = nullptr;
 	//	更新
 	void	GameParam::Update( void )
 	{
-		//	全データ受信
-		//Receive();
-
-		//	位置データ送信
-		NET_CHARA	netChara;
-
-		//	プレイヤーの位置情報送信( 後で関数化 )
-		netChara.id = myIndex;
-		netChara.pos = playerManager->GetPlayer()->GetPos();
-		netChara.angle = playerManager->GetPlayer()->GetAngle();
-		SocketClient::Send( ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 	}
 
 //----------------------------------------------------------------------------------
@@ -109,11 +98,7 @@ GameParam*	gameParam = nullptr;
 			int	size = SocketClient::Receive( data, 256 );
 
 			//	受信出来るサイズがなければループを抜ける
-			if ( size <= 0 )	
-			{ 
-				printf( "size = %d\n", size );
-				return; 
-			}
+			if ( size <= 0 )	return; 
 
 			//	先頭アドレスが不正ならばループを抜ける
 			if ( data[COMMAND] == NO_COMMAND )	{ return; }
@@ -122,26 +107,15 @@ GameParam*	gameParam = nullptr;
 			switch ( data[COMMAND] )
 			{
 			case COMMANDS::CHARA_INFO:
-				{
-					NET_CHARA*	netChara = ( NET_CHARA* )&data;
-					SetPlayerParam( netChara->id, netChara->pos, netChara->angle );
-				}
+				CharaInfoReceive( data );
 				break;
 
 			case COMMANDS::SIGN_UP:
-				{
-					NET_IN*	netIn = ( NET_IN* )&data;
-					SetPlayerInfo( netIn->id, netIn->name );
-					printf( "%dP %sが参加しました。\n", netIn->id, netIn->name );
-				}
+				SignUpReceive( data );
 				break;
 
 			case COMMANDS::SIGN_OUT:
-				{
-					NET_OUT*	netOut = ( NET_OUT* )&data;
-					playerInfo[netOut->id].active = false;
-					printf( "%dP %sさんがログアウトしました。\n", netOut->id, playerInfo[netOut->id].name );
-				}
+				SignOutReceive( data );
 				break;
 
 			default:
@@ -154,20 +128,60 @@ GameParam*	gameParam = nullptr;
 	//	送信
 	void	GameParam::Send( void )
 	{
-
+		//	位置データ送信
+		SendCharaData();
 	}
 
 //----------------------------------------------------------------------------------
 //	受信処理
 //----------------------------------------------------------------------------------
 
+	//	キャラデータ受信
+	void	GameParam::CharaInfoReceive( const LPSTR& data )
+	{
+		NET_CHARA*	netChara = ( NET_CHARA* )data;
+		SetPlayerParam( netChara->id, netChara->pos, netChara->angle );
+	}
+
+	//	サインアップ受信
+	void	GameParam::SignUpReceive( const LPSTR& data )
+	{
+		NET_IN*	netIn = ( NET_IN* )data;
+		SetPlayerInfo( netIn->id, netIn->name );
+		printf( "%dP %sが参加しました。\n", netIn->id, netIn->name );
+	}
+
+	//	サインアウト受信
+	void	GameParam::SignOutReceive( const LPSTR& data )
+	{
+		NET_OUT*	netOut = ( NET_OUT* )data;
+		playerInfo[netOut->id].active = false;
+		printf( "%dP %sさんがログアウトしました。\n", netOut->id, playerInfo[netOut->id].name );
+	}
+
+//----------------------------------------------------------------------------------
+//	送信処理
+//----------------------------------------------------------------------------------
+
+	//	位置データ送信
+	void	GameParam::SendCharaData( void )
+	{
+		//	位置データ送信
+		NET_CHARA	netChara;
+
+		//	プレイヤーの位置情報送信( 後で関数化 )
+		netChara.id = myIndex;
+		netChara.pos = playerManager->GetPlayer()->GetPos();
+		netChara.angle = playerManager->GetPlayer()->GetAngle();
+		SocketClient::Send( ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+	}
 
 //----------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------
 
 	//	プレイヤー情報設定
-	void	GameParam::SetPlayerInfo( int id, const LPSTR name )
+	void	GameParam::SetPlayerInfo( int id, const LPSTR& name )
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
@@ -181,7 +195,7 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle = param.angle;

@@ -100,7 +100,6 @@ sceneMain::~sceneMain( void )
 	SafeDelete( gameParam );
 	playerManager->Release();
 	uiManager->Release();
-	//drawShape->Release();
 	//	WinSock終了
 	WSACleanup();
 }
@@ -113,11 +112,11 @@ sceneMain::~sceneMain( void )
 void	sceneMain::Update( void )
 {
 	//	受信処理は別スレッドで回しておく
-	std::thread		threadFunc1( ThreadFunc1 );
+	std::thread		threadFunc1( ThreadReceive );
 	threadFunc1.join();
 
 	//	サーバーへの情報送信
-	gameParam->Update();
+	gameParam->Send();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -153,9 +152,17 @@ void	sceneMain::Render( void )
 	uiManager->Render();
 
 	//	各プレイヤー座標表示
-	{
+	DebugRender();
+
+	MyInfoRender();
+}
+
+//	debug用描画
+void	sceneMain::DebugRender( void )
+{
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
+			//	各プレイヤー座標描画
 			PlayerParam	playerParam = gameParam->GetPlayerParam( p );
 			Vector3	p_pos = playerParam.pos;
 			char	str[256];
@@ -172,12 +179,7 @@ void	sceneMain::Render( void )
 				drawShape->DrawSphereMesh( playerParam.pos, 2.0f, 0xFFFFFF00 );
 			}
 		}
-	}
-
-	MyInfoRender();
 }
-
-//	仮
 
 //	自分の情報表示
 void	sceneMain::MyInfoRender( void )
@@ -197,10 +199,10 @@ void	sceneMain::MyInfoRender( void )
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 
-void	sceneMain::ThreadFunc1( void )
+//	受信処理をスレッドで回す
+void	sceneMain::ThreadReceive( void )
 {
 	gameParam->Receive();
-	//m_GameParam->Update();
 }
 
 

@@ -36,9 +36,17 @@ public:
 	void	Send( void );
 	void	Receive( void );
 
+	//	óMˆ—
+	void	CharaInfoReceive( const LPSTR& data );
+	void	SignUpReceive( const LPSTR& data );
+	void	SignOutReceive( const LPSTR& data );
+
+	//	‘—Mˆ—
+	void	SendCharaData( void );
+
 	//	î•ñİ’è
-	void	SetPlayerInfo( int id, LPSTR name );
-	void	SetPlayerParam( int id, PlayerParam& param );
+	void	SetPlayerInfo( int id, const LPSTR& name );
+	void	SetPlayerParam( int id, const PlayerParam& param );
 	void	SetPlayerParam( int id, const Vector3& pos, float angle );
 	
 	//	î•ñæ“¾
