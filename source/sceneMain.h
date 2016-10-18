@@ -10,7 +10,6 @@ class GameParam;
 class	sceneMain : public Scene
 {
 private:
-	static	GameParam*	m_GameParam;
 
 public:
 	~sceneMain( void );
@@ -20,10 +19,10 @@ public:
 	void Update( void );	//	XV
 	void Render( void );	//	•`‰æ
 
-	//	î•ñæ“¾
+	//	“®ìŠÖ”
+	void	DebugRender( void );
 	void	MyInfoRender( void );
-	static	void	ThreadFunc1( void );
-	static	void	ThreadFunc2( void );
+	static	void	ThreadReceive( void );
 };
 
 

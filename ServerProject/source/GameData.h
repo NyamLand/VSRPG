@@ -20,12 +20,19 @@
 //	プレイヤーデータ
 //-------------------------------------------------------------------------------------
 
+	//	データ情報
+	enum DATA_INFO
+	{
+		COMMAND,
+		ID,
+		DATA
+	};
+
 	//	プレイヤー基本情報
 	struct PlayerInfo
 	{
 		bool	active;
 		char	name[17];
-		int		type;
 	};
 
 	//	プレイヤーパラメータ
@@ -33,60 +40,41 @@
 	{
 		Vector3	pos;
 		float		angle;
-		int			motion;
 	};
 
 //-------------------------------------------------------------------------------------
 //	ネット情報
 //-------------------------------------------------------------------------------------
 
-	//	動作定数
+	//	コマンド情報
 	enum COMMANDS
 	{
 		NO_COMMAND = -1,
 		CHARA_INFO,
-		CHAT,
 		SIGN_UP = 10,
 		SIGN_OUT,
-		COMMAND_MAX
 	};
 
-	//	基本情報
-	struct NET_INFO
+	//	キャラ情報
+	struct NET_CHARA
 	{
-		char com;
+		char	com;
 		int		id;
-		int		type;
-		char	name[17];
+		float	angle;
+		Vector3	pos;
 	};
 
-	//	チャット情報
-	struct NET_CHAT
-	{
-		char  com;
-		int	  id;
-		char  msg[50];
-	} ;
-
-	//	退室情報
+	//	サインアウト
 	struct NET_OUT
 	{
 		char	com;
 		int		id;
 	};
 
-	//	位置情報
-	struct NET_POS
-	{
-		char com;
-		int id;
-		Vector3	pos;
-	};
-
-	//	移動情報
-	struct NET_MOVE
+	//	サインイン
+	struct NET_IN
 	{
 		char	com;
 		int		id;
-		float	x, y, z;
+		char	name[17];
 	};

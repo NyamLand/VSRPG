@@ -29,8 +29,6 @@
 
 iexMesh*	stage = nullptr;	//	仮(絶対消す)
 //BaseEquipment* baseEquipment;	//	仮(絶対消す)
-GameParam*	sceneMain::m_GameParam = nullptr;
-
 
 //*****************************************************************************************************************************
 //
@@ -53,8 +51,7 @@ bool	sceneMain::Initialize( void )
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 	
 	//	GameParam初期化
-	m_GameParam = new GameParam();
-	//gameParam = m_GameParam;
+	gameParam = new GameParam();
 
 	//	カメラ設定
 	mainView = new Camera();
@@ -81,17 +78,15 @@ bool	sceneMain::Initialize( void )
 	ifs >> addr;
 	ifs >> name;
 
+	//drawShape->Initialize();
+
 	//	クライアント初期化( serverと接続 )
-	if ( !m_GameParam->InitializeClient( addr, PORT_NUM, name, 0 ) )
+	if ( !gameParam->InitializeClient( addr, PORT_NUM, name, 0 ) )
 	{
 		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
 		PostQuitMessage( 0 );
 		return	false;
 	}
-
-
-
-
 	//仮
 	//baseEquipment = new BaseEquipment();
 	
@@ -102,10 +97,9 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	SafeDelete( m_GameParam );
+	SafeDelete( gameParam );
 	playerManager->Release();
 	uiManager->Release();
-
 	//	WinSock終了
 	WSACleanup();
 }
@@ -118,11 +112,11 @@ sceneMain::~sceneMain( void )
 void	sceneMain::Update( void )
 {
 	//	受信処理は別スレッドで回しておく
-	std::thread		threadFunc1( ThreadFunc1 );
+	std::thread		threadFunc1( ThreadReceive );
 	threadFunc1.join();
 
 	//	サーバーへの情報送信
-	m_GameParam->Update();
+	gameParam->Send();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -158,40 +152,43 @@ void	sceneMain::Render( void )
 	uiManager->Render();
 
 	//	各プレイヤー座標表示
-	{
+	DebugRender();
+
+	MyInfoRender();
+}
+
+//	debug用描画
+void	sceneMain::DebugRender( void )
+{
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			PlayerParam	playerParam = m_GameParam->GetPlayerParam( p );
+			//	各プレイヤー座標描画
+			PlayerParam	playerParam = gameParam->GetPlayerParam( p );
 			Vector3	p_pos = playerParam.pos;
 			char	str[256];
 			sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
 			IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
 
 			//	自分はスキップ
-			if ( m_GameParam->GetMyIndex() == p )	continue;
+			if ( gameParam->GetMyIndex() == p )	continue;
 
 			//	仮で球体描画
-			if ( m_GameParam->GetPlayerInfo(p).active )
+			if ( gameParam->GetPlayerInfo( p ).active )
 			{
 				//	球体描画
-				drawShape->DrawSphereMesh( playerParam.pos, 1.5f, 0xFFFFFF00 );
+				drawShape->DrawSphereMesh( playerParam.pos, 2.0f, 0xFFFFFF00 );
 			}
 		}
-	}
-
-	MyInfoRender();
 }
-
-//	仮
 
 //	自分の情報表示
 void	sceneMain::MyInfoRender( void )
 {
 	//	自分のID( Player番号 )
-	int	 id = m_GameParam->GetMyIndex();
+	int	 id = gameParam->GetMyIndex();
 	
 	//	自分の名前
-	LPSTR name = m_GameParam->GetMyInfo( id ).name;
+	LPSTR name = gameParam->GetMyInfo( id ).name;
 	
 	//	自分の座標
 	Vector3	pos = playerManager->GetPlayer()->GetPos();
@@ -202,28 +199,10 @@ void	sceneMain::MyInfoRender( void )
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 
-void	sceneMain::ThreadFunc1( void )
+//	受信処理をスレッドで回す
+void	sceneMain::ThreadReceive( void )
 {
-	m_GameParam->Receive();
-	//m_GameParam->Update();
-}
-
-void	sceneMain::ThreadFunc2( void )
-{
-	//	サーバーへの情報送信
-	m_GameParam->Update();
-
-	//	GameManager更新
-	gameManager->Update();
-
-	//	player更新
-	playerManager->Update();
-
-	//	ui更新
-	uiManager->Update();
-
-	//	camera更新
-	mainView->Update( playerManager->GetPlayer()->GetPos() );
+	gameParam->Receive();
 }
 
 

@@ -64,10 +64,10 @@
 	}
 
 	//	受信
-	int	UDPServer::Receive( const LPSTR data, int* size )
+	int		UDPServer::Receive( const LPSTR data, int* size )
 	{
 		//	タイムアウト設定
-		struct	timeval	tv = { 0, 0 };
+		struct	timeval	tv = { 0, 1000 };
 
 		//	ソケットリスト初期化
 		fd_set	fd_work;
@@ -80,7 +80,7 @@
 		if ( n <= 0 )	return	-1;
 
 		//	データ受信用変数準備
-		int		i,	recvsize;
+		int		recvsize;
 		int		addr_len;
 		struct	sockaddr_in	addr;
 
@@ -90,33 +90,32 @@
 		*size = recvsize;
 		if ( recvsize <= 0 )	return	-1;	//	エラー
 
-		//	クライアント検索
-		//	アドレスを比較し、クライアントを検索する
+		int	command = ( int )data[COMMAND];
 
-		//	IDが未割り当てだと新規受け入れ
-		if( data[1] != -1 )
+		if ( command == COMMANDS::SIGN_UP )
 		{
-			for ( i = 0; i < PLAYER_MAX; i++ )
+			//	新規受入れ
+			for ( int i = 0; i<PLAYER_MAX; i++ )
 			{
-				if ( client_addr[i].sin_addr.S_un.S_addr == 0 )	continue;
-
-				//	受信元と比較
-				if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )	return	i;
-
-				//return	data[1];
+				if ( client_addr[i].sin_addr.S_un.S_addr != 0 ) continue;
+				client_addr[i] = addr;
+				return i;
 			}
 		}
-		
-		//	新規受け入れ
-		//	検索でヒットしない場合は新規クライアントとして受け入れる
-		for ( i = 0; i < PLAYER_MAX; i++ )
-		{
-			if ( client_addr[i].sin_addr.S_un.S_addr != 0 )	continue;
-			client_addr[i] = addr;
-			return	i;
-		}
-		
 
+		//	クライアント検索
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( client_addr[i].sin_addr.S_un.S_addr == 0 ) continue;
+
+			if ( addr.sin_addr.S_un.S_addr == client_addr[i].sin_addr.S_un.S_addr )
+			{
+				int id = atoi( &data[ID] );
+				if ( i == id )	return	i;
+				else continue;
+			}
+		}
+	
 		return	-1;
 	}
 

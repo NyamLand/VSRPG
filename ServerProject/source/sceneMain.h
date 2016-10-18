@@ -11,7 +11,6 @@ class	sceneMain : public Scene
 {
 private:
 	iexView*	view;
-	static	GameParam*	gameParam;
 	
 public:
 	~sceneMain();

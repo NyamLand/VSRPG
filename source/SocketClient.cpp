@@ -69,7 +69,7 @@
 		if ( sock == INVALID_SOCKET )	return	false;
 
 		//	タイムアウト設定( 1000ms )
-		int	timeout = TIME_OUT;
+		int	timeout = 0;
 		if ( setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, ( LPSTR )&timeout, sizeof( timeout ) ) == SOCKET_ERROR )
 			return	false;
 
@@ -87,13 +87,12 @@
 	}
 
 	//	データ受信
-	int	SocketClient::Receive( const LPSTR data, int size )
+	int		SocketClient::Receive( const LPSTR data, int size )
 	{
-		int	recvSize;
-		recvSize = recv( sock, data, size, 0 );
+		int recvSize = recv( sock, data, size, 0 );
 
 		//	エラー(タイムアウト)判定
-		if ( recvSize == SOCKET_ERROR )	return	0;
+		if ( recvSize == SOCKET_ERROR )	return	-1;
 
 		return	recvSize;
 	}

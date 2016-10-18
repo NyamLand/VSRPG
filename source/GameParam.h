@@ -9,7 +9,6 @@
 
 //	include
 #include	"GameData.h"
-//#include	"winsock.h"
 #include	"SocketClient.h"
 
 //	class
@@ -22,9 +21,6 @@ private:
 	//	Player情報
 	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
-
-	//	受信関数ポインタ
-	//void( GameParam::*ReceiveFunction[DATA_MODE::DATA_MAX] )( LPSTR data );
 
 public:
 	//	初期化・解放
@@ -40,10 +36,18 @@ public:
 	void	Send( void );
 	void	Receive( void );
 
+	//	受信処理
+	void	CharaInfoReceive( const LPSTR& data );
+	void	SignUpReceive( const LPSTR& data );
+	void	SignOutReceive( const LPSTR& data );
+
+	//	送信処理
+	void	SendCharaData( void );
+
 	//	情報設定
-	void	SetPlayerInfo( int id, LPSTR name, int type );
-	void	SetPlayerParam( int id, PlayerParam& param );
-	void	SetPlayerParam( int id, Vector3& pos, float angle, int motion );
+	void	SetPlayerInfo( int id, const LPSTR& name );
+	void	SetPlayerParam( int id, const PlayerParam& param );
+	void	SetPlayerParam( int id, const Vector3& pos, float angle );
 	
 	//	情報取得
 	PlayerInfo	GetPlayerInfo( int id )const;

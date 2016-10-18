@@ -112,6 +112,9 @@
     <Filter Include="ソース ファイル\Scene\sceneResult">
       <UniqueIdentifier>{14dca739-1d2c-45f6-b34b-6e933fb22ce2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{58a0a826-afb9-406f-8b84-c126ae0736c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
