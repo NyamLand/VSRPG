@@ -179,25 +179,25 @@ void	sceneMain::Render( void )
 //	debug用描画
 void	sceneMain::DebugRender( void )
 {
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+	for ( int p = 0; p < PLAYER_MAX; p++ )
+	{
+		//	各プレイヤー座標描画
+		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
+		Vector3	p_pos = playerParam.pos;
+		char	str[256];
+		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
+		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
+
+		//	自分はスキップ
+		if ( gameParam->GetMyIndex() == p )	continue;
+
+		//	仮で球体描画
+		if ( gameParam->GetPlayerInfo( p ).active )
 		{
-			//	各プレイヤー座標描画
-			PlayerParam	playerParam = gameParam->GetPlayerParam( p );
-			Vector3	p_pos = playerParam.pos;
-			char	str[256];
-			sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
-			IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
-
-			//	自分はスキップ
-			if ( gameParam->GetMyIndex() == p )	continue;
-
-			//	仮で球体描画
-			if ( gameParam->GetPlayerInfo( p ).active )
-			{
-				//	球体描画
-				drawShape->DrawSphereMesh( playerParam.pos, 2.0f, 0xFFFFFF00 );
-			}
+			//	球体描画
+			drawShape->DrawSphereMesh( playerParam.pos, 2.0f, 0xFFFFFF00 );
 		}
+	}
 }
 
 //	自分の情報表示
