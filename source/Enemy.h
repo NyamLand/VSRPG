@@ -1,6 +1,4 @@
 
-#ifndef		__ENEMY_H__
-#define		__ENEMY_H__
 #pragma once
 
 //***************************************************************
@@ -30,23 +28,22 @@ public:
 	//	初期化・解放
 	Enemy(void);
 	~Enemy(void)override;
-	bool	Initialize(void)override;
+	virtual bool	Initialize(void)=0;
 
 	//	更新・描画
-	void	Update(void)override;
-	void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)override;
+	virtual void	Update(void) = 0;
+	virtual void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)=0;
 	//	各モード動作関数
 	void	MoveMode(void);
 	//void	PostureMode( void );
 
 	//	動作関数
-	void	Move(void);
+	virtual void	Move(void)=0;
 
 	//	攻撃関数
-	void	Attack(void);
+	virtual void	Attack(void)=0;
 
 
 
 
 };
-#endif // !__ENEMY_H__
