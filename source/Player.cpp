@@ -124,9 +124,9 @@ Player::Player(void) : texture(nullptr), hp(0)
 	{
 		//	スティックによる移動
 		Move();
-		if (KEY_Get(KEY_A) == 3) SetMode(MODE::SWOADATTACK);		//仮
-		if (KEY_Get(KEY_B) == 3) SetMode(MODE::MAGICATTACK);
-		if (KEY_Get(KEY_C) == 3) SetMode(MODE::AVOID);
+		if ( KEY_Get( KEY_A ) == 3 ) SetMode( MODE::SWOADATTACK );		//仮
+		if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
+		if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
 	}
 
 	void	Player::ModeSwordAttack( void )

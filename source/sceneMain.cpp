@@ -75,7 +75,7 @@ bool	sceneMain::Initialize( void )
 	gameManager->Initialize();
 
 	//	テキスト読み込み
-	char addr[64], name[64];
+	char addr[64], name[17];
 	std::ifstream	ifs( "onlineInfo.txt" );
 	ifs >> addr;
 	ifs >> name;
@@ -83,10 +83,19 @@ bool	sceneMain::Initialize( void )
 	//drawShape->Initialize();
 
 	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, PORT_NUM, name, 0 ) )
+	bool	serverOK = false;
+	for ( int i = 0; i < 100; i++ )
 	{
-		MessageBox( iexSystem::Window, "クライアント初期化失敗", "ERROR", MB_OK );
-		PostQuitMessage( 0 );
+		printf( "ホスト検索中\n" );
+		if ( gameParam->InitializeClient( addr, 7000, name ) )
+		{
+			serverOK = true;
+			break;
+		}
+	}
+	if ( !serverOK )
+	{
+		MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
 		return	false;
 	}
 	//仮
@@ -103,6 +112,7 @@ sceneMain::~sceneMain( void )
 	playerManager->Release();
 	enemyManager->Release();
 	uiManager->Release();
+	
 	//	WinSock終了
 	WSACleanup();
 }
@@ -114,12 +124,12 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	//	受信処理は別スレッドで回しておく
-	std::thread		threadFunc1( ThreadReceive );
-	threadFunc1.join();
+	//	経過時間取得
+	float elapseTime = GetElapseTime();
+	printf( "経過時間 : %f\n", elapseTime );
 
-	//	サーバーへの情報送信
-	gameParam->Send();
+	//	サーバーから情報受信
+	gameParam->Update();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -197,7 +207,7 @@ void	sceneMain::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 	
 	//	自分の名前
-	LPSTR name = gameParam->GetMyInfo( id ).name;
+	LPSTR name = gameParam->GetPlayerName( id );
 	
 	//	自分の座標
 	Vector3	pos = playerManager->GetPlayer()->GetPos();
@@ -207,13 +217,6 @@ void	sceneMain::MyInfoRender( void )
 	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
-
-//	受信処理をスレッドで回す
-void	sceneMain::ThreadReceive( void )
-{
-	gameParam->Receive();
-}
-
 
 
 

@@ -22,7 +22,6 @@ public:
 	//	“®ìŠÖ”
 	void	DebugRender( void );
 	void	MyInfoRender( void );
-	static	void	ThreadReceive( void );
 };
 
 

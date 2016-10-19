@@ -1,11 +1,11 @@
 
 #pragma once
 
-//***************************************************************
+//*****************************************************************************************************************************
 //
 //	GameParamクラス
 //
-//***************************************************************
+//*****************************************************************************************************************************
 
 //	include
 #include	"GameData.h"
@@ -15,45 +15,37 @@
 class GameParam : public SocketClient
 {
 private:
-	//	自分のプレイヤー番号
-	int	myIndex;
+	int		myIndex;
 
-	//	Player情報
-	PlayerInfo		playerInfo[PLAYER_MAX];
+	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
 
 public:
 	//	初期化・解放
 	GameParam( void );
 	~GameParam( void );
-	bool	InitializeClient( LPSTR addr, int nPort, LPSTR name, int type );
-	void	CloseClient( void );
+	bool InitializeClient( char* addr, int nPort, char* name );
+	void CloseClient( void );
 
-	//	更新
-	void	Update( void );
+	//	データ更新（送受信）
+	void Update( void );
+	void Receive( void );
 
-	//	送受信
-	void	Send( void );
-	void	Receive( void );
-
-	//	受信処理
-	void	CharaInfoReceive( const LPSTR& data );
-	void	SignUpReceive( const LPSTR& data );
-	void	SignOutReceive( const LPSTR& data );
-
-	//	送信処理
-	void	SendCharaData( void );
-
-	//	情報設定
-	void	SetPlayerInfo( int id, const LPSTR& name );
-	void	SetPlayerParam( int id, const PlayerParam& param );
-	void	SetPlayerParam( int id, const Vector3& pos, float angle );
+	//	プレイヤーパラメータ操作
+	void SetPlayerParam( int id, PlayerParam& param );
+	void SetPlayerParam( int id, Vector3& pos );
+	PlayerParam GetPlayerParam( int id ){ return playerParam[id]; }
+	PlayerInfo	GetPlayerInfo( int id ){ return playerInfo[id]; }
 	
-	//	情報取得
-	PlayerInfo	GetPlayerInfo( int id )const;
-	PlayerParam GetPlayerParam( int id )const;
-	PlayerInfo	GetMyInfo( int id )const;
-	int		GetMyIndex( void )const;
+	//	プレイヤー情報操作
+	void  SetPlayerInfo( int id, char* name );
+	void  RemovePlayerInfo( int id );
+
+	bool  GetPlayerActive( int id ){ return playerInfo[id].active; }
+	int   GetMyIndex(){ return myIndex; }
+	char* GetPlayerName( int id ){ return playerInfo[id].name; }
 };
 
 extern	GameParam*	gameParam;
+
+

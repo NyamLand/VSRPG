@@ -30,6 +30,14 @@ public:
 	int		Receive( void );
 	int		Send( int client );
 
+	//	óMŠÖ”
+	void	CharaInfoReceive( int client, const LPSTR& data );
+	void	SignUpReceive( int client, const LPSTR& data );
+	void	SignOutReceive( int client );
+
+	//	‘—MŠÖ”
+	void	CharaInfoSend( void );
+
 	//	î•ñİ’è
 	void	SetPlayer( int id, const LPSTR name );
 	void	SetPlayerParam( int id, const PlayerParam& param );
