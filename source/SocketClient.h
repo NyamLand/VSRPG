@@ -1,35 +1,25 @@
 
-#pragma	once
+#pragma once
 
-//********************************************************************
-//
-//	SocketClientクラス
-//
-//********************************************************************
-
-//	include&define
 #include	<winsock.h>
 
-
-//	class
 class SocketClient
 {
-//private:
+private:
 protected:
 	SOCKET	sock;
-	struct	sockaddr_in		server;
+	struct sockaddr_in server;
 
 public:
-	//	初期化・解放
-	SocketClient( void );
-	~SocketClient( void );
-	bool	InitializeTCP( WORD port, const LPSTR addr );
-	bool	InitializeUDP( WORD port, const LPSTR addr );
+	SocketClient() : sock(INVALID_SOCKET) {}
+	~SocketClient()
+	{
+		if( sock != INVALID_SOCKET ) closesocket(sock);
+	}
 
-	//	送受信
-	void	Send( const LPSTR data, int size );
-	int		Receive( const LPSTR data, int size );
+	bool InitializeTCP( WORD port, char* addr );
+	bool InitializeUDP( WORD port, char* addr );
 
-	//	動作関数
-
+	void send( char *data, int size );
+	int	receive( char *data, int size );
 };
