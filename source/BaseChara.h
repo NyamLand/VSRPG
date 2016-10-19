@@ -19,10 +19,12 @@ protected:
 	//	パラメータ
 	Vector3		pos;
 	Vector3		move;
-	float			angle;
-	float			speed;
-	float			scale;
-	int				mode;
+	float		angle;
+	float		speed;
+	float		scale;
+	int			mode;
+
+	
 
 public:
 	//	初期化・解放

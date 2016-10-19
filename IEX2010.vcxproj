@@ -112,8 +112,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
+    <ClCompile Include="source\BigEnemy.cpp" />
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
+    <ClCompile Include="source\EnemyManager.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
@@ -123,6 +125,7 @@
     <ClCompile Include="source\GameManager.cpp" />
     <ClCompile Include="source\GlobalFunction.cpp" />
     <ClCompile Include="source\sceneMain.cpp" />
+    <ClCompile Include="source\SmallEnemy.cpp" />
     <ClCompile Include="source\SocketClient.cpp" />
     <ClCompile Include="source\system\Framework.cpp" />
     <ClCompile Include="source\system\System.cpp" />
@@ -152,6 +155,7 @@
     <ClInclude Include="source\BigEnemy.h" />
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\Enemy.h" />
+    <ClInclude Include="source\EnemyManager.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\Player.h" />

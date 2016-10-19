@@ -11,6 +11,7 @@
 #include	"UIManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
+#include	"EnemyManager.h"
 
 #pragma comment( lib, "WSOCK32.lib" )
 
@@ -59,7 +60,8 @@ bool	sceneMain::Initialize( void )
 
 	//	playerİ’è
 	playerManager->Initialize();
-
+	//	enemyİ’è
+	enemyManager->Initialize();
 	//	stageİ’è
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
@@ -91,6 +93,7 @@ sceneMain::~sceneMain( void )
 	SafeDelete( stage );
 	SafeDelete( m_GameParam );
 	playerManager->Release();
+	enemyManager->Release();
 	uiManager->Release();
 
 	//	WinSockI—¹
@@ -111,6 +114,9 @@ void	sceneMain::Update( void )
 
 	//	playerXV
 	playerManager->Update();
+
+	//	enemyXV
+	enemyManager->Update();
 
 	//	uiXV
 	uiManager->Update();
@@ -135,6 +141,9 @@ void	sceneMain::Render( void )
 
 	//	player•`‰æ
 	playerManager->Render();
+
+	//	enemy•`‰æ
+	enemyManager->Render();
 
 	//	ui•`‰æ
 	uiManager->Render();
