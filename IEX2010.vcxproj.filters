@@ -231,6 +231,15 @@
     <ClCompile Include="source\sceneTitle.cpp">
       <Filter>ソース ファイル\Scene\sceneTitle</Filter>
     </ClCompile>
+    <ClCompile Include="source\EnemyManager.cpp">
+      <Filter>ソース ファイル\Manager\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BigEnemy.cpp">
+      <Filter>ソース ファイル\Enemy\BigEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SmallEnemy.cpp">
+      <Filter>ソース ファイル\Enemy\SmallEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -313,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
       <Filter>ソース ファイル\Scene\sceneTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyManager.h">
+      <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
