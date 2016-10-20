@@ -37,6 +37,12 @@
     <Filter Include="ソース ファイル\Stage">
       <UniqueIdentifier>{2338350b-c6b5-4f04-b1bb-ae12bf927d21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{b9e49e64-c0fe-4bf2-9352-65e62c4ba62c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerManager">
+      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -53,6 +59,15 @@
     </ClCompile>
     <ClCompile Include="Source\IEX_RayMesh.cpp">
       <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameData.cpp">
+      <Filter>ソース ファイル\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerManager.cpp">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="Source\stage.h">
       <Filter>ソース ファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerManager.h">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

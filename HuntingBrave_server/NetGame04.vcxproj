@@ -92,8 +92,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GameData.cpp" />
     <ClCompile Include="Source\GameParam.cpp" />
     <ClCompile Include="Source\IEX_RayMesh.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\PlayerManager.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\stage.cpp" />
     <ClCompile Include="Source\UDPServer.cpp" />
@@ -102,6 +105,8 @@
     <ClInclude Include="Source\GameData.h" />
     <ClInclude Include="Source\GameParam.h" />
     <ClInclude Include="IEX\iextreme.h" />
+    <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\PlayerManager.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\stage.h" />
     <ClInclude Include="Source\UDPServer.h" />

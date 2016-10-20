@@ -240,6 +240,9 @@
     <ClCompile Include="source\SmallEnemy.cpp">
       <Filter>ソース ファイル\Enemy\SmallEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="source\GameData.cpp">
+      <Filter>ソース ファイル\GameData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">

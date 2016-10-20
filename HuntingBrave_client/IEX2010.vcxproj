@@ -118,6 +118,7 @@
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyManager.cpp" />
+    <ClCompile Include="source\GameData.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />

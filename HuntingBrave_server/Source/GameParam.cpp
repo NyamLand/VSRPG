@@ -36,10 +36,7 @@
 		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
 		bool successInit = Initialize( 7000 );
 
-		if ( successInit )
-		{
-			printf( "サーバー初期化成功\n" );
-		}
+		if ( successInit )	printf( "サーバー初期化成功\n" );
 		return successInit;
 	}
 
@@ -57,11 +54,8 @@
 		{
 			if( playerInfo[p].active == false ) continue;
 
-			NET_CHARA netChara;
-			netChara.id = p;
-			netChara.com = 0;
-			netChara.pos = playerParam[p].pos;
-			send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+			//	移動情報送信
+			SendCharaInfo( p );
 		}
 
 		//	終端通知
@@ -81,59 +75,86 @@
 		switch( data[COMMAND] )
 		{
 		case COMMANDS::CHARA_INFO:		//	移動情報
-			{
-				NET_CHARA* d = ( NET_CHARA* )&data;
-				playerParam[client].pos = d->pos;
-			}
+			ReceiveChara( client, data );
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
-			{
-				NET_IN* netIn = ( NET_IN* )&data;
-				SetPlayer( client, netIn->name );
-
-				netIn->id = client;
-				send( client, ( char* )netIn, sizeof( NET_IN ) );
-
-				//	全員にデータ送信
-				for( int p = 0 ; p < PLAYER_MAX ; p++ )
-				{
-					if( playerInfo[p].active == false ) continue;
-					send( p, ( char* )netIn, sizeof( NET_IN ) );
-				}
-
-				//	全データ送信
-				for( int p=0 ; p<PLAYER_MAX ; p++ )
-				{
-					if( playerInfo[p].active == false ) continue;
-					netIn->id = p;
-					strcpy( netIn->name, playerInfo[p].name );
-					send( client, ( char* )netIn, sizeof( NET_IN ) );
-				}
-				printf( "%dP %sさんが参加しました。\n", client + 1, netIn->name );
-			}
+			ReceiveSignUp( client, data );
 			break;
 
-		case COMMANDS::SIGN_OUT:
-			{
-				playerInfo[client].active = false;
-				CloseClient( client );
-
-				NET_OUT	d;
-				d.com = COMMANDS::SIGN_OUT;
-				d.id  = client;
-
-				//	全員にデータ送信
-				for( int p = 0 ; p < PLAYER_MAX ; p++ )
-				{
-					if( playerInfo[p].active == false ) continue;
-					send( p, ( char* )&d, sizeof( NET_OUT ) );
-				}
-				printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
-			}		
+		case COMMANDS::SIGN_OUT:	//	脱退
+			ReceiveSignOut( client, data );
 			break;
 		}
 		return client;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	送信処理
+//----------------------------------------------------------------------------------------------
+
+	//	キャラ情報送信
+	void	GameParam::SendCharaInfo( int client )
+	{
+		NET_CHARA netChara( client, playerParam[client].pos );
+		send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+	}
+
+//----------------------------------------------------------------------------------------------
+//	受信処理
+//----------------------------------------------------------------------------------------------
+
+	//	キャラ情報受信
+	void	GameParam::ReceiveChara( int client, const LPSTR& data )
+	{
+		NET_CHARA* d = ( NET_CHARA* )data;
+		playerParam[client].pos = d->pos;
+	}
+
+	//	サインアップ情報受信
+	void	GameParam::ReceiveSignUp( int client, const LPSTR& data )
+	{
+		//	名前保存
+		NET_IN* netIn = ( NET_IN* )data;
+		SetPlayer( client, netIn->name );
+
+		//	IDを返信
+		netIn->id = client;
+		send( client, ( char* )netIn, sizeof( NET_IN ) );
+
+		//	全員にデータ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			send( p, ( char* )netIn, sizeof( NET_IN ) );
+		}
+
+		//	全データ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			netIn->id = p;
+			strcpy( netIn->name, playerInfo[p].name );
+			send( client, ( char* )netIn, sizeof( NET_IN ) );
+		}
+		printf("%dP %sさんが参加しました。\n", client + 1, netIn->name);
+	}
+
+	//	サインアウト情報受信
+	void	GameParam::ReceiveSignOut( int client, const LPSTR& data )
+	{
+		playerInfo[client].active = false;
+		CloseClient( client );
+
+		NET_OUT	netOut( client );
+
+		//	全員にデータ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			send( p, ( char* )&netOut, sizeof( NET_OUT ) );
+		}
+		printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
 	}
 
 //----------------------------------------------------------------------------------------------
