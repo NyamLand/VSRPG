@@ -112,6 +112,9 @@
     <Filter Include="Client">
       <UniqueIdentifier>{58a0a826-afb9-406f-8b84-c126ae0736c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\HpUI">
+      <UniqueIdentifier>{16b20290-8c42-401e-abb5-7361b8ddebb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -237,6 +240,9 @@
     <ClCompile Include="source\GameData.cpp">
       <Filter>ソース ファイル\GameData</Filter>
     </ClCompile>
+    <ClCompile Include="source\HpUI.cpp">
+      <Filter>ソース ファイル\UI\HpUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -319,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="source\EnemyManager.h">
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\HpUI.h">
+      <Filter>ソース ファイル\UI\HpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
