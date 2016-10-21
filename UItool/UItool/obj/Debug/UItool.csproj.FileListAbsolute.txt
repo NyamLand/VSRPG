@@ -7,3 +7,12 @@ C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.Propert
 C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.csproj.GenerateResource.Cache
 C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.exe
 C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.pdb
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\bin\Debug\UItool.exe.config
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\obj\Debug\UItool.exe
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\obj\Debug\UItool.pdb
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\bin\Debug\UItool.exe
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\bin\Debug\UItool.pdb
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\obj\Debug\UItool.csprojResolveAssemblyReference.cache
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\obj\Debug\UItool.Form1.resources
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\obj\Debug\UItool.Properties.Resources.resources
+C:\Users\2130026.MAETEL.000\Desktop\VSRPG\UItool\UItool\obj\Debug\UItool.csproj.GenerateResource.Cache
