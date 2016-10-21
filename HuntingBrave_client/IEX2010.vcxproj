@@ -112,6 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
+    <ClCompile Include="source\BaseUI.cpp" />
     <ClCompile Include="source\BigEnemy.cpp" />
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\CSVReader.cpp" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
+    <ClInclude Include="source\BaseUI.h" />
     <ClInclude Include="source\BigEnemy.h" />
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\CSVReader.h" />

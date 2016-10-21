@@ -5,6 +5,7 @@
 #include	<iostream>
 #include	<thread>
 #include	"GlobalFunction.h"
+#include	"BaseUI.h"
 #include	"DrawShape.h"
 #include	"GameParam.h"
 #include	"GameData.h"

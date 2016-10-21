@@ -246,6 +246,9 @@
     <ClCompile Include="source\HpUI.cpp">
       <Filter>ソース ファイル\UI\HpUI</Filter>
     </ClCompile>
+    <ClCompile Include="source\BaseUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\system\Framework.h">
@@ -331,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="source\HpUI.h">
       <Filter>ソース ファイル\UI\HpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BaseUI.h">
+      <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
