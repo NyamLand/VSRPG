@@ -1,9 +1,0 @@
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\bin\Debug\UItool.exe.config
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\bin\Debug\UItool.exe
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\bin\Debug\UItool.pdb
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.csprojResolveAssemblyReference.cache
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.Form1.resources
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.Properties.Resources.resources
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.csproj.GenerateResource.Cache
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.exe
-C:\Users\takayan\Desktop\対戦型RPG-Git\UItool\UItool\obj\Debug\UItool.pdb
