@@ -45,15 +45,14 @@ public:
 	PlayerParam GetPlayerParam( int id ){ return playerParam[id]; }
 	PlayerInfo	GetPlayerInfo( int id ){ return playerInfo[id]; }
 	
-	//	ƒvƒŒƒCƒ„[î•ñ‘€ì
+	//	î•ñİ’è
 	void  SetPlayerInfo( int id, char* name );
 	void  RemovePlayerInfo( int id );
-
+	
+	//	î•ñæ“¾
 	bool  GetPlayerActive( int id ){ return playerInfo[id].active; }
-	int   GetMyIndex(){ return myIndex; }
+	int		GetMyIndex( void ){ return myIndex; }
 	char* GetPlayerName( int id ){ return playerInfo[id].name; }
 };
 
 extern	GameParam*	gameParam;
-
-

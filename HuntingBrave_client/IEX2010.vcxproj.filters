@@ -64,9 +64,6 @@
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{4a747b28-29bc-4552-aaab-eec04ba1e80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\UDPServer">
-      <UniqueIdentifier>{2597754f-8e58-4a2b-a89e-7a698ef9adbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\SocketClient">
       <UniqueIdentifier>{2345738f-1a06-411e-aa85-23aef794d4bd}</UniqueIdentifier>
     </Filter>

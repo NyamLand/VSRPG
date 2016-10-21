@@ -19,8 +19,6 @@
 #include	"BaseEquipment.h"
 //
 
-#pragma comment( lib, "WSOCK32.lib" )
-
 #include	"sceneMain.h"
 
 //*****************************************************************************************************************************
@@ -40,10 +38,6 @@ iexMesh*	stage = nullptr;	//	âº(ê‚ëŒè¡Ç∑)
 
 bool	sceneMain::Initialize( void )
 {
-	//	WinSockèâä˙âª
-	WSADATA	wsaData;
-	WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
-
 	//	ä¬ã´ê›íË
 	iexLight::SetAmbient( 0x404040 );
 	iexLight::SetFog( 800, 1000, 0 );
@@ -51,10 +45,10 @@ bool	sceneMain::Initialize( void )
 	Vector3 dir( 1.0f, -1.0f, -0.5f );
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
-	
+
 	//	GameParamèâä˙âª
 	gameParam = new GameParam();
-
+	
 	//	ÉJÉÅÉâê›íË
 	mainView = new Camera();
 	mainView->Initialize(
@@ -64,8 +58,10 @@ bool	sceneMain::Initialize( void )
 
 	//	playerê›íË
 	playerManager->Initialize();
+
 	//	enemyê›íË
 	enemyManager->Initialize();
+	
 	//	stageê›íË
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 
@@ -114,8 +110,7 @@ sceneMain::~sceneMain( void )
 	enemyManager->Release();
 	uiManager->Release();
 	
-	//	WinSockèIóπ
-	WSACleanup();
+
 }
 
 //*****************************************************************************************************************************
