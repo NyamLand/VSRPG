@@ -2,6 +2,9 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
+#include	"PlayerManager.h"
+
+
 #include	"SmallEnemy.h"
 
 //***************************************************************
@@ -15,7 +18,7 @@
 //------------------------------------------------------------------------------------
 
 //	モデル情報
-#define	Y2009_SCALE	0.02f
+#define	Y2009_SCALE	0.2f
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -45,7 +48,7 @@ SmallEnemy::~SmallEnemy(void)
 bool	SmallEnemy::Initialize(void)
 {
 	//	読み込み
-	Load("DATA/CHR/Y2009/Y2009.IEM");
+	Load("DATA/CHR/ENEMY/zako.IEM");
 
 	SetPos(Vector3(10.0f, 0.0f, 0.0f));
 	SetAngle(0.0f);
@@ -82,10 +85,10 @@ void	SmallEnemy::Update(void)
 }
 
 //	描画
-void	SmallEnemy::Render(iexShader* shader, LPSTR technique)
-{
-	drawShape->DrawSphere(GetPos(), 5.0f, 0xFFFFFFFF);
-}
+//void	SmallEnemy::Render(iexShader* shader, LPSTR technique)
+//{
+//	
+//}
 
 //------------------------------------------------------------------------------------
 //	動作関数
@@ -105,24 +108,21 @@ void	SmallEnemy::MoveMode(void)
 //	移動
 void	SmallEnemy::Move(void)
 {
-	//	左スティックの入力チェック
-	float	axisX = (float)input[0]->Get(KEY_AXISX);
-	float	axisY = -(float)input[0]->Get(KEY_AXISY);
-	float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
-
-	//	入力があれば移動処理
-	if (length >= MIN_INPUT_STICK)
+	//
+	Vector3	vec = playerManager->GetPlayer()->GetPos() - pos;
+	float	length = vec.Length();
+	vec.Normalize();
+	
+	if (length <= 5.0f)
 	{
 		//	モーション設定
-		SetMotion(4);	//	走りモーション
+
+		//	走りモーション
 
 		//	向き調整
-		AngleAdjust(
-			Vector3(axisX, 0.0f, axisY),
-			ANGLE_ADJUST_SPEED);
-
-		//	移動
+		AngleAdjust(vec, speed);
 		SetMove(Vector3(sinf(angle), 0.0f, cosf(angle)) * speed);
+		
 	}
 	else
 	{

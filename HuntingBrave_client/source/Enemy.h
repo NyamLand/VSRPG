@@ -32,7 +32,7 @@ public:
 
 	//	更新・描画
 	virtual void	Update(void) = 0;
-	virtual void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)=0;
+	//virtual void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)=0;
 	//	各モード動作関数
 	void	MoveMode(void);
 	//void	PostureMode( void );

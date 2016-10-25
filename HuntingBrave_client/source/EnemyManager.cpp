@@ -57,7 +57,7 @@ void	EnemyManager::Release(void)
 //	XV
 void	EnemyManager::Update(void)
 {
-	if(KEY_Get(KEY_A)==3)Append(Vector3(10, 0, 0), 0);
+	if(KEY_Get(KEY_A)==3)Append(Vector3(10, 0, 0), 1);
 	for (auto it = enemylist.begin(); it != enemylist.end();)
 	{
 		(*it)->Update();
