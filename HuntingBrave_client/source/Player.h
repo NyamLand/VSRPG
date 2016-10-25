@@ -1,11 +1,30 @@
 
 #pragma once
-
+#include	"BaseEquipment.h"
 //***************************************************************
 //
 //	Playerクラス
 //
 //***************************************************************
+
+struct Status
+{
+	float	hp;
+	float	atk;
+	float	dif;
+	float	mat;
+	float	mdf;
+	float	speed;
+};
+
+//struct Equipments
+//{
+//	BaseEquipment*	atk;
+//	BaseEquipment*	mat;
+//	BaseEquipment*
+//
+//};
+
 
 //	include
 #include	"BaseChara.h"
@@ -41,13 +60,11 @@ namespace MOTION
 class Player : public BaseChara
 {
 private:
-
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );
 
 	iex2DObj*	texture;
 
-	int hp;
 
 public:
 	//	初期化・解放

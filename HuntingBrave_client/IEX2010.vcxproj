@@ -118,6 +118,7 @@
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyManager.cpp" />
+    <ClCompile Include="source\Equipments.cpp" />
     <ClCompile Include="source\GameData.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\Player.cpp" />
@@ -151,7 +152,6 @@
     <ClCompile Include="IEX\IEX_Texture.cpp" />
     <ClCompile Include="IEX\IEX_View.cpp" />
     <ClCompile Include="source\TImerUI.cpp" />
-    <ClCompile Include="source\UDPServer.cpp" />
     <ClCompile Include="source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +162,7 @@
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\EnemyManager.h" />
+    <ClInclude Include="source\Equipments.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\Player.h" />
@@ -181,7 +182,6 @@
     <ClInclude Include="source\system\System.h" />
     <ClInclude Include="IEX\iextreme.h" />
     <ClInclude Include="source\TimerUI.h" />
-    <ClInclude Include="source\UDPServer.h" />
     <ClInclude Include="source\UIManager.h" />
   </ItemGroup>
   <ItemGroup>

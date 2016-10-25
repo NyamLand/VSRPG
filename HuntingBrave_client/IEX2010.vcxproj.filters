@@ -64,9 +64,6 @@
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{4a747b28-29bc-4552-aaab-eec04ba1e80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\UDPServer">
-      <UniqueIdentifier>{2597754f-8e58-4a2b-a89e-7a698ef9adbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\SocketClient">
       <UniqueIdentifier>{2345738f-1a06-411e-aa85-23aef794d4bd}</UniqueIdentifier>
     </Filter>
@@ -114,6 +111,12 @@
     </Filter>
     <Filter Include="Client">
       <UniqueIdentifier>{58a0a826-afb9-406f-8b84-c126ae0736c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Equipment\BaseEquipment">
+      <UniqueIdentifier>{f431a680-d701-4fb1-96f4-08e9dc0ff61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Equipment\Equipments">
+      <UniqueIdentifier>{abb6a795-0a50-4806-a991-275149c712a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -189,9 +192,6 @@
     <ClCompile Include="source\Camera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="source\UDPServer.cpp">
-      <Filter>ソース ファイル\UDPServer</Filter>
-    </ClCompile>
     <ClCompile Include="source\SocketClient.cpp">
       <Filter>ソース ファイル\SocketClient</Filter>
     </ClCompile>
@@ -225,9 +225,6 @@
     <ClCompile Include="source\CSVReader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\BaseEquipment.cpp">
-      <Filter>ソース ファイル\Equipment</Filter>
-    </ClCompile>
     <ClCompile Include="source\sceneTitle.cpp">
       <Filter>ソース ファイル\Scene\sceneTitle</Filter>
     </ClCompile>
@@ -242,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="source\GameData.cpp">
       <Filter>ソース ファイル\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BaseEquipment.cpp">
+      <Filter>ソース ファイル\Equipment\BaseEquipment</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Equipments.cpp">
+      <Filter>ソース ファイル\Equipment\Equipments</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,9 +277,6 @@
     </ClInclude>
     <ClInclude Include="source\Camera.h">
       <Filter>ソース ファイル\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="source\UDPServer.h">
-      <Filter>ソース ファイル\UDPServer</Filter>
     </ClInclude>
     <ClInclude Include="source\SocketClient.h">
       <Filter>ソース ファイル\SocketClient</Filter>
@@ -320,14 +320,17 @@
     <ClInclude Include="source\CSVReader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\BaseEquipment.h">
-      <Filter>ソース ファイル\Equipment</Filter>
-    </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
       <Filter>ソース ファイル\Scene\sceneTitle</Filter>
     </ClInclude>
     <ClInclude Include="source\EnemyManager.h">
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BaseEquipment.h">
+      <Filter>ソース ファイル\Equipment\BaseEquipment</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Equipments.h">
+      <Filter>ソース ファイル\Equipment\Equipments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
