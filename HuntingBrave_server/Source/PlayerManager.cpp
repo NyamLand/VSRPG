@@ -19,13 +19,23 @@
 	//	コンストラクタ
 	PlayerManager::PlayerManager( GameParam* gameParam )
 	{
-	
+		this->gameParam = gameParam;
+
+		//	全プレイヤー初期化
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			player[p] = nullptr;
+		}
 	}
 
 	//	デストラクタ
 	PlayerManager::~PlayerManager( void )
 	{
-
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			delete	player[p];
+			player[p] = nullptr;
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -35,7 +45,7 @@
 	//	更新
 	void	PlayerManager::Update( int id )
 	{
-
+		PlayerParam	param = gameParam->getPlayerParam( id );
 	}
 
 //----------------------------------------------------------------------------------------------

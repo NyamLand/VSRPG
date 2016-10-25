@@ -9,6 +9,8 @@
 
 //	include
 #include	"iextreme.h"
+#include	"CSVReader.h"
+#include	"BaseEquipment.h"
 
 //-------------------------------------------------------------------------------------
 //	プレイヤー情報
@@ -87,3 +89,61 @@
 		NET_OUT( void ){}
 		NET_OUT( int id ){ this->id; }
 	};
+
+
+
+//*****************************************************************************************************************************
+//	装備品データ
+//*****************************************************************************************************************************
+
+	//装備品データ
+	struct EquipmentInfo
+	{
+		
+		string	name;
+		float	atk;
+		float	def;
+		float	mat;
+		float	mdf;
+		float	hp;
+		float	spe;
+		float	boost;
+		string	text;
+	};
+
+	struct EquipmentData
+	{
+		vector< EquipmentInfo > equipments;
+
+		EquipmentData(void){};
+		void Set(vector<string> tokens);
+
+		//		EquipmentParam(void){};
+		//		EquipmentParam(vector<string> token, string name);
+		//		void Set(vector<string> token, string name);
+	};
+
+	static EquipmentData equipmentData;
+
+		//fstream r("DATA\\player_data.csv", ios::in);
+
+		//csv = new CSVReader(r);
+
+
+		//while (!csv->Read(tokens))
+		//{
+		//	for (int i = 0; i < tokens.size(); i++)
+		//	{
+		//		if (tokens[0] == name)
+		//		{
+		//			atk = atoi(tokens[1].c_str());
+		//			def = atoi(tokens[2].c_str());
+		//			mat = atoi(tokens[3].c_str());
+		//			mdf = atoi(tokens[4].c_str());
+		//			hp = atoi(tokens[5].c_str());
+		//			spe = atoi(tokens[6].c_str());
+		//			text = tokens[7].c_str();
+		//		}
+		//	}
+		//}
+		//csv->Close();
