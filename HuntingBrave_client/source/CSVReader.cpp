@@ -1,3 +1,5 @@
+#pragma	once
+
 #include "CSVReader.h"
 
 CSVReader::CSVReader(fstream& stream):

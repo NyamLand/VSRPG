@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"BaseEquipment.h"
+#include	"GameData.h"
 
 //***************************************************************
 //
@@ -11,7 +12,6 @@
 
 //	定数値
 
-CSVReader *BaseEquipment::csv = NULL;
 //------------------------------------------------------------------------------------
 //	グローバル
 //------------------------------------------------------------------------------------
@@ -21,19 +21,45 @@ CSVReader *BaseEquipment::csv = NULL;
 //------------------------------------------------------------------------------------
 
 //	コンストラクタ
-BaseEquipment::BaseEquipment(void) : name(""), 
+//BaseEquipment::BaseEquipment(void) :type(NULL), name(""), 
+//hp(0), atk(0), mat(0), def(0), mdf(0), spe(0),
+//extra(false)
+//{
+//	name = "アイアンシールド";
+//	LoadData();
+//
+//}
+
+BaseEquipment::BaseEquipment(char* filename) :type(NULL), name(""),
 hp(0), atk(0), mat(0), def(0), mdf(0), spe(0),
 extra(false)
 {
-	name = "アイアンシールド";
-	LoadData();
+	fstream r(filename, ios::in);
 
+	csv = new CSVReader(r);
+
+	vector<string> tokens;
+
+	bool flag = false;
+	while (!csv->Read(tokens))
+	{
+		//初期値の次の行から読み込む
+		if (tokens[0].c_str() == "初期値		")
+		{
+			flag = true;
+			continue;
+		}
+
+		if (flag == false) continue;
+		equipmentData.Set(tokens);
+	}
+	csv->Close();
 }
 
 //	デストラクタ
 BaseEquipment::~BaseEquipment(void)
 {
-	SafeDelete(csv);
+//	SafeDelete(csv);
 }
 
 void	BaseEquipment::Initialize()
@@ -44,29 +70,7 @@ void	BaseEquipment::Initialize()
 //**********************************************この機能は後々マネージャーに移植する*************************************************
 void	BaseEquipment::LoadData()
 {
-	fstream r("DATA\\player_data.csv", ios::in);
 
-	csv = new CSVReader(r);
-
-	vector<string> tokens;
-	
-	while (!csv->Read(tokens))
-	{
-		for (int i = 0; i < tokens.size(); i++)
-		{
-			if (tokens[0] == name)
-			{
-				atk = atoi(tokens[1].c_str());
-				def = atoi(tokens[2].c_str());
-				mat = atoi(tokens[3].c_str());
-				mdf = atoi(tokens[4].c_str());
-				hp = atoi(tokens[5].c_str());
-				spe = atoi(tokens[6].c_str());
-				text = tokens[7].c_str();
-			}
-		}
-	}
-	csv->Close();
 
 	//CSVReader csv(r);
 	//vector<string> tokens;

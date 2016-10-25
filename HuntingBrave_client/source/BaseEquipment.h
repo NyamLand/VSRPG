@@ -7,26 +7,40 @@
 #include <fstream>
 #include "CSVReader.h"
 
+namespace TYPE
+{
+	enum
+	{
+		ATTACK,
+		MAGIC_ATTACK,
+		DEFFENCE,
+		MAGIC_DEFFENCE,
+		SPEED,
+		BOOST,
+	};
+}
+
 using namespace std;
 class BaseEquipment		//プレイヤーの装備品
 {
 private:
+	CSVReader *csv;		//エクセル読み込み用
 protected:
+	int			type;		//装備の種類
 	string		name;
-	int			hp;			//体力増加量
+	int			def;		//防御
 	int			atk;		//攻撃
 	int			mat;		//魔法攻撃
-	int			def;		//防御
 	int			mdf;		//魔法防御
+	int			hp;			//体力増加量
 	float		spe;		//スピード(倍率計算のためfloat)
-	bool		extra;		//特殊能力があればtrue,無ければfalse
 	string		text;		//フレーバーテキスト
 
-	//ファイル読み込み用
-	static		CSVReader *csv;
+	bool		extra;		//特殊能力があればtrue,無ければfalse
 
 public:
 	BaseEquipment();
+	BaseEquipment(char* fileneme);
 	virtual ~BaseEquipment();
 
 	void Initialize();

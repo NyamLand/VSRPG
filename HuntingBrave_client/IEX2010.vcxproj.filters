@@ -112,8 +112,16 @@
     <Filter Include="Client">
       <UniqueIdentifier>{58a0a826-afb9-406f-8b84-c126ae0736c2}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="ソース ファイル\UI\HpUI">
       <UniqueIdentifier>{16b20290-8c42-401e-abb5-7361b8ddebb7}</UniqueIdentifier>
+=======
+    <Filter Include="ソース ファイル\Equipment\BaseEquipment">
+      <UniqueIdentifier>{f431a680-d701-4fb1-96f4-08e9dc0ff61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Equipment\Equipments">
+      <UniqueIdentifier>{abb6a795-0a50-4806-a991-275149c712a5}</UniqueIdentifier>
+>>>>>>> origin/otsuka
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +230,6 @@
     <ClCompile Include="source\CSVReader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\BaseEquipment.cpp">
-      <Filter>ソース ファイル\Equipment</Filter>
-    </ClCompile>
     <ClCompile Include="source\sceneTitle.cpp">
       <Filter>ソース ファイル\Scene\sceneTitle</Filter>
     </ClCompile>
@@ -240,8 +245,16 @@
     <ClCompile Include="source\GameData.cpp">
       <Filter>ソース ファイル\GameData</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="source\HpUI.cpp">
       <Filter>ソース ファイル\UI\HpUI</Filter>
+=======
+    <ClCompile Include="source\BaseEquipment.cpp">
+      <Filter>ソース ファイル\Equipment\BaseEquipment</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Equipments.cpp">
+      <Filter>ソース ファイル\Equipment\Equipments</Filter>
+>>>>>>> origin/otsuka
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,17 +330,22 @@
     <ClInclude Include="source\CSVReader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="source\BaseEquipment.h">
-      <Filter>ソース ファイル\Equipment</Filter>
-    </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
       <Filter>ソース ファイル\Scene\sceneTitle</Filter>
     </ClInclude>
     <ClInclude Include="source\EnemyManager.h">
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="source\HpUI.h">
       <Filter>ソース ファイル\UI\HpUI</Filter>
+=======
+    <ClInclude Include="source\BaseEquipment.h">
+      <Filter>ソース ファイル\Equipment\BaseEquipment</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Equipments.h">
+      <Filter>ソース ファイル\Equipment\Equipments</Filter>
+>>>>>>> origin/otsuka
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

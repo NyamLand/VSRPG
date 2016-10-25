@@ -84,3 +84,25 @@
 		this->id = id;
 		this->pos = pos;
 	}
+
+
+//----------------------------------------------------------------------------------------------
+//	EquipmentParamç\ë¢ëÃ
+//----------------------------------------------------------------------------------------------
+
+
+	void	EquipmentData::Set(vector<string> tokens)
+	{
+		EquipmentInfo temp;
+
+		temp.name = tokens[0].c_str();
+		temp.atk = atoi(tokens[1].c_str());
+		temp.def = atoi(tokens[2].c_str());
+		temp.mat = atoi(tokens[3].c_str());
+		temp.mdf = atoi(tokens[4].c_str());
+		temp.hp = atoi(tokens[5].c_str());
+		temp.spe = atoi(tokens[6].c_str());
+		temp.text = tokens[7].c_str();
+
+		equipments.push_back(temp);
+	}

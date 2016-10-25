@@ -118,6 +118,7 @@
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyManager.cpp" />
+    <ClCompile Include="source\Equipments.cpp" />
     <ClCompile Include="source\GameData.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\HpUI.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\EnemyManager.h" />
+    <ClInclude Include="source\Equipments.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\HpUI.h" />

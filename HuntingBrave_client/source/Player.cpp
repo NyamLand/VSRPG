@@ -33,7 +33,7 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-Player::Player(void) : texture(nullptr), hp(0)
+Player::Player(void) : texture(nullptr)
 	{
 	
 	}
