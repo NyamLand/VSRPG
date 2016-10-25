@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="IEX">
+      <UniqueIdentifier>{85bec798-c791-4511-adb9-4c6a7af202ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\GameParam">
+      <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData">
+      <UniqueIdentifier>{7fbb0178-ee12-4124-a353-7569e4ab1745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{46752ebd-a905-4cc5-af38-5d2f011432e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{a2791f55-19c5-4eec-a17d-813d4f2277cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\sceneMain">
+      <UniqueIdentifier>{c7f75995-58d8-4d80-9416-b779d6222d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UDPServer">
+      <UniqueIdentifier>{14488d16-5070-4bcd-8330-b539e199b489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage">
+      <UniqueIdentifier>{2338350b-c6b5-4f04-b1bb-ae12bf927d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{b9e49e64-c0fe-4bf2-9352-65e62c4ba62c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerManager">
+      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\GameParam.cpp">
+      <Filter>ソース ファイル\GameParam</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\sceneMain.cpp">
+      <Filter>ソース ファイル\Scene\sceneMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UDPServer.cpp">
+      <Filter>ソース ファイル\UDPServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\stage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IEX_RayMesh.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameData.cpp">
+      <Filter>ソース ファイル\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerManager.cpp">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IEX\iextreme.h">
+      <Filter>IEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameParam.h">
+      <Filter>ソース ファイル\GameParam</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameData.h">
+      <Filter>ソース ファイル\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\sceneMain.h">
+      <Filter>ソース ファイル\Scene\sceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UDPServer.h">
+      <Filter>ソース ファイル\UDPServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stage.h">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerManager.h">
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
