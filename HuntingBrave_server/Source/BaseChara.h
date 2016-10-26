@@ -3,28 +3,26 @@
 
 //*****************************************************************************************************************************
 //
-//	Playerクラス
+//	BaseCharaクラス
 //
 //*****************************************************************************************************************************
 
 //	include
-#include	"GameData.h"
-#include	"BaseChara.h"
 
 //	class
-class Player : public BaseChara
+class BaseChara
 {
-private:
+protected:
+	Vector3	pos;
+	float		angle;
 
 public:
 	//	初期化・解放
-	Player( void );
-	~Player( void )override;
-
+	BaseChara( void );
+	virtual ~BaseChara( void );
+	
 	//	更新
-	bool Update( PlayerParam& param );
 
 	//	情報取得
+	Vector3	GetPos( void )const;
 };
-
-

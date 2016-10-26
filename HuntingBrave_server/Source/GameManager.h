@@ -3,28 +3,30 @@
 
 //*****************************************************************************************************************************
 //
-//	Playerクラス
+//	GameManagerクラス
 //
 //*****************************************************************************************************************************
 
 //	include
-#include	"GameData.h"
-#include	"BaseChara.h"
 
 //	class
-class Player : public BaseChara
+class GameManager
 {
 private:
-
 public:
 	//	初期化・解放
-	Player( void );
-	~Player( void )override;
+	GameManager( void );
+	~GameManager( void );
 
 	//	更新
-	bool Update( PlayerParam& param );
+	void	Update( void );
+
+	//	動作関数
+
+	//	情報設定
 
 	//	情報取得
-};
 
+
+};
 

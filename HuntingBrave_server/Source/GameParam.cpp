@@ -122,6 +122,10 @@
 		netIn->id = client;
 		send( client, ( char* )netIn, sizeof( NET_IN ) );
 
+		//	初期座標を送信
+		NET_CHARA	netChara( );
+
+
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -174,14 +178,14 @@
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle )
 	{
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos    = param.pos;
 		playerParam[id].angle  = param.angle;
