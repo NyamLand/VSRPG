@@ -27,7 +27,7 @@
 //*****************************************************************************************************************************
 
 iexMesh*	stage = nullptr;	//	‰¼(â‘ÎÁ‚·)
-//BaseEquipment* baseEquipment;	//	‰¼(â‘ÎÁ‚·)
+BaseEquipment* baseEquipment;	//	‰¼(â‘ÎÁ‚·)
 
 //*****************************************************************************************************************************
 //
@@ -63,6 +63,8 @@ bool	sceneMain::Initialize( void )
 	
 	//	stageÝ’è
 	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
+
+	baseEquipment = new BaseEquipment("DATA\\player_data.csv");
 
 	//	ui‚ÌÝ’è
 	uiManager->Initialize();
