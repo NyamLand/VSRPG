@@ -3,7 +3,7 @@
 #include	<stdio.h>
 #include	"iextreme.h"
 #include	"GameData.h"
-
+#include	"GameManager.h"
 #include	"GameParam.h"
 #include	"sceneMain.h"
 
@@ -18,6 +18,7 @@ GameParam*		gameParam;
 //	main
 void main( void )
 {
+	gameManager = new GameManager();
 	gameParam = new GameParam();
 	gameParam->InitializeServer();
 

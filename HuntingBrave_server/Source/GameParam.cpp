@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"GameManager.h"
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -21,10 +22,8 @@
 	{
 		for( int id = 0 ; id < PLAYER_MAX ; id++ )
 		{
-			playerInfo[id].active = false;
-
-			playerParam[id].pos = Vector3( 0.0f, 0.0f, 0.0f );
-			playerParam[id].angle = 0.0f;
+			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 		}
 	}
 
@@ -122,6 +121,10 @@
 		netIn->id = client;
 		send( client, ( char* )netIn, sizeof( NET_IN ) );
 
+		//	初期座標を送信
+		NET_CHARA	netChara( client, gameManager->GetInitPos( client ) );
+		send( client, ( LPSTR )&netChara, sizeof( netChara ) );
+
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -169,19 +172,19 @@
 		strcpy( playerInfo[id].name, name );
 
 		//	パラメータ初期化
-		playerParam[id].pos = Vector3( 0.0f, 0.0f, 0.0f );
+		playerParam[id].pos = gameManager->GetInitPos( id );
 		playerParam[id].angle  = 0.0f;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle )
 	{
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos    = param.pos;
 		playerParam[id].angle  = param.angle;

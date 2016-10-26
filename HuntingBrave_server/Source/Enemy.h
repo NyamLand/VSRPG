@@ -3,28 +3,29 @@
 
 //*****************************************************************************************************************************
 //
-//	Playerクラス
+//	Enemyクラス
 //
 //*****************************************************************************************************************************
 
 //	include
-#include	"GameData.h"
 #include	"BaseChara.h"
 
 //	class
-class Player : public BaseChara
+class Enemy : public BaseChara
 {
 private:
-
 public:
 	//	初期化・解放
-	Player( void );
-	~Player( void )override;
+	Enemy( void );
+	~Enemy( void )override;
 
 	//	更新
-	bool Update( PlayerParam& param );
+
+	//	動作関数
+
+	//	情報設定
 
 	//	情報取得
-};
 
+};
 

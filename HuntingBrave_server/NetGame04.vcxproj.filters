@@ -43,6 +43,18 @@
     <Filter Include="ソース ファイル\Manager\PlayerManager">
       <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\BaseChara">
+      <UniqueIdentifier>{0354be5f-46f2-4182-846a-9a49f3f6f954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\EnemyManager">
+      <UniqueIdentifier>{108be3e4-fdca-4318-91e6-3115e8c992d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy">
+      <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\GameManager">
+      <UniqueIdentifier>{88df4ce4-73dc-4b03-a59c-1751ccaeb688}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -69,6 +81,18 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BaseChara.cpp">
+      <Filter>ソース ファイル\BaseChara</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyManager.cpp">
+      <Filter>ソース ファイル\Manager\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameManager.cpp">
+      <Filter>ソース ファイル\Manager\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -94,6 +118,18 @@
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BaseChara.h">
+      <Filter>ソース ファイル\BaseChara</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyManager.h">
+      <Filter>ソース ファイル\Manager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameManager.h">
+      <Filter>ソース ファイル\Manager\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
