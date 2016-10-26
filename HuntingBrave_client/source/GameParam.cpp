@@ -51,6 +51,11 @@ GameParam*	gameParam = nullptr;
 		if( receive( ( char* )&netIn, sizeof( netIn ) ) <= 0 ) return false;
 		myIndex = netIn.id;
 
+		//	‰ŠúÀ•WŽæ“¾
+		NET_CHARA	netChara;
+		if ( receive( ( LPSTR )&netChara, sizeof( NET_CHARA ) ) <= 0 )	return	false;
+		SetPlayerParam( myIndex, netChara.pos );
+
 		return true;
 	}
 
