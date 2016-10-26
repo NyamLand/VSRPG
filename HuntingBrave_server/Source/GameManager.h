@@ -8,11 +8,14 @@
 //*****************************************************************************************************************************
 
 //	include
+#include	"GameData.h"
 
 //	class
 class GameManager
 {
 private:
+	Vector3	initPos[PLAYER_MAX];
+
 public:
 	//	‰Šú‰»E‰ğ•ú
 	GameManager( void );
@@ -26,7 +29,7 @@ public:
 	//	î•ñİ’è
 
 	//	î•ñæ“¾
-
-
+	Vector3	GetInitPos( int id )const;
 };
 
+extern	GameManager*	gameManager;
