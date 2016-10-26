@@ -96,6 +96,7 @@
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EnemyManager.cpp" />
     <ClCompile Include="Source\GameData.cpp" />
+    <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GameParam.cpp" />
     <ClCompile Include="Source\IEX_RayMesh.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\EnemyManager.h" />
     <ClInclude Include="Source\GameData.h" />
+    <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameParam.h" />
     <ClInclude Include="IEX\iextreme.h" />
     <ClInclude Include="Source\Player.h" />
