@@ -130,6 +130,9 @@
     <ClCompile Include="source\UIManager.cpp">
       <Filter>Source\Manager\UIManager</Filter>
     </ClCompile>
+    <ClCompile Include="source\Random.cpp">
+      <Filter>Source\Random</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="source\UIManager.h">
       <Filter>Source\Manager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Random.h">
+      <Filter>Source\Random</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +340,9 @@
     </Filter>
     <Filter Include="Source\Manager\UIManager">
       <UniqueIdentifier>{834e9202-78c2-4f1e-8f7d-1abc32afc6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Random">
+      <UniqueIdentifier>{9e13061d-bbd1-4f4a-946f-cdcbcad81886}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
