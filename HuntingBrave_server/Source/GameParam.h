@@ -36,10 +36,10 @@ public:
 	void	ReceiveSignOut( int client, const LPSTR& data );
 
 	//	î•ñİ’è
-	void SetPlayerParam( int id, PlayerParam& param );
+	void SetPlayerParam( int id, const PlayerParam& param );
 	void SetPlayer( int id, char* name );
-	void SetPlayerParam( int id, Vector3& pos, float angle );
-	PlayerParam& getPlayerParam( int id ){ return playerParam[id]; }
+	void SetPlayerParam( int id, const Vector3& pos, float angle );
+	PlayerParam& GetPlayerParam( int id ){ return playerParam[id]; }
 
 	//	î•ñæ“¾
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }

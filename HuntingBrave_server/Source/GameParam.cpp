@@ -174,14 +174,14 @@
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle )
 	{
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos    = param.pos;
 		playerParam[id].angle  = param.angle;
