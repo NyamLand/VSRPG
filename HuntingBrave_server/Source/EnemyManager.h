@@ -3,28 +3,29 @@
 
 //*****************************************************************************************************************************
 //
-//	Playerクラス
+//	EnemyManagerクラス
 //
 //*****************************************************************************************************************************
 
 //	include
-#include	"GameData.h"
-#include	"BaseChara.h"
 
 //	class
-class Player : public BaseChara
+class EnemyManager
 {
 private:
-
 public:
 	//	初期化・解放
-	Player( void );
-	~Player( void )override;
-
+	EnemyManager( void );
+	~EnemyManager( void );
+	
 	//	更新
-	bool Update( PlayerParam& param );
+	void	Update( void );
+
+	//	動作関数
+
+	//	情報設定
+	Vector3	GetPos( void )const;
 
 	//	情報取得
+
 };
-
-
