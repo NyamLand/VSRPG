@@ -1,10 +1,10 @@
 
 #include	"iextreme.h"
-#include	"PlayerManager.h"
+#include	"EnemyManager.h"
 
 //*****************************************************************************************************************************
 //
-//	PlayerManagerクラス
+//	EnemyManagerクラス
 //
 //*****************************************************************************************************************************
 
@@ -17,49 +17,25 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PlayerManager::PlayerManager( GameParam* gameParam )
+	EnemyManager::EnemyManager( void )
 	{
-		this->gameParam = gameParam;
-
-		//	全プレイヤー初期化
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			player[p] = nullptr;
-		}
+	
 	}
 
 	//	デストラクタ
-	PlayerManager::~PlayerManager( void )
+	EnemyManager::~EnemyManager( void )
 	{
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			if ( player[p] != nullptr )
-			{
-				delete	player[p];
-				player[p] = nullptr;
-			}
-		}
-	}
 
+	}
+	
 //----------------------------------------------------------------------------------------------
 //	更新
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	void	PlayerManager::Update( int id )
+	void	EnemyManager::Update( void )
 	{
-		PlayerParam	param = gameParam->GetPlayerParam( id );
 
-		//	プレイヤー更新
-		if ( player[id]->Update( param ) == false )
-		{
-			delete	player[id];
-			player[id] = nullptr;
-		}
-		else
-		{
-			gameParam->SetPlayerParam( id, param.pos, param.angle );
-		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -70,22 +46,12 @@
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
-	//	プレイヤー設定
-	void	PlayerManager::SetPlayer( int id )
+	//	座標取得
+	Vector3	EnemyManager::GetPos( void )const
 	{
-		//	存在チェック
-		if ( player[id] != nullptr )	return;
-
-		//	プレイヤー生成
-		player[id] = new Player();
+		return	Vector3( 0.0f, 0.0f, 0.0f );
 	}
 
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------
-
-	//	座標取得
-	Vector3	PlayerManager::GetPos( int id )
-	{
-		return	Vector3( 0.0f, 0.0f, 0.0f );
-	}
