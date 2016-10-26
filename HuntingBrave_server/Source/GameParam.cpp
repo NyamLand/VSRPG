@@ -122,6 +122,10 @@
 		netIn->id = client;
 		send( client, ( char* )netIn, sizeof( NET_IN ) );
 
+		//	初期座標を送信
+		NET_CHARA	netChara( );
+
+
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
