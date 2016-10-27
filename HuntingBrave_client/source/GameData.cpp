@@ -35,16 +35,22 @@
 //----------------------------------------------------------------------------------------------
 	
 	//	コンストラクタ
-	PlayerParam::PlayerParam( const Vector3& pos, float angle )
+	PlayerParam::PlayerParam(const Vector3& pos, Vector3& move, float& axisX, float& axisY, float angle)
 	{
 		this->pos = pos;
+		this->move = move;
+		this->axisX = axisX;
+		this->axisY = axisY;
 		this->angle = angle;
 	}
 
 	//	情報設定
-	void	PlayerParam::Set( const Vector3& pos, float angle )
+	void	PlayerParam::Set(const Vector3& pos, Vector3& move, float& axisX, float& axisY, float angle)
 	{
 		this->pos = pos;
+		this->move = move;
+		this->axisX = axisX;
+		this->axisY = axisY;
 		this->angle = angle;
 	}
 
@@ -83,6 +89,63 @@
 	{
 		this->id = id;
 		this->pos = pos;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	NET_	SEMDDATA構造体
+//----------------------------------------------------------------------------------------------
+	NET_CHAR_RECEIVEDATA::NET_CHAR_RECEIVEDATA(int id, const float& axisX, const float& axisY, const float& angle)
+	{
+		this->id = id;
+		this->axisX = axisX;
+		this->axisY = axisY;
+		this->angle = angle;
+	}
+
+	void NET_CHAR_RECEIVEDATA::Set(int id, const float& axisX, const float& axisY, float& angle)
+	{
+		this->id = id;
+		this->axisX = axisX;
+		this->axisY = axisY;
+		this->angle = angle;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	CONTROLLE_AXIS構造体
+//----------------------------------------------------------------------------------------------
+
+	//	コンストラクタ
+	NET_CONTROLLE_AXIS::NET_CONTROLLE_AXIS(int id, const float axisX, const float axisY)
+	{
+		this->id = id;
+		this->axisX = axisX;
+		this->axisY = axisY;
+	}
+
+	//	情報設定
+	void	NET_CONTROLLE_AXIS::Set(int id, const float axisX, const float axisY)
+	{
+		this->id = id;
+		this->axisX = axisX;
+		this->axisY = axisY;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	NET_	CHARA_MOVE構造体
+//----------------------------------------------------------------------------------------------
+
+	//	コンストラクタ
+	NET_CHARA_MOVE::NET_CHARA_MOVE(int id, const Vector3& move)
+	{
+		this->id = id;
+		this->move = move;
+	}
+
+	//	情報設定
+	void	NET_CHARA_MOVE::Set(int id, const Vector3& move)
+	{
+		this->id = id;
+		this->move = move;
 	}
 
 

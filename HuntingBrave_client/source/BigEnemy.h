@@ -31,13 +31,12 @@ public:
 
 	//	更新・描画
 	void	Update(void)override;
-	void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)override;
+	//void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)override;
 	//	各モード動作関数
 	void	MoveMode(void);
 	//void	PostureMode( void );
 
 	//	動作関数
-	void	Move(void)override;
 
 	//	攻撃関数
 	void	Attack(void)override;
