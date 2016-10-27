@@ -35,13 +35,17 @@ public:
 	void	SendChraraInfo( void );
 	
 	//	受信処理
-	void	ReceiveCharaInfo( const LPSTR& data );
+	void	ReceiveCharaInfo(const LPSTR& data);
+	void	ReceiveCharaDATA(const LPSTR& data);
+	void	ReceiveControllerAxis(int client, const LPSTR& data);
+	void	ReceiveCharaMove(const LPSTR& data);
 	void	ReceiveSignUp( const LPSTR& data );
 	void	ReceiveSignOut( const LPSTR& data );
 
 	//	プレイヤーパラメータ操作
 	void SetPlayerParam( int id, const PlayerParam& param );
-	void SetPlayerParam( int id, const Vector3& pos );
+	void SetPlayerPos(int id, const Vector3& pos);
+	void SetPlayerMove(int id, const Vector3& move);
 	PlayerParam GetPlayerParam( int id ){ return playerParam[id]; }
 	PlayerInfo	GetPlayerInfo( int id ){ return playerInfo[id]; }
 	
