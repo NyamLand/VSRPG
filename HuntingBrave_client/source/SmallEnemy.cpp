@@ -22,10 +22,10 @@
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
-#define	MOVE_SPEED		0.5f
+#define	MOVE_SPEED		0.45f
 
-//	入力情報
-#define	MIN_INPUT_STICK		0.3f
+#define ENEMY_LENGTH	10.0f
+
 
 
 //------------------------------------------------------------------------------------
@@ -97,39 +97,14 @@ void	SmallEnemy::Update(void)
 //	移動モード動作
 void	SmallEnemy::MoveMode(void)
 {
-	//	スティックによる移動
-	Move();
+	
+	Move(speed,ENEMY_LENGTH);
+
 }
 
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
-
-//	移動
-void	SmallEnemy::Move(void)
-{
-	//
-	Vector3	vec = playerManager->GetPlayer()->GetPos() - pos;
-	float	length = vec.Length();
-	vec.Normalize();
-	
-	if (length <= 5.0f)
-	{
-		//	モーション設定
-
-		//	走りモーション
-
-		//	向き調整
-		AngleAdjust(vec, speed);
-		SetMove(Vector3(sinf(angle), 0.0f, cosf(angle)) * speed);
-		
-	}
-	else
-	{
-		//	モーション設定
-		SetMotion(1);	//	待機モーション
-	}
-}
 
 void	SmallEnemy::Attack()
 {
@@ -138,6 +113,7 @@ void	SmallEnemy::Attack()
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
+
 
 //------------------------------------------------------------------------------------
 //	情報取得

@@ -38,7 +38,6 @@ public:
 	//void	PostureMode( void );
 
 	//	“®ìŠÖ”
-	void	Move(void)override;
 
 	//	UŒ‚ŠÖ”
 	void	Attack(void)override;
