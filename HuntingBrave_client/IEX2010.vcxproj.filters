@@ -1,21 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="source\Collision.cpp" />
-    <ClCompile Include="source\CSVReader.cpp" />
-    <ClCompile Include="source\BaseEquipment.cpp" />
-    <ClCompile Include="source\Equipments.cpp" />
-    <ClCompile Include="source\GameData.cpp" />
-    <ClCompile Include="source\GameParam.cpp" />
-    <ClCompile Include="source\HpUI.cpp" />
-    <ClCompile Include="source\Singleton.cpp" />
-    <ClCompile Include="source\Camera.cpp" />
-    <ClCompile Include="source\DrawShape.cpp" />
-    <ClCompile Include="source\GameManager.cpp" />
-    <ClCompile Include="source\GlobalFunction.cpp" />
-    <ClCompile Include="source\SocketClient.cpp" />
-    <ClCompile Include="source\TImerUI.cpp" />
-    <ClCompile Include="source\UIManager.cpp" />
     <ClCompile Include="IEX\IEX_2DObject.cpp">
       <Filter>IEX</Filter>
     </ClCompile>
@@ -64,176 +49,316 @@
     <ClCompile Include="IEX\IEX_View.cpp">
       <Filter>IEX</Filter>
     </ClCompile>
-    <ClCompile Include="source\system\Framework.cpp">
-      <Filter>ソースファイル\SYSTEM</Filter>
-    </ClCompile>
-    <ClCompile Include="source\system\System.cpp">
-      <Filter>ソースファイル\SYSTEM</Filter>
-    </ClCompile>
     <ClCompile Include="source\system\WinMain.cpp">
-      <Filter>ソースファイル\SYSTEM</Filter>
+      <Filter>Source\SYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="source\BaseChara.cpp">
-      <Filter>BaseChara</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Enemy.cpp">
-      <Filter>ENEMY</Filter>
+      <Filter>Source\BaseChara</Filter>
     </ClCompile>
     <ClCompile Include="source\BigEnemy.cpp">
-      <Filter>ENEMY\BigEnemy</Filter>
+      <Filter>Source\Enemy\BigEnemy</Filter>
     </ClCompile>
     <ClCompile Include="source\SmallEnemy.cpp">
-      <Filter>ENEMY\SmallEnemy</Filter>
+      <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneTitle.cpp">
-      <Filter>Scene\SceneTitle</Filter>
+      <Filter>Source\Scene\SceneTitle</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneMain.cpp">
-      <Filter>Scene\SceneMain</Filter>
+      <Filter>Source\Scene\SceneMain</Filter>
     </ClCompile>
     <ClCompile Include="source\PlayerManager.cpp">
-      <Filter>Manager\PlayerManager</Filter>
+      <Filter>Source\Manager\PlayerManager</Filter>
     </ClCompile>
     <ClCompile Include="source\EnemyManager.cpp">
-      <Filter>Manager\EnemyManager</Filter>
+      <Filter>Source\Manager\EnemyManager</Filter>
     </ClCompile>
     <ClCompile Include="source\Player.cpp">
-      <Filter>Player</Filter>
+      <Filter>Source\Player</Filter>
     </ClCompile>
     <ClCompile Include="source\Status.cpp">
-      <Filter>Status</Filter>
+      <Filter>Source\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="source\system\Framework.cpp">
+      <Filter>Source\SYSTEM\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\system\System.cpp">
+      <Filter>Source\SYSTEM\System</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BaseEquipment.cpp">
+      <Filter>Source\Equipment\BaseEquipment</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Camera.cpp">
+      <Filter>Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collision.cpp">
+      <Filter>Source\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CSVReader.cpp">
+      <Filter>Source\CSVReader</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DrawShape.cpp">
+      <Filter>Source\DrawShape</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Equipments.cpp">
+      <Filter>Source\Equipment\Equipments</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameData.cpp">
+      <Filter>Source\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameManager.cpp">
+      <Filter>Source\Manager\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameParam.cpp">
+      <Filter>Source\GameParam</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GlobalFunction.cpp">
+      <Filter>Source\GlobalFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="source\HpUI.cpp">
+      <Filter>Source\UI\HpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TImerUI.cpp">
+      <Filter>Source\UI\TimerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UIManager.cpp">
+      <Filter>Source\Manager\UIManager</Filter>
     </ClCompile>
     <ClCompile Include="source\Random.cpp">
       <Filter>Source\Random</Filter>
     </ClCompile>
+    <ClCompile Include="source\Singleton.cpp">
+      <Filter>Source\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SocketClient.cpp">
+      <Filter>Source\SocketClient</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>Source\Enemy\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Collision.h" />
-    <ClInclude Include="source\CSVReader.h" />
-    <ClInclude Include="source\BaseEquipment.h" />
-    <ClInclude Include="source\Equipments.h" />
-    <ClInclude Include="source\GameData.h" />
-    <ClInclude Include="source\GameParam.h" />
-    <ClInclude Include="source\HpUI.h" />
-    <ClInclude Include="source\Singleton.h" />
-    <ClInclude Include="source\Camera.h" />
-    <ClInclude Include="source\DrawShape.h" />
-    <ClInclude Include="source\GameManager.h" />
-    <ClInclude Include="source\GlobalFunction.h" />
-    <ClInclude Include="source\Interpolation.h" />
-    <ClInclude Include="source\SocketClient.h" />
-    <ClInclude Include="source\TimerUI.h" />
-    <ClInclude Include="source\UIManager.h" />
     <ClInclude Include="IEX\iextreme.h">
       <Filter>IEX</Filter>
     </ClInclude>
-    <ClInclude Include="source\system\Framework.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\sceneMain.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\system\System.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\BaseChara.h">
-      <Filter>BaseChara</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Enemy.h">
-      <Filter>ENEMY</Filter>
+      <Filter>Source\BaseChara</Filter>
     </ClInclude>
     <ClInclude Include="source\BigEnemy.h">
-      <Filter>ENEMY\BigEnemy</Filter>
+      <Filter>Source\Enemy\BigEnemy</Filter>
     </ClInclude>
     <ClInclude Include="source\SmallEnemy.h">
-      <Filter>ENEMY\SmallEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="source\system\Scene.h">
-      <Filter>ヘッダーファイル</Filter>
+      <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
-      <Filter>Scene\SceneTitle</Filter>
+      <Filter>Source\Scene\SceneTitle</Filter>
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
-      <Filter>Manager\PlayerManager</Filter>
+      <Filter>Source\Manager\PlayerManager</Filter>
     </ClInclude>
     <ClInclude Include="source\EnemyManager.h">
-      <Filter>Manager\EnemyManager</Filter>
+      <Filter>Source\Manager\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
-      <Filter>Player</Filter>
+      <Filter>Source\Player</Filter>
     </ClInclude>
     <ClInclude Include="source\Status.h">
-      <Filter>Status</Filter>
+      <Filter>Source\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="source\system\Framework.h">
+      <Filter>Source\SYSTEM\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="source\system\System.h">
+      <Filter>Source\SYSTEM\System</Filter>
+    </ClInclude>
+    <ClInclude Include="source\system\Scene.h">
+      <Filter>Source\SYSTEM\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneMain.h">
+      <Filter>Source\Scene\SceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BaseEquipment.h">
+      <Filter>Source\Equipment\BaseEquipment</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Camera.h">
+      <Filter>Source\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Collision.h">
+      <Filter>Source\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CSVReader.h">
+      <Filter>Source\CSVReader</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DrawShape.h">
+      <Filter>Source\DrawShape</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Equipments.h">
+      <Filter>Source\Equipment\Equipments</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameData.h">
+      <Filter>Source\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameManager.h">
+      <Filter>Source\Manager\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameParam.h">
+      <Filter>Source\GameParam</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GlobalFunction.h">
+      <Filter>Source\GlobalFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="source\HpUI.h">
+      <Filter>Source\UI\HpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TimerUI.h">
+      <Filter>Source\UI\TimerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UIManager.h">
+      <Filter>Source\Manager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Interpolation.h">
+      <Filter>Source\Interpolation</Filter>
     </ClInclude>
     <ClInclude Include="source\Random.h">
       <Filter>Source\Random</Filter>
     </ClInclude>
+    <ClInclude Include="source\Singleton.h">
+      <Filter>Source\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SocketClient.h">
+      <Filter>Source\SocketClient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
+      <Filter>Source\Enemy\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="シェーダー">
-      <UniqueIdentifier>{840fd280-9f4b-48d9-96f1-9bf53ec3d2c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IEX">
       <UniqueIdentifier>{9579baa5-a993-44e4-856c-5eb63d3fa398}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル">
-      <UniqueIdentifier>{fd957f54-2898-4f92-a9bc-1a4b401f43d9}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{855d9f67-386f-4c86-af29-d8c36d77efc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル\SYSTEM">
-      <UniqueIdentifier>{328e3617-650c-4c9b-b829-e38566478169}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダーファイル">
-      <UniqueIdentifier>{cf0aa818-7a70-4527-ab13-8dcdb4cb8fbd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BaseChara">
-      <UniqueIdentifier>{41ab9ea8-9855-4ded-a95f-55110a30e1b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ENEMY">
-      <UniqueIdentifier>{271840fe-9343-42a4-85a1-eaa2cd8467a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ENEMY\BigEnemy">
-      <UniqueIdentifier>{a8a38afe-9ac9-4daf-81bd-ad1791e4566a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ENEMY\SmallEnemy">
-      <UniqueIdentifier>{7ba92694-7e48-4b37-a7f8-8be58a288972}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{2014966c-8727-4575-91a7-c0c308c00a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneMain">
-      <UniqueIdentifier>{c63170af-b294-435a-b426-9b7f1fba7f42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneTitle">
-      <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{eea7aadd-3b94-4b04-8dd3-7b2f4e147908}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager\PlayerManager">
-      <UniqueIdentifier>{a4b1a340-34f7-4107-8a2f-235dcbc8861c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager\EnemyManager">
-      <UniqueIdentifier>{5a615ad7-ebd0-4f2d-9fe8-2e97ee1b2b54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player">
+    <Filter Include="Source\Player">
       <UniqueIdentifier>{c30ec995-bb6c-47f8-8758-b7160024baf8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Status">
+    <Filter Include="Source\Manager">
+      <UniqueIdentifier>{eea7aadd-3b94-4b04-8dd3-7b2f4e147908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\PlayerManager">
+      <UniqueIdentifier>{a4b1a340-34f7-4107-8a2f-235dcbc8861c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\EnemyManager">
+      <UniqueIdentifier>{5a615ad7-ebd0-4f2d-9fe8-2e97ee1b2b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\BaseChara">
+      <UniqueIdentifier>{41ab9ea8-9855-4ded-a95f-55110a30e1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{2014966c-8727-4575-91a7-c0c308c00a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\SceneMain">
+      <UniqueIdentifier>{c63170af-b294-435a-b426-9b7f1fba7f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\SceneTitle">
+      <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Status">
       <UniqueIdentifier>{2f7613e1-2b5b-43e7-9d33-fa4b6aa9fc4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{840fd280-9f4b-48d9-96f1-9bf53ec3d2c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM">
+      <UniqueIdentifier>{328e3617-650c-4c9b-b829-e38566478169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM\Framework">
+      <UniqueIdentifier>{8315e0c5-9963-4f16-86c1-24527c70122d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM\System">
+      <UniqueIdentifier>{ced84632-0908-4540-971d-2443acd91156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM\Scene">
+      <UniqueIdentifier>{3632b4e4-aca5-4f58-8711-f15e77b476d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Equipment">
+      <UniqueIdentifier>{6706e893-914f-4187-95e2-1bc3874d7019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Equipment\BaseEquipment">
+      <UniqueIdentifier>{e8078ee5-a7f9-472a-832c-6af2f6c93547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Camera">
+      <UniqueIdentifier>{0d0ec491-63fb-4ec8-9c64-0547d8bf5968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Collision">
+      <UniqueIdentifier>{f89565fd-48af-4324-b99a-4c157b8976c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSVReader">
+      <UniqueIdentifier>{908a6e20-4f51-49c3-bde8-5d4d4890818f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DrawShape">
+      <UniqueIdentifier>{cc7206e9-1bd8-4cb9-a667-4460b21dc2ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Equipment\Equipments">
+      <UniqueIdentifier>{d1662c23-24ad-44c2-ba67-b82c5cc6b867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData">
+      <UniqueIdentifier>{6830b170-61e0-417f-b14d-7bb52da213cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\GameManager">
+      <UniqueIdentifier>{ad3cfcb3-9987-4925-adec-358c9db67d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameParam">
+      <UniqueIdentifier>{804d6198-a417-46a3-a7f5-86858acfbfcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GlobalFunction">
+      <UniqueIdentifier>{65cfac60-14a1-4ab6-b1f8-b9a0d98880b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI">
+      <UniqueIdentifier>{2f0390d9-381c-4bb2-83d5-8cf2163ebf5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\HpUI">
+      <UniqueIdentifier>{a7e8abda-0862-48a6-8ce6-bae19b778292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\TimerUI">
+      <UniqueIdentifier>{bb071643-a005-4037-94e3-efe88b5942c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\UIManager">
+      <UniqueIdentifier>{0d7efa3e-ff24-480e-bc9a-345f5b5e3e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Interpolation">
+      <UniqueIdentifier>{39ada560-b673-4ea3-a3c8-9259b84b7dc8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Random">
-      <UniqueIdentifier>{9e13061d-bbd1-4f4a-946f-cdcbcad81886}</UniqueIdentifier>
+      <UniqueIdentifier>{a50740b7-f97f-47bd-a75e-05d72d5ced1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Singleton">
+      <UniqueIdentifier>{1cc32681-9ec8-4d81-993f-cd50fd295176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SocketClient">
+      <UniqueIdentifier>{f3003026-4859-40b2-893d-1f725bd28697}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy">
+      <UniqueIdentifier>{271840fe-9343-42a4-85a1-eaa2cd8467a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\BigEnemy">
+      <UniqueIdentifier>{a8a38afe-9ac9-4daf-81bd-ad1791e4566a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\SmallEnemy">
+      <UniqueIdentifier>{7ba92694-7e48-4b37-a7f8-8be58a288972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\Enemy">
+      <UniqueIdentifier>{dc7d625e-a28e-4a7f-b90e-0970bec169b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">
-      <Filter>シェーダー</Filter>
+      <Filter>Shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DATA\Shader\3DEx.fx">
-      <Filter>シェーダー</Filter>
+      <Filter>Shader</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
