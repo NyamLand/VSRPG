@@ -26,6 +26,8 @@ protected:
 	int				timer;
 	int				step;
 	bool			initflag;
+	
+
 
 public:
 	//	‰Šú‰»E‰ğ•ú

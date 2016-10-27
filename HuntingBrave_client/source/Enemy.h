@@ -20,6 +20,13 @@ private:
 		MODE_MAX
 	};
 
+	//	パラメータ
+	/*AttackInfo	attackInfo;
+	Capsule	collisionShape;*/
+	Vector3	targetPos;
+	float		interpolationParam;
+	bool		active;
+	bool		eraseOK;
 	//	モード別関数ポインタ
 	void( Enemy::*ModeFunction[MODE_MAX] )( void );
 
@@ -35,8 +42,15 @@ public:
 	void	MoveMode( void );
 
 	//	動作関数
-	virtual void	Move( void ) = 0;
-
+	void	Move( float speed,float length ) ;
+	void	FacingPlayer(void);
+	void	Advance(float	speed);
+	bool	DistCheck(float	length);
+	//void	LifeCheck(void);
 	//	攻撃関数
-	virtual void	Attack( void ) = 0;
+	virtual void	Attack( void )=0;
+	//	情報取得
+	void	SetTargetPos(const Vector3& pos);
+	bool	GetActive(void)const;
+	bool	GetEraseOK(void)const;
 };

@@ -1,0 +1,5 @@
+struct Status
+{
+	int	hp;
+
+};

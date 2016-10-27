@@ -63,6 +63,7 @@
 	{
 		//	ZÉLÅ[Ç≈ê∂ê¨( âº )
 		if( KEY( KEY_A ) ==3 )	Append( Vector3( 10.0f, 0.0f, 0.0f ), 0 );
+		if (KEY(KEY_B) == 3)Append(Vector3(-10.0f, 0.0f, 0.0f), 1);
 	
 		for ( auto it = enemylist.begin(); it != enemylist.end(); )
 		{
