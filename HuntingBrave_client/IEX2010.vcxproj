@@ -133,6 +133,7 @@
     <ClCompile Include="source\sceneMain.cpp" />
     <ClCompile Include="source\SmallEnemy.cpp" />
     <ClCompile Include="source\SocketClient.cpp" />
+    <ClCompile Include="source\Status.cpp" />
     <ClCompile Include="source\system\Framework.cpp" />
     <ClCompile Include="source\system\System.cpp" />
     <ClCompile Include="source\system\WinMain.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="source\Interpolation.h" />
     <ClInclude Include="source\SmallEnemy.h" />
     <ClInclude Include="source\SocketClient.h" />
+    <ClInclude Include="source\Status.h" />
     <ClInclude Include="source\system\Framework.h" />
     <ClInclude Include="source\system\Scene.h" />
     <ClInclude Include="source\sceneMain.h" />
