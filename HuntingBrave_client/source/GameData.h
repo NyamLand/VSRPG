@@ -32,10 +32,12 @@
 	struct PlayerParam
 	{
 		Vector3 pos;
+		Vector3 move;
+		float axisX,axisY;
 		float	angle;
 		PlayerParam( void ){};
-		PlayerParam( const Vector3& pos, float angle );
-		void Set( const Vector3& pos, float angle );
+		PlayerParam(const Vector3& pos, Vector3& move, float& axisX, float& axisY, float angle);
+		void Set(const Vector3& pos, Vector3& move, float& axisX, float& axisY, float angle);
 	};
 
 	//	データ構造
@@ -55,8 +57,11 @@
 	{
 		NO_COMMAND = -1,
 		CHARA_INFO,
+		CHAR_MOVE,
+		CHARA_RECEIVEDATA,
 		SIGN_UP = 10,
-		SIGN_OUT
+		SIGN_OUT,
+		CONTROLLE_AXIS,
 	};
 
 	//	新規参加情報
@@ -80,6 +85,44 @@
 		NET_CHARA( int id, const Vector3& pos );
 		void	Set( int id, const Vector3& pos );
 	};
+
+	//	送るデータの塊
+	struct NET_CHAR_RECEIVEDATA
+	{
+		char com = COMMANDS::CHARA_RECEIVEDATA;
+		int		id;
+		float	axisX, axisY;
+		float	angle;
+		NET_CHAR_RECEIVEDATA(void){}
+		NET_CHAR_RECEIVEDATA(int id, const float& axisX, const float& axisY, const float& angle);
+		void	Set(int id, const float& axisX, const float& axisY, float& angle);
+	};
+
+//***************************今後使うか分からん******************
+//	コントローラー軸情報
+	struct NET_CONTROLLE_AXIS
+	{
+		char com = COMMANDS::CONTROLLE_AXIS;
+		int		id;
+		float axisX,axisY;
+		NET_CONTROLLE_AXIS(void){}
+		NET_CONTROLLE_AXIS(int id, const float axisX, const float axisY);
+		void	Set(int id, const float axisX, const float axisY);
+	};
+
+
+	//	キャラ移動データ
+	struct NET_CHARA_MOVE
+	{
+		char com = COMMANDS::CHAR_MOVE;
+		int		id;
+		Vector3	move;
+		NET_CHARA_MOVE(void){}
+		NET_CHARA_MOVE(int id, const Vector3& move);
+		void	Set(int id, const Vector3& move);
+	};
+
+//****************************************************************
 	
 	//	脱退情報
 	struct NET_OUT

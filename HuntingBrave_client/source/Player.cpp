@@ -4,6 +4,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"Player.h"
+#include	"GameParam.h"
 #include	"CSVReader.h"
 #include	"BaseEquipment.h"
 
@@ -33,7 +34,7 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-Player::Player(void) : texture(nullptr)
+Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 	{
 	
 	}
@@ -106,6 +107,8 @@ Player::Player(void) : texture(nullptr)
 		( this->*ModeFunction[mode] )();
 
 		//	更新
+		int index = gameParam->GetMyIndex();
+		pos = gameParam->GetPlayerParam(index).pos;
 		BaseChara::Update();
 	}
 
@@ -156,10 +159,14 @@ Player::Player(void) : texture(nullptr)
 	//	移動
 	bool		Player::Move( void )
 	{
+		axisX = ( float )input[0]->Get( KEY_AXISX );
+		axisY = -( float )input[0]->Get( KEY_AXISY );
+
 		//	左スティックの入力チェック
-		float	axisX = ( float )input[0]->Get( KEY_AXISX );
-		float	axisY = -( float )input[0]->Get( KEY_AXISY );
-		float	length = sqrtf( axisX * axisX + axisY * axisY ) * 0.001f;
+		//float	axisX = ( float )input[0]->Get( KEY_AXISX );
+		//float	axisY = -( float )input[0]->Get( KEY_AXISY );
+		
+		float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
 
 		//	入力があれば移動処理
 		if ( length >= MIN_INPUT_STICK )
@@ -167,13 +174,13 @@ Player::Player(void) : texture(nullptr)
 			//	モーション設定
 			SetMotion( MOTION::MOVE );	//	走りモーション
 
-			//	向き調整
+			////	向き調整
 			AngleAdjust( 
 				Vector3( axisX, 0.0f, axisY ), 
 				ANGLE_ADJUST_MOVE_SPEED );
 
-			//	移動
-			SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
+			////	移動
+			//SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
 		}
 		else
 		{

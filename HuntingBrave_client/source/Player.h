@@ -65,6 +65,7 @@ private:
 
 	iex2DObj*	texture;
 
+	float		axisX,axisY;		//コントローラースティック軸傾き
 
 public:
 	//	初期化・解放
@@ -94,4 +95,8 @@ public:
 
 	//情報設定
 	void	SetMode(int mode);
+
+
+	float	GetAxisX(){ return axisX; };
+	float	GetAxisY(){ return axisY; };
 };

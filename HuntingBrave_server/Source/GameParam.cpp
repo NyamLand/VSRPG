@@ -77,6 +77,18 @@
 			ReceiveChara( client, data );
 			break;
 
+		case COMMANDS::CHARA_RECEIVEDATA:	//必要情報全部
+			ReceiveCharaDATA(client, data);
+			break;
+
+		case COMMANDS::CONTROLLE_AXIS:	//コントローラー軸情報
+			ReceiveControllerAxis(client, data);
+			break;
+
+		case COMMANDS::CHAR_MOVE:		//	移動情報
+			ReceiveCharaMove(client, data);
+			break;
+
 		case COMMANDS::SIGN_UP:	//	新規参入
 			ReceiveSignUp( client, data );
 			break;
@@ -108,6 +120,54 @@
 	{
 		NET_CHARA* d = ( NET_CHARA* )data;
 		playerParam[client].pos = d->pos;
+	}
+
+
+
+	//*****************************************
+	//		後でちゃんとする
+
+	//受け取り情報全部
+	void	GameParam::ReceiveCharaDATA(int client, const LPSTR& data)
+	{
+		NET_CHAR_RECEIVEDATA* d = (NET_CHAR_RECEIVEDATA*)data;
+		//playerParam[client].axis = d->axis;
+		float	length = sqrtf(d->axisX * d->axisX + d->axisY * d->axisY) * 0.001f;
+
+		////	入力があれば移動処理
+		if (length >= 0.3f)
+		{
+			Vector3 m = Vector3(sinf(d->angle), 0.0f, cosf(d->angle)) * 0.5;
+
+			playerParam[client].pos += m;
+		}
+	}
+
+
+	//*****************************************
+
+	//	コントローラー情報受信
+	void	GameParam::ReceiveControllerAxis(int client, const LPSTR& data)
+	{
+		NET_CONTROLLE_AXIS* d = (NET_CONTROLLE_AXIS*)data;
+		//playerParam[client].axis = d->axis;
+		float	length = sqrtf(d->axisX * d->axisX + d->axisY * d->axisY) * 0.001f;
+
+		////	入力があれば移動処理
+		if (length >= 0.3f)	
+		{
+			Vector3 m = Vector3(sinf(0), 0.0f, cosf(0)) * 0.5;
+			playerParam[client].pos += m;
+		}
+	}
+
+
+
+	//	キャラ移動量情報受信
+	void	GameParam::ReceiveCharaMove(int client, const LPSTR& data)
+	{
+		NET_CHARA_MOVE* d = (NET_CHARA_MOVE*)data;
+		playerParam[client].move = d->move;
 	}
 
 	//	サインアップ情報受信
