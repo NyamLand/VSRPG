@@ -103,6 +103,9 @@
     <ClCompile Include="source\Status.cpp">
       <Filter>Status</Filter>
     </ClCompile>
+    <ClCompile Include="source\Random.cpp">
+      <Filter>Source\Random</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Collision.h" />
@@ -163,6 +166,9 @@
     <ClInclude Include="source\Status.h">
       <Filter>Status</Filter>
     </ClInclude>
+    <ClInclude Include="source\Random.h">
+      <Filter>Source\Random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="シェーダー">
@@ -215,6 +221,9 @@
     </Filter>
     <Filter Include="Status">
       <UniqueIdentifier>{2f7613e1-2b5b-43e7-9d33-fa4b6aa9fc4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Random">
+      <UniqueIdentifier>{9e13061d-bbd1-4f4a-946f-cdcbcad81886}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
