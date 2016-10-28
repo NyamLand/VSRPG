@@ -137,7 +137,7 @@
 		////	“ü—Í‚ª‚ ‚ê‚ÎˆÚ“®ˆ—
 		if (length >= 0.3f)
 		{
-			Vector3 m = Vector3(sinf(d->angle), 0.0f, cosf(d->angle)) * 0.5;
+			Vector3 m = Vector3(sinf(d->angle), 0.0f, cosf(d->angle)) * 0.3f;
 
 			playerParam[client].pos += m;
 		}
@@ -156,7 +156,7 @@
 		////	“ü—Í‚ª‚ ‚ê‚ÎˆÚ“®ˆ—
 		if (length >= 0.3f)	
 		{
-			Vector3 m = Vector3(sinf(0), 0.0f, cosf(0)) * 0.5;
+			Vector3 m = Vector3(sinf(0), 0.0f, cosf(0)) * 0.3f;
 			playerParam[client].pos += m;
 		}
 	}

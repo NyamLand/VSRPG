@@ -19,22 +19,52 @@
 //------------------------------------------------------------------------------------
 
 //	モデル情報
-#define	Y2009_SCALE	0.02f
+#define	PLAYER_SCALE	0.2f
 
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED	0.3f
 #define	ANGLE_ADJUST_MAGIC_SPEED	0.05f
-#define	MOVE_SPEED		0.5f
+#define	MOVE_SPEED		0.1f
 
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
+
+//	定数関連
+namespace
+{
+	//	モーション番号
+	enum MOTION_NUM
+	{
+		POSUTURE,						//	待機
+		RUN_START,						//	走り出し
+		RUN,									//	走り
+		ATTACK1,							//	攻撃１
+		ATTACK2,							//	攻撃２
+		STEP,								//	ステップ
+		MAGIC_CHANT_START,		//	詠唱開始
+		MAGIC_CHANT,					//	詠唱中
+		MAGIC_ACTUATION,			//	魔法発動
+		KNOCKBACK1,					//	仰け反り１
+		KNOCKBACK2,					//	仰け反り２
+		FALL,									//	倒れる
+		DEAD,								//	死亡
+		EAT,									//	食べる
+		MENU_OPEN,						//	メニューを開く
+		MENU,								//	メニュー操作中
+		LEVEL_UP,							//	レベルアップ
+		MENU_CLOSE,					//	メニューを閉じる
+		WIN,									//	勝利
+		WIN_KEEP,						//	勝利キープ
+		CRY									//	泣き
+	};
+}
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
+	Player::Player( void ) : axisX( 0.0f ), axisY( 0.0f )
 	{
 	
 	}
@@ -42,24 +72,21 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 	//	デストラクタ
 	Player::~Player( void )
 	{
-		SafeDelete( texture );
+		
 	}
 
 	//	初期化
 	bool	Player::Initialize( void )
 	{
 		//	読み込み
-		Load( "DATA/CHR/Y2009/Y2009.IEM" );
+		Load( "DATA/CHR/suppin/Suppin.IEM" );
 
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
 		SetAngle( 0.0f );
-		SetScale( Y2009_SCALE );
-		SetMotion( 1 );	//	数値仮
+		SetScale( PLAYER_SCALE );
+		SetMotion( MOTION_NUM::POSUTURE );
 		speed = MOVE_SPEED;
-		SetMode(MODE::MOVE);
-
-		//	テクスチャテスト
-		obj->SetTexture( 0, "DATA/CHR/Y2009/testTexture.png" );
+		SetMode( MODE::MOVE );
 
 		//	関数ポインタ
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;
@@ -108,7 +135,7 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 
 		//	更新
 		int index = gameParam->GetMyIndex();
-		pos = gameParam->GetPlayerParam(index).pos;
+		pos = gameParam->GetPlayerParam( index ).pos;
 		BaseChara::Update();
 	}
 
@@ -136,13 +163,13 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 	{
 		bool param = SwordAttack();
 
-		if(param)SetMode(MODE::MOVE);
+		if( param )	SetMode( MODE::MOVE );
 	}
 
 	void	Player::ModeMagicAttack( void )
 	{
 		bool param = MagicAttack();
-		if(param)SetMode(MODE::MOVE);
+		if( param )SetMode( MODE::MOVE );
 	}
 
 
@@ -172,7 +199,7 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 		if ( length >= MIN_INPUT_STICK )
 		{
 			//	モーション設定
-			SetMotion( MOTION::MOVE );	//	走りモーション
+			SetMotion( MOTION_NUM::RUN );	//	走りモーション
 
 			////	向き調整
 			AngleAdjust( 
@@ -185,7 +212,7 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 		else
 		{
 			//	モーション設定
-			SetMotion( MOTION::WAIT );	//	待機モーション
+			SetMotion( MOTION_NUM::POSUTURE );	//	待機モーション
 		}
 		return false;
 	}
@@ -193,13 +220,13 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 
 
 	//剣攻撃
-	bool		Player::SwordAttack(void)
+	bool		Player::SwordAttack( void )
 	{
-		SetMotion( MOTION::ATTACK );		//仮
+		SetMotion( MOTION_NUM::ATTACK1 );		//仮
 		if (!initflag) initflag = true;
 
 		//仮
-		if (obj->GetFrame() == 413)
+		if ( obj->GetFrame() == 413 )
 		{
 			initflag = false;
 			return true;	//攻撃動作が終われば
@@ -214,41 +241,41 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 	//魔法攻撃
 	bool		Player::MagicAttack(void)
 	{
-		SetMotion(MOTION::ATTACK2);		//仮
+		SetMotion( MOTION_NUM::MAGIC_CHANT );		//仮
 
-		if (!initflag)
+		if ( !initflag )
 		{
 			initflag = true;
 			timer = 0;
-			move = Vector3(0, 0, 0);
+			move = Vector3( 0, 0, 0 );
 		}
 
 		//	左スティックの入力チェック
-		float	axisX = (float)input[0]->Get(KEY_AXISX);
-		float	axisY = -(float)input[0]->Get(KEY_AXISY);
-		float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
-		switch (step)
+		float	axisX = ( float )input[0]->Get( KEY_AXISX );
+		float	axisY = -( float )input[0]->Get( KEY_AXISY );
+		float	length = sqrtf( axisX * axisX + axisY * axisY ) * 0.001f;
+		switch ( step )
 		{
 		case 0:
 
 			//	入力があれば
-			if (length >= MIN_INPUT_STICK)
+			if ( length >= MIN_INPUT_STICK )
 			{
 				//	向き調整
 				AngleAdjust(
-					Vector3(axisX, 0.0f, axisY),
-					ANGLE_ADJUST_MAGIC_SPEED);
+					Vector3( axisX, 0.0f, axisY ),
+					ANGLE_ADJUST_MAGIC_SPEED );
 
 				//if (axisX > 0)	angle += 0.1f; 
 				//else			angle -= 0.1f;
 			}
 
 
-			if (KEY_Get(KEY_B) == 2) step++;
+			if ( KEY_Get( KEY_B ) == 2 ) step++;
 			break;
 		case 1:
 			timer++;		//硬直
-			SetMotion(MOTION::RIGOR);
+			SetMotion( MOTION_NUM::MAGIC_CHANT );
 			if (timer > 100)
 			{
 				initflag = false;
@@ -263,9 +290,9 @@ Player::Player(void) : texture(nullptr), axisX(0), axisY(0)
 	bool		Player::Avoid(void)
 	{
 		Vector3 front = GetFront();
-		SetMotion(MOTION::AVOID);
+		SetMotion( MOTION_NUM::STEP );
 
-		if (!initflag)
+		if ( !initflag )
 		{
 			initflag = true;
 			timer = 0;

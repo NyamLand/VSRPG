@@ -42,20 +42,7 @@ namespace MODE
 	};
 }
 
-//*‰¼ƒ‚ƒfƒ‹‚É‘Î‚µ‚Ä
-namespace MOTION
-{
-	enum
-	{
-		HOPPING,
-		RIGOR,
-		WAIT,
-		AVOID,
-		MOVE,
-		ATTACK,
-		ATTACK2 = 7,
-	};
-}
+
 //	class
 class Player : public BaseChara
 {
