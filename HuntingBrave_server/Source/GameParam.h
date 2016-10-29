@@ -29,6 +29,7 @@ public:
 
 	//	‘—Mˆ—
 	void	SendCharaInfo( int client );
+	void	SendGameInfo( int client );
 
 	//	óMˆ—
 	void	ReceiveChara(int client, const LPSTR& data);
@@ -41,7 +42,8 @@ public:
 	//	î•ñİ’è
 	void SetPlayerParam( int id, const PlayerParam& param );
 	void SetPlayer( int id, char* name );
-	void SetPlayerParam( int id, const Vector3& pos, float angle );
+	void ReleasePlayer( int id );
+	void SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
 	PlayerParam& GetPlayerParam( int id ){ return playerParam[id]; }
 
 	//	î•ñæ“¾

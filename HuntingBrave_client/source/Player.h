@@ -1,6 +1,6 @@
 
 #pragma once
-#include	"BaseEquipment.h"
+
 //***************************************************************
 //
 //	Playerクラス
@@ -28,6 +28,8 @@ struct Status
 
 //	include
 #include	"BaseChara.h"
+#include	"BaseEquipment.h"
+#include	"GameData.h"
 
 namespace MODE
 {
@@ -47,12 +49,10 @@ namespace MODE
 class Player : public BaseChara
 {
 private:
+
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );
-
-	iex2DObj*	texture;
-
-	float		axisX,axisY;		//コントローラースティック軸傾き
+	PlayerParam	playerParam;
 
 public:
 	//	初期化・解放
@@ -61,7 +61,7 @@ public:
 	bool	Initialize( void )override;
 	
 	//	更新・描画
-	void	Update( void )override;
+	bool	Update( PlayerParam& playerParam );
 	void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr )override;
 
 	//	各モード動作関数
@@ -81,9 +81,6 @@ public:
 
 
 	//情報設定
-	void	SetMode(int mode);
-
-
-	float	GetAxisX(){ return axisX; };
-	float	GetAxisY(){ return axisY; };
+	void	SetMode( int mode );
+	void	SetPlayerParam( const PlayerParam& playerParam );
 };

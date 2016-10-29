@@ -18,37 +18,35 @@
 //	初期化・解放
 //---------------------------------------------------------------------------------------
 
-//	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0.0f )
-{
+	//	コンストラクタ
+	TimerUI::TimerUI( void ) : timer( 0 )
+	{
 
-}
+	}
 
-//	デストラクタ
-TimerUI::~TimerUI(void)
-{
+	//	デストラクタ
+	TimerUI::~TimerUI( void )
+	{
 
-}
-
-
+	}
 
 //---------------------------------------------------------------------------------------
 //	更新・描画
 //---------------------------------------------------------------------------------------
 
-//	更新
-void	TimerUI::Update(void)
-{
-	timer = gameManager->GetTimer();
-}
+	//	更新
+	void	TimerUI::Update( void )
+	{
+		timer = gameManager->GetTime();
+	}
 
-//	描画
-void	TimerUI::Render(void)
-{
-	char str[64];
-	sprintf_s(str, "timer = %f",timer);
-	IEX_DrawText(str, 20, 20, 400, 100, 0xFF00FF00);
-}
+	//	描画
+	void	TimerUI::Render( void )
+	{
+		char str[64];
+		sprintf_s( str, "timer = %dsec", timer );
+		IEX_DrawText( str, 600, 50, 400, 100, 0xFF00FF00 );
+	}
 
 //---------------------------------------------------------------------------------------
 //	動作関数

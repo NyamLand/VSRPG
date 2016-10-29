@@ -15,12 +15,9 @@ class GameManager : public Singleton<GameManager>
 {
 	//	コンストラクタを呼ぶためにfriend設定
 	friend Singleton<GameManager>;
-public:
-	//	定数
-	static const int TIME_MAX = 120;
 
-private:
-	float timer;
+public:
+	int		timer;
 
 private:
 	//	初期化・解放
@@ -36,11 +33,11 @@ public:
 	//	更新・描画
 	void	Update( void );
 
-	//	動作関数
-	void	TimerCount();
+	//	情報設定
+	void	SetTimer( int time ){ timer = time; }
 
-	//	ゲッター・セッター
-	float	GetTimer( void ){ return timer; }
+	//	情報取得
+	int		GetTime( void ){ return timer; }
 };
 
 #define	gameManager ( GameManager::GetInstance() )

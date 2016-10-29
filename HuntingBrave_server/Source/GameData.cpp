@@ -35,21 +35,19 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PlayerParam::PlayerParam(const Vector3& pos, Vector3& move, Vector2& axis, float angle)
+	PlayerParam::PlayerParam( const Vector3& pos, float moveX, float moveZ, float angle, int motion )
 	{
-		this->pos = pos;
-		this->move = move;
-		this->axis = axis;
-		this->angle = angle;
+		Set( pos, moveX, moveZ, angle, motion );
 	}
 
 	//	情報設定
-	void	PlayerParam::Set(const Vector3& pos, Vector3& move, Vector2& axis, float angle)
+	void	PlayerParam::Set( const Vector3& pos, float moveX, float moveZ, float angle, int motion )
 	{
 		this->pos = pos;
-		this->move = move;
-		this->axis = axis;
+		this->moveX = moveX;
+		this->moveZ = moveZ;
 		this->angle = angle;
+		this->motion = motion;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -76,19 +74,37 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	NET_CHARA::NET_CHARA( int id, const Vector3& pos )
+	NET_CHARA::NET_CHARA( int id, const Vector3& pos, float angle, int motion )
 	{
-		this->id = id;
-		this->pos = pos;
+		Set( id, pos, angle, motion );
 	}
 
 	//	情報設定
-	void	NET_CHARA::Set( int id, const Vector3& pos )
+	void	NET_CHARA::Set( int id, const Vector3& pos, float angle, int motion )
 	{
 		this->id = id;
 		this->pos = pos;
+		this->angle = angle;
+		this->motion = motion;
 	}
 
+//----------------------------------------------------------------------------------------------
+//	NET_MOVE構造体
+//----------------------------------------------------------------------------------------------
+
+	//	コンストラクタ
+	NET_MOVE::NET_MOVE( int id, float axisX, float axisY )
+	{
+		Set( id, axisX, axisY );
+	}
+
+	//	情報設定
+	void	NET_MOVE::Set( int id, float axisX, float axisY )
+	{
+		this->id = id;
+		this->axisX = axisX;
+		this->axisY = axisY;
+	}
 
 //----------------------------------------------------------------------------------------------
 //	NET_	SEMDDATA構造体

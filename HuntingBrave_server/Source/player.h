@@ -15,6 +15,7 @@
 class Player : public BaseChara
 {
 private:
+	PlayerParam	pParam;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -24,7 +25,13 @@ public:
 	//	XV
 	bool Update( PlayerParam& param );
 
-	//	î•ñæ“¾
+	//	“®ìŠÖ”
+	void	Move( void );
+	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
+	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
+
+	//	î•ñİ’è
+	void	SetMotion( int motion );
 };
 
 

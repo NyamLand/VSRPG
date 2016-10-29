@@ -15,6 +15,7 @@ class BaseChara
 protected:
 	Vector3	pos;
 	float		angle;
+	int			motion;
 
 public:
 	//	‰Šú‰»E‰ğ•ú

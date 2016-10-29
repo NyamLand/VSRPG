@@ -3,10 +3,10 @@
 #include	<fstream>
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	"Player.h"
 #include	"GameParam.h"
 #include	"CSVReader.h"
 #include	"BaseEquipment.h"
+#include	"Player.h"
 
 //***************************************************************
 //
@@ -64,7 +64,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void ) : axisX( 0.0f ), axisY( 0.0f )
+	Player::Player( void )
 	{
 	
 	}
@@ -128,15 +128,19 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	更新
-	void	Player::Update( void )
+	bool	Player::Update( PlayerParam& playerParam )
 	{
+		//	サーバーからの情報を反映
+		this->playerParam = playerParam;
+		SetPlayerParam( playerParam );
+
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
 
 		//	更新
-		int index = gameParam->GetMyIndex();
-		pos = gameParam->GetPlayerParam( index ).pos;
 		BaseChara::Update();
+
+		return	true;
 	}
 
 	void	Player::Render( iexShader* shader, LPSTR technique )
@@ -172,11 +176,10 @@ namespace
 		if( param )SetMode( MODE::MOVE );
 	}
 
-
-	void	Player::ModeAvoid(void)
+	void	Player::ModeAvoid( void )
 	{
 		bool param = Avoid();
-		if(param)SetMode(MODE::MOVE);
+		if( param )SetMode( MODE::MOVE );
 	}
 
 //------------------------------------------------------------------------------------
@@ -186,34 +189,24 @@ namespace
 	//	移動
 	bool		Player::Move( void )
 	{
-		axisX = ( float )input[0]->Get( KEY_AXISX );
-		axisY = -( float )input[0]->Get( KEY_AXISY );
+		//float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
 
-		//	左スティックの入力チェック
-		//float	axisX = ( float )input[0]->Get( KEY_AXISX );
-		//float	axisY = -( float )input[0]->Get( KEY_AXISY );
-		
-		float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
+		////	入力があれば移動処理
+		//if ( length >= MIN_INPUT_STICK )
+		//{
+		//	//	モーション設定
+		//	SetMotion( MOTION_NUM::RUN );	//	走りモーション
 
-		//	入力があれば移動処理
-		if ( length >= MIN_INPUT_STICK )
-		{
-			//	モーション設定
-			SetMotion( MOTION_NUM::RUN );	//	走りモーション
-
-			////	向き調整
-			AngleAdjust( 
-				Vector3( axisX, 0.0f, axisY ), 
-				ANGLE_ADJUST_MOVE_SPEED );
-
-			////	移動
-			//SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
-		}
-		else
-		{
-			//	モーション設定
-			SetMotion( MOTION_NUM::POSUTURE );	//	待機モーション
-		}
+		//	//	向き調整
+		//	AngleAdjust( 
+		//		Vector3( axisX, 0.0f, axisY ), 
+		//		ANGLE_ADJUST_MOVE_SPEED );
+		//}
+		//else
+		//{
+		//	//	モーション設定
+		//	SetMotion( MOTION_NUM::POSUTURE );	//	待機モーション
+		//}
 		return false;
 	}
 
@@ -316,13 +309,22 @@ namespace
 //	情報設定
 //------------------------------------------------------------------------------------
 
-	void	Player::SetMode(int mode)
+	//	モード設定
+	void	Player::SetMode( int mode )
 	{
-		if (this->mode != mode)
+		if ( this->mode != mode )
 		{
 			step = 0;
 			this->mode = mode;
 		}
+	}
+
+	//	パラメータ設定
+	void	Player::SetPlayerParam( const PlayerParam& playerParam )
+	{
+		pos = playerParam.pos;
+		angle = playerParam.angle;
+		SetMotion( playerParam.motion );
 	}
 
 

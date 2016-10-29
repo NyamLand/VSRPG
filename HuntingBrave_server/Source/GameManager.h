@@ -9,12 +9,14 @@
 
 //	include
 #include	"GameData.h"
+#include	"Timer.h"
 
 //	class
 class GameManager
 {
 private:
-	Vector3	initPos[PLAYER_MAX];
+	PlayerParam	initPlayerParam[PLAYER_MAX];
+	Timer*	timer;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -25,11 +27,13 @@ public:
 	void	Update( void );
 
 	//	“®ìŠÖ”
+	void	TimerUpdate( void );
 
 	//	î•ñİ’è
 
 	//	î•ñæ“¾
-	Vector3	GetInitPos( int id )const;
+	Timer*	GetTimer( void )const;
+	PlayerParam	GetInitInfo( int id )const;
 };
 
 extern	GameManager*	gameManager;

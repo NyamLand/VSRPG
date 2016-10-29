@@ -4,7 +4,6 @@
 #include	"DrawShape.h"
 #include	"PlayerManager.h"
 
-
 #include	"SmallEnemy.h"
 
 //***************************************************************

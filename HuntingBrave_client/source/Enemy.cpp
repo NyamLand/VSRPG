@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
 #include	"PlayerManager.h"
+
 #include	"Enemy.h"
 
 //***************************************************************
@@ -67,7 +68,7 @@
 	void	Enemy::FacingPlayer(void)
 	{
 		//	プレイヤーへのベクトルを求める
-		Vector3	targetVec = playerManager->GetPlayer()->GetPos() - pos;
+		Vector3	targetVec = playerManager->GetPlayer( 0 )->GetPos() - pos;
 		targetVec.Normalize();
 
 		AngleAdjust(targetVec, ANGLEADJUST_SPEED);
@@ -85,7 +86,7 @@
 	//	プレイヤーとの距離チェック
 	bool	Enemy::DistCheck(float	length)
 	{
-		Vector3	vec = playerManager->GetPlayer()->GetPos() - pos;
+		Vector3	vec = playerManager->GetPlayer( 0 )->GetPos() - pos;
 		float	len = vec.Length();
 
 		//	一定の距離まで近づくと攻撃

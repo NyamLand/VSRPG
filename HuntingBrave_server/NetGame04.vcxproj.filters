@@ -55,6 +55,9 @@
     <Filter Include="ソース ファイル\Manager\GameManager">
       <UniqueIdentifier>{88df4ce4-73dc-4b03-a59c-1751ccaeb688}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Timer">
+      <UniqueIdentifier>{f0af59b6-6349-4757-a705-e0f87f635d4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="Source\GameManager.cpp">
       <Filter>ソース ファイル\Manager\GameManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>ソース ファイル\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -130,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameManager.h">
       <Filter>ソース ファイル\Manager\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>ソース ファイル\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
