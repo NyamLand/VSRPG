@@ -57,11 +57,7 @@
 			if ( player[p] == nullptr )	continue;
 			
 			//	プレイヤー更新
-			bool isAlive = player[p]->Update( gameParam->GetPlayerParam( p ) );
-			if ( isAlive == false )
-			{
-				SafeDelete( player[p] );
-			}
+			player[p]->Update( gameParam->GetPlayerParam( p ) );
 		}
 	}
 

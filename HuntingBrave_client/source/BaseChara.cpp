@@ -24,10 +24,12 @@
 	//	コンストラクタ
 	BaseChara::BaseChara( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		angle(0.0f), scale(1.0f), speed(0.0f), mode(0), timer(0), step(0),
-		initflag(false)
+		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ), 
+		mode( 0 ), timer( 0 ), step( 0 ),
+		initflag( false )
 	{
-		
+		//	構造体初期化
+		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
 	}
 
 	//	デストラクタ
@@ -213,6 +215,12 @@
 		return	pos;
 	}
 
+	//	移動値取得
+	Vector3	BaseChara::GetMove( void )const
+	{
+		return	move;
+	}
+
 	//	前方取得
 	Vector3	BaseChara::GetFront( void )const
 	{
@@ -244,5 +252,11 @@
 	float		BaseChara::GetAngle( void )const
 	{
 		return	angle;
+	}
+
+	//	モーション取得
+	int			BaseChara::GetMotion( void )const
+	{
+		return	obj->GetMotion();
 	}
 

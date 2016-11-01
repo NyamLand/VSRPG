@@ -8,6 +8,7 @@
 //***************************************************************
 
 //	include
+#include	"CharaInfo.h"
 
 //	class
 class BaseChara
@@ -26,8 +27,7 @@ protected:
 	int				timer;
 	int				step;
 	bool			initflag;
-	
-
+	AttackInfo	attackInfo;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -56,8 +56,10 @@ public:
 	//	î•ñæ“¾
 	Matrix	GetMatrix( void )const;
 	Vector3	GetPos( void )const;
+	Vector3	GetMove( void )const;
 	Vector3	GetFront( void )const;
 	Vector3	GetUp( void )const;
 	Vector3	GetRight( void )const;
 	float		GetAngle( void )const;
+	int			GetMotion( void )const;
 };

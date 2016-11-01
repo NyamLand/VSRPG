@@ -3,6 +3,7 @@
 #include	<fstream>
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"DrawShape.h"
 #include	"GameParam.h"
 #include	"CSVReader.h"
 #include	"BaseEquipment.h"
@@ -56,6 +57,13 @@ namespace
 		WIN,									//	勝利
 		WIN_KEEP,						//	勝利キープ
 		CRY									//	泣き
+	};
+
+	//	ボーン番号
+	enum BONE_NUM
+	{
+		HAND = 27,
+		SWORD,
 	};
 }
 
@@ -128,7 +136,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	更新
-	bool	Player::Update( PlayerParam& playerParam )
+	void	Player::Update( PlayerParam& playerParam )
 	{
 		//	サーバーからの情報を反映
 		this->playerParam = playerParam;
@@ -139,14 +147,19 @@ namespace
 
 		//	更新
 		BaseChara::Update();
-
-		return	true;
 	}
 
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
 		BaseChara::Render();
 
+		//	ボーンの座標取得
+		Matrix handMat = *obj->GetBone( 27 ) * obj->TransMatrix;
+		Matrix swordMat = *obj->GetBone( 28 ) * obj->TransMatrix;
+		Vector3	handPos = Vector3( handMat._41, handMat._42, handMat._43 );
+		Vector3	swordPos = Vector3( swordMat._41, swordMat._42, swordMat._43 );
+
+		drawShape->DrawCapsule( handPos, swordPos, 0.5f, 0xFFFFFFFF );
 	}
 
 //------------------------------------------------------------------------------------
@@ -332,3 +345,8 @@ namespace
 //	情報取得
 //------------------------------------------------------------------------------------
 
+	//	現在のモードを取得
+	int		Player::GetMode( void )const
+	{
+		return	mode;
+	}
