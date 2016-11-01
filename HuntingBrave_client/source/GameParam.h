@@ -60,6 +60,7 @@ public:
 	bool  GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
 	char* GetPlayerName( int id ){ return playerInfo[id].name; }
+	float	GetStickInput( float& outX, float& outY );
 };
 
 extern	GameParam*	gameParam;

@@ -15,31 +15,34 @@ class BigEnemy : public Enemy
 private:
 	enum MODE	//	仮
 	{
+		ENTRY,
 		MOVE,
-		//POSTURE,
+		ATTACK,
+		DEAD,
 		MODE_MAX
 	};
 
 	//	モード別関数ポインタ
-	void(BigEnemy::*ModeFunction[MODE_MAX])(void);
+	void( BigEnemy::*ModeFunction[MODE_MAX] )( void );
 
 public:
 	//	初期化・解放
-	BigEnemy(void);
-	~BigEnemy(void)override;
-	bool	Initialize(void)override;
+	BigEnemy( void );
+	~BigEnemy( void )override;
+	bool	Initialize( void )override;
 
-	//	更新・描画
-	void	Update(void)override;
-	//void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)override;
+	//	更新
+	void	Update( void );
+
 	//	各モード動作関数
-	void	MoveMode(void);
-	//void	PostureMode( void );
+	void	EntryMode( void );
+	void	MoveMode( void );
+	void	AttackMode( void );
 
 	//	動作関数
 
 	//	攻撃関数
-	void	Attack(void)override;
+	void	Attack( void )override;
 
 
 };

@@ -148,8 +148,12 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendMove( void )
 	{
 		//	移動データ送信
-		float axisX = ( float )input[0]->Get( KEY_AXISX ) * 0.001f;
-		float axisY = -( float )input[0]->Get( KEY_AXISY ) * 0.001f;
+		float axisX = 0.0f, axisY = 0.0f;
+		if ( playerManager->GetPlayer( myIndex )->GetMode() == MODE::MOVE )
+		{
+			GetStickInput( axisX, axisY );
+		}
+
 		NET_MOVE	netMove( myIndex, axisX, axisY );
 		send( ( LPSTR )&netMove, sizeof( netMove ) );
 	}
@@ -196,7 +200,7 @@ GameParam*	gameParam = nullptr;
 
 
 	//	コントローラー情報受信
-	void	GameParam::ReceiveControllerAxis(int client, const LPSTR& data)
+	void	GameParam::ReceiveControllerAxis( int client, const LPSTR& data )
 	{
 		NET_CONTROLLE_AXIS* d = (NET_CONTROLLE_AXIS*)data;
 		//playerParam[client].axisX = d->axisX;
@@ -204,9 +208,9 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	キャラ移動量情報受信
-	void	GameParam::ReceiveCharaMove( const LPSTR& data)
+	void	GameParam::ReceiveCharaMove( const LPSTR& data )
 	{
-		NET_CHARA_MOVE* netChara = (NET_CHARA_MOVE*)data;
+		NET_CHARA_MOVE* netChara = ( NET_CHARA_MOVE* )data;
 		SetPlayerMove( netChara->id, netChara->move );
 	}
 
@@ -270,3 +274,17 @@ GameParam*	gameParam = nullptr;
 		//playerParam[id].move = param.move;
 		playerParam[id].angle  = param.angle;
 	}
+
+//----------------------------------------------------------------------------------------------
+//	情報設定
+//----------------------------------------------------------------------------------------------
+
+	//	スティック入力情報取得( 返り値に入力の長さ、引数に入力値をかえす )
+	float	GameParam::GetStickInput( float& outX, float& outY )
+	{
+		outX = ( float )input[0]->Get( KEY_AXISX ) * 0.001f;
+		outY = -( float )input[0]->Get( KEY_AXISY ) * 0.001f;
+
+		return	Vector3( outX, 0.0f, outY ).Length();
+	}
+

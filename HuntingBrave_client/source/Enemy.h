@@ -13,38 +13,36 @@
 //	class
 class Enemy : public BaseChara
 {
-private:
-	enum MODE	//	仮
-	{
-		MOVE,
-		MODE_MAX
-	};
-
+protected:
 	//	パラメータ
 	Vector3	targetPos;
 	float		interpolationParam;
-	bool		active;
-	bool		eraseOK;
+	float		searchDist;
+	float		attackDist;
 
-	//	モード別関数ポインタ
-	void( Enemy::*ModeFunction[MODE_MAX] )( void );
+	enum MODE	//	仮
+	{
+		ENTRY,
+		MOVE,
+		ATTACK,
+		DEAD,
+		MODE_MAX
+	};
 
 public:
 	//	初期化・解放
 	Enemy( void );
 	~Enemy( void )override;
 
-	//	更新・描画
-	virtual void	Update( void ) = 0;
-
 	//	各モード動作関数
 	void	MoveMode( void );
 
 	//	動作関数
-	void	Move( float speed, float length ) ;
+	void	Move( float speed ) ;
 	void	FacingPlayer( void );
 	void	Advance( float speed );
-	bool	DistCheck( float length );
+	bool	DistCheck( float& length );
+	void	LifeCheck( void );
 
 	//	攻撃関数
 	virtual void	Attack( void )=0;
@@ -52,5 +50,5 @@ public:
 	//	情報取得
 	void	SetTargetPos( const Vector3& pos );
 	bool	GetActive( void )const;
-	bool	GetEraseOK( void )const;
+	bool	GetIsAlive( void )const;
 };

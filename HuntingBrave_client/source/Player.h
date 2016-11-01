@@ -76,10 +76,5 @@ public:
 	bool		MagicAttack( void );
 	bool		Avoid( void );
 
-	//î•ñİ’è
-	void	SetMode( int mode );
 	void	SetPlayerParam( const PlayerParam& playerParam );
-
-	//	î•ñæ“¾
-	int		GetMode( void )const;
 };

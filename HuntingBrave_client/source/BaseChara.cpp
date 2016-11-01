@@ -25,11 +25,12 @@
 	BaseChara::BaseChara( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
 		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ), 
-		mode( 0 ), timer( 0 ), step( 0 ),
-		initflag( false )
+		active( false ),
+		mode( 0 )
 	{
 		//	構造体初期化
 		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
+		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
 	}
 
 	//	デストラクタ
@@ -199,6 +200,23 @@
 		}
 	}
 
+	//	モード設定( 新規モードが同じならfalseをかえす )
+	bool	BaseChara::SetMode( int nextMode )
+	{
+		if ( mode != nextMode )
+		{
+			mode = nextMode;
+			return	true;
+		}
+		return	false;
+	}
+
+	//	モデル設定
+	void	BaseChara::SetObj( iex3DObj*	obj )
+	{
+		this->obj = obj;
+	}
+
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
@@ -258,5 +276,11 @@
 	int			BaseChara::GetMotion( void )const
 	{
 		return	obj->GetMotion();
+	}
+
+	//	モード取得
+	int			BaseChara::GetMode( void )const
+	{
+		return	mode;
 	}
 

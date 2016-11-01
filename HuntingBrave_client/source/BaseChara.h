@@ -23,11 +23,11 @@ protected:
 	float			angle;
 	float			speed;
 	float			scale;
+	bool			active;
 	int				mode;
-	int				timer;
-	int				step;
-	bool			initflag;
 	AttackInfo	attackInfo;
+	LifeInfo		lifeInfo;
+
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -52,6 +52,8 @@ public:
 	void	SetAngle( float Angle );
 	void	SetScale( float Scale );
 	void	SetMotion( int motion );
+	bool	SetMode( int nextMode );
+	void	SetObj( iex3DObj* obj );
 
 	//	î•ñæ“¾
 	Matrix	GetMatrix( void )const;
@@ -62,4 +64,5 @@ public:
 	Vector3	GetRight( void )const;
 	float		GetAngle( void )const;
 	int			GetMotion( void )const;
+	int			GetMode( void )const;
 };

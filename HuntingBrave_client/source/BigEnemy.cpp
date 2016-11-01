@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
+#include	"Interpolation.h"
 #include	"BigEnemy.h"
 
 //***************************************************************
@@ -15,94 +16,132 @@
 //------------------------------------------------------------------------------------
 
 //	モデル情報
-#define	Y2009_SCALE	0.02f
+#define	MINOTAURUS_SCALE	0.02f
+#define	INIT_LIFE	1
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
-#define	MOVE_SPEED		0.45f
+#define	MOVE_SPEED		0.1f
 
-
-#define	ENEMY_LENGTH	6.0f
-
+//	その他パラメータ
+#define	ATTACK_DIST		5.0f
+#define	SEARCH_DIST	10.0f
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
 
-//	コンストラクタ
-BigEnemy::BigEnemy(void)
-{
+	//	コンストラクタ
+	BigEnemy::BigEnemy( void )
+	{
+		ModeFunction[MODE::ENTRY] = &BigEnemy::EntryMode;
+		ModeFunction[MODE::MOVE] = &BigEnemy::MoveMode;
+		ModeFunction[MODE::ATTACK] = &BigEnemy::AttackMode;
+		
+		//	変数初期化
+		speed = MOVE_SPEED;
+		active = false;
+		lifeInfo.isAlive = true;
+		searchDist = SEARCH_DIST;
+		attackDist = ATTACK_DIST;
+	}
 
-}
+	//	デストラクタ
+	BigEnemy::~BigEnemy( void )
+	{
 
-//	デストラクタ
-BigEnemy::~BigEnemy(void)
-{
+	}
 
-}
+	//	初期化
+	bool	BigEnemy::Initialize( void )
+	{
+		SetMode( MODE::ENTRY );
+		SetAngle( 0.0f );
+		SetScale( 0.0f );
+		SetMotion( 1 );	//	数値仮
+		
+		lifeInfo.Initialize( INIT_LIFE );
 
-//	初期化
-bool	BigEnemy::Initialize(void)
-{
-	//	読み込み
-	Load("DATA/CHR/Y2009/Y2009.IEM");
+		//	情報更新
+		UpdateInfo();
 
-	SetPos(Vector3(-10.0f, 0.0f, 0.0f));
-	SetAngle(0.0f);
-	SetScale(Y2009_SCALE);
-	SetMotion(1);	//	数値仮
-	speed = MOVE_SPEED;
+		if ( obj == nullptr )	return	false;
+		return	true;
+	}
 
-	//	関数ポインタ
-	ModeFunction[MODE::MOVE] = &BigEnemy::MoveMode;
-	//ModeFunction[MODE::MOVE] = &Player::PostureMode;
-	//ModeFunction[MODE::MOVE] = &Player::MoveMode;
-
-	//	情報更新
-	UpdateInfo();
-
-	if (obj == nullptr)	return	false;
-	return	true;
-}
-
-//	解放
+	//	解放
 
 //------------------------------------------------------------------------------------
 //	更新・描画
 //------------------------------------------------------------------------------------
 
-//	更新
-void	BigEnemy::Update(void)
-{
-	//	各モードに応じた動作関数
-	(this->*ModeFunction[MOVE/*仮*/])();
-
 	//	更新
-	BaseChara::Update();
-}
+	void	BigEnemy::Update( void )
+	{
+		//	各モードに応じた動作関数
+		( this->*ModeFunction[mode] )();
 
-//	描画
-//void	BigEnemy::Render(iexShader* shader, LPSTR technique)
-//{
-//	drawShape->DrawSphere(GetPos(), 5.0f, 0xFFFFFFFF);
-//}
-
-//------------------------------------------------------------------------------------
-//	動作関数
-//------------------------------------------------------------------------------------
-
-//	移動モード動作
-void	BigEnemy::MoveMode(void)
-{
-	//	スティックによる移動
-	Move(speed,ENEMY_LENGTH);
-}
+		//	情報更新
+		BaseChara::Update();
+	}
 
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
 
+	//	出現時モード動作
+	void	BigEnemy::EntryMode( void )
+	{
+		//	補間
+		bool	expantion = Interpolation::LinearInterpolation(
+			scale, 0.0f, MINOTAURUS_SCALE, interpolationParam );
 
+		//	補間パラメータ更新
+		Interpolation::PercentageUpdate( interpolationParam, 0.01f );
+
+		//	補間終了後移動
+		if ( expantion )
+		{
+			active = true;
+			SetMode( MODE::MOVE );
+		}
+	}
+
+	//	移動モード動作
+	void	BigEnemy::MoveMode( void )
+	{
+		//	移動
+		Move( speed );
+	}
+
+	//	攻撃モード動作
+	void	BigEnemy::AttackMode( void )
+	{
+		SetMotion( 2 );
+
+		//	フレーム取得
+		int frame = obj->GetFrame();
+
+		//	フレーム制御
+		if ( frame >= 138 && frame <= 150 )
+		{
+			//	攻撃状態を有効にする
+			attackInfo.attackParam = AttackInfo::ATTACK1;
+		}
+		else
+		{
+			//	攻撃状態を無効にする
+			attackInfo.attackParam = AttackInfo::NO_ATTACK;
+
+			//	通常モードへ移行
+			if ( frame >= 170 )
+				SetMode( MODE::MOVE );
+		}
+	}
+
+//------------------------------------------------------------------------------------
+//	動作関数
+//------------------------------------------------------------------------------------
 
 void	BigEnemy::Attack()
 {
