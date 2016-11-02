@@ -20,7 +20,6 @@
 
 //	定数
 #define	APPEND_INTERVAL		3
-#define	COLLISION_DIST	2.0f
 #define	ENEMY_MAX			5
 
 namespace
@@ -81,7 +80,7 @@ namespace
 	void	EnemyManager::Load( void )
 	{
 		org[ENEMY_TYPE::BIG_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
-		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/zako.IEM" );
+		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -176,14 +175,15 @@ namespace
 			Vector3	vec = enemy->GetPos() - ( *it )->GetPos();
 			float		length = vec.Length();
 
+			float collisionDist = enemy->GetRad() + (*it)->GetRad();
 			//	近い場合は離す
-			if ( length < COLLISION_DIST )
+			if ( length < collisionDist )
 			{
 				//	ベクトル正規化
 				vec.Normalize();
 
 				//	離す
-				( *it )->SetPos( enemy->GetPos() - vec * COLLISION_DIST );
+				( *it )->SetPos( enemy->GetPos() - vec * collisionDist );
 			}
 		}
 	}
@@ -191,6 +191,7 @@ namespace
 	//	プレイヤーとの座標チェック
 	void	EnemyManager::PlayerPosCheck( Enemy* enemy )
 	{
+		
 		//	自分→相手へのベクトル
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -202,14 +203,15 @@ namespace
 			Vector3	vec = pPos - enemy->GetPos();
 			float		length = vec.Length();
 			
+			float collisionDist = enemy->GetRad() + playerManager->GetPlayer( p )->GetRad();
 			//	近い場合は離す
-			if ( length < COLLISION_DIST )
+			if ( length <  collisionDist)
 			{
 				//	ベクトル正規化
 				vec.Normalize();
 
 				//	離す
-				enemy->SetPos( pPos - vec * COLLISION_DIST );
+				enemy->SetPos( pPos - vec * collisionDist );
 			}
 		}
 	}
@@ -233,8 +235,7 @@ namespace
 			random->GetFloat( -20.0f, 20.0f ) );
 		
 		//	リストに追加
-		Append( appendPos, ENEMY_TYPE::BIG_ENEMY );
-
+		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
 		//	生成フラグをfalseにする
 		appendOK = false;
 	}

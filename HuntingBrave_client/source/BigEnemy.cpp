@@ -61,6 +61,7 @@
 		SetMotion( 1 );	//	”’l‰¼
 		
 		lifeInfo.Initialize( INIT_LIFE );
+		rad = 0.2f;
 
 		//	î•ñXV
 		UpdateInfo();

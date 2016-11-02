@@ -26,7 +26,7 @@
 	//	コンストラクタ
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
-		interpolationParam( 0.0f ), searchDist( 0.0f ), attackDist( 0.0f )
+		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f)
 	{
 		
 	}
@@ -62,7 +62,7 @@
 		else
 		{
 			//	モーション設定
-			SetMotion( 1 );	//	待機モーション
+			SetMotion( 0 );	//	待機モーション
 		}
 	}
 
@@ -137,6 +137,7 @@
 		return	lifeInfo.isAlive;
 	}
 
+	
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
