@@ -6,8 +6,8 @@
 #include	<thread>
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
-#include	"GameParam.h"
 #include	"GameData.h"
+#include	"GameParam.h"
 #include	"GameManager.h"
 #include	"UIManager.h"
 #include	"Camera.h"
@@ -78,22 +78,11 @@ bool	sceneMain::Initialize( void )
 	ifs >> addr;
 	ifs >> name;
 
-	//drawShape->Initialize();
-
 	//	クライアント初期化( serverと接続 )
-	bool	serverOK = false;
-	for ( int i = 0; i < 100; i++ )
-	{
-		printf( "ホスト検索中\n" );
-		if ( gameParam->InitializeClient( addr, 7000, name ) )
-		{
-			serverOK = true;
-			break;
-		}
-	}
-	if ( !serverOK )
+	if ( !gameParam->InitializeClient( addr, 7000, name ) )
 	{
 		MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
+		exit( 0 );
 		return	false;
 	}
 	//仮
@@ -141,7 +130,7 @@ void	sceneMain::Update( void )
 	uiManager->Update();
 
 	//	camera更新
-	mainView->Update( playerManager->GetPlayer()->GetPos() );
+	mainView->Update( playerManager->GetPlayer( 0 )->GetPos() );
 }
 
 //*****************************************************************************************************************************
@@ -184,16 +173,6 @@ void	sceneMain::DebugRender( void )
 		char	str[256];
 		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
 		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
-
-		//	自分はスキップ
-		if ( gameParam->GetMyIndex() == p )	continue;
-
-		//	仮で球体描画
-		if ( gameParam->GetPlayerInfo( p ).active )
-		{
-			//	球体描画
-			drawShape->DrawSphereMesh( playerParam.pos, 2.0f, 0xFFFFFF00 );
-		}
 	}
 }
 
@@ -207,7 +186,7 @@ void	sceneMain::MyInfoRender( void )
 	LPSTR name = gameParam->GetPlayerName( id );
 	
 	//	自分の座標
-	Vector3	pos = playerManager->GetPlayer()->GetPos();
+	Vector3	pos = playerManager->GetPlayer( 0 )->GetPos();
 
 	//	表示
 	char	str[256];

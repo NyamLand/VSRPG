@@ -28,7 +28,10 @@ public:
 
 	//	î•ñİ’è
 	void	SetPlayer( int id );
+	void	ReleasePlayer( int id );
 
 	//	À•Wæ“¾
 	Vector3	GetPos( int id );
 };
+
+extern	PlayerManager*	playerManager;

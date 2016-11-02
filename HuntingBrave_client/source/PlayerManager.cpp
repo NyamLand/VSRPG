@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"UIManager.h"
+#include	"GameParam.h"
 #include	"PlayerManager.h"
 
 //***************************************************************
@@ -19,9 +20,12 @@
 //-------------------------------------------------------------------------------------
 	
 	//	コンストラクタ
-	PlayerManager::PlayerManager( void ) : player( nullptr )
+	PlayerManager::PlayerManager( void )
 	{
-		
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			player[p] = nullptr;
+		}
 	}
 		
 	//	デストラクタ
@@ -30,21 +34,13 @@
 		Release();
 	}
 
-	//	初期化
-	bool	PlayerManager::Initialize( void )
-	{
-		//	プレイヤー初期化
-		player = new Player();
-		player->Initialize();
-
-		if ( player != nullptr )	return	true;
-		return	false;
-	}
-
 	//	解放
 	void	PlayerManager::Release( void )
 	{
-		SafeDelete( player );
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			SafeDelete( player[p] );
+		}
 	}
 
 //-------------------------------------------------------------------------------------
@@ -54,13 +50,28 @@
 	//	更新
 	void	PlayerManager::Update( void )
 	{
-		player->Update();
+		//	全プレイヤー初期化
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			//	存在チェック
+			if ( player[p] == nullptr )	continue;
+			
+			//	プレイヤー更新
+			player[p]->Update( gameParam->GetPlayerParam( p ) );
+		}
 	}
 
 	//	描画
 	void	PlayerManager::Render( void )
 	{
-		player->Render();
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			//	存在チェック
+			if ( player[p] == nullptr )	continue;
+
+			//	描画
+			player[p]->Render();
+		}
 	}
 
 //-------------------------------------------------------------------------------------
@@ -72,10 +83,14 @@
 //-------------------------------------------------------------------------------------
 
 	//	プレイヤー生成
-	void	PlayerManager::SetPlayer( int id, int type )
+	void	PlayerManager::SetPlayer( int id )
 	{
 		//	存在チェック
-		//if ( player)
+		if ( player[id] != nullptr )	return;
+
+		//	プレイヤー生成
+		player[id] = new Player();
+		player[id]->Initialize();
 	}
 
 //-------------------------------------------------------------------------------------
@@ -83,7 +98,7 @@
 //-------------------------------------------------------------------------------------
 
 	//	Player情報取得
-	Player*	PlayerManager::GetPlayer( void )
+	Player*	PlayerManager::GetPlayer( int id )
 	{
-		return	player;
+		return	player[id];
 	}

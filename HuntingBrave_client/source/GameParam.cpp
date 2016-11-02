@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GameData.h"
+#include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"GameParam.h"
 
@@ -97,7 +98,11 @@ GameParam*	gameParam = nullptr;
 					break;
 
 				case COMMANDS::CHAR_MOVE:	//	移動情報
-					ReceiveCharaMove(data);
+					ReceiveCharaMove( data );
+					break;
+
+				case COMMANDS::GAME_INFO:	//	ゲーム情報
+					ReceiveGameInfo( data );
 					break;
 
 				case COMMANDS::SIGN_UP:		//	参加情報
@@ -118,7 +123,10 @@ GameParam*	gameParam = nullptr;
 		Receive();
 
 		//	移動データ送信
-		SendChraraInfo();
+		//SendChraraInfo();
+
+		//	移動データ送信
+		SendMove();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -128,12 +136,26 @@ GameParam*	gameParam = nullptr;
 	//	移動情報送信
 	void	GameParam::SendChraraInfo( void )
 	{
-		//	移動データ送信
-		//NET_CHARA	netChara(myIndex, playerManager->GetPlayer()->GetPos());
-		//NET_CONTROLLE_AXIS	netChara(myIndex, playerManager->GetPlayer()->GetAxisX(), playerManager->GetPlayer()->GetAxisY());
+		NET_CHARA	netChara( myIndex, 
+			playerManager->GetPlayer( myIndex )->GetPos(),
+			playerManager->GetPlayer( myIndex )->GetAngle(),
+			0 );
 
-		NET_CHAR_RECEIVEDATA netChara(myIndex, playerManager->GetPlayer()->GetAxisX(), playerManager->GetPlayer()->GetAxisY(), playerManager->GetPlayer()->GetAngle());
-		send( ( char*)&netChara, sizeof( netChara ) );
+		send( ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+	}
+
+	//	移動情報送信
+	void	GameParam::SendMove( void )
+	{
+		//	移動データ送信
+		float axisX = 0.0f, axisY = 0.0f;
+		if ( playerManager->GetPlayer( myIndex )->GetMode() == MODE::MOVE )
+		{
+			GetStickInput( axisX, axisY );
+		}
+
+		NET_MOVE	netMove( myIndex, axisX, axisY );
+		send( ( LPSTR )&netMove, sizeof( netMove ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -144,7 +166,14 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::ReceiveCharaInfo( const LPSTR& data )
 	{
 		NET_CHARA*	netChara = ( NET_CHARA* )data;
-		SetPlayerPos( netChara->id, netChara->pos );
+		SetPlayerParam( netChara->id, netChara->pos, netChara->angle, netChara->motion );
+	}
+
+	//	ゲーム情報受信
+	void	GameParam::ReceiveGameInfo( const LPSTR& data )
+	{
+		NET_GAME*	gameInfo = ( NET_GAME* )data;
+		gameManager->SetTimer( gameInfo->limitTimer );
 	}
 
 
@@ -171,18 +200,18 @@ GameParam*	gameParam = nullptr;
 
 
 	//	コントローラー情報受信
-	void	GameParam::ReceiveControllerAxis(int client, const LPSTR& data)
+	void	GameParam::ReceiveControllerAxis( int client, const LPSTR& data )
 	{
 		NET_CONTROLLE_AXIS* d = (NET_CONTROLLE_AXIS*)data;
-		playerParam[client].axisX = d->axisX;
-		playerParam[client].axisY = d->axisY;
+		//playerParam[client].axisX = d->axisX;
+		//playerParam[client].axisY = d->axisY;
 	}
 
 	//	キャラ移動量情報受信
-	void	GameParam::ReceiveCharaMove( const LPSTR& data)
+	void	GameParam::ReceiveCharaMove( const LPSTR& data )
 	{
-		NET_CHARA_MOVE* netChara = (NET_CHARA_MOVE*)data;
-		SetPlayerMove(netChara->id, netChara->move);
+		NET_CHARA_MOVE* netChara = ( NET_CHARA_MOVE* )data;
+		SetPlayerMove( netChara->id, netChara->move );
 	}
 
 	//	サインアップ情報受信
@@ -207,6 +236,8 @@ GameParam*	gameParam = nullptr;
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
+
+		playerManager->SetPlayer( id );
 	}
 
 	//	プレイヤー脱退
@@ -222,9 +253,17 @@ GameParam*	gameParam = nullptr;
 		playerParam[id].angle  = 0.0f;
 	}
 
+	//	プレイヤーパラメータ設定
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
+	{
+		playerParam[id].pos = pos;
+		playerParam[id].angle = angle;
+		playerParam[id].motion = motion;
+	}
+
 	void	GameParam::SetPlayerMove(int id, const Vector3& move)
 	{
-		playerParam[id].move = move;
+		//playerParam[id].move = move;
 		playerParam[id].angle = 0.0f;
 	}
 
@@ -232,6 +271,20 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos = param.pos;
-		playerParam[id].move = param.move;
+		//playerParam[id].move = param.move;
 		playerParam[id].angle  = param.angle;
 	}
+
+//----------------------------------------------------------------------------------------------
+//	情報設定
+//----------------------------------------------------------------------------------------------
+
+	//	スティック入力情報取得( 返り値に入力の長さ、引数に入力値をかえす )
+	float	GameParam::GetStickInput( float& outX, float& outY )
+	{
+		outX = ( float )input[0]->Get( KEY_AXISX ) * 0.001f;
+		outY = -( float )input[0]->Get( KEY_AXISY ) * 0.001f;
+
+		return	Vector3( outX, 0.0f, outY ).Length();
+	}
+

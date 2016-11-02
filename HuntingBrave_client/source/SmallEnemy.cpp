@@ -4,7 +4,6 @@
 #include	"DrawShape.h"
 #include	"PlayerManager.h"
 
-
 #include	"SmallEnemy.h"
 
 //***************************************************************
@@ -26,90 +25,67 @@
 
 #define ENEMY_LENGTH	10.0f
 
-
-
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
 
-//	コンストラクタ
-SmallEnemy::SmallEnemy(void)
-{
+	//	コンストラクタ
+	SmallEnemy::SmallEnemy( void )
+	{
 
-}
+	}
 
-//	デストラクタ
-SmallEnemy::~SmallEnemy(void)
-{
+	//	デストラクタ
+	SmallEnemy::~SmallEnemy( void )
+	{
 
-}
+	}
 
-//	初期化
-bool	SmallEnemy::Initialize(void)
-{
-	//	読み込み
-	Load("DATA/CHR/ENEMY/zako.IEM");
+	//	初期化
+	bool	SmallEnemy::Initialize( void )
+	{
+		//	読み込み
+		Load( "DATA/CHR/ENEMY/zako.IEM" );
 
-	SetPos(Vector3(10.0f, 0.0f, 0.0f));
-	SetAngle(0.0f);
-	SetScale(Y2009_SCALE);
-	SetMotion(1);	//	数値仮
-	speed = MOVE_SPEED;
+		SetPos( Vector3( 10.0f, 0.0f, 0.0f ) );
+		SetAngle( 0.0f );
+		SetScale( Y2009_SCALE );
+		SetMotion( 1 );	//	数値仮
+		speed = MOVE_SPEED;
 
-	//	関数ポインタ
-	ModeFunction[MODE::MOVE] = &SmallEnemy::MoveMode;
-	//ModeFunction[MODE::MOVE] = &Player::PostureMode;
-	//ModeFunction[MODE::MOVE] = &Player::MoveMode;
+		//	情報更新
+		UpdateInfo();
 
-	//	情報更新
-	UpdateInfo();
+		if ( obj == nullptr )	return	false;
+		return	true;
+	}
 
-	if (obj == nullptr)	return	false;
-	return	true;
-}
-
-//	解放
+	//	解放
 
 //------------------------------------------------------------------------------------
 //	更新・描画
-//------------------------------------------------------------------------------------
-
-//	更新
-void	SmallEnemy::Update(void)
-{
-	//	各モードに応じた動作関数
-	(this->*ModeFunction[MOVE/*仮*/])();
-
-	//	更新
-	BaseChara::Update();
-}
-
-//	描画
-//void	SmallEnemy::Render(iexShader* shader, LPSTR technique)
-//{
-//	
-//}
+//-----------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
 
-//	移動モード動作
-void	SmallEnemy::MoveMode(void)
-{
+	//	移動モード動作
+	void	SmallEnemy::MoveMode( void )
+	{
+		Move( speed );
+	}
+
+//------------------------------------------------------------------------------------
+//	動作関数
+//------------------------------------------------------------------------------------
+
+	//	攻撃
+	void	SmallEnemy::Attack()
+	{
+
+	}
 	
-	Move(speed,ENEMY_LENGTH);
-
-}
-
-//------------------------------------------------------------------------------------
-//	動作関数
-//------------------------------------------------------------------------------------
-
-void	SmallEnemy::Attack()
-{
-
-}
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------

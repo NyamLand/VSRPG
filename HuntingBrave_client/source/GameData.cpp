@@ -32,26 +32,20 @@
 
 //----------------------------------------------------------------------------------------------
 //	PlayerParam構造体
-//----------------------------------------------------------------------------------------------
-	
+//----------------------------------------------------------------------------------------------	
+
 	//	コンストラクタ
-	PlayerParam::PlayerParam(const Vector3& pos, Vector3& move, float& axisX, float& axisY, float angle)
+	PlayerParam::PlayerParam( const Vector3& pos, float angle, int motion )
 	{
-		this->pos = pos;
-		this->move = move;
-		this->axisX = axisX;
-		this->axisY = axisY;
-		this->angle = angle;
+		Set( pos, angle, motion );
 	}
 
 	//	情報設定
-	void	PlayerParam::Set(const Vector3& pos, Vector3& move, float& axisX, float& axisY, float angle)
+	void	PlayerParam::Set( const Vector3& pos, float angle, int motion )
 	{
 		this->pos = pos;
-		this->move = move;
-		this->axisX = axisX;
-		this->axisY = axisY;
 		this->angle = angle;
+		this->motion = motion;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -78,22 +72,45 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	NET_CHARA::NET_CHARA( int id, const Vector3& pos )
+	NET_CHARA::NET_CHARA( int id, const Vector3& pos, float angle, int motion )
 	{
 		this->id = id;
 		this->pos = pos;
+		this->angle = angle;
+		this->motion = motion;
 	}
 
 	//	情報設定
-	void	NET_CHARA::Set( int id, const Vector3& pos )
+	void	NET_CHARA::Set( int id, const Vector3& pos, float angle, int motion )
 	{
 		this->id = id;
 		this->pos = pos;
+		this->angle = angle;
+		this->motion = motion;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	NET_MOVE構造体
+//----------------------------------------------------------------------------------------------
+
+	//	コンストラクタ
+	NET_MOVE::NET_MOVE( int id, float axisX, float axisY )
+	{
+		Set( id, axisX, axisY );
+	}
+
+	//	情報設定
+	void	NET_MOVE::Set( int id, float axisX, float axisY )
+	{
+		this->id = id;
+		this->axisX = axisX;
+		this->axisY = axisY;
 	}
 
 //----------------------------------------------------------------------------------------------
 //	NET_	SEMDDATA構造体
 //----------------------------------------------------------------------------------------------
+
 	NET_CHAR_RECEIVEDATA::NET_CHAR_RECEIVEDATA(int id, const float& axisX, const float& axisY, const float& angle)
 	{
 		this->id = id;

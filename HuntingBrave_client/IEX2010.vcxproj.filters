@@ -136,6 +136,12 @@
     <ClCompile Include="source\Enemy.cpp">
       <Filter>Source\Enemy\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="source\ShapeInfo.cpp">
+      <Filter>Source\ShapeInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CharaInfo.cpp">
+      <Filter>Source\BaseChara\CharaInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -230,6 +236,12 @@
     </ClInclude>
     <ClInclude Include="source\Enemy.h">
       <Filter>Source\Enemy\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ShapeInfo.h">
+      <Filter>Source\ShapeInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CharaInfo.h">
+      <Filter>Source\BaseChara\CharaInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +361,12 @@
     </Filter>
     <Filter Include="Source\Enemy\Enemy">
       <UniqueIdentifier>{dc7d625e-a28e-4a7f-b90e-0970bec169b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ShapeInfo">
+      <UniqueIdentifier>{8435c910-25c3-4cc3-a3a5-99918de33daa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\BaseChara\CharaInfo">
+      <UniqueIdentifier>{9ee647b7-ea1c-4b18-a5e7-6753e9254306}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

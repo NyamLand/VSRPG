@@ -3,10 +3,11 @@
 #include	<fstream>
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	"Player.h"
+#include	"DrawShape.h"
 #include	"GameParam.h"
 #include	"CSVReader.h"
 #include	"BaseEquipment.h"
+#include	"Player.h"
 
 //***************************************************************
 //
@@ -57,6 +58,13 @@ namespace
 		WIN_KEEP,						//	勝利キープ
 		CRY									//	泣き
 	};
+
+	//	ボーン番号
+	enum BONE_NUM
+	{
+		HAND = 27,
+		SWORD,
+	};
 }
 
 //------------------------------------------------------------------------------------
@@ -64,7 +72,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void ) : axisX( 0.0f ), axisY( 0.0f )
+	Player::Player( void )
 	{
 	
 	}
@@ -128,14 +136,16 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	更新
-	void	Player::Update( void )
+	void	Player::Update( PlayerParam& playerParam )
 	{
+		//	サーバーからの情報を反映
+		this->playerParam = playerParam;
+		SetPlayerParam( playerParam );
+
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
 
 		//	更新
-		int index = gameParam->GetMyIndex();
-		pos = gameParam->GetPlayerParam( index ).pos;
 		BaseChara::Update();
 	}
 
@@ -143,6 +153,13 @@ namespace
 	{
 		BaseChara::Render();
 
+		//	ボーンの座標取得
+		Matrix handMat = *obj->GetBone( 27 ) * obj->TransMatrix;
+		Matrix swordMat = *obj->GetBone( 28 ) * obj->TransMatrix;
+		Vector3	handPos = Vector3( handMat._41, handMat._42, handMat._43 );
+		Vector3	swordPos = Vector3( swordMat._41, swordMat._42, swordMat._43 );
+
+		drawShape->DrawCapsule( handPos, swordPos, 0.5f, 0xFFFFFFFF );
 	}
 
 //------------------------------------------------------------------------------------
@@ -152,11 +169,16 @@ namespace
 	//	移動モード動作
 	void	Player::MoveMode( void )
 	{
-		//	スティックによる移動
+		//	移動モーション設定
 		Move();
-		if ( KEY_Get( KEY_A ) == 3 ) SetMode( MODE::SWOADATTACK );		//仮
-		if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
-		if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
+
+		//	攻撃に移行
+		if ( KEY_Get( KEY_A ) == 3 )
+		{
+			if ( SetMode( MODE::SWOADATTACK ) )	SetMotion( MOTION_NUM::ATTACK1 );
+		}
+		//if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
+		//if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
 	}
 
 	void	Player::ModeSwordAttack( void )
@@ -172,11 +194,10 @@ namespace
 		if( param )SetMode( MODE::MOVE );
 	}
 
-
-	void	Player::ModeAvoid(void)
+	void	Player::ModeAvoid( void )
 	{
 		bool param = Avoid();
-		if(param)SetMode(MODE::MOVE);
+		if( param )SetMode( MODE::MOVE );
 	}
 
 //------------------------------------------------------------------------------------
@@ -186,51 +207,19 @@ namespace
 	//	移動
 	bool		Player::Move( void )
 	{
-		axisX = ( float )input[0]->Get( KEY_AXISX );
-		axisY = -( float )input[0]->Get( KEY_AXISY );
+		float x, y, length;
+		length = gameParam->GetStickInput( x, y );
 
-		//	左スティックの入力チェック
-		//float	axisX = ( float )input[0]->Get( KEY_AXISX );
-		//float	axisY = -( float )input[0]->Get( KEY_AXISY );
-		
-		float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
-
-		//	入力があれば移動処理
-		if ( length >= MIN_INPUT_STICK )
-		{
-			//	モーション設定
-			SetMotion( MOTION_NUM::RUN );	//	走りモーション
-
-			////	向き調整
-			AngleAdjust( 
-				Vector3( axisX, 0.0f, axisY ), 
-				ANGLE_ADJUST_MOVE_SPEED );
-
-			////	移動
-			//SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
-		}
-		else
-		{
-			//	モーション設定
-			SetMotion( MOTION_NUM::POSUTURE );	//	待機モーション
-		}
+		if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
+		else SetMotion( MOTION_NUM::POSUTURE );
 		return false;
 	}
-
-
 
 	//剣攻撃
 	bool		Player::SwordAttack( void )
 	{
-		SetMotion( MOTION_NUM::ATTACK1 );		//仮
-		if (!initflag) initflag = true;
-
-		//仮
-		if ( obj->GetFrame() == 413 )
-		{
-			initflag = false;
-			return true;	//攻撃動作が終われば
-		}
+		//	フレームが移動にもどるのでもどったら移動に変更
+		if ( GetMotion() == POSUTURE )	SetMode( MODE::MOVE );
 		return false;
 	}
 
@@ -239,14 +228,14 @@ namespace
 
 
 	//魔法攻撃
-	bool		Player::MagicAttack(void)
+	bool		Player::MagicAttack( void )
 	{
 		SetMotion( MOTION_NUM::MAGIC_CHANT );		//仮
 
-		if ( !initflag )
+		if ( !attackInfo.initFlag )
 		{
-			initflag = true;
-			timer = 0;
+			attackInfo.initFlag = true;
+			attackInfo.timer = 0;
 			move = Vector3( 0, 0, 0 );
 		}
 
@@ -254,7 +243,7 @@ namespace
 		float	axisX = ( float )input[0]->Get( KEY_AXISX );
 		float	axisY = -( float )input[0]->Get( KEY_AXISY );
 		float	length = sqrtf( axisX * axisX + axisY * axisY ) * 0.001f;
-		switch ( step )
+		switch ( attackInfo.step )
 		{
 		case 0:
 
@@ -271,40 +260,39 @@ namespace
 			}
 
 
-			if ( KEY_Get( KEY_B ) == 2 ) step++;
+			if ( KEY_Get( KEY_B ) == 2 ) attackInfo.step++;
 			break;
 		case 1:
-			timer++;		//硬直
+			attackInfo.timer++;		//硬直
 			SetMotion( MOTION_NUM::MAGIC_CHANT );
-			if (timer > 100)
+			if (attackInfo.timer > 100)
 			{
-				initflag = false;
+				attackInfo.initFlag = false;
 				return true;
 			}
 		}
 		return false;
 	}
 
-
 	//回避
-	bool		Player::Avoid(void)
+	bool		Player::Avoid( void )
 	{
 		Vector3 front = GetFront();
 		SetMotion( MOTION_NUM::STEP );
 
-		if ( !initflag )
+		if ( !attackInfo.initFlag )
 		{
-			initflag = true;
-			timer = 0;
+			attackInfo.initFlag = true;
+			attackInfo.timer = 0;
 			move.x += front.x * 1.1f;
 			move.z += front.z * 1.1f;
 		}
 
-		timer++;
+		attackInfo.timer++;
 
-		if (timer > 30)
+		if (attackInfo.timer > 30)
 		{
-			initflag = false;
+			attackInfo.initFlag = false;
 			return true;
 		}
 
@@ -316,17 +304,15 @@ namespace
 //	情報設定
 //------------------------------------------------------------------------------------
 
-	void	Player::SetMode(int mode)
+	//	パラメータ設定
+	void	Player::SetPlayerParam( const PlayerParam& playerParam )
 	{
-		if (this->mode != mode)
-		{
-			step = 0;
-			this->mode = mode;
-		}
+		pos = playerParam.pos;
+		angle = playerParam.angle;
+		//SetMotion( playerParam.motion );
 	}
 
 
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
-

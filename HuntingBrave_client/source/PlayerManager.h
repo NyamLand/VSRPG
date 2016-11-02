@@ -18,7 +18,7 @@ class PlayerManager : public Singleton<PlayerManager>
 
 private:
 	//	パラメータ
-	Player*	player;
+	Player*	player[PLAYER_MAX];
 
 	//	初期化・解放
 	PlayerManager( void );
@@ -26,7 +26,7 @@ private:
 
 public:
 	//	初期化・解放
-	bool	Initialize( void )override;
+	//bool	Initialize( void )override;
 	void	Release( void )override;
 
 	//	更新・描画
@@ -34,10 +34,10 @@ public:
 	void	Render( void );
 
 	//	情報設定
-	void	SetPlayer( int id, int type );
+	void	SetPlayer( int id );
 
 	//	情報取得
-	Player*	GetPlayer( void );
+	Player*	GetPlayer( int id );
 };
 
 #define	playerManager ( PlayerManager::GetInstance() )

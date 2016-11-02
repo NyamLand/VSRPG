@@ -12,6 +12,9 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
+#define	TIME_MAX	( 5 * MINUTE )
+
+//	実体
 GameManager*	gameManager = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -19,19 +22,27 @@ GameManager*	gameManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameManager::GameManager( void )
+	GameManager::GameManager( void ) : timer( nullptr )
 	{
 		//	初期座標設定
-		initPos[0] = Vector3( 0.0f, 0.0f, 15.0f );
-		initPos[1] = Vector3( 15.0f, 0.0f, 0.0f );
-		initPos[2] = Vector3( 0.0f, 0.0f, -15.0f );
-		initPos[3] = Vector3( -15.0f, 0.0f, 0.0f );
+		int initMotion = 0;
+		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, 15.0f ), 0.0f, 0.0f, D3DX_PI, initMotion );
+		initPlayerParam[1].Set( Vector3( 15.0f, 0.0f, 0.0f ), 0.0f, 0.0f, D3DX_PI * 1.5f, initMotion );
+		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -15.0f ), 0.0f, 0.0f, 0.0f, initMotion );
+		initPlayerParam[3].Set( Vector3( -15.0f, 0.0f, 0.0f ), 0.0f, 0.0f, D3DX_PI * 0.5f, initMotion );
+
+		timer = new Timer();
+		timer->Start( TIME_MAX );
 	}
 
 	//	デストラクタ
 	GameManager::~GameManager( void )
 	{
-
+		if ( timer != nullptr )
+		{
+			delete timer;
+			timer = nullptr;
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -39,6 +50,10 @@ GameManager*	gameManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	更新
+	void	GameManager::Update( void )
+	{
+		timer->LimitTimerUpdate();
+	}
 
 //----------------------------------------------------------------------------------------------
 //	動作関数
@@ -53,9 +68,15 @@ GameManager*	gameManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	初期座標取得
-	Vector3	GameManager::GetInitPos( int id )const
+	PlayerParam	GameManager::GetInitInfo( int id )const
 	{
-		return	initPos[id];
+		return	initPlayerParam[id];
+	}
+
+	//	タイマー取得
+	Timer*	GameManager::GetTimer( void )const
+	{
+		return	timer;
 	}
 
 //----------------------------------------------------------------------------------------------

@@ -103,6 +103,7 @@
     <ClCompile Include="Source\PlayerManager.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\stage.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\UDPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +118,7 @@
     <ClInclude Include="Source\PlayerManager.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\stage.h" />
+    <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\UDPServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

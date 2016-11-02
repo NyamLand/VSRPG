@@ -8,6 +8,7 @@
 //***************************************************************
 
 //	include
+#include	"CharaInfo.h"
 
 //	class
 class BaseChara
@@ -22,11 +23,10 @@ protected:
 	float			angle;
 	float			speed;
 	float			scale;
+	bool			active;
 	int				mode;
-	int				timer;
-	int				step;
-	bool			initflag;
-	
+	AttackInfo	attackInfo;
+	LifeInfo		lifeInfo;
 
 
 public:
@@ -52,12 +52,17 @@ public:
 	void	SetAngle( float Angle );
 	void	SetScale( float Scale );
 	void	SetMotion( int motion );
+	bool	SetMode( int nextMode );
+	void	SetObj( iex3DObj* obj );
 
 	//	èÓïÒéÊìæ
 	Matrix	GetMatrix( void )const;
 	Vector3	GetPos( void )const;
+	Vector3	GetMove( void )const;
 	Vector3	GetFront( void )const;
 	Vector3	GetUp( void )const;
 	Vector3	GetRight( void )const;
 	float		GetAngle( void )const;
+	int			GetMotion( void )const;
+	int			GetMode( void )const;
 };
