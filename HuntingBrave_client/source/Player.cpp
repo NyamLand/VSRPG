@@ -95,6 +95,7 @@ namespace
 		SetMotion( MOTION_NUM::POSUTURE );
 		speed = MOVE_SPEED;
 		SetMode( MODE::MOVE );
+		rad = 2.0f;
 
 		//	ä÷êîÉ|ÉCÉìÉ^
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;

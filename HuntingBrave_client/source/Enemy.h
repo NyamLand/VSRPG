@@ -19,6 +19,7 @@ protected:
 	float		interpolationParam;
 	float		searchDist;
 	float		attackDist;
+	float		rad;
 
 	enum MODE	//	‰¼
 	{
@@ -51,4 +52,5 @@ public:
 	void	SetTargetPos( const Vector3& pos );
 	bool	GetActive( void )const;
 	bool	GetIsAlive( void )const;
+	
 };

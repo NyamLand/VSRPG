@@ -27,7 +27,7 @@ protected:
 	int				mode;
 	AttackInfo	attackInfo;
 	LifeInfo		lifeInfo;
-
+	float		rad;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -65,4 +65,5 @@ public:
 	float		GetAngle( void )const;
 	int			GetMotion( void )const;
 	int			GetMode( void )const;
+	float	GetRad( void )const;
 };

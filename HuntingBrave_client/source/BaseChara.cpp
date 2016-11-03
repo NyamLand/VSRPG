@@ -24,7 +24,7 @@
 	//	コンストラクタ
 	BaseChara::BaseChara( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ), 
+		angle(0.0f), scale(1.0f), speed(0.0f), rad( 0.0f ),
 		active( false ),
 		mode( 0 )
 	{
@@ -284,3 +284,8 @@
 		return	mode;
 	}
 
+	//半径取得
+	float	BaseChara::GetRad(void)const
+	{
+		return	rad;
+	}
