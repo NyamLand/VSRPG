@@ -8,6 +8,7 @@
 //***************************************************************
 
 //	include
+#include	"ShapeInfo.h"
 
 //	UŒ‚î•ñ\‘¢‘Ì
 struct AttackInfo
@@ -26,6 +27,7 @@ struct AttackInfo
 	int		step;
 	bool	initFlag;
 	ATTACK_PARAM	attackParam;
+	CollisionShape		collisionShape;
 
 	//	‰Šú‰»E‰ğ•ú
 	AttackInfo( void );

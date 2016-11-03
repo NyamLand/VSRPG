@@ -1,6 +1,9 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"GameParam.h"
+#include	"EnemyManager.h"
+#include	"PlayerManager.h"
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -12,6 +15,8 @@
 //--------------------------------------------------------------------------------------------
 //	グローバル
 //--------------------------------------------------------------------------------------------
+
+#define	PLAYER_ATTACK_HIT_DIST		2.0f
 
 //--------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -27,6 +32,56 @@
 	Collision::~Collision( void )
 	{
 
+	}
+
+//--------------------------------------------------------------------------------------------
+//	当たり判定
+//--------------------------------------------------------------------------------------------
+
+	//	全当たり判定
+	void	Collision::AllCollision( void )
+	{
+		//	プレイヤーの攻撃判定
+		PlayerAttackCollision();
+	}
+
+	//	プレイヤー攻撃判定
+	void	Collision::PlayerAttackCollision( void )
+	{
+		//	変数準備
+		list<Enemy*>	 enemyList = enemyManager->GetList();
+		bool	isHit = false;
+
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			//	条件が合わないものはスキップ
+			if ( gameParam->GetPlayerActive( p ) == false )		continue;
+
+			//	攻撃情報取得、攻撃中でなければスキップ
+			AttackInfo	attackInfo = playerManager->GetPlayer( p )->GetAttackInfo();
+			if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		continue;
+
+			//	敵との当たり判定
+			for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+			{
+				
+				switch ( attackInfo.collisionShape.shapeType )
+				{
+				case SHAPE_TYPE::CAPSULE:
+					isHit = CapsuleVSSphere( attackInfo.collisionShape.capsule , Sphere( ( *it )->GetPos(), 2.0f ) );
+					break;
+
+				case SHAPE_TYPE::SPHERE:
+					isHit = SphereVSSphere( attackInfo.collisionShape.sphere, Sphere( ( *it )->GetPos(), 2.0f ) );
+					break;
+				}
+
+				if ( isHit == true )
+				{
+					( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer( p )->GetAttackInfo().power );
+				}
+			}
+		}
 	}
 
 //--------------------------------------------------------------------------------------------

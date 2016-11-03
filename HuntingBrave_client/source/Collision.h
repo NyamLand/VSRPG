@@ -1,6 +1,5 @@
 
-#ifndef		__COLLISION_H__
-#define		__COLLISION_H__
+#pragma once
 
 //****************************************************************************************
 //
@@ -22,6 +21,10 @@ private:
 	~Collision( void );
 
 public:
+	//	ìñÇΩÇËîªíË
+	void	AllCollision( void );
+	void	PlayerAttackCollision( void );
+
 	//	çﬁéøîªíË
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );
 
@@ -35,6 +38,3 @@ public:
 };
 
 #define	collision ( Collision::GetInstance() )
-
-//****************************************************************************************
-#endif // !__COLLISION_H__

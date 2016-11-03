@@ -23,7 +23,7 @@
 		power( power ), step( 0 ), timer( 0 ),
 		initFlag( false )
 	{
-
+		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
 	}
 
 	//	リセット
@@ -33,6 +33,7 @@
 		step = 0; 
 		timer = 0;
 		initFlag = false;
+		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -51,8 +52,12 @@
 	void	LifeInfo::CulcLife( int param )
 	{
 		life += param;
-		if ( life <= 0 )				life = 0;
 		if ( life >= maxLife )	life = maxLife;
+		if ( life <= 0 )
+		{
+			life = 0;
+			isAlive = false;
+		}
 	}
 
 	//	リセット

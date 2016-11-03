@@ -74,7 +74,11 @@ namespace
 	//	コンストラクタ
 	Player::Player( void )
 	{
-	
+		//	関数ポインタ
+		ModeFunction[MODE::MOVE] = &Player::MoveMode;
+		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
+		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
+		ModeFunction[MODE::AVOID] = &Player::ModeAvoid;
 	}
 
 	//	デストラクタ
@@ -89,18 +93,16 @@ namespace
 		//	読み込み
 		Load( "DATA/CHR/suppin/Suppin.IEM" );
 
+		//	情報設定
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
 		SetAngle( 0.0f );
 		SetScale( PLAYER_SCALE );
 		SetMotion( MOTION_NUM::POSUTURE );
-		speed = MOVE_SPEED;
 		SetMode( MODE::MOVE );
 
-		//	関数ポインタ
-		ModeFunction[MODE::MOVE] = &Player::MoveMode;
-		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
-		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
-		ModeFunction[MODE::AVOID] = &Player::ModeAvoid;
+		//	変数初期化
+		speed = MOVE_SPEED;
+		attackInfo.power = 1;
 
 		//	情報更新
 		UpdateInfo();
@@ -152,14 +154,6 @@ namespace
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
 		BaseChara::Render();
-
-		//	ボーンの座標取得
-		Matrix handMat = *obj->GetBone( 27 ) * obj->TransMatrix;
-		Matrix swordMat = *obj->GetBone( 28 ) * obj->TransMatrix;
-		Vector3	handPos = Vector3( handMat._41, handMat._42, handMat._43 );
-		Vector3	swordPos = Vector3( swordMat._41, swordMat._42, swordMat._43 );
-
-		drawShape->DrawCapsule( handPos, swordPos, 0.5f, 0xFFFFFFFF );
 	}
 
 //------------------------------------------------------------------------------------
@@ -218,8 +212,20 @@ namespace
 	//剣攻撃
 	bool		Player::SwordAttack( void )
 	{
+		//	攻撃情報設定
+		attackInfo.attackParam = AttackInfo::ATTACK1;
+		
+		//	ボーンの座標取得、当たり判定用構造体にセット
+		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
+		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
+		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 0.25f ) );
+
 		//	フレームが移動にもどるのでもどったら移動に変更
-		if ( GetMotion() == POSUTURE )	SetMode( MODE::MOVE );
+		if ( GetMotion() == POSUTURE )
+		{
+			attackInfo.Reset();
+			SetMode( MODE::MOVE );
+		}
 		return false;
 	}
 
@@ -311,7 +317,6 @@ namespace
 		angle = playerParam.angle;
 		//SetMotion( playerParam.motion );
 	}
-
 
 //------------------------------------------------------------------------------------
 //	情報取得

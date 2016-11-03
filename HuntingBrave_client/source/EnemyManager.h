@@ -52,11 +52,10 @@ public:
 	void	PlayerPosCheck( Enemy*	eneny );
 	void	AddRegularTimeIntervals( void );
 
-	
-
 	//	î•ñİ’è
 
 	//	î•ñæ“¾
+	list<Enemy*>&	GetList( void );
 };
 
 #define	enemyManager ( EnemyManager::GetInstance() )

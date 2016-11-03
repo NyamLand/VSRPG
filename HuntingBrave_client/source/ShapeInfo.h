@@ -7,14 +7,26 @@
 //
 //**********************************************************************
 
+//	形状種類
+enum SHAPE_TYPE
+{
+	SPHERE,
+	CAPSULE,
+};
+
 //	球構造体
 struct Sphere
 {
+	//	パラメータ
 	Vector3	center;
 	float			r;
+
+	//	初期化・解放
 	Sphere( void );
 	Sphere( const Vector3& center, float r );
-	~Sphere( void ){};
+
+	//	情報設定
+	void	Set( const Vector3& center, float r );
 };
 
 //	直線構造体
@@ -32,13 +44,16 @@ struct Line
 //	カプセル構造体
 struct Capsule
 {
+	//	パラメータ
 	Vector3	p1, p2;
 	float			r;
+
+	//	初期化・解放
 	Capsule( void );
 	Capsule( const Vector3& p1, const Vector3& p2, float r );
-	void	SetPos( const Vector3& P1, const Vector3& P2 );
-	void	SetRadius( float r );
-	~Capsule( void ){}
+	
+	//	情報設定
+	void	Set( const Vector3& p1, const Vector3& p2, float r );
 };
 
 //	AABB構造体
@@ -69,4 +84,18 @@ struct AABB
 
 		return	out;
 	}
+};
+
+
+//	すべての形状まとめ
+struct CollisionShape
+{
+	//	パラメータ
+	SHAPE_TYPE shapeType;
+	Sphere	sphere;
+	Capsule	capsule;
+
+	//	情報設定
+	void	SetCapsule( const Capsule& capsule );
+	void	SetSphere( const Sphere& sphere );
 };

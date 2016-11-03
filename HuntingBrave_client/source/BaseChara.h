@@ -56,7 +56,10 @@ public:
 	void	SetObj( iex3DObj* obj );
 
 	//	î•ñæ“¾
+	AttackInfo&	GetAttackInfo( void );
+	LifeInfo&		GetLifeInfo( void );
 	Matrix	GetMatrix( void )const;
+	Vector3	GetBonePos( int boneNum )const;
 	Vector3	GetPos( void )const;
 	Vector3	GetMove( void )const;
 	Vector3	GetFront( void )const;

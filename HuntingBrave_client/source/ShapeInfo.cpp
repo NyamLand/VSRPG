@@ -23,10 +23,16 @@
 	}
 
 	//	コンストラクタ
-	Sphere::Sphere( const Vector3& center, float r ) :
-		center( center ), r( r )
+	Sphere::Sphere( const Vector3& center, float r )
 	{
+		Set( center, r );
+	}
 
+	//	情報設定
+	void	Sphere::Set( const Vector3& center, float r )
+	{
+		this->center = center;
+		this->r = r;
 	}
 
 //---------------------------------------------------------------------------------------------
@@ -77,15 +83,28 @@
 
 	}
 
-	//	座標設定
-	void	Capsule::SetPos( const Vector3& P1, const Vector3& P2 )
+	//	情報設定
+	void Capsule::Set( const Vector3& p1, const Vector3& p2, float r )
 	{
-		p1 = P1;
-		p2 = P2;
+		this->p1 = p1;
+		this->p2 = p2;
+		this->r = r;
 	}
 
-	//	半径設定
-	void	Capsule::SetRadius( float r )
+//---------------------------------------------------------------------------------------------
+//	全形状まとめ
+//---------------------------------------------------------------------------------------------
+
+	//	カプセル設定
+	void	CollisionShape::SetCapsule( const Capsule& capsule )
 	{
-		this->r = r;
+		this->capsule = capsule;
+		shapeType = SHAPE_TYPE::CAPSULE;
+	}
+
+	//	球設定
+	void	CollisionShape::SetSphere( const Sphere& sphere )
+	{
+		this->sphere = sphere;
+		shapeType = SHAPE_TYPE::SPHERE;
 	}

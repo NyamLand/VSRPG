@@ -221,10 +221,30 @@
 //	情報取得
 //------------------------------------------------------------------------------------
 
+	//	攻撃情報取得
+	AttackInfo&	BaseChara::GetAttackInfo( void )
+	{
+		return	attackInfo;
+	}
+
+	//	ライフ情報取得
+	LifeInfo&		BaseChara::GetLifeInfo( void )
+	{
+		return	lifeInfo;
+	}
+
 	//	行列取得
 	Matrix	BaseChara::GetMatrix( void )const
 	{
 		return	obj->TransMatrix;
+	}
+
+	//	ボーン座標取得
+	Vector3	BaseChara::GetBonePos( int boneNum )const
+	{
+		Matrix boneMat = *obj->GetBone( boneNum ) * obj->TransMatrix;
+		Vector3	bonePos = Vector3( boneMat._41, boneMat._42, boneMat._43 );
+		return	bonePos;
 	}
 
 	//	座標取得
