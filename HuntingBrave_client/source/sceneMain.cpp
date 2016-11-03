@@ -13,6 +13,7 @@
 #include	"Camera.h"
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
+#include	"Collision.h"
 
 //
 #include	"BaseEquipment.h"
@@ -131,6 +132,9 @@ void	sceneMain::Update( void )
 
 	//	cameraXV
 	mainView->Update( playerManager->GetPlayer( 0 )->GetPos() );
+
+	//	collision
+	collision->AllCollision();
 }
 
 //*****************************************************************************************************************************
