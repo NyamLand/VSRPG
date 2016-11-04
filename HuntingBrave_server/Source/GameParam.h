@@ -29,17 +29,22 @@ public:
 
 	//	‘—Mˆ—
 	void	SendCharaInfo( int client );
+	void	SendGameInfo( int client );
 
 	//	óMˆ—
-	void	ReceiveChara( int client, const LPSTR& data );
+	void	ReceiveChara(int client, const LPSTR& data);
+	void	ReceiveCharaDATA(int client, const LPSTR& data);
+	void	ReceiveControllerAxis(int client, const LPSTR& data);
+	void	ReceiveCharaMove(int client, const LPSTR& data);
 	void	ReceiveSignUp( int client, const LPSTR& data );
 	void	ReceiveSignOut( int client, const LPSTR& data );
 
 	//	î•ñİ’è
-	void SetPlayerParam( int id, PlayerParam& param );
+	void SetPlayerParam( int id, const PlayerParam& param );
 	void SetPlayer( int id, char* name );
-	void SetPlayerParam( int id, Vector3& pos, float angle );
-	PlayerParam& getPlayerParam( int id ){ return playerParam[id]; }
+	void ReleasePlayer( int id );
+	void SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
+	PlayerParam& GetPlayerParam( int id ){ return playerParam[id]; }
 
 	//	î•ñæ“¾
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }

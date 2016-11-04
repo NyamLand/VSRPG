@@ -3,9 +3,11 @@
 #include	<fstream>
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	"Player.h"
+#include	"DrawShape.h"
+#include	"GameParam.h"
 #include	"CSVReader.h"
 #include	"BaseEquipment.h"
+#include	"Player.h"
 
 //***************************************************************
 //
@@ -18,53 +20,90 @@
 //------------------------------------------------------------------------------------
 
 //	モデル情報
-#define	Y2009_SCALE	0.02f
+#define	PLAYER_SCALE	0.2f
 
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED	0.3f
 #define	ANGLE_ADJUST_MAGIC_SPEED	0.05f
-#define	MOVE_SPEED		0.5f
+#define	MOVE_SPEED		0.1f
 
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
+
+//	定数関連
+namespace
+{
+	//	モーション番号
+	enum MOTION_NUM
+	{
+		POSUTURE,						//	待機
+		RUN_START,						//	走り出し
+		RUN,									//	走り
+		ATTACK1,							//	攻撃１
+		ATTACK2,							//	攻撃２
+		STEP,								//	ステップ
+		MAGIC_CHANT_START,		//	詠唱開始
+		MAGIC_CHANT,					//	詠唱中
+		MAGIC_ACTUATION,			//	魔法発動
+		KNOCKBACK1,					//	仰け反り１
+		KNOCKBACK2,					//	仰け反り２
+		FALL,									//	倒れる
+		DEAD,								//	死亡
+		EAT,									//	食べる
+		MENU_OPEN,						//	メニューを開く
+		MENU,								//	メニュー操作中
+		LEVEL_UP,							//	レベルアップ
+		MENU_CLOSE,					//	メニューを閉じる
+		WIN,									//	勝利
+		WIN_KEEP,						//	勝利キープ
+		CRY									//	泣き
+	};
+
+	//	ボーン番号
+	enum BONE_NUM
+	{
+		HAND = 27,
+		SWORD,
+	};
+}
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-Player::Player(void) : texture(nullptr)
+	Player::Player( void )
 	{
-	
+		//	関数ポインタ
+		ModeFunction[MODE::MOVE] = &Player::MoveMode;
+		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
+		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
+		ModeFunction[MODE::AVOID] = &Player::ModeAvoid;
 	}
 
 	//	デストラクタ
 	Player::~Player( void )
 	{
-		SafeDelete( texture );
+		
 	}
 
 	//	初期化
 	bool	Player::Initialize( void )
 	{
 		//	読み込み
-		Load( "DATA/CHR/Y2009/Y2009.IEM" );
+		Load( "DATA/CHR/suppin/Suppin.IEM" );
 
+		//	情報設定
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
 		SetAngle( 0.0f );
-		SetScale( Y2009_SCALE );
-		SetMotion( 1 );	//	数値仮
+		SetScale( PLAYER_SCALE );
+		SetMotion( MOTION_NUM::POSUTURE );
+		SetMode( MODE::MOVE );
+		rad = 2.0f;
+
+		//	変数初期化
 		speed = MOVE_SPEED;
-		SetMode(MODE::MOVE);
-
-		//	テクスチャテスト
-		obj->SetTexture( 0, "DATA/CHR/Y2009/testTexture.png" );
-
-		//	関数ポインタ
-		ModeFunction[MODE::MOVE] = &Player::MoveMode;
-		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
-		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
-		ModeFunction[MODE::AVOID] = &Player::ModeAvoid;
+		attackInfo.power = 1;
 
 		//	情報更新
 		UpdateInfo();
@@ -100,8 +139,12 @@ Player::Player(void) : texture(nullptr)
 //------------------------------------------------------------------------------------
 
 	//	更新
-	void	Player::Update( void )
+	void	Player::Update( PlayerParam& playerParam )
 	{
+		//	サーバーからの情報を反映
+		this->playerParam = playerParam;
+		SetPlayerParam( playerParam );
+
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
 
@@ -112,7 +155,6 @@ Player::Player(void) : texture(nullptr)
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
 		BaseChara::Render();
-
 	}
 
 //------------------------------------------------------------------------------------
@@ -122,31 +164,35 @@ Player::Player(void) : texture(nullptr)
 	//	移動モード動作
 	void	Player::MoveMode( void )
 	{
-		//	スティックによる移動
+		//	移動モーション設定
 		Move();
-		if ( KEY_Get( KEY_A ) == 3 ) SetMode( MODE::SWOADATTACK );		//仮
-		if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
-		if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
+
+		//	攻撃に移行
+		if ( KEY_Get( KEY_A ) == 3 )
+		{
+			if ( SetMode( MODE::SWOADATTACK ) )	SetMotion( MOTION_NUM::ATTACK1 );
+		}
+		//if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
+		//if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
 	}
 
 	void	Player::ModeSwordAttack( void )
 	{
 		bool param = SwordAttack();
 
-		if(param)SetMode(MODE::MOVE);
+		if( param )	SetMode( MODE::MOVE );
 	}
 
 	void	Player::ModeMagicAttack( void )
 	{
 		bool param = MagicAttack();
-		if(param)SetMode(MODE::MOVE);
+		if( param )SetMode( MODE::MOVE );
 	}
 
-
-	void	Player::ModeAvoid(void)
+	void	Player::ModeAvoid( void )
 	{
 		bool param = Avoid();
-		if(param)SetMode(MODE::MOVE);
+		if( param )SetMode( MODE::MOVE );
 	}
 
 //------------------------------------------------------------------------------------
@@ -156,46 +202,30 @@ Player::Player(void) : texture(nullptr)
 	//	移動
 	bool		Player::Move( void )
 	{
-		//	左スティックの入力チェック
-		float	axisX = ( float )input[0]->Get( KEY_AXISX );
-		float	axisY = -( float )input[0]->Get( KEY_AXISY );
-		float	length = sqrtf( axisX * axisX + axisY * axisY ) * 0.001f;
+		float x, y, length;
+		length = gameParam->GetStickInput( x, y );
 
-		//	入力があれば移動処理
-		if ( length >= MIN_INPUT_STICK )
-		{
-			//	モーション設定
-			SetMotion( MOTION::MOVE );	//	走りモーション
-
-			//	向き調整
-			AngleAdjust( 
-				Vector3( axisX, 0.0f, axisY ), 
-				ANGLE_ADJUST_MOVE_SPEED );
-
-			//	移動
-			SetMove( Vector3( sinf( angle ), 0.0f, cosf( angle ) ) * speed );
-		}
-		else
-		{
-			//	モーション設定
-			SetMotion( MOTION::WAIT );	//	待機モーション
-		}
+		if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
+		else SetMotion( MOTION_NUM::POSUTURE );
 		return false;
 	}
 
-
-
 	//剣攻撃
-	bool		Player::SwordAttack(void)
+	bool		Player::SwordAttack( void )
 	{
-		SetMotion( MOTION::ATTACK );		//仮
-		if (!initflag) initflag = true;
+		//	攻撃情報設定
+		attackInfo.attackParam = AttackInfo::ATTACK1;
+		
+		//	ボーンの座標取得、当たり判定用構造体にセット
+		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
+		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
+		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 0.25f ) );
 
-		//仮
-		if (obj->GetFrame() == 413)
+		//	フレームが移動にもどるのでもどったら移動に変更
+		if ( GetMotion() == POSUTURE )
 		{
-			initflag = false;
-			return true;	//攻撃動作が終われば
+			attackInfo.Reset();
+			SetMode( MODE::MOVE );
 		}
 		return false;
 	}
@@ -205,72 +235,71 @@ Player::Player(void) : texture(nullptr)
 
 
 	//魔法攻撃
-	bool		Player::MagicAttack(void)
+	bool		Player::MagicAttack( void )
 	{
-		SetMotion(MOTION::ATTACK2);		//仮
+		SetMotion( MOTION_NUM::MAGIC_CHANT );		//仮
 
-		if (!initflag)
+		if ( !attackInfo.initFlag )
 		{
-			initflag = true;
-			timer = 0;
-			move = Vector3(0, 0, 0);
+			attackInfo.initFlag = true;
+			attackInfo.timer = 0;
+			move = Vector3( 0, 0, 0 );
 		}
 
 		//	左スティックの入力チェック
-		float	axisX = (float)input[0]->Get(KEY_AXISX);
-		float	axisY = -(float)input[0]->Get(KEY_AXISY);
-		float	length = sqrtf(axisX * axisX + axisY * axisY) * 0.001f;
-		switch (step)
+		float	axisX = ( float )input[0]->Get( KEY_AXISX );
+		float	axisY = -( float )input[0]->Get( KEY_AXISY );
+		float	length = sqrtf( axisX * axisX + axisY * axisY ) * 0.001f;
+		switch ( attackInfo.step )
 		{
 		case 0:
 
 			//	入力があれば
-			if (length >= MIN_INPUT_STICK)
+			if ( length >= MIN_INPUT_STICK )
 			{
 				//	向き調整
 				AngleAdjust(
-					Vector3(axisX, 0.0f, axisY),
-					ANGLE_ADJUST_MAGIC_SPEED);
+					Vector3( axisX, 0.0f, axisY ),
+					ANGLE_ADJUST_MAGIC_SPEED );
 
 				//if (axisX > 0)	angle += 0.1f; 
 				//else			angle -= 0.1f;
 			}
 
 
-			if (KEY_Get(KEY_B) == 2) step++;
+			if ( KEY_Get( KEY_B ) == 2 ) attackInfo.step++;
 			break;
 		case 1:
-			timer++;		//硬直
-			SetMotion(MOTION::RIGOR);
-			if (timer > 100)
+			attackInfo.timer++;		//硬直
+			SetMotion( MOTION_NUM::MAGIC_CHANT );
+			if (attackInfo.timer > 100)
 			{
-				initflag = false;
+				attackInfo.initFlag = false;
 				return true;
 			}
 		}
 		return false;
 	}
 
-
 	//回避
-	bool		Player::Avoid(void)
+	bool		Player::Avoid( void )
 	{
 		Vector3 front = GetFront();
-		SetMotion(MOTION::AVOID);
+		SetMotion( MOTION_NUM::STEP );
 
-		if (!initflag)
+		if ( !attackInfo.initFlag )
 		{
-			initflag = true;
-			timer = 0;
+			attackInfo.initFlag = true;
+			attackInfo.timer = 0;
 			move.x += front.x * 1.1f;
 			move.z += front.z * 1.1f;
 		}
 
-		timer++;
+		attackInfo.timer++;
 
-		if (timer > 30)
+		if (attackInfo.timer > 30)
 		{
-			initflag = false;
+			attackInfo.initFlag = false;
 			return true;
 		}
 
@@ -282,17 +311,14 @@ Player::Player(void) : texture(nullptr)
 //	情報設定
 //------------------------------------------------------------------------------------
 
-	void	Player::SetMode(int mode)
+	//	パラメータ設定
+	void	Player::SetPlayerParam( const PlayerParam& playerParam )
 	{
-		if (this->mode != mode)
-		{
-			step = 0;
-			this->mode = mode;
-		}
+		pos = playerParam.pos;
+		angle = playerParam.angle;
+		//SetMotion( playerParam.motion );
 	}
-
 
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
-

@@ -15,8 +15,8 @@ class Singleton
 {
 protected:
 	//	‰Šú‰»E‰ğ•ú
-	Singleton( void ){}
-	virtual ~Singleton( void ){}
+	Singleton( void ){ Initialize(); }
+	virtual ~Singleton( void ){ Release(); }
 
 public:
 	//	‰Šú‰»E‰ğ•ú

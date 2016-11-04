@@ -9,25 +9,29 @@
 
 //	include
 #include	"GameData.h"
+#include	"BaseChara.h"
 
 //	class
-class Player
+class Player : public BaseChara
 {
 private:
-	//	パラメータ
-	Vector3		pos;		//	座標
-	float			angle;	//	方向
+	PlayerParam	pParam;
 
 public:
 	//	初期化・解放
 	Player( void );
-	~Player( void );
+	~Player( void )override;
 
 	//	更新
 	bool Update( PlayerParam& param );
 
-	//	情報取得
-	Vector3 GetPos( void );
+	//	動作関数
+	void	Move( void );
+	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
+	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
+
+	//	情報設定
+	void	SetMotion( int motion );
 };
 
 

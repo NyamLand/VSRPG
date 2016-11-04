@@ -12,6 +12,8 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
+PlayerManager*	playerManager = nullptr;
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -33,8 +35,11 @@
 	{
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			delete	player[p];
-			player[p] = nullptr;
+			if ( player[p] != nullptr )
+			{
+				delete	player[p];
+				player[p] = nullptr;
+			}
 		}
 	}
 
@@ -45,7 +50,19 @@
 	//	更新
 	void	PlayerManager::Update( int id )
 	{
-		PlayerParam	param = gameParam->getPlayerParam( id );
+		PlayerParam	param = gameParam->GetPlayerParam( id );
+
+		//	プレイヤー更新
+		if (  gameParam->GetPlayerActive( id ) == false )
+		{
+			ReleasePlayer( id );
+		}
+		else
+		{
+			//	更新・情報を反映
+			player[id]->Update( param );
+			gameParam->SetPlayerParam( id, param.pos, param.angle, param.motion );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -59,7 +76,21 @@
 	//	プレイヤー設定
 	void	PlayerManager::SetPlayer( int id )
 	{
+		//	存在チェック
+		if ( player[id] != nullptr )	return;
 
+		//	プレイヤー生成
+		player[id] = new Player();
+	}
+
+	//	プレイヤー解放
+	void	PlayerManager::ReleasePlayer( int id )
+	{
+		if ( player[id] != nullptr )
+		{
+			delete	player[id];
+			player[id] = nullptr;
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

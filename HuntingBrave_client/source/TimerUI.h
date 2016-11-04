@@ -13,15 +13,15 @@
 class TimerUI
 {
 private:
-	float timer;
+	int		timer;
 
 public:
 	//	初期化・解放
-	TimerUI(void);
-	~TimerUI(void);
+	TimerUI( void );
+	~TimerUI( void );
 
 	//	更新・描画
-	void	Update(void);
-	void	Render(void);
+	void	Update( void );
+	void	Render( void );
 };
 

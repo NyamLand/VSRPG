@@ -24,10 +24,13 @@
 	//	コンストラクタ
 	BaseChara::BaseChara( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		angle(0.0f), scale(1.0f), speed(0.0f), mode(0), timer(0), step(0),
-		initflag(false)
+		angle(0.0f), scale(1.0f), speed(0.0f), rad( 0.0f ),
+		active( false ),
+		mode( 0 )
 	{
-		
+		//	構造体初期化
+		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
+		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
 	}
 
 	//	デストラクタ
@@ -197,9 +200,38 @@
 		}
 	}
 
+	//	モード設定( 新規モードが同じならfalseをかえす )
+	bool	BaseChara::SetMode( int nextMode )
+	{
+		if ( mode != nextMode )
+		{
+			mode = nextMode;
+			return	true;
+		}
+		return	false;
+	}
+
+	//	モデル設定
+	void	BaseChara::SetObj( iex3DObj*	obj )
+	{
+		this->obj = obj;
+	}
+
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
+
+	//	攻撃情報取得
+	AttackInfo&	BaseChara::GetAttackInfo( void )
+	{
+		return	attackInfo;
+	}
+
+	//	ライフ情報取得
+	LifeInfo&		BaseChara::GetLifeInfo( void )
+	{
+		return	lifeInfo;
+	}
 
 	//	行列取得
 	Matrix	BaseChara::GetMatrix( void )const
@@ -207,10 +239,24 @@
 		return	obj->TransMatrix;
 	}
 
+	//	ボーン座標取得
+	Vector3	BaseChara::GetBonePos( int boneNum )const
+	{
+		Matrix boneMat = *obj->GetBone( boneNum ) * obj->TransMatrix;
+		Vector3	bonePos = Vector3( boneMat._41, boneMat._42, boneMat._43 );
+		return	bonePos;
+	}
+
 	//	座標取得
 	Vector3	BaseChara::GetPos( void )const
 	{
 		return	pos;
+	}
+
+	//	移動値取得
+	Vector3	BaseChara::GetMove( void )const
+	{
+		return	move;
 	}
 
 	//	前方取得
@@ -246,3 +292,20 @@
 		return	angle;
 	}
 
+	//	モーション取得
+	int			BaseChara::GetMotion( void )const
+	{
+		return	obj->GetMotion();
+	}
+
+	//	モード取得
+	int			BaseChara::GetMode( void )const
+	{
+		return	mode;
+	}
+
+	//半径取得
+	float	BaseChara::GetRad(void)const
+	{
+		return	rad;
+	}

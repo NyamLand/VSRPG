@@ -16,8 +16,10 @@ class SmallEnemy : public Enemy
 private:
 	enum MODE	//	仮
 	{
+		ENTRY,
 		MOVE,
-		//POSTURE,
+		ATTACK,
+		DEAD,
 		MODE_MAX
 	};
 
@@ -30,15 +32,15 @@ public:
 	~SmallEnemy(void)override;
 	bool	Initialize(void)override;
 
-	//	更新・描画
-	void	Update(void)override;
-	void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)override;
+	//	更新
+	void	Update(void);
+
 	//	各モード動作関数
+	void	EntryMode(void);
 	void	MoveMode(void);
-	//void	PostureMode( void );
+	void	AttackMode(void);
 
 	//	動作関数
-	void	Move(void)override;
 
 	//	攻撃関数
 	void	Attack(void)override;

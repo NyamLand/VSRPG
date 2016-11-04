@@ -1,5 +1,7 @@
 
 #include	"iextreme.h"
+#include	"GameManager.h"
+#include	"PlayerManager.h"
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -21,10 +23,8 @@
 	{
 		for( int id = 0 ; id < PLAYER_MAX ; id++ )
 		{
-			playerInfo[id].active = false;
-
-			playerParam[id].pos = Vector3( 0.0f, 0.0f, 0.0f );
-			playerParam[id].angle = 0.0f;
+			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 		}
 	}
 
@@ -54,6 +54,9 @@
 		{
 			if( playerInfo[p].active == false ) continue;
 
+			//	ゲーム情報送信
+			SendGameInfo( p );
+
 			//	移動情報送信
 			SendCharaInfo( p );
 		}
@@ -78,6 +81,18 @@
 			ReceiveChara( client, data );
 			break;
 
+		case COMMANDS::CHARA_RECEIVEDATA:	//必要情報全部
+			ReceiveCharaDATA( client, data );
+			break;
+
+		case COMMANDS::CONTROLLE_AXIS:	//コントローラー軸情報
+			ReceiveControllerAxis( client, data );
+			break;
+
+		case COMMANDS::CHAR_MOVE:		//	移動情報
+			ReceiveCharaMove( client, data );
+			break;
+
 		case COMMANDS::SIGN_UP:	//	新規参入
 			ReceiveSignUp( client, data );
 			break;
@@ -96,8 +111,24 @@
 	//	キャラ情報送信
 	void	GameParam::SendCharaInfo( int client )
 	{
-		NET_CHARA netChara( client, playerParam[client].pos );
+		//	情報設定
+		NET_CHARA netChara( client, 
+			playerParam[client].pos, 
+			playerParam[client].angle,
+			playerParam[client].motion );
+
+		//	送信
 		send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+	}
+
+	//	ゲーム情報送信
+	void	GameParam::SendGameInfo( int client )
+	{
+		//	情報設定
+		NET_GAME	 netGame( ( float )( gameManager->GetTimer()->GetLimitTime() ) ); 
+
+		//	送信
+		send( client, ( LPSTR )&netGame, sizeof( NET_GAME ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -107,8 +138,58 @@
 	//	キャラ情報受信
 	void	GameParam::ReceiveChara( int client, const LPSTR& data )
 	{
-		NET_CHARA* d = ( NET_CHARA* )data;
-		playerParam[client].pos = d->pos;
+		NET_MOVE* netMove = ( NET_MOVE* )data;
+		playerParam[client].moveX = netMove->axisX;
+		playerParam[client].moveZ = netMove->axisY;
+	}
+
+
+
+	//*****************************************
+	//		後でちゃんとする
+
+	//受け取り情報全部
+	void	GameParam::ReceiveCharaDATA( int client, const LPSTR& data )
+	{
+		NET_CHAR_RECEIVEDATA* d = (NET_CHAR_RECEIVEDATA*)data;
+		//playerParam[client].axis = d->axis;
+		float	length = sqrtf(d->axisX * d->axisX + d->axisY * d->axisY) * 0.001f;
+
+		////	入力があれば移動処理
+		if (length >= 0.3f)
+		{
+			Vector3 m = Vector3(sinf(d->angle), 0.0f, cosf(d->angle)) * 0.3f;
+
+			playerParam[client].pos += m;
+		}
+	}
+
+
+	//*****************************************
+
+	//	コントローラー情報受信
+	void	GameParam::ReceiveControllerAxis(int client, const LPSTR& data)
+	{
+		NET_CONTROLLE_AXIS* d = (NET_CONTROLLE_AXIS*)data;
+		//playerParam[client].axis = d->axis;
+		float	length = sqrtf( d->axisX * d->axisX + d->axisY * d->axisY ) * 0.001f;
+
+		//	入力があれば移動処理
+		if ( length >= 0.3f )	
+		{
+			Vector3 m = Vector3(sinf(0), 0.0f, cosf(0)) * 0.3f;
+			playerParam[client].pos += m;
+		}
+	}
+
+
+
+	//	キャラ移動量情報受信
+	void	GameParam::ReceiveCharaMove(int client, const LPSTR& data)
+	{
+		NET_MOVE* netMove = ( NET_MOVE* )data;
+		playerParam[client].moveX = netMove->axisX;
+		playerParam[client].moveZ = netMove->axisY;
 	}
 
 	//	サインアップ情報受信
@@ -121,6 +202,11 @@
 		//	IDを返信
 		netIn->id = client;
 		send( client, ( char* )netIn, sizeof( NET_IN ) );
+
+		//	初期座標を送信
+		PlayerParam	initParam = gameManager->GetInitInfo( client );
+		NET_CHARA	netChara( client, initParam.pos, initParam.angle, initParam.motion );
+		send( client, ( LPSTR )&netChara, sizeof( netChara ) );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -143,7 +229,10 @@
 	//	サインアウト情報受信
 	void	GameParam::ReceiveSignOut( int client, const LPSTR& data )
 	{
-		playerInfo[client].active = false;
+		//	プレイヤー解放
+		ReleasePlayer( client );
+
+		//	ソケットを閉じる
 		CloseClient( client );
 
 		NET_OUT	netOut( client );
@@ -169,19 +258,27 @@
 		strcpy( playerInfo[id].name, name );
 
 		//	パラメータ初期化
-		playerParam[id].pos = Vector3( 0.0f, 0.0f, 0.0f );
-		playerParam[id].angle  = 0.0f;
+		playerParam[id] = gameManager->GetInitInfo( id );
+		playerManager->SetPlayer( id );
+	}
+
+	//	プレイヤー解放
+	void	GameParam::ReleasePlayer( int id )
+	{
+		ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
+		//playerManager->ReleasePlayer( id );
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, Vector3& pos, float angle )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
 	{
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
+		playerParam[id].motion = motion;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, PlayerParam& param )
+	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos    = param.pos;
 		playerParam[id].angle  = param.angle;

@@ -13,37 +13,44 @@
 //	class
 class Enemy : public BaseChara
 {
-private:
+protected:
+	//	パラメータ
+	Vector3	targetPos;
+	float		interpolationParam;
+	float		searchDist;
+	float		attackDist;
+	float		rad;
+
 	enum MODE	//	仮
 	{
+		ENTRY,
 		MOVE,
-		//POSTURE,
+		ATTACK,
+		DEAD,
 		MODE_MAX
 	};
 
-	//	モード別関数ポインタ
-	void(Enemy::*ModeFunction[MODE_MAX])(void);
-
 public:
 	//	初期化・解放
-	Enemy(void);
-	~Enemy(void)override;
-	virtual bool	Initialize(void)=0;
+	Enemy( void );
+	~Enemy( void )override;
 
-	//	更新・描画
-	virtual void	Update(void) = 0;
-	virtual void	Render(iexShader* shader = nullptr, LPSTR technique = nullptr)=0;
 	//	各モード動作関数
-	void	MoveMode(void);
-	//void	PostureMode( void );
+	void	MoveMode( void );
 
 	//	動作関数
-	virtual void	Move(void)=0;
+	void	Move( float speed ) ;
+	void	FacingPlayer( void );
+	void	Advance( float speed );
+	bool	DistCheck( float& length );
+	void	LifeCheck( void );
 
 	//	攻撃関数
-	virtual void	Attack(void)=0;
+	virtual void	Attack( void )=0;
 
-
-
-
+	//	情報取得
+	void	SetTargetPos( const Vector3& pos );
+	bool	GetActive( void )const;
+	bool	GetIsAlive( void )const;
+	
 };

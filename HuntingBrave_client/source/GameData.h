@@ -32,10 +32,11 @@
 	struct PlayerParam
 	{
 		Vector3 pos;
-		float	angle;
+		float		angle; 
+		int			motion;
 		PlayerParam( void ){};
-		PlayerParam( const Vector3& pos, float angle );
-		void Set( const Vector3& pos, float angle );
+		PlayerParam( const Vector3& pos, float angle, int motion );
+		void Set( const Vector3& pos, float angle, int motion );
 	};
 
 	//	データ構造
@@ -55,8 +56,12 @@
 	{
 		NO_COMMAND = -1,
 		CHARA_INFO,
+		CHAR_MOVE,
+		CHARA_RECEIVEDATA,
+		GAME_INFO,
 		SIGN_UP = 10,
-		SIGN_OUT
+		SIGN_OUT,
+		CONTROLLE_AXIS,
 	};
 
 	//	新規参加情報
@@ -76,10 +81,70 @@
 		char com = COMMANDS::CHARA_INFO;
 		int		id;
 		Vector3	pos;
+		float		angle;
+		int			motion;
 		NET_CHARA( void ){}
-		NET_CHARA( int id, const Vector3& pos );
-		void	Set( int id, const Vector3& pos );
+		NET_CHARA(int id, const Vector3& pos, float angle, int motion );
+		void	Set( int id, const Vector3& pos, float angle, int motion );
 	};
+
+	//	移動情報
+	struct NET_MOVE
+	{
+		char com = COMMANDS::CHAR_MOVE;
+		int		id;
+		float	axisX, axisY;
+		NET_MOVE( void ){};
+		NET_MOVE( int id, float axisX, float axisY );
+		void	Set( int id, float axisX, float axisY );
+	};
+
+	//	ゲーム情報
+	struct NET_GAME
+	{
+		char	com = GAME_INFO;
+		int		limitTimer;
+		NET_GAME( void ){};
+		NET_GAME( int timer ){ limitTimer = timer; }
+	};
+
+	//	送るデータの塊
+	struct NET_CHAR_RECEIVEDATA
+	{
+		char com = COMMANDS::CHARA_RECEIVEDATA;
+		int		id;
+		float	axisX, axisY;
+		float	angle;
+		NET_CHAR_RECEIVEDATA(void){}
+		NET_CHAR_RECEIVEDATA(int id, const float& axisX, const float& axisY, const float& angle);
+		void	Set(int id, const float& axisX, const float& axisY, float& angle);
+	};
+
+//***************************今後使うか分からん******************
+//	コントローラー軸情報
+	struct NET_CONTROLLE_AXIS
+	{
+		char com = COMMANDS::CONTROLLE_AXIS;
+		int		id;
+		float axisX,axisY;
+		NET_CONTROLLE_AXIS(void){}
+		NET_CONTROLLE_AXIS(int id, const float axisX, const float axisY);
+		void	Set(int id, const float axisX, const float axisY);
+	};
+
+
+	//	キャラ移動データ
+	struct NET_CHARA_MOVE
+	{
+		char com = COMMANDS::CHAR_MOVE;
+		int		id;
+		Vector3	move;
+		NET_CHARA_MOVE(void){}
+		NET_CHARA_MOVE(int id, const Vector3& move);
+		void	Set(int id, const Vector3& move);
+	};
+
+//****************************************************************
 	
 	//	脱退情報
 	struct NET_OUT

@@ -44,7 +44,7 @@ extra(false)
 	while (!csv->Read(tokens))
 	{
 		//初期値の次の行から読み込む
-		if (tokens[0].c_str() == "初期値		")
+		if (tokens[0] == "初期値")
 		{
 			flag = true;
 			continue;
@@ -59,7 +59,7 @@ extra(false)
 //	デストラクタ
 BaseEquipment::~BaseEquipment(void)
 {
-//	SafeDelete(csv);
+	SafeDelete(csv);
 }
 
 void	BaseEquipment::Initialize()
