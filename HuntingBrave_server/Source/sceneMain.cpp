@@ -6,9 +6,10 @@
 #include	"GameManager.h"
 #include	"GameParam.h"
 #include	"PlayerManager.h"
+#include	"PointManager.h"
 #include	"sceneMain.h"
 
-GameParam*		gameParam;
+GameParam*		gameParam = nullptr;
 
 //*****************************************************************************************************************************
 //
@@ -19,11 +20,14 @@ GameParam*		gameParam;
 //	main
 void main( void )
 {
+	//	初期化
 	gameManager = new GameManager();
 	gameParam = new GameParam();
 	playerManager = new PlayerManager( gameParam );
+	pointManager = new PointManager( gameParam );
 	gameParam->InitializeServer();
 
+	//	無限ループ
 	for (;;)
 	{
 		//	マネージャー更新
@@ -33,7 +37,8 @@ void main( void )
 		int client = gameParam->Receive();
 		if ( client != -1 )
 		{
-			//	プレイヤー更新
+			//	全体更新
+			pointManager->Update( client );
 			playerManager->Update( client );
 
 			//	クライアントへ送信
@@ -42,7 +47,8 @@ void main( void )
 	}
 
 	//	解放
-	delete	gameParam;
-	delete	gameManager;
-	delete	playerManager;
+	delete	gameParam;	gameParam = nullptr;
+	delete	gameManager;	gameManager = nullptr;
+	delete	playerManager;	playerManager = nullptr;
+	delete	pointManager;	pointManager = nullptr;
 }

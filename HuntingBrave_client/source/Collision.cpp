@@ -77,6 +77,7 @@
 				{
 					//	ƒ‰ƒCƒtŒvŽZ
 					( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer( p )->GetAttackInfo().power );
+					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
 				}
 			}
 		}

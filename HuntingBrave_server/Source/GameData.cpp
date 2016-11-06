@@ -19,8 +19,7 @@
 	//	コンストラクタ
 	PlayerInfo::PlayerInfo( bool active, const LPSTR& name )
 	{
-		this->active = active;
-		strcpy( this->name, name );
+		Set( active, name );
 	}
 
 	//	情報設定
@@ -104,6 +103,29 @@
 		this->id = id;
 		this->axisX = axisX;
 		this->axisY = axisY;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	NET_POINT構造体
+//----------------------------------------------------------------------------------------------
+
+	//	コンストラクタ
+	NET_POINT::NET_POINT( void ) : point( 0 )
+	{
+
+	}
+	
+	//	コンストラクタ
+	NET_POINT::NET_POINT( int id, int point )
+	{
+		Set( id, point );
+	}
+
+	//	情報設定
+	void	NET_POINT::Set( int id, int point )
+	{
+		this->id = id;
+		this->point = point;
 	}
 
 //----------------------------------------------------------------------------------------------

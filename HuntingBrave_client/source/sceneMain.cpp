@@ -173,9 +173,10 @@ void	sceneMain::DebugRender( void )
 	{
 		//	各プレイヤー座標描画
 		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
+		int	point = gameParam->GetPointInfo( p ).point;
 		Vector3	p_pos = playerParam.pos;
 		char	str[256];
-		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
+		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point );
 		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
 	}
 }

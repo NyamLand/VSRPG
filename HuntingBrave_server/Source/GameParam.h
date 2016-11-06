@@ -17,6 +17,7 @@ class GameParam : public UDPServer
 private:
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	PointInfo		pointInfo[PLAYER_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -30,9 +31,11 @@ public:
 	//	‘—Mˆ—
 	void	SendCharaInfo( int client );
 	void	SendGameInfo( int client );
+	void	SendPointInfo( int client );
 
 	//	óMˆ—
-	void	ReceiveChara(int client, const LPSTR& data);
+	void	ReceiveChara( int client, const LPSTR& data );
+	void	ReceivePoint( int client, const LPSTR& data );
 	void	ReceiveCharaDATA(int client, const LPSTR& data);
 	void	ReceiveControllerAxis(int client, const LPSTR& data);
 	void	ReceiveCharaMove(int client, const LPSTR& data);
@@ -41,11 +44,14 @@ public:
 
 	//	î•ñİ’è
 	void SetPlayerParam( int id, const PlayerParam& param );
+	void SetPointInfo( int id, const PointInfo& pointInfo );
 	void SetPlayer( int id, char* name );
 	void ReleasePlayer( int id );
 	void SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
-	PlayerParam& GetPlayerParam( int id ){ return playerParam[id]; }
 
 	//	î•ñæ“¾
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }
+	PlayerParam& GetPlayerParam( int id ){ return playerParam[id]; }
+	PointInfo&		GetPointInfo( int id ){ return pointInfo[id]; }
+
 };

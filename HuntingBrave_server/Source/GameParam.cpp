@@ -25,6 +25,7 @@
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 		}
 	}
 
@@ -59,6 +60,9 @@
 
 			//	移動情報送信
 			SendCharaInfo( p );
+
+			//	点数情報送信
+			SendPointInfo( p );
 		}
 
 		//	終端通知
@@ -93,6 +97,10 @@
 			ReceiveCharaMove( client, data );
 			break;
 
+		case COMMANDS::POINT_INFO:		//	点数情報
+			ReceivePoint( client, data );
+			break;
+
 		case COMMANDS::SIGN_UP:	//	新規参入
 			ReceiveSignUp( client, data );
 			break;
@@ -125,10 +133,26 @@
 	void	GameParam::SendGameInfo( int client )
 	{
 		//	情報設定
-		NET_GAME	 netGame( ( float )( gameManager->GetTimer()->GetLimitTime() ) ); 
+		NET_GAME	 netGame( gameManager->GetTimer()->GetLimitTime() ); 
 
 		//	送信
 		send( client, ( LPSTR )&netGame, sizeof( NET_GAME ) );
+	}
+
+	//	点数情報送信
+	void	GameParam::SendPointInfo( int client )
+	{
+		//	加算分が０だとスキップ
+		if ( pointInfo[client].addPoint == 0 )	return;
+
+		//	情報設定
+		NET_POINT	netPoint;
+		netPoint.id = client;
+		netPoint.point = pointInfo[client].point;
+		pointInfo[client].addPoint = 0;
+
+		//	送信
+		send( client, ( LPSTR )&netPoint, sizeof( NET_POINT ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -141,6 +165,13 @@
 		NET_MOVE* netMove = ( NET_MOVE* )data;
 		playerParam[client].moveX = netMove->axisX;
 		playerParam[client].moveZ = netMove->axisY;
+	}
+
+	//	点数情報受信
+	void	GameParam::ReceivePoint( int client, const LPSTR& data )
+	{
+		NET_POINT*	netPoint = ( NET_POINT* )data;
+		pointInfo[client].addPoint = netPoint->point;
 	}
 
 
@@ -282,5 +313,11 @@
 	{
 		playerParam[id].pos    = param.pos;
 		playerParam[id].angle  = param.angle;
+	}
+
+	//	点数情報設定
+	void	GameParam::SetPointInfo( int id, const PointInfo& pointInfo )
+	{
+		this->pointInfo[id] = pointInfo;
 	}
 

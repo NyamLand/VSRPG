@@ -19,6 +19,7 @@ private:
 
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	PointInfo		pointInfo[PLAYER_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -34,12 +35,15 @@ public:
 	//	‘—Mˆ—
 	void	SendChraraInfo( void );
 	void	SendMove( void );
-	
+	void	SendPoint( void );
+
 	//	óMˆ—
 	void	ReceiveCharaInfo(const LPSTR& data);
 	void	ReceiveCharaDATA(const LPSTR& data);
 	void	ReceiveControllerAxis(int client, const LPSTR& data);
 	void	ReceiveCharaMove(const LPSTR& data);
+
+	void	ReceivePoint( const LPSTR& data );
 	void	ReceiveSignUp( const LPSTR& data );
 	void	ReceiveSignOut( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
@@ -49,14 +53,17 @@ public:
 	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
 	void	SetPlayerPos(int id, const Vector3& pos);
 	void	SetPlayerMove(int id, const Vector3& move);
-	PlayerParam GetPlayerParam( int id ){ return playerParam[id]; }
-	PlayerInfo	GetPlayerInfo( int id ){ return playerInfo[id]; }
 	
 	//	î•ñİ’è
 	void  SetPlayerInfo( int id, char* name );
+	void	SetPointInfo( int id, int addPoint );
+	void	AddPoint( int id, int point );
 	void  RemovePlayerInfo( int id );
 	
 	//	î•ñæ“¾
+	PlayerParam GetPlayerParam( int id )const{ return playerParam[id]; }
+	PlayerInfo	GetPlayerInfo( int id )const{ return playerInfo[id]; }
+	PointInfo&		GetPointInfo( int id ){ return	pointInfo[id]; };
 	bool  GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
 	char* GetPlayerName( int id ){ return playerInfo[id].name; }

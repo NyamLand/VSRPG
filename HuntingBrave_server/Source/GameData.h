@@ -47,6 +47,14 @@
 		void Set( const Vector3& pos, float moveX, float moveZ, float angle, int motion );
 	};
 
+	//	点数、順位情報
+	struct PointInfo
+	{
+		//	変数
+		int		point;
+		int		addPoint;
+	};
+
 	//	データ構造
 	enum
 	{
@@ -67,6 +75,7 @@
 		CHAR_MOVE,
 		CHARA_RECEIVEDATA,
 		GAME_INFO,
+		POINT_INFO,
 		SIGN_UP = 10,
 		SIGN_OUT,
 		CONTROLLE_AXIS,
@@ -103,6 +112,17 @@
 		NET_CHARA( void ){}
 		NET_CHARA( int id, const Vector3& pos, float angle, int motion );
 		void	Set( int id, const Vector3& pos, float angle, int motion );
+	};
+
+	//	点数
+	struct NET_POINT
+	{
+		char com = COMMANDS::POINT_INFO;
+		int		id;
+		int		point;
+		NET_POINT( void );
+		NET_POINT( int id, int point );
+		void	Set( int id, int point );
 	};
 
 	//	移動情報

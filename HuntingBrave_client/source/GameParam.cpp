@@ -29,6 +29,7 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 		}
 	}
 
@@ -105,6 +106,10 @@ GameParam*	gameParam = nullptr;
 					ReceiveGameInfo( data );
 					break;
 
+				case COMMANDS::POINT_INFO:	//	点数情報
+					ReceivePoint( data );
+					break;
+
 				case COMMANDS::SIGN_UP:		//	参加情報
 					ReceiveSignUp( data );
 					break;
@@ -127,6 +132,9 @@ GameParam*	gameParam = nullptr;
 
 		//	移動データ送信
 		SendMove();
+
+		//	点数データ送信
+		SendPoint();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -158,6 +166,24 @@ GameParam*	gameParam = nullptr;
 		send( ( LPSTR )&netMove, sizeof( netMove ) );
 	}
 
+	//	点数情報送信
+	void	GameParam::SendPoint( void )
+	{
+		//	加算分が０ならスキップ
+		if ( pointInfo[myIndex].addPoint == 0 )	return;
+
+		//	情報格納
+		NET_POINT	netPoint;
+		netPoint.id = myIndex;
+		netPoint.point = pointInfo[myIndex].addPoint;
+
+		//	送信
+		send( ( LPSTR )&netPoint, sizeof( netPoint ) );
+
+		//	加算情報リセット
+		pointInfo[myIndex].addPoint = 0;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	データ受信
 //----------------------------------------------------------------------------------------------
@@ -176,6 +202,12 @@ GameParam*	gameParam = nullptr;
 		gameManager->SetTimer( gameInfo->limitTimer );
 	}
 
+	//	点数情報受信
+	void	GameParam::ReceivePoint( const LPSTR& data )
+	{
+		NET_POINT*	netPoint = ( NET_POINT* )data;
+		SetPointInfo( netPoint->id, netPoint->point );
+	}
 
 	//*****************************************
 	//		後でちゃんとする
@@ -238,6 +270,18 @@ GameParam*	gameParam = nullptr;
 		strcpy( playerInfo[id].name, name );
 
 		playerManager->SetPlayer( id );
+	}
+
+	//	点数情報設定
+	void	GameParam::SetPointInfo( int id, int point )
+	{
+		pointInfo[id].point = point;
+	}
+
+	//	加算情報設定
+	void	GameParam::AddPoint( int id, int addPoint )
+	{
+		pointInfo[id].addPoint += addPoint;
 	}
 
 	//	プレイヤー脱退
