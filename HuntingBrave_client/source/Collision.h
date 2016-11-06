@@ -16,6 +16,15 @@ class Collision : public Singleton<Collision>
 {
 	friend Singleton<Collision>;
 
+public:
+	enum COLLISION_PAIR
+	{
+		SPHEREVSSPHERE,
+		SPHEREVSCAPSULE,
+		CAPSULEVSSPHERE,
+		CAPSULEVSCAPSULE,
+	};
+
 private:
 	Collision( void );
 	~Collision( void );
@@ -24,6 +33,8 @@ public:
 	//	ìñÇΩÇËîªíË
 	void	AllCollision( void );
 	void	PlayerAttackCollision( void );
+	bool	CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 );
+	COLLISION_PAIR	GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 );
 
 	//	çﬁéøîªíË
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );

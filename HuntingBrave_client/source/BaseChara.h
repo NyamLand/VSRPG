@@ -23,11 +23,10 @@ protected:
 	float			angle;
 	float			speed;
 	float			scale;
-	bool			active;
 	int				mode;
-	AttackInfo	attackInfo;
-	LifeInfo		lifeInfo;
-	float		rad;
+	CollisionInfo	collisionInfo;
+	AttackInfo		attackInfo;
+	LifeInfo			lifeInfo;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -47,6 +46,7 @@ public:
 	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
 
 	//	î•ñİ’è
+	void	SetCollisionShape( void );
 	void	SetPos( const Vector3& Pos );
 	void	SetMove( const Vector3& Move );
 	void	SetAngle( float Angle );
@@ -58,6 +58,7 @@ public:
 	//	î•ñæ“¾
 	AttackInfo&	GetAttackInfo( void );
 	LifeInfo&		GetLifeInfo( void );
+	CollisionInfo GetCollisionInfo( void )const;
 	Matrix	GetMatrix( void )const;
 	Vector3	GetBonePos( int boneNum )const;
 	Vector3	GetPos( void )const;
@@ -68,5 +69,4 @@ public:
 	float		GetAngle( void )const;
 	int			GetMotion( void )const;
 	int			GetMode( void )const;
-	float	GetRad( void )const;
 };

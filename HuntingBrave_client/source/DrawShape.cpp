@@ -81,6 +81,7 @@
 		}
 	}
 
+	//	球描画
 	void	DrawShape::DrawSphere( const Vector3& pos, float r, DWORD color )
 	{
 		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
@@ -156,11 +157,12 @@
 		d3dd->DrawPrimitive(D3DPT_LINESTRIP, L6, N);
 	}
 
+	//	カプセル描画
 	void	DrawShape::DrawCapsule( const Vector3& p1, const Vector3& p2, float r, DWORD color )
 	{
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
+		//iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
 		DrawCapsule(iexSystem::GetDevice(), D3DXVECTOR3(p1.x, p1.y, p1.z), D3DXVECTOR3(p2.x, p2.y, p2.z), r, color);
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
+		//iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 	}
 
 	//	線描画
@@ -184,11 +186,12 @@
 		d3dd->DrawPrimitive(D3DPT_LINELIST, 0, 1);
 	}
 
+	//	線描画
 	void	DrawShape::DrawLine( const Vector3& p1, const Vector3& p2, DWORD color )
 	{
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
+		//iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
 		DrawLine(iexSystem::GetDevice(), D3DXVECTOR3(p1.x, p1.y, p1.z), D3DXVECTOR3(p2.x, p2.y, p2.z), color);
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
+		//iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 	}
 
 	//	球メッシュ描画

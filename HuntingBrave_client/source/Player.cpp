@@ -21,6 +21,8 @@
 
 //	モデル情報
 #define	PLAYER_SCALE	0.2f
+#define	PLAYER_HEIGHT		2.5f
+#define	PLAYER_RADIUS		1.5f
 
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED	0.3f
@@ -99,11 +101,15 @@ namespace
 		SetScale( PLAYER_SCALE );
 		SetMotion( MOTION_NUM::POSUTURE );
 		SetMode( MODE::MOVE );
-		rad = 2.0f;
+
+		//	当たり判定形状設定
+		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
 		//	変数初期化
 		speed = MOVE_SPEED;
 		attackInfo.power = 1;
+		lifeInfo.active = true;
+		lifeInfo.isAlive = true;
 
 		//	情報更新
 		UpdateInfo();
@@ -155,6 +161,9 @@ namespace
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
 		BaseChara::Render();
+
+		drawShape->DrawCapsule( attackInfo.collisionShape.capsule.p1, attackInfo.collisionShape.capsule.p2, attackInfo.collisionShape.capsule.r, 0xFFFFFFFF );
+		
 	}
 
 //------------------------------------------------------------------------------------
@@ -219,7 +228,7 @@ namespace
 		//	ボーンの座標取得、当たり判定用構造体にセット
 		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
 		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
-		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 0.25f ) );
+		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 1.0f ) );
 
 		//	フレームが移動にもどるのでもどったら移動に変更
 		if ( GetMotion() == POSUTURE )

@@ -17,6 +17,8 @@
 
 //	モデル情報
 #define	MINOTAURUS_SCALE	0.02f
+#define	MINOTAURUS_HEIGHT	2.0f
+#define	MINOTAURUS_RADIUS	1.5f
 #define	INIT_LIFE	1
 
 //	動作スピード
@@ -40,10 +42,11 @@
 		
 		//	変数初期化
 		speed = MOVE_SPEED;
-		active = false;
-		lifeInfo.isAlive = true;
 		searchDist = SEARCH_DIST;
 		attackDist = ATTACK_DIST;
+		lifeInfo.isAlive = true;
+		lifeInfo.active = false;
+
 	}
 
 	//	デストラクタ
@@ -61,7 +64,7 @@
 		SetMotion( 1 );	//	数値仮
 		
 		lifeInfo.Initialize( INIT_LIFE );
-		rad = 0.2f;
+		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
 		//	情報更新
 		UpdateInfo();
@@ -103,7 +106,7 @@
 		//	補間終了後移動
 		if ( expantion )
 		{
-			active = true;
+			lifeInfo.active = true;
 			SetMode( MODE::MOVE );
 		}
 	}
@@ -144,10 +147,11 @@
 //	動作関数
 //------------------------------------------------------------------------------------
 
-void	BigEnemy::Attack()
-{
+	void	BigEnemy::Attack()
+	{
 
-}
+	}
+
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------

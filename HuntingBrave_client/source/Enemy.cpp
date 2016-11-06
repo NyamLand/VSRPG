@@ -102,11 +102,11 @@
 	//	ライフチェック（ ０以下なら死亡モードに移行 ）
 	void	Enemy::LifeCheck( void )
 	{
-		if ( !active )	return;
+		if ( !lifeInfo.active )	return;
 
 		if ( lifeInfo.life <= 0 )
 		{
-			active = false;
+			lifeInfo.active = false;
 			SetMode( MODE::DEAD );
 		}
 	}
@@ -124,19 +124,6 @@
 	{
 		targetPos = pos;
 	}
-
-	//	アクティブ状態取得
-	bool	Enemy::GetActive( void )const
-	{
-		return	active;
-	}
-
-	//	消去可能状態取得
-	bool	Enemy::GetIsAlive( void )const
-	{
-		return	lifeInfo.isAlive;
-	}
-
 	
 //------------------------------------------------------------------------------------
 //	情報取得

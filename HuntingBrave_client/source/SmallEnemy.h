@@ -24,26 +24,26 @@ private:
 	};
 
 	//	モード別関数ポインタ
-	void(SmallEnemy::*ModeFunction[MODE_MAX])(void);
+	void( SmallEnemy::*ModeFunction[MODE_MAX] )( void );
 
 public:
 	//	初期化・解放
-	SmallEnemy(void);
-	~SmallEnemy(void)override;
-	bool	Initialize(void)override;
+	SmallEnemy( void );
+	~SmallEnemy( void )override;
+	bool	Initialize( void )override;
 
 	//	更新
-	void	Update(void);
+	void	Update( void )override;
 
 	//	各モード動作関数
-	void	EntryMode(void);
-	void	MoveMode(void);
-	void	AttackMode(void);
+	void	EntryMode( void );
+	void	MoveMode( void );
+	void	AttackMode( void );
 
 	//	動作関数
 
 	//	攻撃関数
-	void	Attack(void)override;
+	void	Attack( void )override;
 
 
 };

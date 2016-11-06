@@ -18,6 +18,8 @@
 
 #define	PLAYER_ATTACK_HIT_DIST		2.0f
 
+
+
 //--------------------------------------------------------------------------------------------
 //	初期化・解放
 //--------------------------------------------------------------------------------------------
@@ -52,6 +54,7 @@
 		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
 
+		//	全プレイヤー回す
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			//	条件が合わないものはスキップ
@@ -64,24 +67,86 @@
 			//	敵との当たり判定
 			for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
 			{
-				
-				switch ( attackInfo.collisionShape.shapeType )
-				{
-				case SHAPE_TYPE::CAPSULE:
-					isHit = CapsuleVSSphere( attackInfo.collisionShape.capsule , Sphere( ( *it )->GetPos(), 2.0f ) );
-					break;
+				//	当たり判定チェック
+				isHit = CheckCollision( 
+					attackInfo.collisionShape, 
+					( *it )->GetCollisionInfo().collisionShape );
 
-				case SHAPE_TYPE::SPHERE:
-					isHit = SphereVSSphere( attackInfo.collisionShape.sphere, Sphere( ( *it )->GetPos(), 2.0f ) );
-					break;
-				}
-
+				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
+					//	ライフ計算
 					( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer( p )->GetAttackInfo().power );
 				}
 			}
 		}
+	}
+
+	//	ヒットチェック
+	bool	Collision::CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 )
+	{
+		//	組み合わせチェック
+		COLLISION_PAIR collisionPair;
+		collisionPair = GetCollisionPair( shape1.shapeType, shape2.shapeType );
+
+		bool	isHit = false;
+		switch ( collisionPair )
+		{
+		case COLLISION_PAIR::SPHEREVSSPHERE:
+			isHit = SphereVSSphere( shape1.sphere, shape2.sphere );
+			break;
+
+		case COLLISION_PAIR::SPHEREVSCAPSULE:
+			isHit = CapsuleVSSphere( shape2.capsule, shape1.sphere );
+			break;
+
+		case COLLISION_PAIR::CAPSULEVSSPHERE:
+			isHit = CapsuleVSSphere( shape1.capsule, shape2.sphere );
+			break;
+
+		case COLLISION_PAIR::CAPSULEVSCAPSULE:
+			isHit = CapsuleVSCapsule( shape1.capsule, shape2.capsule );
+			break;
+		}
+
+		return	isHit;
+	}
+
+	//	形状組み合わせ
+	Collision::COLLISION_PAIR	Collision::GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 )
+	{
+		COLLISION_PAIR	collisionPair;
+
+		switch ( type1 )
+		{
+		case SHAPE_TYPE::SPHERE:
+			switch ( type2 )
+			{
+			case SHAPE_TYPE::SPHERE:
+				collisionPair = COLLISION_PAIR::SPHEREVSSPHERE;
+				break;
+				
+			case SHAPE_TYPE::CAPSULE:
+				collisionPair = COLLISION_PAIR::SPHEREVSCAPSULE;
+				break;
+			}
+			break;
+
+		case SHAPE_TYPE::CAPSULE:
+			switch ( type2 )
+			{
+			case SHAPE_TYPE::SPHERE:
+				collisionPair = COLLISION_PAIR::CAPSULEVSSPHERE;
+				break;
+
+			case SHAPE_TYPE::CAPSULE:
+				collisionPair = COLLISION_PAIR::CAPSULEVSCAPSULE;
+				break;
+			}
+			break;
+		}
+
+		return	collisionPair;
 	}
 
 //--------------------------------------------------------------------------------------------

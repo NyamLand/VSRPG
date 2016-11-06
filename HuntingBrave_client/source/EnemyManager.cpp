@@ -102,7 +102,7 @@ namespace
 			( *it )->Update();
 		
 			//	生存チェック
-			bool isAlive = ( *it )->GetIsAlive();
+			bool isAlive = ( *it )->GetLifeInfo().isAlive;
 
 			//	死亡していたらリストから削除
 			if ( !isAlive )
@@ -175,7 +175,7 @@ namespace
 			Vector3	vec = enemy->GetPos() - ( *it )->GetPos();
 			float		length = vec.Length();
 
-			float collisionDist = enemy->GetRad() + (*it)->GetRad();
+			float collisionDist = enemy->GetCollisionInfo().radius + ( *it )->GetCollisionInfo().radius;
 			//	近い場合は離す
 			if ( length < collisionDist )
 			{
@@ -191,7 +191,6 @@ namespace
 	//	プレイヤーとの座標チェック
 	void	EnemyManager::PlayerPosCheck( Enemy* enemy )
 	{
-		
 		//	自分→相手へのベクトル
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -203,9 +202,9 @@ namespace
 			Vector3	vec = pPos - enemy->GetPos();
 			float		length = vec.Length();
 			
-			float collisionDist = enemy->GetRad() + playerManager->GetPlayer( p )->GetRad();
+			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer( p )->GetCollisionInfo().radius;
 			//	近い場合は離す
-			if ( length <  collisionDist)
+			if ( length <  collisionDist )
 			{
 				//	ベクトル正規化
 				vec.Normalize();
@@ -236,6 +235,7 @@ namespace
 		
 		//	リストに追加
 		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
+		
 		//	生成フラグをfalseにする
 		appendOK = false;
 	}

@@ -38,6 +38,7 @@ struct AttackInfo
 struct LifeInfo
 {
 	bool	isAlive;
+	bool	active;
 	int		maxLife;
 	int		life;
 
@@ -50,4 +51,20 @@ struct LifeInfo
 	
 	//	î•ñİ’è
 	void	Initialize( int initLife );
+};
+
+//	“–‚½‚è”»’èŒ`ó\‘¢‘Ì
+struct CollisionInfo
+{
+	CollisionShape		collisionShape;
+	float					height;
+	float					radius;
+
+	//	‰Šú‰»
+	CollisionInfo( void );
+	CollisionInfo( const CollisionShape& collisionShape, float hitHeight, float hitRadius );
+
+	//	î•ñİ’è
+	void	SetCollisionShape( const CollisionShape& colShape );
+	void	Set( SHAPE_TYPE shapeType, float hitHeight, float hitRadius );
 };

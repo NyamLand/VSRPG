@@ -43,7 +43,7 @@
 	//	コンストラクタ
 	LifeInfo::LifeInfo( void ) : 
 		life( 0 ), maxLife( 0 ), 
-		isAlive( true )
+		isAlive( true ), active( false )
 	{
 
 	}
@@ -72,4 +72,37 @@
 		life = initLife;
 		maxLife = initLife;
 		isAlive = true;
+		active = false;
+	}
+
+//-------------------------------------------------------------------------------------
+//	CollisionInfo構造体
+//-------------------------------------------------------------------------------------
+
+	//	デフォルトコンストラクタ
+	CollisionInfo::CollisionInfo( void ) : height( 0.0f ), radius( 0.0f )
+	{
+		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
+	}
+
+	//	コンストラクタ
+	CollisionInfo::CollisionInfo( const CollisionShape& colShape, float hitHeight, float hitRadius )
+	{
+		collisionShape = colShape;
+		height = hitHeight;
+		radius = hitRadius;
+	}
+
+	//	形状設定
+	void	CollisionInfo::SetCollisionShape( const CollisionShape& colShape )
+	{
+		collisionShape = colShape;
+	}
+
+	//	情報設定
+	void	CollisionInfo::Set( SHAPE_TYPE shapeType, float hitHeight, float hitRadius )
+	{
+		collisionShape.shapeType = shapeType;
+		height = hitHeight;
+		radius = hitRadius;
 	}
