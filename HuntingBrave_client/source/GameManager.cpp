@@ -45,10 +45,9 @@
 	//	クライアント初期化
 	void	GameManager::InitializeClient( void )
 	{
+		//	WinSock初期化
 		WSADATA	wsaData;
 		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
-
-
 	}
 
 //---------------------------------------------------------------------------------------
