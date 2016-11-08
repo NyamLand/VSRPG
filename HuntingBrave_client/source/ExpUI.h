@@ -3,37 +3,37 @@
 
 //***************************************************************
 //
-//	HpUIクラス
+//	ExpUIクラス
 //
 //***************************************************************
 
-namespace HP_MAX
+namespace EXP_MAX
 {
 	enum
 	{
-		WIDTH = 1024,				//	画像横幅
-		HEIGHT = 256,				//	画像縦幅
+		ICON_SIZE = 64,				//	画像幅
+		DIGIT_MAX = 4,				//	数字最大桁数 
 	};
 }
 
 
 //	class
-class HpUI
+class ExpUI
 {
 private:
-	Image* hpFrame_obj;
-	Image* hpDamage_obj;
-	Image* hp_obj;
-	Image* hpBack_obj;
-	int	posx, posy, width, height;
+	Image* icon;
+	Image* number[EXP_MAX::DIGIT_MAX];
+	int	exp;
+	int	posx, posy, size;
 
 public:
 	//	初期化・解放
-	HpUI(int x, int y, int w, int h);
-	~HpUI(void);
+	ExpUI(int x, int y, int w, int h);
+	~ExpUI(void);
 
 	//	更新・描画
 	void	Update(void);
+	void	ExpManager(void);
 	void	Render(void);
 };
 

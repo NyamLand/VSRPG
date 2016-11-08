@@ -3,11 +3,11 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
-#include	"TimerUI.h"
+#include	"ScoreUI.h"
 
 //***************************************************************
 //
-//	TimerUIクラス
+//	ScoreUIクラス
 //
 //***************************************************************
 
@@ -20,16 +20,14 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0.0f )
+ScoreUI::ScoreUI(void)
 {
-	time_obj = new Image();
-	time_obj->Initialize("DATA/UI/main_UI/Number.png", 0, 500, 100, 100, 0, 0, 64 * 3, 64);
-	time_obj->SetWave(0.01f);
+
 
 }
 
 //	デストラクタ
-TimerUI::~TimerUI(void)
+ScoreUI::~ScoreUI(void)
 {
 
 }
@@ -41,25 +39,15 @@ TimerUI::~TimerUI(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	TimerUI::Update(void)
+void	ScoreUI::Update(void)
 {
-	timer = gameManager->GetTimer();
-	if (KEY_Get(KEY_SPACE) == 1){
-		if (time_obj->WaveUpdate(100, 1.0f))
-		{
-			time_obj->SetWave(0.01f);
-		}
-	}
+
 }
 
 //	描画
-void	TimerUI::Render(void)
+void	ScoreUI::Render(void)
 {
-	char str[64];
-	sprintf_s(str, "timer = %f",timer);
-	IEX_DrawText(str, 20, 20, 400, 100, 0xFF00FF00);
 
-	time_obj->Render(IMAGE_MODE::WAVE);
 }
 
 //---------------------------------------------------------------------------------------
