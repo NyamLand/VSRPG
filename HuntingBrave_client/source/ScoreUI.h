@@ -3,23 +3,30 @@
 
 //***************************************************************
 //
-//	TimerUIクラス
+//	ScoreUIクラス
 //
 //***************************************************************
 
-//	include
+namespace HP_MAX
+{
+	enum
+	{
+		WIDTH = 1024,				//	画像横幅
+		HEIGHT = 256,				//	画像縦幅
+	};
+}
+
 
 //	class
-class TimerUI
+class ScoreUI
 {
 private:
-	float timer;
-	Image* time_obj;
+	int	posx, posy, width, height;
 
 public:
 	//	初期化・解放
-	TimerUI(void);
-	~TimerUI(void);
+	ScoreUI(void);
+	~ScoreUI(void);
 
 	//	更新・描画
 	void	Update(void);

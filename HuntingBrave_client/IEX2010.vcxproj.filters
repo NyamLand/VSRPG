@@ -115,6 +115,12 @@
     <Filter Include="ソース ファイル\UI\HpUI">
       <UniqueIdentifier>{16b20290-8c42-401e-abb5-7361b8ddebb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\ScoreUI">
+      <UniqueIdentifier>{7fd88fe6-49e2-419e-b227-6086b2fd61c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\ExpUI">
+      <UniqueIdentifier>{340cb49d-b483-4e6b-805e-5b90e7d9fe56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\system\Framework.cpp">
@@ -240,11 +246,17 @@
     <ClCompile Include="source\GameData.cpp">
       <Filter>ソース ファイル\GameData</Filter>
     </ClCompile>
+    <ClCompile Include="source\Image.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
     <ClCompile Include="source\HpUI.cpp">
       <Filter>ソース ファイル\UI\HpUI</Filter>
     </ClCompile>
-    <ClCompile Include="source\BaseUI.cpp">
-      <Filter>ソース ファイル\UI</Filter>
+    <ClCompile Include="source\ScoreUI.cpp">
+      <Filter>ソース ファイル\UI\ScoreUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ExpUI.cpp">
+      <Filter>ソース ファイル\UI\ExpUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,11 +341,20 @@
     <ClInclude Include="source\EnemyManager.h">
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClInclude>
+    <ClInclude Include="source\UDPServer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Image.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
     <ClInclude Include="source\HpUI.h">
       <Filter>ソース ファイル\UI\HpUI</Filter>
     </ClInclude>
-    <ClInclude Include="source\BaseUI.h">
-      <Filter>ソース ファイル\UI</Filter>
+    <ClInclude Include="source\ScoreUI.h">
+      <Filter>ソース ファイル\UI\ScoreUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ExpUI.h">
+      <Filter>ソース ファイル\UI\ExpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

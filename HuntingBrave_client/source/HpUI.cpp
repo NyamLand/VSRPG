@@ -3,11 +3,11 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
-#include	"TimerUI.h"
+#include	"HpUI.h"
 
 //***************************************************************
 //
-//	TimerUIクラス
+//	HpUIクラス
 //
 //***************************************************************
 
@@ -20,18 +20,37 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0.0f )
+HpUI::HpUI(int x, int y, int w, int h)
 {
-	time_obj = new Image();
-	time_obj->Initialize("DATA/UI/main_UI/Number.png", 0, 500, 100, 100, 0, 0, 64 * 3, 64);
-	time_obj->SetWave(0.01f);
+	//	座標、サイズ情報格納
+	posx = x;	posy = y;	width = w;	height = h;
+	
+	//	HPバーフレーム
+	hpFrame_obj = new Image();
+	hpFrame_obj->Initialize("DATA/UI/main_UI/HP_UI.png", posx, posy, width, height, 0, 0, HP_MAX::WIDTH, HP_MAX::HEIGHT);
+
+	//	HPダメージ
+	hpDamage_obj = new Image();
+	hpDamage_obj->Initialize("DATA/UI/main_UI/HP_UI.png", posx, posy, width, height, 0, HP_MAX::HEIGHT * 1, HP_MAX::WIDTH, HP_MAX::HEIGHT);
+
+	//	HP残量
+	hp_obj = new Image();				
+	hp_obj->Initialize("DATA/UI/main_UI/HP_UI.png", posx, posy, width, height, 0, HP_MAX::HEIGHT * 2, HP_MAX::WIDTH, HP_MAX::HEIGHT);
+
+
+	//	HP背景
+	hpBack_obj = new Image();
+	hpBack_obj->Initialize("DATA/UI/main_UI/HP_UI.png", posx, posy, width, height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);
 
 }
 
 //	デストラクタ
-TimerUI::~TimerUI(void)
+HpUI::~HpUI(void)
 {
-
+	SafeDelete(hpFrame_obj);
+	SafeDelete(hpDamage_obj);
+	SafeDelete(hp_obj);
+	SafeDelete(hpBack_obj);
 }
 
 
@@ -41,25 +60,21 @@ TimerUI::~TimerUI(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	TimerUI::Update(void)
+void	HpUI::Update(void)
 {
-	timer = gameManager->GetTimer();
-	if (KEY_Get(KEY_SPACE) == 1){
-		if (time_obj->WaveUpdate(100, 1.0f))
-		{
-			time_obj->SetWave(0.01f);
-		}
-	}
+	
 }
 
 //	描画
-void	TimerUI::Render(void)
+void	HpUI::Render(void)
 {
-	char str[64];
-	sprintf_s(str, "timer = %f",timer);
-	IEX_DrawText(str, 20, 20, 400, 100, 0xFF00FF00);
-
-	time_obj->Render(IMAGE_MODE::WAVE);
+	//----------------------
+	//	HPバー
+	//----------------------
+	hpBack_obj->Render(IMAGE_MODE::ADOPTPARAM);		//	背景
+	hp_obj->Render(IMAGE_MODE::ADOPTPARAM);			//	HP残量
+	hpDamage_obj->Render(IMAGE_MODE::ADOPTPARAM);	//	HPダメージ
+	hpFrame_obj->Render(IMAGE_MODE::ADOPTPARAM);	//	フレーム
 }
 
 //---------------------------------------------------------------------------------------
