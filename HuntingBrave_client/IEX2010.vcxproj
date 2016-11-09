@@ -120,9 +120,11 @@
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyManager.cpp" />
     <ClCompile Include="source\Equipments.cpp" />
+    <ClCompile Include="source\ExpUI.cpp" />
     <ClCompile Include="source\GameData.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\HpUI.cpp" />
+    <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
     <ClCompile Include="source\Random.cpp" />
@@ -169,9 +171,11 @@
     <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\EnemyManager.h" />
     <ClInclude Include="source\Equipments.h" />
+    <ClInclude Include="source\ExpUI.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\HpUI.h" />
+    <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
     <ClInclude Include="source\Random.h" />

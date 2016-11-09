@@ -142,6 +142,12 @@
     <ClCompile Include="source\CharaInfo.cpp">
       <Filter>Source\BaseChara\CharaInfo</Filter>
     </ClCompile>
+    <ClCompile Include="source\Image.cpp">
+      <Filter>Source\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ExpUI.cpp">
+      <Filter>Source\UI\ExpUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -242,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="source\CharaInfo.h">
       <Filter>Source\BaseChara\CharaInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Image.h">
+      <Filter>Source\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ExpUI.h">
+      <Filter>Source\UI\ExpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +379,12 @@
     </Filter>
     <Filter Include="Source\BaseChara\CharaInfo">
       <UniqueIdentifier>{9ee647b7-ea1c-4b18-a5e7-6753e9254306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Image">
+      <UniqueIdentifier>{6e0b5205-f20d-4baf-8776-ac4d4515a565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ExpUI">
+      <UniqueIdentifier>{c1391f02-854e-4d6b-b5cd-d7906a2fdbea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
