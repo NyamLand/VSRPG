@@ -58,6 +58,8 @@ namespace
 
 		//	ƒ‚ƒfƒ‹“Ç‚İ‚İ
 		Load();
+		
+		
 
 		return	true;
 	}
@@ -144,10 +146,12 @@ namespace
 		{
 		case BIG_ENEMY:
 			enemy = new BigEnemy();
+			//enemy->GetLifeInfo().maxLife = 80.0f;
 			break;
 
 		case SMALL_ENEMY:
 			enemy = new SmallEnemy();
+			//enemy->GetLifeInfo().maxLife = 20.0f;
 			break;
 
 		default:
@@ -158,6 +162,7 @@ namespace
 		enemy->SetObj( org[type]->Clone() );
 		enemy->Initialize();
 		enemy->SetPos( pos );
+		
 
 		//	ƒŠƒXƒg‚É’Ç‰Á
 		enemylist.push_back( enemy );
