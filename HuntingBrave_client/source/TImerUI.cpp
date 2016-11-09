@@ -20,7 +20,7 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0.0f )
+TimerUI::TimerUI(void) : timer( 0 )
 {
 	time_obj = new Image();
 	time_obj->Initialize("DATA/UI/main_UI/Number.png", 0, 500, 100, 100, 0, 0, 64 * 3, 64);
@@ -43,11 +43,11 @@ TimerUI::~TimerUI(void)
 //	更新
 void	TimerUI::Update(void)
 {
-	timer = gameManager->GetTimer();
-	if (KEY_Get(KEY_SPACE) == 1){
-		if (time_obj->WaveUpdate(100, 1.0f))
+	timer = gameManager->GetTime();
+	if ( KEY_Get( KEY_SPACE ) == 1 ){
+		if ( time_obj->WaveUpdate( 100, 1.0f ) )
 		{
-			time_obj->SetWave(0.01f);
+			time_obj->SetWave( 0.01f );
 		}
 	}
 }
@@ -56,14 +56,14 @@ void	TimerUI::Update(void)
 void	TimerUI::Render(void)
 {
 	char str[64];
-	sprintf_s(str, "timer = %f",timer);
-	IEX_DrawText(str, 20, 20, 400, 100, 0xFF00FF00);
+	sprintf_s( str, "timer = %d秒",timer );
+	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
 
-	time_obj->Render(IMAGE_MODE::WAVE);
+	time_obj->Render( IMAGE_MODE::WAVE );
 }
 
-//---------------------------------------------------------------------------------------
-//	動作関数
+//--------------------------------------------------------------------------------------
+//	動作関数-
 //---------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------
