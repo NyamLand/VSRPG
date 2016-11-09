@@ -18,6 +18,7 @@ private:
 		ENTRY,
 		MOVE,
 		ATTACK,
+		DAMAGE,
 		DEAD,
 		MODE_MAX
 	};
@@ -38,6 +39,7 @@ public:
 	void	EntryMode( void );
 	void	MoveMode( void );
 	void	AttackMode( void );
+	void	DamageMode( void );
 
 	//	ìÆçÏä÷êî
 

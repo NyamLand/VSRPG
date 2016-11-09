@@ -20,11 +20,14 @@ protected:
 	float		searchDist;
 	float		attackDist;
 
+	float		elife;			//“G‚Ì‘Ì—Í
+
 	enum MODE	//	‰¼
 	{
 		ENTRY,
 		MOVE,
 		ATTACK,
+		DAMAGE,
 		DEAD,
 		MODE_MAX
 	};
