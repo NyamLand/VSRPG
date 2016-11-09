@@ -51,18 +51,22 @@
 		if( client == -1 ) return -1;
 	
 		//	全データ送信
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for ( int clientNum = 0; clientNum < PLAYER_MAX; clientNum++ )
 		{
-			if( playerInfo[p].active == false ) continue;
+			if( playerInfo[clientNum].active == false ) continue;
 
 			//	ゲーム情報送信
-			SendGameInfo( p );
+			SendGameInfo( clientNum );
 
-			//	移動情報送信
-			SendCharaInfo( p );
+			//	各プレイヤーに全プレイヤーの情報を送信
+			for ( int player = 0; player < PLAYER_MAX; player++ )
+			{
+				//	移動情報送信
+				SendCharaInfo( clientNum, player );
 
-			//	点数情報送信
-			SendPointInfo( p );
+				//	点数情報送信
+				SendPointInfo( clientNum, player );
+			}
 		}
 
 		//	終端通知
@@ -117,19 +121,16 @@
 //----------------------------------------------------------------------------------------------
 
 	//	キャラ情報送信
-	void	GameParam::SendCharaInfo( int client )
+	void	GameParam::SendCharaInfo( int client, int player )
 	{
 		//	情報設定
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			NET_CHARA netChara( p, 
-				playerParam[p].pos, 
-				playerParam[p].angle,
-				playerParam[p].motion );
+		NET_CHARA netChara( player, 
+			playerParam[player].pos, 
+			playerParam[player].angle,
+			playerParam[player].motion );
 
-			//	送信
-			send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
-		}
+		//	送信
+		send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
 	}
 
 	//	ゲーム情報送信
@@ -143,16 +144,16 @@
 	}
 
 	//	点数情報送信
-	void	GameParam::SendPointInfo( int client )
+	void	GameParam::SendPointInfo( int client, int player )
 	{
 		//	加算分が０だとスキップ
-		if ( pointInfo[client].addPoint == 0 )	return;
+		if ( pointInfo[player].addPoint == 0 )	return;
 
 		//	情報設定
 		NET_POINT	netPoint;
-		netPoint.id = client;
-		netPoint.point = pointInfo[client].point;
-		pointInfo[client].addPoint = 0;
+		netPoint.id = player;
+		netPoint.point = pointInfo[player].point;
+		pointInfo[player].addPoint = 0;
 
 		//	送信
 		send( client, ( LPSTR )&netPoint, sizeof( NET_POINT ) );
