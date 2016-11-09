@@ -150,13 +150,11 @@
 		if ( pointInfo[player].addPoint == 0 )	return;
 
 		//	î•ñİ’è
-		NET_POINT	netPoint;
-		netPoint.id = player;
-		netPoint.point = pointInfo[player].point;
+		NET_POINT	netPoint( player, pointInfo[player].point );
 		pointInfo[player].addPoint = 0;
 
 		//	‘—M
-		send( client, ( LPSTR )&netPoint, sizeof( NET_POINT ) );
+		send( client, ( char* )&netPoint, sizeof( NET_POINT ) );
 	}
 
 //----------------------------------------------------------------------------------------------
