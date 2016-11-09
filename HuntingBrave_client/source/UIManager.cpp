@@ -32,7 +32,18 @@ UIManager::~UIManager(void)
 //	初期化
 bool	UIManager::Initialize( void )
 {
+	//---------------------------------------
+	//	HPバーのポジションをセット(左下）
+	//---------------------------------------
+	int width = (int)(HP_MAX::WIDTH / 2.5f);								//	スケール1/2.5
+	int height = (int)(HP_MAX::HEIGHT / 2.5f);								//	スケール1/2.5
+	int posx = width / 2;											//	中心から端までの距離
+	int posy = iexSystem::ScreenHeight - height / 2;				//	画面端から画像の中心から端までの距離引く
+
+
 	timerUI = new TimerUI();
+	hpUI = new HpUI(posx, posy, width, height);
+	expUI = new ExpUI(posx, posy, width, height);
 	return	true;
 }
 
@@ -40,6 +51,8 @@ bool	UIManager::Initialize( void )
 void	UIManager::Release(void)
 {
 	SafeDelete( timerUI );
+	SafeDelete( hpUI );
+	SafeDelete( expUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -50,12 +63,17 @@ void	UIManager::Release(void)
 void	UIManager::Update(void)
 {
 	timerUI->Update();
+	hpUI->Update();
+	expUI->Update();
 }
 
 //	描画
 void	UIManager::Render(void)
 {
 	timerUI->Render();
+	hpUI->Render();
+	expUI->Render();
+
 }
 
 //---------------------------------------------------------------------------------------

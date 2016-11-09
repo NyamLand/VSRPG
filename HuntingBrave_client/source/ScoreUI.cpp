@@ -1,12 +1,13 @@
 
 #include	"iextreme.h"
-
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
+#include	"Image.h"
+#include	"ScoreUI.h"
 
 //***************************************************************
 //
-//	GameManagerクラス
+//	ScoreUIクラス
 //
 //***************************************************************
 
@@ -18,47 +19,36 @@
 //	初期化・解放
 //---------------------------------------------------------------------------------------
 
-	//	コンストラクタ
-	GameManager::GameManager( void ) : timer( 0.0f )
-	{
-	
-	}
+//	コンストラクタ
+ScoreUI::ScoreUI(void)
+{
 
-	//	デストラクタ
-	GameManager::~GameManager( void )
-	{
 
-	}
+}
 
-	//	初期化
-	bool	GameManager::Initialize( void )
-	{
-		return	true;
-	}
+//	デストラクタ
+ScoreUI::~ScoreUI(void)
+{
 
-	//	解放
-	void	GameManager::Release( void )
-	{
+}
 
-	}
 
-	//	クライアント初期化
-	void	GameManager::InitializeClient( void )
-	{
-		//	WinSock初期化
-		WSADATA	wsaData;
-		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
-	}
 
 //---------------------------------------------------------------------------------------
 //	更新・描画
 //---------------------------------------------------------------------------------------
 
-	//	更新
-	void	GameManager::Update( void )
-	{
-		
-	}
+//	更新
+void	ScoreUI::Update(void)
+{
+
+}
+
+//	描画
+void	ScoreUI::Render(void)
+{
+
+}
 
 //---------------------------------------------------------------------------------------
 //	動作関数

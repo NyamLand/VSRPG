@@ -33,6 +33,7 @@ public:
 	//	“–‚½‚è”»’è
 	void	AllCollision( void );
 	void	PlayerAttackCollision( void );
+	void	EnemyAttackCollision( void );
 	bool	CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 );
 	COLLISION_PAIR	GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 );
 

@@ -47,7 +47,7 @@
 		PlayerAttackCollision();
 	}
 
-	//	プレイヤー攻撃判定
+	//	プレイヤー攻撃当たり判定
 	void	Collision::PlayerAttackCollision( void )
 	{
 		//	変数準備
@@ -78,6 +78,42 @@
 					//	ライフ計算
 					( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer( p )->GetAttackInfo().power );
 					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
+				}
+			}
+		}
+	}
+
+	//	敵攻撃当たり判定
+	void	Collision::EnemyAttackCollision( void )
+	{
+		//	変数準備
+		list<Enemy*>	 enemyList = enemyManager->GetList();
+		bool	isHit = false;
+
+		//	全敵回す
+		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		{
+			//	攻撃情報取得、攻撃中でなければスキップ
+			AttackInfo	attackInfo = ( *it )->GetAttackInfo();
+			if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		continue;
+
+			//	全プレイヤー当たり判定
+			for ( int p = 0; p < PLAYER_MAX; p++ )
+			{
+				//	条件が合わないものはスキップ
+				if ( gameParam->GetPlayerActive( p ) == false )		continue;
+
+				//	当たり判定チェック
+				isHit = CheckCollision(
+					attackInfo.collisionShape,
+					playerManager->GetPlayer( p )->GetCollisionInfo().collisionShape );
+
+				//	当たっていればライフ計算
+				if ( isHit == true )
+				{
+					////	ライフ計算
+					//( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer(p)->GetAttackInfo().power );
+					//gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
 				}
 			}
 		}
