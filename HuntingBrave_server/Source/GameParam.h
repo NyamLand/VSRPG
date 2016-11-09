@@ -29,9 +29,9 @@ public:
 	int Send( int client );
 
 	//	‘—Mˆ—
-	void	SendCharaInfo( int client );
+	void	SendCharaInfo( int client, int player );
+	void	SendPointInfo( int client, int player );
 	void	SendGameInfo( int client );
-	void	SendPointInfo( int client );
 
 	//	óMˆ—
 	void	ReceiveChara( int client, const LPSTR& data );
