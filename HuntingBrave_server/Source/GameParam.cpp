@@ -120,13 +120,16 @@
 	void	GameParam::SendCharaInfo( int client )
 	{
 		//	情報設定
-		NET_CHARA netChara( client, 
-			playerParam[client].pos, 
-			playerParam[client].angle,
-			playerParam[client].motion );
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			NET_CHARA netChara( p, 
+				playerParam[p].pos, 
+				playerParam[p].angle,
+				playerParam[p].motion );
 
-		//	送信
-		send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+			//	送信
+			send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+		}
 	}
 
 	//	ゲーム情報送信
