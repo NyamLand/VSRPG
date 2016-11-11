@@ -46,6 +46,7 @@ public:
 	void	Advance( float speed );
 	bool	DistCheck( float& length );
 	void	LifeCheck( void );
+	//virtual bool	DamageFlgCheck( void )=0;
 
 	//	UŒ‚ŠÖ”
 	virtual void	Attack( void )=0;

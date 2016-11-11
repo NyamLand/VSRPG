@@ -40,7 +40,7 @@ public:
 	void	MoveMode( void );
 	void	AttackMode( void );
 	void	DamageMode( void );
-
+	//bool	DamageFlgCheck( void )override;
 	//	“®ìŠÖ”
 
 	//	UŒ‚ŠÖ”
