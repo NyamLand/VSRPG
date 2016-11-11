@@ -19,6 +19,7 @@ private:
 		ENTRY,
 		MOVE,
 		ATTACK,
+		DAMAGE,
 		DEAD,
 		MODE_MAX
 	};
@@ -39,7 +40,7 @@ public:
 	void	EntryMode( void );
 	void	MoveMode( void );
 	void	AttackMode( void );
-
+	//bool	DamageFlgCheck(void)override;
 	//	“®ìŠÖ”
 
 	//	UŒ‚ŠÖ”

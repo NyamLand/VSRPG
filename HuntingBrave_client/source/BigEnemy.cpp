@@ -19,7 +19,7 @@
 #define	MINOTAURUS_SCALE	0.02f
 #define	MINOTAURUS_HEIGHT	2.0f
 #define	MINOTAURUS_RADIUS	1.5f
-#define	INIT_LIFE	1
+#define	INIT_LIFE	200
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -144,11 +144,11 @@
 		}
 	}
 
-	void	BigEnemy::DamageMode( void )
+	void	BigEnemy::DamageMode(void)
 	{
-		SetMotion( 3 );
+		
 	}
-
+	
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
