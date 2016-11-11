@@ -148,6 +148,12 @@
     <ClCompile Include="source\ExpUI.cpp">
       <Filter>Source\UI\ExpUI</Filter>
     </ClCompile>
+    <ClCompile Include="source\ItemUI.cpp">
+      <Filter>Source\UI\ItemUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MapUI.cpp">
+      <Filter>Source\UI\MapUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -254,6 +260,12 @@
     </ClInclude>
     <ClInclude Include="source\ExpUI.h">
       <Filter>Source\UI\ExpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ItemUI.h">
+      <Filter>Source\UI\ItemUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MapUI.h">
+      <Filter>Source\UI\MapUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +397,12 @@
     </Filter>
     <Filter Include="Source\UI\ExpUI">
       <UniqueIdentifier>{c1391f02-854e-4d6b-b5cd-d7906a2fdbea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ItemUI">
+      <UniqueIdentifier>{8fcc2c22-1743-4491-8c92-2ef72173033e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\MapUI">
+      <UniqueIdentifier>{66913ead-712a-4386-873c-0c725950c99f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

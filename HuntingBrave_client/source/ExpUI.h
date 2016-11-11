@@ -23,7 +23,8 @@ class ExpUI
 private:
 	Image* icon;
 	Image* number[EXP_MAX::DIGIT_MAX];
-	int	exp;
+	int numbox[EXP_MAX::DIGIT_MAX];
+	int	exp, exp_digit;
 	int	posx, posy, size;
 
 public:
@@ -34,6 +35,7 @@ public:
 	//	çXêVÅEï`âÊ
 	void	Update(void);
 	void	ExpManager(void);
+	void	NumberSet(Image* img, const int num, const int digit);
 	void	Render(void);
 };
 

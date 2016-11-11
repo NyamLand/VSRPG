@@ -72,8 +72,8 @@ void	HpUI::Render(void)
 	//	HPバー
 	//----------------------
 	hpBack_obj->Render(IMAGE_MODE::ADOPTPARAM);		//	背景
-	hp_obj->Render(IMAGE_MODE::ADOPTPARAM);			//	HP残量
 	hpDamage_obj->Render(IMAGE_MODE::ADOPTPARAM);	//	HPダメージ
+	hp_obj->Render(IMAGE_MODE::ADOPTPARAM);			//	HP残量
 	hpFrame_obj->Render(IMAGE_MODE::ADOPTPARAM);	//	フレーム
 }
 

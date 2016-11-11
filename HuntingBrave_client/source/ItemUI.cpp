@@ -3,11 +3,11 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
-#include	"TimerUI.h"
+#include	"ItemUI.h"
 
 //***************************************************************
 //
-//	TimerUIクラス
+//	ItemUIクラス
 //
 //***************************************************************
 
@@ -20,18 +20,25 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0 )
+ItemUI::ItemUI(int x, int y, int w, int h)
 {
-	time_obj = new Image();
-	time_obj->Initialize("DATA/UI/main_UI/Number.png", 0, 500, 100, 100, 0, 0, 64 * 3, 64);
-	time_obj->SetWave(0.01f);
+	//	座標、サイズ情報格納
+	width = w / 2;
+	height = h;
+
+	//		左端			画像の中心
+	posx = (x - w / 2) + (width / 2);
+	posy = y -(h / 2) - (height / 2);
+
+	obj = new Image();
+	obj->Initialize("DATA/UI/main_UI/HP_item_UI.png", posx, posy, width, height, ITEM_MAX::SPX, ITEM_MAX::SPY, ITEM_MAX::WIDTH, ITEM_MAX::HEIGHT);
 
 }
 
 //	デストラクタ
-TimerUI::~TimerUI(void)
+ItemUI::~ItemUI(void)
 {
-
+	SafeDelete(obj);
 }
 
 
@@ -41,29 +48,19 @@ TimerUI::~TimerUI(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	TimerUI::Update(void)
+void	ItemUI::Update(void)
 {
-	timer = gameManager->GetTime();
-	if ( KEY_Get( KEY_SPACE ) == 1 ){
-		if ( time_obj->WaveUpdate( 100, 1.0f ) )
-		{
-			time_obj->SetWave( 0.01f );
-		}
-	}
+
 }
 
 //	描画
-void	TimerUI::Render(void)
+void	ItemUI::Render(void)
 {
-	char str[64];
-	sprintf_s( str, "timer = %d秒",timer );
-	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
-
-	//time_obj->Render( IMAGE_MODE::WAVE );
+	obj->Render(IMAGE_MODE::ADOPTPARAM);
 }
 
-//--------------------------------------------------------------------------------------
-//	動作関数-
+//---------------------------------------------------------------------------------------
+//	動作関数
 //---------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------

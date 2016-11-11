@@ -3,11 +3,11 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
-#include	"TimerUI.h"
+#include	"MapUI.h"
 
 //***************************************************************
 //
-//	TimerUIクラス
+//	MapUIクラス
 //
 //***************************************************************
 
@@ -20,18 +20,20 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0 )
+MapUI::MapUI(int x, int y, int w, int h)
 {
-	time_obj = new Image();
-	time_obj->Initialize("DATA/UI/main_UI/Number.png", 0, 500, 100, 100, 0, 0, 64 * 3, 64);
-	time_obj->SetWave(0.01f);
+	//	座標、サイズ情報格納
+	posx = x;	posy = y;	width = w;	height = h;
+
+	obj = new Image();
+	obj->Initialize("DATA/UI/main_UI/Map_UI.png", posx, posy, width, height, 0, 0, MAP_MAX::WIDTH, MAP_MAX::HEIGHT);
 
 }
 
 //	デストラクタ
-TimerUI::~TimerUI(void)
+MapUI::~MapUI(void)
 {
-
+	SafeDelete(obj);
 }
 
 
@@ -41,29 +43,19 @@ TimerUI::~TimerUI(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	TimerUI::Update(void)
+void	MapUI::Update(void)
 {
-	timer = gameManager->GetTime();
-	if ( KEY_Get( KEY_SPACE ) == 1 ){
-		if ( time_obj->WaveUpdate( 100, 1.0f ) )
-		{
-			time_obj->SetWave( 0.01f );
-		}
-	}
+
 }
 
 //	描画
-void	TimerUI::Render(void)
+void	MapUI::Render(void)
 {
-	char str[64];
-	sprintf_s( str, "timer = %d秒",timer );
-	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
-
-	//time_obj->Render( IMAGE_MODE::WAVE );
+	obj->Render(IMAGE_MODE::ADOPTPARAM);
 }
 
-//--------------------------------------------------------------------------------------
-//	動作関数-
+//---------------------------------------------------------------------------------------
+//	動作関数
 //---------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------
