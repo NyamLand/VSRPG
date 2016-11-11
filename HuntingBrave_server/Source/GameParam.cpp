@@ -61,6 +61,9 @@
 			//	各プレイヤーに全プレイヤーの情報を送信
 			for ( int player = 0; player < PLAYER_MAX; player++ )
 			{
+				//	アクティブでないプレイヤーはとばす
+				if ( playerInfo[player].active == false ) continue;
+
 				//	移動情報送信
 				SendCharaInfo( clientNum, player );
 
@@ -151,10 +154,13 @@
 
 		//	情報設定
 		NET_POINT	netPoint( player, pointInfo[player].point );
-		pointInfo[player].addPoint = 0;
-
+		
 		//	送信
 		send( client, ( char* )&netPoint, sizeof( NET_POINT ) );
+
+		//	加算点数リセット
+		pointInfo[player].addPoint = 0;
+
 	}
 
 //----------------------------------------------------------------------------------------------
