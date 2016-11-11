@@ -14,6 +14,8 @@
 #include	"TimerUI.h"
 #include	"HpUI.h"
 #include	"ExpUI.h"
+#include	"ItemUI.h"
+#include	"MapUI.h"
 
 //	class
 class UIManager : public Singleton<UIManager> 
@@ -30,6 +32,8 @@ private:
 	TimerUI*	timerUI;
 	HpUI*		hpUI;
 	ExpUI*		expUI;
+	ItemUI*		itemUI;
+	MapUI*		mapUI;
 
 public:
 	//	‰Šú‰»E‰ğ•ú

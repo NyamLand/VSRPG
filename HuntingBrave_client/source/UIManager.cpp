@@ -35,15 +35,26 @@ bool	UIManager::Initialize( void )
 	//---------------------------------------
 	//	HPバーのポジションをセット(左下）
 	//---------------------------------------
-	int width = (int)(HP_MAX::WIDTH / 2.5f);								//	スケール1/2.5
-	int height = (int)(HP_MAX::HEIGHT / 2.5f);								//	スケール1/2.5
-	int posx = width / 2;											//	中心から端までの距離
-	int posy = iexSystem::ScreenHeight - height / 2;				//	画面端から画像の中心から端までの距離引く
-
+	int width = (int)(HP_MAX::WIDTH / 2.5f);			//	スケール1/2.5
+	int height = (int)(HP_MAX::HEIGHT / 2.5f);			//	スケール1/2.5
+	int posx = width / 2;								//	中心から端までの距離
+	int posy = iexSystem::ScreenHeight - height / 2;	//	画面端から画像の中心から端までの距離引く
 
 	timerUI = new TimerUI();
 	hpUI = new HpUI(posx, posy, width, height);
 	expUI = new ExpUI(posx, posy, width, height);
+	itemUI = new ItemUI(posx, posy, width, height);
+
+	//---------------------------------------
+	//	マップのポジションをセット(左下）
+	//---------------------------------------
+	width = (int)(MAP_MAX::WIDTH / 2.5f);			//	スケール1/2.5
+	height = (int)(MAP_MAX::HEIGHT / 2.5f);			//	スケール1/2.5
+	posx = iexSystem::ScreenWidth - (width / 2);	//	中心から端までの距離
+	posy = height / 2;								//	画面端から画像の中心から端までの距離引く
+
+	mapUI = new MapUI(posx, posy, width, height);
+
 	return	true;
 }
 
@@ -53,6 +64,8 @@ void	UIManager::Release(void)
 	SafeDelete( timerUI );
 	SafeDelete( hpUI );
 	SafeDelete( expUI );
+	SafeDelete( itemUI );
+	SafeDelete( mapUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -65,6 +78,8 @@ void	UIManager::Update(void)
 	timerUI->Update();
 	hpUI->Update();
 	expUI->Update();
+	itemUI->Update();
+	mapUI->Update();
 }
 
 //	描画
@@ -73,7 +88,8 @@ void	UIManager::Render(void)
 	timerUI->Render();
 	hpUI->Render();
 	expUI->Render();
-
+	itemUI->Render();
+	mapUI->Render();
 }
 
 //---------------------------------------------------------------------------------------

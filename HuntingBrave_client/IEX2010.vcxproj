@@ -125,6 +125,8 @@
     <ClCompile Include="source\GameParam.cpp" />
     <ClCompile Include="source\HpUI.cpp" />
     <ClCompile Include="source\Image.cpp" />
+    <ClCompile Include="source\ItemUI.cpp" />
+    <ClCompile Include="source\MapUI.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
     <ClCompile Include="source\Random.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="source\GameParam.h" />
     <ClInclude Include="source\HpUI.h" />
     <ClInclude Include="source\Image.h" />
+    <ClInclude Include="source\ItemUI.h" />
+    <ClInclude Include="source\MapUI.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
     <ClInclude Include="source\Random.h" />
