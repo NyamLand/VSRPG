@@ -49,7 +49,7 @@
 //----------------------------------------------------------------------------------------------
 
 	//	送信
-	int		GameParam::Send( int client )
+	int	GameParam::Send( int client )
 	{
 		if( client == -1 ) return -1;
 
@@ -79,7 +79,7 @@
 	}
 
 	//	受信
-	int		GameParam::Receive( void )
+	int	GameParam::Receive( void )
 	{
 		char	data[256];
 		int		size = sizeof( data );
@@ -92,12 +92,12 @@
 			client = ReceiveChara( client, data );
 			break;
 
-		case RECEIVE_COMMAND::INPUT_INFO:		//	入力情報
-			client = ReceiveInput( client, data );
-			break;
-
 		case RECEIVE_COMMAND::POINT_INFO:		//	点数情報
 			client = ReceivePoint( client, data );
+			break;
+
+		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
+			client = ReceiveAttackParam( client , data );
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
@@ -142,9 +142,6 @@
 	//	点数情報送信
 	void	GameParam::SendPointInfo( int client, int player )
 	{
-		//	加算分が０だとスキップ
-		if ( pointInfo[player].addPoint == 0 )	return;
-
 		//	情報設定
 		SendPointData	sendPointData( player, pointInfo[player].point );
 		
@@ -162,13 +159,13 @@
 		ReceivePlayerData* receivePlayerData = ( ReceivePlayerData* )data;
 		
 		//	スティックの入力情報設定
-		inputManager->SetAxis( 
-			receivePlayerData->id, 
-			receivePlayerData->axisX, 
-			receivePlayerData->axisY );
+		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
+
+		//	ボタンの入力情報設定
+		inputManager->SetInput( client, receivePlayerData->button, receivePlayerData->inputType );
 		
 		//	フレーム情報設定
-		playerParam[receivePlayerData->id].frame = receivePlayerData->frame;
+		playerParam[client].frame = receivePlayerData->frame;
 
 		return	client;
 	}
@@ -188,14 +185,22 @@
 		return	-1;
 	}
 
-	//	入力情報受信
-	int	GameParam::ReceiveInput( int client, const LPSTR& data )
+	//	攻撃情報受信
+	int	GameParam::ReceiveAttackParam( int client, const LPSTR& data )
 	{
-		ReceiveInputData* receiveInputData = ( ReceiveInputData* )data;
-		inputManager->SetInput( 
-			receiveInputData->id, receiveInputData->buttonType, receiveInputData->inputType );
+		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
+		
+		AttackInfo	attackInfo;
+		attackInfo.attackParam = ( AttackInfo::ATTACK_PARAM )receiveAttackData->attackParam;
+		attackInfo.collisionShape.SetCapsule( 
+			Capsule( 	receiveAttackData->attackPos1, 
+							receiveAttackData->attackPos2,
+							receiveAttackData->radius ) );
+		attackInfo.collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+		attackInfo.power = 1;
+		//playerManager->GetPlayer( client )->SetAttackInfo( attackInfo );
 
-		return	client;
+		return	-1;
 	}
 
 	//	サインアップ情報受信

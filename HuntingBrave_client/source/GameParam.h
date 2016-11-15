@@ -36,8 +36,8 @@ public:
 
 	//	‘—Mˆ—
 	void	SendPlayerInfo( void );
-	void	SendInputInfo( void );
 	void	SendPointInfo( void );
+	void	SendAttackParam( void );
 
 	//	óMˆ—
 	void	ReceiveCharaInfo(const LPSTR& data);
@@ -52,7 +52,6 @@ public:
 	
 	//	î•ñİ’è
 	void  SetPlayerInfo( int id, char* name );
-	void	SetInputAcceptance( bool state );
 	void	SetPointInfo( int id, int addPoint );
 	void	AddPoint( int id, int point );
 	void  RemovePlayerInfo( int id );

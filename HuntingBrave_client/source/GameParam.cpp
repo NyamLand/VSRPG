@@ -126,11 +126,10 @@ GameParam*	gameParam = nullptr;
 		//	キャラクター情報送信
 		SendPlayerInfo();
 
-		//	入力データ送信
-		SendInputInfo();
-
 		//	点数データ送信
 		SendPointInfo();
+
+		SendAttackParam();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -147,32 +146,14 @@ GameParam*	gameParam = nullptr;
 		//	フレーム情報取得
 		int	frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
-		//	送信情報設定
-		SendPlayerData	sendPlayerData( 
-			myIndex, axisX, axisY, frame, 0  );
-
-		send( ( LPSTR )&sendPlayerData, sizeof( SendPlayerData ) );
-	}
-
-	//	入力情報送信
-	void	GameParam::SendInputInfo( void )
-	{
-		//	入力受付チェック
-		if ( !inputAcceptance )	return;
-
 		//	入力情報取得
-		int		inputType = 0;
-		int		buttonType = inputManager->GetInput( inputType );
-		
-		//	入力がある時だけ送信
-		if ( inputType == InputManager::NO_INPUT )		return;
-		
-		//	送信情報設定
-		SendInputData	sendInputData( 
-			myIndex, buttonType, inputType );
+		char		inputType = inputManager->NO_INPUT;
+		char		buttonType = inputManager->GetInput( inputType );
 
-		//	送信
-		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
+		//	送信情報設定
+		SendPlayerData	sendPlayerData( axisX, axisY, buttonType, inputType, frame  );
+
+		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 
 	//	点数情報送信
@@ -182,15 +163,32 @@ GameParam*	gameParam = nullptr;
 		if ( pointInfo[myIndex].addPoint == 0 )	return;
 
 		//	情報格納
-		SendPointData	sendPointData(
-			myIndex,
-			pointInfo[myIndex].addPoint );
+		SendPointData	sendPointData( pointInfo[myIndex].addPoint );
 
 		//	送信
 		send( ( LPSTR )&sendPointData, sizeof( sendPointData ) );
 
 		//	加算情報リセット
 		pointInfo[myIndex].addPoint = 0;
+	}
+
+	//	攻撃情報送信
+	void	GameParam::SendAttackParam( void )
+	{
+		//	情報取得
+		AttackInfo	attackInfo = playerManager->GetPlayer( myIndex )->GetAttackInfo();
+
+		//	攻撃していなければスキップ
+		//if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )	return;
+
+		//	情報設定
+		SendAttackData	sendAttackData( 
+			attackInfo.attackParam, 
+			attackInfo.collisionShape.capsule.p1,
+			attackInfo.collisionShape.capsule.p2,
+			attackInfo.collisionShape.capsule.r );
+		//	送信
+		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -298,10 +296,3 @@ GameParam*	gameParam = nullptr;
 
 		return	Vector3( outX, 0.0f, outY ).Length();
 	}
-
-	//	入力受付状態設定
-	void	GameParam::SetInputAcceptance( bool state )
-	{
-		inputAcceptance = state;
-	}
-

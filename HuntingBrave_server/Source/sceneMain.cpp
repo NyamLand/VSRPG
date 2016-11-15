@@ -26,7 +26,6 @@ void main( void )
 	gameParam = new GameParam();
 	inputManager = new InputManager();
 	playerManager = new PlayerManager( gameParam );
-	pointManager = new PointManager( gameParam );
 	gameParam->InitializeServer();
 
 	//	無限ループ
@@ -40,7 +39,6 @@ void main( void )
 		if ( client != -1 )
 		{
 			//	全体更新
-			//pointManager->Update( client );
 			playerManager->Update( client );
 
 			//	クライアントへ送信
@@ -52,6 +50,5 @@ void main( void )
 	delete	gameParam;		gameParam = nullptr;
 	delete	gameManager;	gameManager = nullptr;
 	delete	playerManager;	playerManager = nullptr;
-	delete	pointManager;	pointManager = nullptr;
 	delete	inputManager;	inputManager = nullptr;
 }

@@ -7,6 +7,8 @@
 //
 //****************************************************************
 
+#include	"iextreme.h"
+
 	//	送信コマンド
 	namespace
 	{
@@ -16,6 +18,7 @@
 			{
 				NO_COMMAND = -1,
 				PLAYER_INFO = 1,
+				ATTACK_INFO,
 				POINT_INFO,
 				INPUT_INFO,
 			};
@@ -26,35 +29,48 @@
 //	送信用構造体
 //----------------------------------------------------------------------------------------------
 
-	//	キャラクターデータ送信用
+	//	プレイヤーデータ送信用
 	struct SendPlayerData
 	{
-		char	com = SEND_COMMAND::PLAYER_INFO;
-		int		id;
-		float	axisX, axisY;
-		int	hitParam;
-		int 	frame;
-		SendPlayerData( int myIndex, float axisX, float axisY, int hitParam, int frame ) : 
-			id( myIndex ), axisX( axisX ), axisY( axisY ), hitParam( hitParam ), frame( frame ){};
+		char	com = SEND_COMMAND::PLAYER_INFO;	//1byte
+		float	axisX, axisY;	//	8byte
+		char	button;			//	1byte
+		char	inputType;	//	1byte
+		int 	frame;			//	4byte
+		//	15byte
+		SendPlayerData( float axisX, float axisY, char button, char inputType, int frame ) : 
+			axisX( axisX ), axisY( axisY ), 
+			button( button ), inputType( inputType ), 
+			frame( frame ){}
+	};
+
+	//	攻撃情報
+	struct SendAttackData
+	{
+		char			com = SEND_COMMAND::ATTACK_INFO;		//	1byte
+		char			attackParam;	//	1byte
+		Vector3	attackPos1;		//	12byte
+		Vector3	attackPos2;		//	12byte
+		float			radius;		//	4byte
+		SendAttackData( char attackParam, const Vector3& attackPos1, const Vector3& attackPos2, float radius ) :
+			attackParam( attackParam ), attackPos1( attackPos1 ), attackPos2( attackPos2 ), radius( radius ) {}
 	};
 
 	//	点数情報
 	struct SendPointData
 	{
 		char		com = SEND_COMMAND::POINT_INFO;
-		int		id;
 		int		addPoint;
-		SendPointData( int myIndex, int addPoint ) : id( myIndex ), addPoint( addPoint ){};
+		SendPointData( int addPoint ) : addPoint( addPoint ){};
 	};
 
 	//	入力情報
 	struct SendInputData
 	{
 		char		com = SEND_COMMAND::INPUT_INFO;
-		int		id;
 		int		buttonType;
 		int		inputType;
 		SendInputData( void ){};
-		SendInputData( int myIndex, int buttonType, int inputType ) :
-			id( myIndex ), buttonType( buttonType ), inputType( inputType ){}
+		SendInputData( int buttonType, int inputType ) :
+			buttonType( buttonType ), inputType( inputType ){}
 	};

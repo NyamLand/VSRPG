@@ -43,7 +43,7 @@ InputManager*	inputManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	“ü—Íî•ñİ’è
-	void	InputManager::SetInput( int id, int buttonType, int inputType )
+	void	InputManager::SetInput( int id, char buttonType, char inputType )
 	{
 		inputInfo[id].buttonType = buttonType;
 		inputInfo[id].inputType = inputType;

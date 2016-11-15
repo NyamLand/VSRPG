@@ -8,6 +8,7 @@
 //*****************************************************************************************************************************
 
 //	include
+#include	"CharaInfo.h"
 
 //	enum
 namespace MODE
@@ -27,8 +28,9 @@ namespace MODE
 class BaseChara
 {
 protected:
+	AttackInfo	attackInfo;
 	Vector3	pos;
-	float		angle;
+	float			angle;
 	int			mode;
 	int			motion;
 
@@ -39,7 +41,9 @@ public:
 
 	//	î•ñİ’è
 	bool	SetMode( int nextMode );
+	void	SetAttackInfo( const AttackInfo& attackInfo );
 
 	//	î•ñæ“¾
 	Vector3	GetPos( void )const;
+	AttackInfo	GetAttackInfo( void )const;
 };

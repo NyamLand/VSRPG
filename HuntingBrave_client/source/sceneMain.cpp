@@ -37,11 +37,6 @@ BaseEquipment* baseEquipment;	//	仮(絶対消す)
 //
 //*****************************************************************************************************************************
 
-void	ThreadFuntion1( void )
-{
-	gameParam->SendInputInfo();
-}
-
 bool	sceneMain::Initialize( void )
 {
 	//	環境設定
@@ -119,8 +114,6 @@ void	sceneMain::Update( void )
 	printf( "経過時間 : %f\n", elapseTime );
 
 	//	送受信
-	//	サーバーから情報受信
-	//gameParam->Update();
 	std::thread		ThreadFunc( ThreadFunction );
 	ThreadFunc.join();
 

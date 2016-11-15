@@ -34,9 +34,6 @@
     <Filter Include="ソース ファイル\UDPServer">
       <UniqueIdentifier>{14488d16-5070-4bcd-8330-b539e199b489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Stage">
-      <UniqueIdentifier>{2338350b-c6b5-4f04-b1bb-ae12bf927d21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Manager">
       <UniqueIdentifier>{b9e49e64-c0fe-4bf2-9352-65e62c4ba62c}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,12 @@
     </Filter>
     <Filter Include="ソース ファイル\CharaInfo">
       <UniqueIdentifier>{6709b4a8-10a6-4f5f-8385-5e2e32e860a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{47bff9ba-ed3b-4d65-b0fb-c4b93950cc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ShapeInfo">
+      <UniqueIdentifier>{c356096f-8b22-45b6-a036-bab7ab67a7bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +177,9 @@
     <ClCompile Include="IEX\IEX_View.cpp">
       <Filter>IEX</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ShapeInfo.cpp">
+      <Filter>ソース ファイル\ShapeInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -226,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="IEX\iextreme.h">
       <Filter>IEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShapeInfo.h">
+      <Filter>ソース ファイル\ShapeInfo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

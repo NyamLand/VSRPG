@@ -49,10 +49,13 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(DXSDK_DIR)lib/x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <EmbedManifest>false</EmbedManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./IEX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./IEX/;./SOURCE/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -68,6 +71,8 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,6 +127,7 @@
     <ClCompile Include="Source\ReceiveData.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\SendData.cpp" />
+    <ClCompile Include="Source\ShapeInfo.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\UDPServer.cpp" />
   </ItemGroup>
@@ -141,6 +147,7 @@
     <ClInclude Include="Source\ReceiveData.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\SendData.h" />
+    <ClInclude Include="Source\ShapeInfo.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\UDPServer.h" />
   </ItemGroup>

@@ -32,6 +32,7 @@ public:
 
 	//	À•Wæ“¾
 	Vector3	GetPos( int id );
+	Player*	&	GetPlayer( int id );
 };
 
 extern	PlayerManager*	playerManager;
