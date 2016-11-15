@@ -151,8 +151,8 @@ namespace
 		this->playerParam = playerParam;
 		SetPlayerParam( playerParam );
 
-		//	各モードに応じた動作関数
-		( this->*ModeFunction[mode] )();
+		//	剣攻撃
+		SwordAttack();
 
 		//	更新
 		BaseChara::Update();
@@ -175,14 +175,6 @@ namespace
 	{
 		//	移動モーション設定
 		Move();
-
-		//	攻撃に移行
-		if ( KEY_Get( KEY_A ) == 3 )
-		{
-			if ( SetMode( MODE::SWOADATTACK ) )	SetMotion( MOTION_NUM::ATTACK1 );
-		}
-		//if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
-		//if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
 	}
 
 	void	Player::ModeSwordAttack( void )
@@ -211,17 +203,24 @@ namespace
 	//	移動
 	bool		Player::Move( void )
 	{
-		float x, y, length;
-		length = gameParam->GetStickInput( x, y );
+		//float x, y, length;
+		//length = gameParam->GetStickInput( x, y );
 
-		if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
-		else SetMotion( MOTION_NUM::POSUTURE );
+		//if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
+		//else SetMotion( MOTION_NUM::POSUTURE );
 		return false;
 	}
 
 	//剣攻撃
 	bool		Player::SwordAttack( void )
 	{
+		//	攻撃モーション以外ならスキップ
+		if ( GetMotion() != ATTACK1 )
+		{
+			attackInfo.Reset();
+			return false;
+		}
+
 		//	攻撃情報設定
 		attackInfo.attackParam = AttackInfo::ATTACK1;
 		
@@ -230,12 +229,6 @@ namespace
 		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
 		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 1.0f ) );
 
-		//	フレームが移動にもどるのでもどったら移動に変更
-		if ( GetMotion() == POSUTURE )
-		{
-			attackInfo.Reset();
-			SetMode( MODE::MOVE );
-		}
 		return false;
 	}
 
@@ -325,7 +318,7 @@ namespace
 	{
 		pos = playerParam.pos;
 		angle = playerParam.angle;
-		//SetMotion( playerParam.motion );
+		SetMotion( playerParam.motion );
 	}
 
 //------------------------------------------------------------------------------------

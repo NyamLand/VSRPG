@@ -80,7 +80,7 @@ PlayerManager*	playerManager = nullptr;
 		if ( player[id] != nullptr )	return;
 
 		//	プレイヤー生成
-		player[id] = new Player();
+		player[id] = new Player( id );
 	}
 
 	//	プレイヤー解放

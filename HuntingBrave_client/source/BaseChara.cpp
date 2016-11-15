@@ -338,3 +338,9 @@
 	{
 		return	mode;
 	}
+
+	//	ƒtƒŒ[ƒ€Žæ“¾
+	int			BaseChara::GetFrame( void )const
+	{
+		return	obj->GetFrame();
+	}
