@@ -196,7 +196,10 @@ GameParam*	gameParam = nullptr;
 	//	ƒLƒƒƒ‰î•ñŽóM
 	void	GameParam::ReceiveCharaInfo( const LPSTR& data )
 	{
+		//	ŽóMî•ñ
 		ReceiveCharaData*	receiveCharaData = ( ReceiveCharaData* )data;
+
+		//	î•ñÝ’è
 		SetPlayerParam( 
 			receiveCharaData->id, 
 			receiveCharaData->pos, 
