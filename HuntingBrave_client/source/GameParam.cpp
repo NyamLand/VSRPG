@@ -18,6 +18,9 @@
 
 GameParam*	gameParam = nullptr;
 
+//	入力情報
+#define	MIN_INPUT_STICK		0.3f
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -141,7 +144,7 @@ GameParam*	gameParam = nullptr;
 		GetStickInput( axisX, axisY );
 
 		//	フレーム情報取得
-		int		frame = playerManager->GetPlayer( myIndex )->GetFrame();
+		int	frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
 		//	送信情報設定
 		SendPlayerData	sendPlayerData( 
@@ -225,7 +228,9 @@ GameParam*	gameParam = nullptr;
 	//	サインアウト情報受信
 	void	GameParam::ReceiveSignOutInfo( const LPSTR& data )
 	{
-		RemovePlayerInfo( ( ( SignOut* )data )->id ); 
+		SignOut*	signOut = ( SignOut* )data;
+
+		RemovePlayerInfo( signOut->id ); 
 	}
 
 //----------------------------------------------------------------------------------------------

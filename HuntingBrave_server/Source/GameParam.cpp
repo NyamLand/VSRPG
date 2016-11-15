@@ -50,28 +50,25 @@
 	int		GameParam::Send( int client )
 	{
 		if( client == -1 ) return -1;
-	
+
 		//	全データ送信
 		for ( int clientNum = 0; clientNum < PLAYER_MAX; clientNum++ )
 		{
+			//	
 			if( playerInfo[clientNum].active == false ) continue;
 
-			//	ゲーム情報送信
-			SendGameInfo( clientNum );
+			//	アクティブでないプレイヤーはとばす
+			if ( playerInfo[clientNum].active == false ) continue;
 
-			//	各プレイヤーに全プレイヤーの情報を送信
-			for ( int player = 0; player < PLAYER_MAX; player++ )
-			{
-				//	アクティブでないプレイヤーはとばす
-				if ( playerInfo[player].active == false ) continue;
+			//	移動情報送信
+			SendCharaInfo( client, clientNum );
 
-				//	移動情報送信
-				SendCharaInfo( clientNum, player );
-
-				//	点数情報送信
-				SendPointInfo( clientNum, player );
-			}
+			//	点数情報送信
+			SendPointInfo( client, clientNum );	
 		}
+		
+		//	ゲーム情報送信
+		SendGameInfo( client );
 
 		//	終端通知
 		char end = -1;
@@ -229,9 +226,6 @@
 		//	プレイヤー解放
 		ReleasePlayer( client );
 
-		//	ソケットを閉じる
-		CloseClient( client );
-
 		SignOut	signOut( client );
 
 		//	全員にデータ送信
@@ -241,6 +235,9 @@
 			send( p, ( char* )&signOut, sizeof( SignOut ) );
 		}
 		printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
+
+		//	ソケットを閉じる
+		CloseClient( client );
 	}
 
 //----------------------------------------------------------------------------------------------

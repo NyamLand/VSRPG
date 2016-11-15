@@ -95,5 +95,5 @@
 		char  com = COMMANDS::SIGN_OUT;
 		int	  id;
 		SignOut( void ){}
-		SignOut( int id ){ this->id; }
+		SignOut( int id ){ this->id = id; }
 	};

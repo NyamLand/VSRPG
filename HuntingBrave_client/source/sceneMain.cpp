@@ -130,9 +130,8 @@ void	sceneMain::Update( void )
 	uiManager->Update();
 
 	//	camera更新
-	mainView->Update( 
-		playerManager->GetPlayer( 
-			gameParam->GetMyIndex() )->GetPos() );
+	int index = gameParam->GetMyIndex();
+	mainView->Update( playerManager->GetPlayer( index )->GetPos() );
 
 	//	collision
 	collision->AllCollision();
@@ -192,7 +191,7 @@ void	sceneMain::MyInfoRender( void )
 	LPSTR name = gameParam->GetPlayerName( id );
 	
 	//	自分の座標
-	Vector3	pos = playerManager->GetPlayer( 0 )->GetPos();
+	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
 
 	//	表示
 	char	str[256];
