@@ -40,10 +40,10 @@
 	//	プレイヤーパラメータ
 	struct PlayerParam
 	{
-		Vector3 pos;
-		float	angle;
-		int		motion;
-		int		frame;
+		Vector3	pos;
+		float			angle;
+		int			motion;
+		int			frame;
 		PlayerParam( void ){}
 		PlayerParam( const Vector3& pos, float angle, int motion, int frame );
 		void Set( const Vector3& pos, float angle, int motion, int frame );

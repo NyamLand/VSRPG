@@ -36,7 +36,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	BaseChara( void );
 	virtual ~BaseChara( void );
-	
+
 	//	î•ñİ’è
 	bool	SetMode( int nextMode );
 

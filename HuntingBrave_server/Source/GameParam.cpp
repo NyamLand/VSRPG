@@ -3,6 +3,7 @@
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
+#include	<thread>
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -14,6 +15,7 @@
 //----------------------------------------------------------------------------------------------
 //	グローバル
 //----------------------------------------------------------------------------------------------
+
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -87,25 +89,26 @@
 		switch( data[COMMAND] )
 		{
 		case RECEIVE_COMMAND::PLAYER_INFO:		//	パラメータ情報
-			ReceiveChara( client, data );
+			client = ReceiveChara( client, data );
 			break;
 
 		case RECEIVE_COMMAND::INPUT_INFO:		//	入力情報
-			ReceiveInput( client, data );
+			client = ReceiveInput( client, data );
 			break;
 
 		case RECEIVE_COMMAND::POINT_INFO:		//	点数情報
-			ReceivePoint( client, data );
+			client = ReceivePoint( client, data );
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
-			ReceiveSignUp( client, data );
+			client = ReceiveSignUp( client, data );
 			break;
 
 		case COMMANDS::SIGN_OUT:	//	脱退
-			ReceiveSignOut( client, data );
+			client = ReceiveSignOut( client, data );
 			break;
 		}
+
 		return client;
 	}
 
@@ -147,9 +150,6 @@
 		
 		//	送信
 		send( client, ( char* )&sendPointData, sizeof( sendPointData ) );
-
-		//	加算点数リセット
-		pointInfo[player].addPoint = 0;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -157,7 +157,7 @@
 //----------------------------------------------------------------------------------------------
 
 	//	キャラ情報受信
-	void	GameParam::ReceiveChara( int client, const LPSTR& data )
+	int	GameParam::ReceiveChara( int client, const LPSTR& data )
 	{
 		ReceivePlayerData* receivePlayerData = ( ReceivePlayerData* )data;
 		
@@ -169,25 +169,37 @@
 		
 		//	フレーム情報設定
 		playerParam[receivePlayerData->id].frame = receivePlayerData->frame;
+
+		return	client;
 	}
 
 	//	点数情報受信
-	void	GameParam::ReceivePoint( int client, const LPSTR& data )
+	int	GameParam::ReceivePoint( int client, const LPSTR& data )
 	{
 		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
-		pointInfo[client].addPoint = receivePointData->addPoint;
+		pointInfo[client].point += receivePointData->addPoint;
+		
+		//	全プレイヤーに送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			SendPointInfo( client, p );
+		}
+
+		return	-1;
 	}
 
 	//	入力情報受信
-	void	GameParam::ReceiveInput( int client, const LPSTR& data )
+	int	GameParam::ReceiveInput( int client, const LPSTR& data )
 	{
 		ReceiveInputData* receiveInputData = ( ReceiveInputData* )data;
 		inputManager->SetInput( 
 			receiveInputData->id, receiveInputData->buttonType, receiveInputData->inputType );
+
+		return	client;
 	}
 
 	//	サインアップ情報受信
-	void	GameParam::ReceiveSignUp( int client, const LPSTR& data )
+	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
 	{
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
@@ -218,15 +230,20 @@
 			send( client, ( char* )signUp, sizeof( SignUp ) );
 		}
 		printf( "%dP %sさんが参加しました。\n", client + 1, signUp->name );
+
+		return	client;
 	}
 
 	//	サインアウト情報受信
-	void	GameParam::ReceiveSignOut( int client, const LPSTR& data )
+	int	GameParam::ReceiveSignOut( int client, const LPSTR& data )
 	{
 		//	プレイヤー解放
 		ReleasePlayer( client );
 
 		SignOut	signOut( client );
+
+		//	ソケットを閉じる
+		CloseClient( client );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -236,8 +253,7 @@
 		}
 		printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
 
-		//	ソケットを閉じる
-		CloseClient( client );
+		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------

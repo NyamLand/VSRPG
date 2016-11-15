@@ -15,7 +15,9 @@
 class GameParam : public SocketClient
 {
 private:
+	//	プレイヤー番号
 	int		myIndex;
+	bool		inputAcceptance;	//	入力受付
 
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
@@ -50,6 +52,7 @@ public:
 	
 	//	情報設定
 	void  SetPlayerInfo( int id, char* name );
+	void	SetInputAcceptance( bool state );
 	void	SetPointInfo( int id, int addPoint );
 	void	AddPoint( int id, int point );
 	void  RemovePlayerInfo( int id );

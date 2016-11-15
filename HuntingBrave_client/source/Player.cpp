@@ -119,6 +119,7 @@ namespace
 			strcat_s( fileName, playerNum );
 			obj->SetTexture( 0, fileName );
 		}
+		
 		//	î•ñXV
 		UpdateInfo();
 

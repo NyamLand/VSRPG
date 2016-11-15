@@ -24,6 +24,9 @@ public:
 
 	//	XV
 	void	Update( int client );
+
+	//	î•ñİ’è
+	void	SetHitParam( int client );
 };
 
 extern	PointManager*	pointManager;

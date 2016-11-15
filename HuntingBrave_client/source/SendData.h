@@ -32,15 +32,16 @@
 		char	com = SEND_COMMAND::PLAYER_INFO;
 		int		id;
 		float	axisX, axisY;
+		int	hitParam;
 		int 	frame;
-		SendPlayerData( int myIndex, float axisX, float axisY, int frame ) : 
-			id( myIndex ), axisX( axisX ), axisY( axisY ), frame( frame ){};
+		SendPlayerData( int myIndex, float axisX, float axisY, int hitParam, int frame ) : 
+			id( myIndex ), axisX( axisX ), axisY( axisY ), hitParam( hitParam ), frame( frame ){};
 	};
 
 	//	ì_êîèÓïÒ
 	struct SendPointData
 	{
-		char	com = SEND_COMMAND::POINT_INFO;
+		char		com = SEND_COMMAND::POINT_INFO;
 		int		id;
 		int		addPoint;
 		SendPointData( int myIndex, int addPoint ) : id( myIndex ), addPoint( addPoint ){};
@@ -49,7 +50,7 @@
 	//	ì¸óÕèÓïÒ
 	struct SendInputData
 	{
-		char com = SEND_COMMAND::INPUT_INFO;
+		char		com = SEND_COMMAND::INPUT_INFO;
 		int		id;
 		int		buttonType;
 		int		inputType;

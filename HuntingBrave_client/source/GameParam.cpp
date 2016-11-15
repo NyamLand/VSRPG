@@ -4,6 +4,7 @@
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
+#include	<thread>
 #include	"GameParam.h"
 
 //***************************************************************
@@ -26,7 +27,7 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameParam::GameParam( void )
+	GameParam::GameParam( void ) : myIndex( -1 ), inputAcceptance( true )
 	{
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
@@ -148,7 +149,7 @@ GameParam*	gameParam = nullptr;
 
 		//	送信情報設定
 		SendPlayerData	sendPlayerData( 
-			myIndex, axisX, axisY, frame );
+			myIndex, axisX, axisY, frame, 0  );
 
 		send( ( LPSTR )&sendPlayerData, sizeof( SendPlayerData ) );
 	}
@@ -156,6 +157,9 @@ GameParam*	gameParam = nullptr;
 	//	入力情報送信
 	void	GameParam::SendInputInfo( void )
 	{
+		//	入力受付チェック
+		if ( !inputAcceptance )	return;
+
 		//	入力情報取得
 		int		inputType = 0;
 		int		buttonType = inputManager->GetInput( inputType );
@@ -168,7 +172,7 @@ GameParam*	gameParam = nullptr;
 			myIndex, buttonType, inputType );
 
 		//	送信
-		send( ( LPSTR )&sendInputData, sizeof( SendInputData ) );
+		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
 	}
 
 	//	点数情報送信
@@ -293,5 +297,11 @@ GameParam*	gameParam = nullptr;
 		outY = -( float )input[0]->Get( KEY_AXISY ) * 0.001f;
 
 		return	Vector3( outX, 0.0f, outY ).Length();
+	}
+
+	//	入力受付状態設定
+	void	GameParam::SetInputAcceptance( bool state )
+	{
+		inputAcceptance = state;
 	}
 
