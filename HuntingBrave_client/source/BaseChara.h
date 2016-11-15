@@ -69,4 +69,5 @@ public:
 	float		GetAngle( void )const;
 	int			GetMotion( void )const;
 	int			GetMode( void )const;
+	int			GetFrame( void )const;
 };

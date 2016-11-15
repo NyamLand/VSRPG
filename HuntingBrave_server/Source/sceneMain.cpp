@@ -7,6 +7,7 @@
 #include	"GameParam.h"
 #include	"PlayerManager.h"
 #include	"PointManager.h"
+#include	"InputManager.h"
 #include	"sceneMain.h"
 
 GameParam*		gameParam = nullptr;
@@ -23,6 +24,7 @@ void main( void )
 	//	‰Šú‰»
 	gameManager = new GameManager();
 	gameParam = new GameParam();
+	inputManager = new InputManager();
 	playerManager = new PlayerManager( gameParam );
 	pointManager = new PointManager( gameParam );
 	gameParam->InitializeServer();
@@ -47,8 +49,9 @@ void main( void )
 	}
 
 	//	‰ð•ú
-	delete	gameParam;	gameParam = nullptr;
+	delete	gameParam;		gameParam = nullptr;
 	delete	gameManager;	gameManager = nullptr;
 	delete	playerManager;	playerManager = nullptr;
 	delete	pointManager;	pointManager = nullptr;
+	delete	inputManager;	inputManager = nullptr;
 }

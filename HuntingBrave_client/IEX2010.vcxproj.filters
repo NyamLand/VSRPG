@@ -103,9 +103,6 @@
     <ClCompile Include="source\Equipments.cpp">
       <Filter>Source\Equipment\Equipments</Filter>
     </ClCompile>
-    <ClCompile Include="source\GameData.cpp">
-      <Filter>Source\GameData</Filter>
-    </ClCompile>
     <ClCompile Include="source\GameManager.cpp">
       <Filter>Source\Manager\GameManager</Filter>
     </ClCompile>
@@ -153,6 +150,21 @@
     </ClCompile>
     <ClCompile Include="source\MapUI.cpp">
       <Filter>Source\UI\MapUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\InputManager.cpp">
+      <Filter>Source\Manager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ReceiveData.cpp">
+      <Filter>Source\GameData\ReceiveData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SendData.cpp">
+      <Filter>Source\GameData\SendData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameData.cpp">
+      <Filter>Source\GameData\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SharedData.cpp">
+      <Filter>Source\GameData\SharedData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +225,6 @@
     <ClInclude Include="source\Equipments.h">
       <Filter>Source\Equipment\Equipments</Filter>
     </ClInclude>
-    <ClInclude Include="source\GameData.h">
-      <Filter>Source\GameData</Filter>
-    </ClInclude>
     <ClInclude Include="source\GameManager.h">
       <Filter>Source\Manager\GameManager</Filter>
     </ClInclude>
@@ -266,6 +275,21 @@
     </ClInclude>
     <ClInclude Include="source\MapUI.h">
       <Filter>Source\UI\MapUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\InputManager.h">
+      <Filter>Source\Manager\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ReceiveData.h">
+      <Filter>Source\GameData\ReceiveData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SendData.h">
+      <Filter>Source\GameData\SendData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameData.h">
+      <Filter>Source\GameData\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SharedData.h">
+      <Filter>Source\GameData\SharedData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +427,21 @@
     </Filter>
     <Filter Include="Source\UI\MapUI">
       <UniqueIdentifier>{66913ead-712a-4386-873c-0c725950c99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\InputManager">
+      <UniqueIdentifier>{4a6fa8c4-bd1c-48f9-91ad-a0a5c31aec6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\ReceiveData">
+      <UniqueIdentifier>{549dc27f-5307-4072-9cf8-6fcedf651439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\SendData">
+      <UniqueIdentifier>{e73e0922-dd89-449a-b8c1-7c3a30496d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\GameData">
+      <UniqueIdentifier>{97f29bec-23cf-4ecd-bc9b-e287d66a2d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\SharedData">
+      <UniqueIdentifier>{67dcb19f-222d-4dc2-9814-c671b4a9b2c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

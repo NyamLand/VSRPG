@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"InputManager.h"
 #include	"Player.h"
 
 //*****************************************************************************************************************************
@@ -54,9 +55,14 @@ namespace
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void )
+	Player::Player( int id ) :
+		index( id )
 	{
 		ZeroMemory( &pParam, sizeof( PlayerParam ) );
+
+		//	関数ポインタ設定
+		ModeFunction[MODE::MOVE] = &Player::ModeMove;
+		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
 	}
 
 	//	デストラクタ
@@ -75,13 +81,37 @@ namespace
 		//	情報受け取り
 		pParam = param;
 
-		//	移動
-		Move();
+		//	モード別動作関数
+		( this->*ModeFunction[mode] )();
 
 		//	計算後情報反映
 		param = pParam;
 
 		return true;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	モード別動作関数
+//----------------------------------------------------------------------------------------------
+
+	//	通常移動
+	void	Player::ModeMove( void )
+	{
+		//	移動
+		Move();
+
+		//	入力受付
+		if ( inputManager->GetInput( index ).inputType == InputManager::ENTER )
+		{
+			if( SetMode( MODE::SWOADATTACK ) ) SetMotion( MOTION_NUM::ATTACK1 );
+			inputManager->GetInput( index ).inputType = InputManager::NO_INPUT;
+		}
+	}
+
+	//	剣攻撃
+	void	Player::ModeSwordAttack( void )
+	{
+		SwordAttack();
 	}
 	
 //----------------------------------------------------------------------------------------------
@@ -91,8 +121,8 @@ namespace
 	//	移動
 	void	Player::Move( void )
 	{
-		float moveX = pParam.moveX;
-		float moveZ = pParam.moveZ;
+		float moveX = inputManager->GetInput( index ).axisX;
+		float moveZ = inputManager->GetInput( index ).axisY;
 		float length = sqrtf( moveX * moveX + moveZ * moveZ );
 
 		//	入力があれば移動処理
@@ -112,6 +142,16 @@ namespace
 		else
 		{
 			SetMotion( MOTION_NUM::POSUTURE );
+		}
+	}
+
+	//	剣攻撃
+	void	Player::SwordAttack( void )
+	{
+		// 一定以上のフレームに達すると移動に戻す
+		if ( pParam.frame >= 190 )
+		{
+			SetMode( MODE::MOVE );
 		}
 	}
 

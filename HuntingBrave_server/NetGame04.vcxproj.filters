@@ -61,6 +61,21 @@
     <Filter Include="ソース ファイル\Manager\PointManager">
       <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\InputManager">
+      <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\SendData">
+      <UniqueIdentifier>{202f5623-39fa-4062-8587-bb97e16241bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\GameData">
+      <UniqueIdentifier>{b36ce8c5-9c2d-49f4-a724-b598cd156c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\ReceiveData">
+      <UniqueIdentifier>{861daa82-ab78-490e-8af2-da9f089fb228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CharaInfo">
+      <UniqueIdentifier>{6709b4a8-10a6-4f5f-8385-5e2e32e860a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -77,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="Source\IEX_RayMesh.cpp">
       <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameData.cpp">
-      <Filter>ソース ファイル\GameData</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerManager.cpp">
       <Filter>ソース ファイル\Manager\PlayerManager</Filter>
@@ -105,6 +117,21 @@
     <ClCompile Include="Source\PointManager.cpp">
       <Filter>ソース ファイル\Manager\PointManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>ソース ファイル\Manager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameData.cpp">
+      <Filter>ソース ファイル\GameData\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SendData.cpp">
+      <Filter>ソース ファイル\GameData\SendData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ReceiveData.cpp">
+      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CharaInfo.cpp">
+      <Filter>ソース ファイル\CharaInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -112,9 +139,6 @@
     </ClInclude>
     <ClInclude Include="Source\GameParam.h">
       <Filter>ソース ファイル\GameParam</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameData.h">
-      <Filter>ソース ファイル\GameData</Filter>
     </ClInclude>
     <ClInclude Include="Source\sceneMain.h">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
@@ -148,6 +172,21 @@
     </ClInclude>
     <ClInclude Include="Source\PointManager.h">
       <Filter>ソース ファイル\Manager\PointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>ソース ファイル\Manager\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameData.h">
+      <Filter>ソース ファイル\GameData\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SendData.h">
+      <Filter>ソース ファイル\GameData\SendData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ReceiveData.h">
+      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CharaInfo.h">
+      <Filter>ソース ファイル\CharaInfo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

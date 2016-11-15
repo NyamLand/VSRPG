@@ -87,9 +87,6 @@ bool	sceneMain::Initialize( void )
 		exit( 0 );
 		return	false;
 	}
-	//仮
-	//baseEquipment = new BaseEquipment();
-	
 	return true;
 }
 
@@ -116,8 +113,9 @@ void	sceneMain::Update( void )
 	float elapseTime = GetElapseTime();
 	printf( "経過時間 : %f\n", elapseTime );
 
-	//	サーバーから情報受信
-	gameParam->Update();
+	//	送受信
+	std::thread		ThreadFunc( ThreadFunction );
+	ThreadFunc.join();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -132,7 +130,9 @@ void	sceneMain::Update( void )
 	uiManager->Update();
 
 	//	camera更新
-	mainView->Update( playerManager->GetPlayer( 0 )->GetPos() );
+	mainView->Update( 
+		playerManager->GetPlayer( 
+			gameParam->GetMyIndex() )->GetPos() );
 
 	//	collision
 	collision->AllCollision();
@@ -198,6 +198,13 @@ void	sceneMain::MyInfoRender( void )
 	char	str[256];
 	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
+}
+
+//	受信送信
+void	sceneMain::ThreadFunction( void )
+{
+	//	サーバーから情報受信
+	gameParam->Update();
 }
 
 

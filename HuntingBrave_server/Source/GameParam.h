@@ -36,9 +36,7 @@ public:
 	//	óMˆ—
 	void	ReceiveChara( int client, const LPSTR& data );
 	void	ReceivePoint( int client, const LPSTR& data );
-	void	ReceiveCharaDATA(int client, const LPSTR& data);
-	void	ReceiveControllerAxis(int client, const LPSTR& data);
-	void	ReceiveCharaMove(int client, const LPSTR& data);
+	void	ReceiveInput( int client, const LPSTR& data );
 	void	ReceiveSignUp( int client, const LPSTR& data );
 	void	ReceiveSignOut( int client, const LPSTR& data );
 
