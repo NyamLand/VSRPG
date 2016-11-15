@@ -111,6 +111,15 @@ namespace
 		lifeInfo.active = true;
 		lifeInfo.isAlive = true;
 
+		//	テクスチャ書き換え
+		{
+			char	fileName[256] = "DATA/CHR/suppin/s_body_";
+			char playerNum[16] = "";
+			sprintf_s( playerNum, "%d.png", gameParam->GetMyIndex() );
+			strcat_s( fileName, playerNum );
+			obj->SetTexture( 0, fileName );
+		}
+
 		//	情報更新
 		UpdateInfo();
 
