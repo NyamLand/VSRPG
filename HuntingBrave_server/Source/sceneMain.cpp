@@ -40,7 +40,7 @@ void main( void )
 		if ( client != -1 )
 		{
 			//	全体更新
-			pointManager->Update( client );
+			//pointManager->Update( client );
 			playerManager->Update( client );
 
 			//	クライアントへ送信

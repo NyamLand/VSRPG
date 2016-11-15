@@ -37,6 +37,11 @@ BaseEquipment* baseEquipment;	//	仮(絶対消す)
 //
 //*****************************************************************************************************************************
 
+void	ThreadFuntion1( void )
+{
+	gameParam->SendInputInfo();
+}
+
 bool	sceneMain::Initialize( void )
 {
 	//	環境設定
@@ -115,9 +120,9 @@ void	sceneMain::Update( void )
 
 	//	送受信
 	//	サーバーから情報受信
-	gameParam->Update();
-	//std::thread		ThreadFunc( ThreadFunction );
-	//ThreadFunc.join();
+	//gameParam->Update();
+	std::thread		ThreadFunc( ThreadFunction );
+	ThreadFunc.join();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -207,6 +212,8 @@ void	sceneMain::ThreadFunction( void )
 	//	サーバーから情報受信
 	gameParam->Update();
 }
+
+
 
 
 

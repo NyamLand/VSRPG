@@ -41,7 +41,8 @@ PointManager*	pointManager = nullptr;
 		//	ポイント構造体取得
 		PointInfo	pointInfo = gameParam->GetPointInfo( client );
 
-		if ( pointInfo.addPoint == 0 )	return;
+		//	あたり情報
+		if ( pointInfo.addPoint == -1 )		return;
 
 		//	点数加算
 		pointInfo.point += pointInfo.addPoint;

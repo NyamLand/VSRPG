@@ -34,11 +34,11 @@ public:
 	void	SendGameInfo( int client );
 
 	//	óMˆ—
-	void	ReceiveChara( int client, const LPSTR& data );
-	void	ReceivePoint( int client, const LPSTR& data );
-	void	ReceiveInput( int client, const LPSTR& data );
-	void	ReceiveSignUp( int client, const LPSTR& data );
-	void	ReceiveSignOut( int client, const LPSTR& data );
+	int	ReceiveChara( int client, const LPSTR& data );
+	int	ReceivePoint( int client, const LPSTR& data );
+	int	ReceiveInput( int client, const LPSTR& data );
+	int	ReceiveSignUp( int client, const LPSTR& data );
+	int	ReceiveSignOut( int client, const LPSTR& data );
 
 	//	î•ñİ’è
 	void SetPlayerParam( int id, const PlayerParam& param );

@@ -67,7 +67,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -92,6 +92,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IEX\IEX_2DObject.cpp" />
+    <ClCompile Include="IEX\IEX_3DObject.cpp" />
+    <ClCompile Include="IEX\IEX_Audio.cpp" />
+    <ClCompile Include="IEX\IEX_Direct3D.cpp" />
+    <ClCompile Include="IEX\IEX_Input.cpp" />
+    <ClCompile Include="IEX\IEX_Light.cpp" />
+    <ClCompile Include="IEX\IEX_Math.cpp" />
+    <ClCompile Include="IEX\IEX_Mesh.cpp" />
+    <ClCompile Include="IEX\IEX_Particle.cpp" />
+    <ClCompile Include="IEX\IEX_Polygon.cpp" />
+    <ClCompile Include="IEX\IEX_RenderState.cpp" />
+    <ClCompile Include="IEX\IEX_Shader.cpp" />
+    <ClCompile Include="IEX\IEX_SkinMesh.cpp" />
+    <ClCompile Include="IEX\IEX_System.cpp" />
+    <ClCompile Include="IEX\IEX_Texture.cpp" />
+    <ClCompile Include="IEX\IEX_View.cpp" />
     <ClCompile Include="Source\BaseChara.cpp" />
     <ClCompile Include="Source\CharaInfo.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
@@ -99,7 +115,6 @@
     <ClCompile Include="Source\GameData.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GameParam.cpp" />
-    <ClCompile Include="Source\IEX_RayMesh.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerManager.cpp" />
@@ -107,11 +122,11 @@
     <ClCompile Include="Source\ReceiveData.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\SendData.cpp" />
-    <ClCompile Include="Source\stage.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\UDPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IEX\iextreme.h" />
     <ClInclude Include="Source\BaseChara.h" />
     <ClInclude Include="Source\CharaInfo.h" />
     <ClInclude Include="Source\Enemy.h" />
@@ -119,7 +134,6 @@
     <ClInclude Include="Source\GameData.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameParam.h" />
-    <ClInclude Include="IEX\iextreme.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerManager.h" />
@@ -127,7 +141,6 @@
     <ClInclude Include="Source\ReceiveData.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\SendData.h" />
-    <ClInclude Include="Source\stage.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\UDPServer.h" />
   </ItemGroup>
