@@ -90,7 +90,7 @@ namespace
 	}
 
 	//	‰Šú‰»
-	bool	Player::Initialize( void )
+	bool	Player::Initialize( int id )
 	{
 		//	“Ç‚İ‚İ
 		Load( "DATA/CHR/suppin/Suppin.IEM" );
@@ -115,11 +115,10 @@ namespace
 		{
 			char	fileName[256] = "DATA/CHR/suppin/s_body_";
 			char playerNum[16] = "";
-			sprintf_s( playerNum, "%d.png", gameParam->GetMyIndex() );
+			sprintf_s( playerNum, "%d.png", id );
 			strcat_s( fileName, playerNum );
 			obj->SetTexture( 0, fileName );
 		}
-
 		//	î•ñXV
 		UpdateInfo();
 

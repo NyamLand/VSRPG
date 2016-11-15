@@ -57,7 +57,7 @@ public:
 	//	初期化・解放
 	Player( void );
 	~Player( void )override;
-	bool	Initialize( void )override;
+	bool	Initialize( int id );
 	
 	//	更新・描画
 	void	Update( PlayerParam& playerParam );
