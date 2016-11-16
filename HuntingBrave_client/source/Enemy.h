@@ -20,7 +20,10 @@ protected:
 	float		searchDist;
 	float		attackDist;
 
-	float		elife;			//敵の体力
+	//float		elife;			//敵の体力
+	int	count;		//仮多段ヒット用
+
+public:
 
 	enum MODE	//	仮
 	{
@@ -38,7 +41,11 @@ public:
 	~Enemy( void )override;
 
 	//	各モード動作関数
-	void	MoveMode( void );
+	virtual void	EntryMode( void ) = 0;
+	virtual void	MoveMode( void ) = 0;
+	virtual void	AttackMode( void ) = 0;
+	void	DamageMode( void );
+	
 
 	//	動作関数
 	void	Move( float speed ) ;
@@ -47,6 +54,8 @@ public:
 	bool	DistCheck( float& length );
 	void	LifeCheck( void );
 	//virtual bool	DamageFlgCheck( void )=0;
+
+	//モード関数
 
 	//	攻撃関数
 	virtual void	Attack( void )=0;

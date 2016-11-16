@@ -73,9 +73,12 @@
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
-					//	ライフ計算
-					( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer( p )->GetAttackInfo().power );
-					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
+					if ((*it)->GetLifeInfo().active){
+						//	ライフ計算
+						(*it)->SetMode((*it)->DAMAGE);
+						(*it)->GetLifeInfo().CulcLife(-playerManager->GetPlayer(p)->GetAttackInfo().power);
+						gameParam->AddPoint(gameParam->GetMyIndex(), 1000);
+					}
 				}
 			}
 		}

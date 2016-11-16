@@ -22,7 +22,7 @@
 #define	MINOTAURUS_HEIGHT	0.125f
 #define	MINOTAURUS_RADIUS	1.0f
 
-#define	INIT_LIFE	 1
+#define	INIT_LIFE	 5
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -42,6 +42,7 @@
 		ModeFunction[MODE::ENTRY] = &SmallEnemy::EntryMode;
 		ModeFunction[MODE::MOVE] = &SmallEnemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &SmallEnemy::AttackMode;
+		ModeFunction[MODE::DAMAGE] = &SmallEnemy::DamageMode;
 
 		//	変数初期化
 		speed = MOVE_SPEED;
