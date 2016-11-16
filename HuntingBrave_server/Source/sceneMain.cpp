@@ -8,6 +8,7 @@
 #include	"PlayerManager.h"
 #include	"PointManager.h"
 #include	"InputManager.h"
+#include	"Collision.h"
 #include	"sceneMain.h"
 
 GameParam*		gameParam = nullptr;
@@ -26,6 +27,7 @@ void main( void )
 	gameParam = new GameParam();
 	inputManager = new InputManager();
 	playerManager = new PlayerManager( gameParam );
+	collision = new Collision( gameParam );
 	gameParam->InitializeServer();
 
 	//	無限ループ
@@ -40,6 +42,9 @@ void main( void )
 		{
 			//	全体更新
 			playerManager->Update( client );
+
+			//	当たり判定
+			collision->AllCollision();
 
 			//	クライアントへ送信
 			gameParam->Send( client );

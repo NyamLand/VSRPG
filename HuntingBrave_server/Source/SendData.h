@@ -51,9 +51,10 @@
 	{
 		char com = SEND_COMMAND::CHARA_INFO;
 		int			id;
+		int			life;
 		Vector3	pos;
 		float			angle;
 		int			motion;
-		SendCharaData( int id, const Vector3& pos, float angle, int motion ) : 
-			id( id ), pos( pos ), angle( angle ), motion( motion ){}
+		SendCharaData( int id, const Vector3& pos, float angle, int motion, int life ) : 
+			id( id ), pos( pos ), angle( angle ), motion( motion ), life( life ){}
 	};

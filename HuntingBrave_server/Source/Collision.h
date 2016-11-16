@@ -24,13 +24,14 @@ public:
 		CAPSULEVSCAPSULE,
 	};
 
-	//	
+	//	ƒQ[ƒ€î•ñ
+	GameParam*	gameParam;
 
-private:
+public:
+	//	‰Šú‰»E‰ğ•ú
 	Collision( GameParam* gameParam );
 	~Collision( void );
 
-public:
 	//	“–‚½‚è”»’è
 	void	AllCollision( void );
 	void	PlayerAttackCollision( void );
@@ -49,5 +50,5 @@ public:
 	bool	CapsuleVSSphere( const Capsule& capsule, const Sphere& sphere );
 	bool	SphereVSSphere( const Sphere& sphere1, const Sphere& sphere2 );
 };
-
-#define	collision ( Collision::GetInstance() )
+extern	Collision*	collision;
+//#define	collision ( Collision::GetInstance() )
