@@ -60,7 +60,7 @@
 
 			//	攻撃情報取得、攻撃中でなければスキップ
 			AttackInfo	attackInfo = playerManager->GetPlayer( p )->GetAttackInfo();
-			if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		continue;
+			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
 
 			//	敵との当たり判定
 			for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
@@ -93,7 +93,7 @@
 		{
 			//	攻撃情報取得、攻撃中でなければスキップ
 			AttackInfo	attackInfo = ( *it )->GetAttackInfo();
-			if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		continue;
+			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
 
 			//	全プレイヤー当たり判定
 			for ( int p = 0; p < PLAYER_MAX; p++ )

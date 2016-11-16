@@ -80,7 +80,7 @@ PlayerManager*	playerManager = nullptr;
 		if ( player[id] != nullptr )	return;
 
 		//	プレイヤー生成
-		player[id] = new Player();
+		player[id] = new Player( id );
 	}
 
 	//	プレイヤー解放
@@ -101,4 +101,10 @@ PlayerManager*	playerManager = nullptr;
 	Vector3	PlayerManager::GetPos( int id )
 	{
 		return	Vector3( 0.0f, 0.0f, 0.0f );
+	}
+
+	//	プレイヤー取得
+	Player*&	PlayerManager::GetPlayer( int id )
+	{
+		return	player[id];
 	}

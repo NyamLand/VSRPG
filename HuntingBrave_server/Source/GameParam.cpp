@@ -2,6 +2,8 @@
 #include	"iextreme.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
+#include	"InputManager.h"
+#include	<thread>
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -13,6 +15,7 @@
 //----------------------------------------------------------------------------------------------
 //	グローバル
 //----------------------------------------------------------------------------------------------
+
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -46,31 +49,28 @@
 //----------------------------------------------------------------------------------------------
 
 	//	送信
-	int		GameParam::Send( int client )
+	int	GameParam::Send( int client )
 	{
 		if( client == -1 ) return -1;
-	
+
 		//	全データ送信
 		for ( int clientNum = 0; clientNum < PLAYER_MAX; clientNum++ )
 		{
+			//	
 			if( playerInfo[clientNum].active == false ) continue;
 
-			//	ゲーム情報送信
-			SendGameInfo( clientNum );
+			//	アクティブでないプレイヤーはとばす
+			if ( playerInfo[clientNum].active == false ) continue;
 
-			//	各プレイヤーに全プレイヤーの情報を送信
-			for ( int player = 0; player < PLAYER_MAX; player++ )
-			{
-				//	アクティブでないプレイヤーはとばす
-				if ( playerInfo[player].active == false ) continue;
+			//	移動情報送信
+			SendCharaInfo( client, clientNum );
 
-				//	移動情報送信
-				SendCharaInfo( clientNum, player );
-
-				//	点数情報送信
-				SendPointInfo( clientNum, player );
-			}
+			//	点数情報送信
+			SendPointInfo( client, clientNum );	
 		}
+		
+		//	ゲーム情報送信
+		SendGameInfo( client );
 
 		//	終端通知
 		char end = -1;
@@ -79,7 +79,7 @@
 	}
 
 	//	受信
-	int		GameParam::Receive( void )
+	int	GameParam::Receive( void )
 	{
 		char	data[256];
 		int		size = sizeof( data );
@@ -88,34 +88,27 @@
 		
 		switch( data[COMMAND] )
 		{
-		case COMMANDS::CHARA_INFO:		//	移動情報
-			ReceiveChara( client, data );
+		case RECEIVE_COMMAND::PLAYER_INFO:		//	パラメータ情報
+			client = ReceiveChara( client, data );
 			break;
 
-		case COMMANDS::CHARA_RECEIVEDATA:	//必要情報全部
-			ReceiveCharaDATA( client, data );
+		case RECEIVE_COMMAND::POINT_INFO:		//	点数情報
+			client = ReceivePoint( client, data );
 			break;
 
-		case COMMANDS::CONTROLLE_AXIS:	//コントローラー軸情報
-			ReceiveControllerAxis( client, data );
-			break;
-
-		case COMMANDS::CHAR_MOVE:		//	移動情報
-			ReceiveCharaMove( client, data );
-			break;
-
-		case COMMANDS::POINT_INFO:		//	点数情報
-			ReceivePoint( client, data );
+		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
+			client = ReceiveAttackParam( client , data );
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
-			ReceiveSignUp( client, data );
+			client = ReceiveSignUp( client, data );
 			break;
 
 		case COMMANDS::SIGN_OUT:	//	脱退
-			ReceiveSignOut( client, data );
+			client = ReceiveSignOut( client, data );
 			break;
 		}
+
 		return client;
 	}
 
@@ -127,40 +120,33 @@
 	void	GameParam::SendCharaInfo( int client, int player )
 	{
 		//	情報設定
-		NET_CHARA netChara( player, 
+		SendCharaData sendCharaData( player, 
 			playerParam[player].pos, 
 			playerParam[player].angle,
 			playerParam[player].motion );
 
 		//	送信
-		send( client, ( LPSTR )&netChara, sizeof( NET_CHARA ) );
+		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
 	}
 
 	//	ゲーム情報送信
 	void	GameParam::SendGameInfo( int client )
 	{
 		//	情報設定
-		NET_GAME	 netGame( gameManager->GetTimer()->GetLimitTime() ); 
+		SendGameData	 sendGameData( gameManager->GetTimer()->GetLimitTime() ); 
 
 		//	送信
-		send( client, ( LPSTR )&netGame, sizeof( NET_GAME ) );
+		send( client, ( LPSTR )&sendGameData, sizeof( sendGameData ) );
 	}
 
 	//	点数情報送信
 	void	GameParam::SendPointInfo( int client, int player )
 	{
-		//	加算分が０だとスキップ
-		if ( pointInfo[player].addPoint == 0 )	return;
-
 		//	情報設定
-		NET_POINT	netPoint( player, pointInfo[player].point );
+		SendPointData	sendPointData( player, pointInfo[player].point );
 		
 		//	送信
-		send( client, ( char* )&netPoint, sizeof( NET_POINT ) );
-
-		//	加算点数リセット
-		pointInfo[player].addPoint = 0;
-
+		send( client, ( char* )&sendPointData, sizeof( sendPointData ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -168,121 +154,111 @@
 //----------------------------------------------------------------------------------------------
 
 	//	キャラ情報受信
-	void	GameParam::ReceiveChara( int client, const LPSTR& data )
+	int	GameParam::ReceiveChara( int client, const LPSTR& data )
 	{
-		NET_MOVE* netMove = ( NET_MOVE* )data;
-		playerParam[client].moveX = netMove->axisX;
-		playerParam[client].moveZ = netMove->axisY;
+		ReceivePlayerData* receivePlayerData = ( ReceivePlayerData* )data;
+		
+		//	スティックの入力情報設定
+		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
+
+		//	ボタンの入力情報設定
+		inputManager->SetInput( client, receivePlayerData->button, receivePlayerData->inputType );
+		
+		//	フレーム情報設定
+		playerParam[client].frame = receivePlayerData->frame;
+
+		return	client;
 	}
 
 	//	点数情報受信
-	void	GameParam::ReceivePoint( int client, const LPSTR& data )
+	int	GameParam::ReceivePoint( int client, const LPSTR& data )
 	{
-		NET_POINT*	netPoint = ( NET_POINT* )data;
-		pointInfo[client].addPoint = netPoint->point;
-	}
-
-
-
-	//*****************************************
-	//		後でちゃんとする
-
-	//受け取り情報全部
-	void	GameParam::ReceiveCharaDATA( int client, const LPSTR& data )
-	{
-		NET_CHAR_RECEIVEDATA* d = (NET_CHAR_RECEIVEDATA*)data;
-		//playerParam[client].axis = d->axis;
-		float	length = sqrtf(d->axisX * d->axisX + d->axisY * d->axisY) * 0.001f;
-
-		////	入力があれば移動処理
-		if (length >= 0.3f)
+		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
+		pointInfo[client].point += receivePointData->addPoint;
+		
+		//	全プレイヤーに送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			Vector3 m = Vector3(sinf(d->angle), 0.0f, cosf(d->angle)) * 0.3f;
-
-			playerParam[client].pos += m;
+			SendPointInfo( client, p );
 		}
+
+		return	-1;
 	}
 
-
-	//*****************************************
-
-	//	コントローラー情報受信
-	void	GameParam::ReceiveControllerAxis(int client, const LPSTR& data)
+	//	攻撃情報受信
+	int	GameParam::ReceiveAttackParam( int client, const LPSTR& data )
 	{
-		NET_CONTROLLE_AXIS* d = (NET_CONTROLLE_AXIS*)data;
-		//playerParam[client].axis = d->axis;
-		float	length = sqrtf( d->axisX * d->axisX + d->axisY * d->axisY ) * 0.001f;
+		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
+		
+		AttackInfo	attackInfo;
+		attackInfo.attackParam = ( AttackInfo::ATTACK_PARAM )receiveAttackData->attackParam;
+		attackInfo.collisionShape.SetCapsule( 
+			Capsule( 	receiveAttackData->attackPos1, 
+							receiveAttackData->attackPos2,
+							receiveAttackData->radius ) );
+		attackInfo.collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+		attackInfo.power = 1;
+		//playerManager->GetPlayer( client )->SetAttackInfo( attackInfo );
 
-		//	入力があれば移動処理
-		if ( length >= 0.3f )	
-		{
-			Vector3 m = Vector3(sinf(0), 0.0f, cosf(0)) * 0.3f;
-			playerParam[client].pos += m;
-		}
-	}
-
-
-
-	//	キャラ移動量情報受信
-	void	GameParam::ReceiveCharaMove(int client, const LPSTR& data)
-	{
-		NET_MOVE* netMove = ( NET_MOVE* )data;
-		playerParam[client].moveX = netMove->axisX;
-		playerParam[client].moveZ = netMove->axisY;
+		return	-1;
 	}
 
 	//	サインアップ情報受信
-	void	GameParam::ReceiveSignUp( int client, const LPSTR& data )
+	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
 	{
 		//	名前保存
-		NET_IN* netIn = ( NET_IN* )data;
-		SetPlayer( client, netIn->name );
+		SignUp* signUp = ( SignUp* )data;
+		SetPlayer( client, signUp->name );
 
 		//	IDを返信
-		netIn->id = client;
-		send( client, ( char* )netIn, sizeof( NET_IN ) );
+		signUp->id = client;
+		send( client, ( char* )signUp, sizeof( SignUp ) );
 
 		//	初期座標を送信
 		PlayerParam	initParam = gameManager->GetInitInfo( client );
-		NET_CHARA	netChara( client, initParam.pos, initParam.angle, initParam.motion );
-		send( client, ( LPSTR )&netChara, sizeof( netChara ) );
+		SendCharaData	sendCharaData( client, initParam.pos, initParam.angle, initParam.motion );
+		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( playerInfo[p].active == false ) continue;
-			send( p, ( char* )netIn, sizeof( NET_IN ) );
+			send( p, ( char* )signUp, sizeof( SignUp ) );
 		}
 
 		//	全データ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( playerInfo[p].active == false ) continue;
-			netIn->id = p;
-			strcpy( netIn->name, playerInfo[p].name );
-			send( client, ( char* )netIn, sizeof( NET_IN ) );
+			signUp->id = p;
+			strcpy( signUp->name, playerInfo[p].name );
+			send( client, ( char* )signUp, sizeof( SignUp ) );
 		}
-		printf("%dP %sさんが参加しました。\n", client + 1, netIn->name);
+		printf( "%dP %sさんが参加しました。\n", client + 1, signUp->name );
+
+		return	client;
 	}
 
 	//	サインアウト情報受信
-	void	GameParam::ReceiveSignOut( int client, const LPSTR& data )
+	int	GameParam::ReceiveSignOut( int client, const LPSTR& data )
 	{
 		//	プレイヤー解放
 		ReleasePlayer( client );
 
+		SignOut	signOut( client );
+
 		//	ソケットを閉じる
 		CloseClient( client );
-
-		NET_OUT	netOut( client );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( playerInfo[p].active == false ) continue;
-			send( p, ( char* )&netOut, sizeof( NET_OUT ) );
+			send( p, ( char* )&signOut, sizeof( SignOut ) );
 		}
 		printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
+
+		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------

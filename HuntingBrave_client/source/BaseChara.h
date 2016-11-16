@@ -33,7 +33,7 @@ public:
 	BaseChara( void );
 	virtual ~BaseChara( void );
 	bool	Load( LPSTR filename );
-	virtual bool Initialize( void ) = 0;
+	virtual bool Initialize( void ){ return true; }
 	
 	//	çXêVÅEï`âÊ
 	virtual void	Update( void );
@@ -56,17 +56,18 @@ public:
 	void	SetObj( iex3DObj* obj );
 
 	//	èÓïÒéÊìæ
-	AttackInfo&	GetAttackInfo( void );
+	AttackInfo	GetAttackInfo( void )const;
 	LifeInfo&		GetLifeInfo( void );
 	CollisionInfo GetCollisionInfo( void )const;
-	Matrix	GetMatrix( void )const;
+	Matrix		GetMatrix( void )const;
 	Vector3	GetBonePos( int boneNum )const;
 	Vector3	GetPos( void )const;
 	Vector3	GetMove( void )const;
 	Vector3	GetFront( void )const;
 	Vector3	GetUp( void )const;
 	Vector3	GetRight( void )const;
-	float		GetAngle( void )const;
+	float			GetAngle( void )const;
 	int			GetMotion( void )const;
 	int			GetMode( void )const;
+	int			GetFrame( void )const;
 };

@@ -20,7 +20,7 @@
 	BaseChara::BaseChara( void ) :
 		pos( 0.0f, 0.0f, 0.0f ),
 		angle( 0.0f ),
-		motion( 0 )
+		motion( 0 ), mode( MODE::MOVE )
 	{
 	
 	}
@@ -35,9 +35,28 @@
 //	更新
 //----------------------------------------------------------------------------------------------
 
+
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
+
+	//	モード設定( 新規モードが同じならfalseをかえす )
+	bool	BaseChara::SetMode( int nextMode )
+	{
+		if ( mode != nextMode )
+		{ 
+			mode = nextMode;
+			return	true;
+		}
+		
+		return	false;
+	}
+
+	//	攻撃情報設定
+	void	BaseChara::SetAttackInfo( const AttackInfo& attackInfo )
+	{
+		this->attackInfo = attackInfo;
+	}
 
 //----------------------------------------------------------------------------------------------
 //	情報取得
@@ -49,3 +68,8 @@
 		return	pos;
 	}
 	
+	//	攻撃情報取得
+	AttackInfo	BaseChara::GetAttackInfo( void )const
+	{
+		return	attackInfo;
+	}

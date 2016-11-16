@@ -10,8 +10,7 @@
 //	include
 #include	"ShapeInfo.h"
 
-//	攻撃情報構造体
-struct AttackInfo
+namespace
 {
 	//	定数
 	enum ATTACK_PARAM
@@ -20,13 +19,18 @@ struct AttackInfo
 		ATTACK1,
 		ATTACK2,
 	};
+}
 
+
+//	攻撃情報構造体
+struct AttackInfo
+{
 	//	パラメータ
 	int		power;
 	int		timer;
 	int		step;
-	bool	initFlag;
-	ATTACK_PARAM	attackParam;
+	bool		initFlag;
+	char		attackParam;
 	CollisionShape		collisionShape;
 
 	//	初期化・解放

@@ -9,16 +9,19 @@
 
 //	include
 #include	"GameData.h"
+#include	"CharaInfo.h"
+#include	"ShapeInfo.h"
 #include	"UDPServer.h"
 
 //	class
 class GameParam : public UDPServer
 {
 private:
-	PlayerInfo	playerInfo[PLAYER_MAX];
+	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
-
+	AttackInfo	attackInfo[PLAYER_MAX];
+	
 public:
 	//	‰Šú‰»E‰ğ•ú
 	GameParam( void );
@@ -34,13 +37,11 @@ public:
 	void	SendGameInfo( int client );
 
 	//	óMˆ—
-	void	ReceiveChara( int client, const LPSTR& data );
-	void	ReceivePoint( int client, const LPSTR& data );
-	void	ReceiveCharaDATA(int client, const LPSTR& data);
-	void	ReceiveControllerAxis(int client, const LPSTR& data);
-	void	ReceiveCharaMove(int client, const LPSTR& data);
-	void	ReceiveSignUp( int client, const LPSTR& data );
-	void	ReceiveSignOut( int client, const LPSTR& data );
+	int	ReceiveChara( int client, const LPSTR& data );
+	int	ReceivePoint( int client, const LPSTR& data );
+	int	ReceiveAttackParam( int client, const LPSTR& data );
+	int	ReceiveSignUp( int client, const LPSTR& data );
+	int	ReceiveSignOut( int client, const LPSTR& data );
 
 	//	î•ñİ’è
 	void SetPlayerParam( int id, const PlayerParam& param );

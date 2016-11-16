@@ -3,6 +3,8 @@
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
+#include	"InputManager.h"
+#include	<thread>
 #include	"GameParam.h"
 
 //***************************************************************
@@ -17,12 +19,15 @@
 
 GameParam*	gameParam = nullptr;
 
+//	入力情報
+#define	MIN_INPUT_STICK		0.3f
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameParam::GameParam( void )
+	GameParam::GameParam( void ) : myIndex( -1 ), inputAcceptance( true )
 	{
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
@@ -46,18 +51,17 @@ GameParam*	gameParam = nullptr;
 		InitializeUDP( nPort, addr );
 
 		//	タイプと名前の送信
-		NET_IN netIn( -1, name );
-		send( ( char* )&netIn, sizeof( netIn ) );
+		SignUp signUp( -1, name );
+		send( ( char* )&signUp, sizeof( signUp ) );
 
 		//	個人ID取得
-		if( receive( ( char* )&netIn, sizeof( netIn ) ) <= 0 ) return false;
-		myIndex = netIn.id;
+		if( receive( ( char* )&signUp, sizeof( signUp ) ) <= 0 ) return false;
+		myIndex = signUp.id;
 
 		//	初期座標取得
-		NET_CHARA	netChara;
-		if ( receive( ( LPSTR )&netChara, sizeof( NET_CHARA ) ) <= 0 )	return	false;
-		SetPlayerPos( myIndex, netChara.pos );
-
+		ReceiveCharaData	receiveCharaData;
+		if ( receive( ( LPSTR )&receiveCharaData, sizeof( receiveCharaData ) ) <= 0 )	return	false;
+		SetPlayerParam( myIndex, receiveCharaData.pos, receiveCharaData.angle, receiveCharaData.motion );
 		return true;
 	}
 
@@ -65,8 +69,8 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::CloseClient( void )
 	{
 		//	脱退メッセージ送信
-		NET_OUT	netOut( myIndex );
-		send( ( LPSTR )&netOut, sizeof( NET_OUT ) );
+		SignOut	signOut( myIndex );
+		send( ( LPSTR )&signOut, sizeof( SignOut ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -85,38 +89,30 @@ GameParam*	gameParam = nullptr;
 			if( size <= 0 ) break;
 		
 			//	データ終端判定
-			if( data[COMMAND] == NO_COMMAND ) break;
+			if( data[COMMAND] == RECEIVE_COMMAND::NO_COMMAND ) break;
 
 			//	先頭バイト（コマンド）による処理分岐
 			switch( data[COMMAND] )
 			{
-				case COMMANDS::CHARA_INFO:	//	移動情報
-					ReceiveCharaInfo( data );
-					break;
+			case RECEIVE_COMMAND::CHARA_INFO:	//	移動情報
+				ReceiveCharaInfo( data );
+				break;
 
-				case COMMANDS::CHARA_RECEIVEDATA:	//必要情報全部
-					ReceiveCharaDATA( data );
-					break;
+			case RECEIVE_COMMAND::GAME_INFO:	//	ゲーム情報
+				ReceiveGameInfo( data );
+				break;
 
-				case COMMANDS::CHAR_MOVE:	//	移動情報
-					ReceiveCharaMove( data );
-					break;
+			case RECEIVE_COMMAND::POINT_INFO:	//	点数情報
+				ReceivePointInfo( data );
+				break;
 
-				case COMMANDS::GAME_INFO:	//	ゲーム情報
-					ReceiveGameInfo( data );
-					break;
+			case COMMANDS::SIGN_UP:		//	参加情報
+				ReceiveSignUpInfo( data );
+				break;
 
-				case COMMANDS::POINT_INFO:	//	点数情報
-					ReceivePoint( data );
-					break;
-
-				case COMMANDS::SIGN_UP:		//	参加情報
-					ReceiveSignUp( data );
-					break;
-
-				case COMMANDS::SIGN_OUT:		//	脱退情報
-					ReceiveSignOut( data );
-					break;
+			case COMMANDS::SIGN_OUT:		//	脱退情報
+				ReceiveSignOutInfo( data );
+				break;
 			}
 		}
 	}
@@ -127,61 +123,72 @@ GameParam*	gameParam = nullptr;
 		//	全データ受信
 		Receive();
 
-		//	移動データ送信
-		//SendChraraInfo();
-
-		//	移動データ送信
-		SendMove();
+		//	キャラクター情報送信
+		SendPlayerInfo();
 
 		//	点数データ送信
-		SendPoint();
+		SendPointInfo();
+
+		//SendAttackParam();
 	}
 
 //----------------------------------------------------------------------------------------------
 //	データ送信
 //----------------------------------------------------------------------------------------------
 
-	//	移動情報送信
-	void	GameParam::SendChraraInfo( void )
+	//	情報送信
+	void	GameParam::SendPlayerInfo( void )
 	{
-		NET_CHARA	netChara( myIndex, 
-			playerManager->GetPlayer( myIndex )->GetPos(),
-			playerManager->GetPlayer( myIndex )->GetAngle(),
-			0 );
-
-		send( ( LPSTR )&netChara, sizeof( NET_CHARA ) );
-	}
-
-	//	移動情報送信
-	void	GameParam::SendMove( void )
-	{
-		//	移動データ送信
+		//	スティック入力情報取得
 		float axisX = 0.0f, axisY = 0.0f;
-		if ( playerManager->GetPlayer( myIndex )->GetMode() == MODE::MOVE )
-		{
-			GetStickInput( axisX, axisY );
-		}
+		GetStickInput( axisX, axisY );
 
-		NET_MOVE	netMove( myIndex, axisX, axisY );
-		send( ( LPSTR )&netMove, sizeof( netMove ) );
+		//	フレーム情報取得
+		int	frame = playerManager->GetPlayer( myIndex )->GetFrame();
+
+		//	入力情報取得
+		char		inputType = inputManager->NO_INPUT;
+		char		buttonType = inputManager->GetInput( inputType );
+
+		//	送信情報設定
+		SendPlayerData	sendPlayerData( axisX, axisY, buttonType, inputType, frame  );
+
+		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 
 	//	点数情報送信
-	void	GameParam::SendPoint( void )
+	void	GameParam::SendPointInfo( void )
 	{
 		//	加算分が０ならスキップ
 		if ( pointInfo[myIndex].addPoint == 0 )	return;
 
 		//	情報格納
-		NET_POINT	netPoint;
-		netPoint.id = myIndex;
-		netPoint.point = pointInfo[myIndex].addPoint;
+		SendPointData	sendPointData( pointInfo[myIndex].addPoint );
 
 		//	送信
-		send( ( LPSTR )&netPoint, sizeof( netPoint ) );
+		send( ( LPSTR )&sendPointData, sizeof( sendPointData ) );
 
 		//	加算情報リセット
 		pointInfo[myIndex].addPoint = 0;
+	}
+
+	//	攻撃情報送信
+	void	GameParam::SendAttackParam( void )
+	{
+		//	情報取得
+		AttackInfo	attackInfo = playerManager->GetPlayer( myIndex )->GetAttackInfo();
+
+		//	攻撃していなければスキップ
+		//if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )	return;
+
+		//	情報設定
+		SendAttackData	sendAttackData( 
+			attackInfo.attackParam, 
+			attackInfo.collisionShape.capsule.p1,
+			attackInfo.collisionShape.capsule.p2,
+			attackInfo.collisionShape.capsule.r );
+		//	送信
+		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -191,72 +198,44 @@ GameParam*	gameParam = nullptr;
 	//	キャラ情報受信
 	void	GameParam::ReceiveCharaInfo( const LPSTR& data )
 	{
-		NET_CHARA*	netChara = ( NET_CHARA* )data;
-		SetPlayerParam( netChara->id, netChara->pos, netChara->angle, netChara->motion );
+		//	受信情報
+		ReceiveCharaData*	receiveCharaData = ( ReceiveCharaData* )data;
+
+		//	情報設定
+		SetPlayerParam( 
+			receiveCharaData->id, 
+			receiveCharaData->pos, 
+			receiveCharaData->angle, 
+			receiveCharaData->motion );
 	}
 
 	//	ゲーム情報受信
 	void	GameParam::ReceiveGameInfo( const LPSTR& data )
 	{
-		NET_GAME*	gameInfo = ( NET_GAME* )data;
-		gameManager->SetTimer( gameInfo->limitTimer );
+		ReceiveGameData*	receiveGameData = ( ReceiveGameData* )data;
+		gameManager->SetTimer( receiveGameData->limitTimer );
 	}
 
 	//	点数情報受信
-	void	GameParam::ReceivePoint( const LPSTR& data )
+	void	GameParam::ReceivePointInfo( const LPSTR& data )
 	{
-		NET_POINT*	netPoint = ( NET_POINT* )data;
-		SetPointInfo( netPoint->id, netPoint->point );
-	}
-
-	//*****************************************
-	//		後でちゃんとする
-
-	//受け取り情報全部
-	void	GameParam::ReceiveCharaDATA(const LPSTR& data)
-	{
-		//NET_CHAR_RECEIVEDATA* d = (NET_CHAR_RECEIVEDATA*)data;
-		////playerParam[client].axis = d->axis;
-		//float	length = sqrtf(d->axisX * d->axisX + d->axisY * d->axisY) * 0.001f;
-
-		//////	入力があれば移動処理
-		//if (length >= 0.3f)
-		//{
-		//	Vector3 m = Vector3(sinf(d->angle), 0.0f, cosf(d->angle)) * 0.5;
-		//	playerParam[client].pos += m;
-		//}
-	}
-
-
-	//*****************************************
-
-
-	//	コントローラー情報受信
-	void	GameParam::ReceiveControllerAxis( int client, const LPSTR& data )
-	{
-		NET_CONTROLLE_AXIS* d = (NET_CONTROLLE_AXIS*)data;
-		//playerParam[client].axisX = d->axisX;
-		//playerParam[client].axisY = d->axisY;
-	}
-
-	//	キャラ移動量情報受信
-	void	GameParam::ReceiveCharaMove( const LPSTR& data )
-	{
-		NET_CHARA_MOVE* netChara = ( NET_CHARA_MOVE* )data;
-		SetPlayerMove( netChara->id, netChara->move );
+		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
+		SetPointInfo( receivePointData->id, receivePointData->point );
 	}
 
 	//	サインアップ情報受信
-	void	GameParam::ReceiveSignUp( const LPSTR& data )
+	void	GameParam::ReceiveSignUpInfo( const LPSTR& data )
 	{
-		NET_IN*	netIn = ( NET_IN* )data;
-		SetPlayerInfo( netIn->id, netIn->name );
+		SignUp*	signUp = ( SignUp* )data;
+		SetPlayerInfo( signUp->id, signUp->name );
 	}
 
 	//	サインアウト情報受信
-	void	GameParam::ReceiveSignOut( const LPSTR& data )
+	void	GameParam::ReceiveSignOutInfo( const LPSTR& data )
 	{
-		RemovePlayerInfo( ( ( NET_OUT* )data )->id ); 
+		SignOut*	signOut = ( SignOut* )data;
+
+		RemovePlayerInfo( signOut->id ); 
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -291,13 +270,6 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerPos( int id, const Vector3& pos )
-	{
-		playerParam[id].pos = pos;
-		playerParam[id].angle  = 0.0f;
-	}
-
-	//	プレイヤーパラメータ設定
 	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
 	{
 		playerParam[id].pos = pos;
@@ -305,17 +277,10 @@ GameParam*	gameParam = nullptr;
 		playerParam[id].motion = motion;
 	}
 
-	void	GameParam::SetPlayerMove(int id, const Vector3& move)
-	{
-		//playerParam[id].move = move;
-		playerParam[id].angle = 0.0f;
-	}
-
 	//	プレイヤーパラメータ設定
 	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
 	{
 		playerParam[id].pos = param.pos;
-		//playerParam[id].move = param.move;
 		playerParam[id].angle  = param.angle;
 	}
 
@@ -331,4 +296,3 @@ GameParam*	gameParam = nullptr;
 
 		return	Vector3( outX, 0.0f, outY ).Length();
 	}
-

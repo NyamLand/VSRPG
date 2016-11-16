@@ -15,7 +15,9 @@
 class GameParam : public SocketClient
 {
 private:
+	//	プレイヤー番号
 	int		myIndex;
+	bool		inputAcceptance;	//	入力受付
 
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
@@ -33,26 +35,20 @@ public:
 	void Receive( void );
 
 	//	送信処理
-	void	SendChraraInfo( void );
-	void	SendMove( void );
-	void	SendPoint( void );
+	void	SendPlayerInfo( void );
+	void	SendPointInfo( void );
+	void	SendAttackParam( void );
 
 	//	受信処理
 	void	ReceiveCharaInfo(const LPSTR& data);
-	void	ReceiveCharaDATA(const LPSTR& data);
-	void	ReceiveControllerAxis(int client, const LPSTR& data);
-	void	ReceiveCharaMove(const LPSTR& data);
-
-	void	ReceivePoint( const LPSTR& data );
-	void	ReceiveSignUp( const LPSTR& data );
-	void	ReceiveSignOut( const LPSTR& data );
+	void	ReceivePointInfo( const LPSTR& data );
+	void	ReceiveSignUpInfo( const LPSTR& data );
+	void	ReceiveSignOutInfo( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
 
 	//	プレイヤーパラメータ操作
 	void	SetPlayerParam( int id, const PlayerParam& param );
 	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
-	void	SetPlayerPos(int id, const Vector3& pos);
-	void	SetPlayerMove(int id, const Vector3& move);
 	
 	//	情報設定
 	void  SetPlayerInfo( int id, char* name );

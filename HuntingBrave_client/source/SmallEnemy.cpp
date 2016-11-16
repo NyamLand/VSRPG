@@ -22,7 +22,7 @@
 #define	MINOTAURUS_HEIGHT	0.125f
 #define	MINOTAURUS_RADIUS	1.0f
 
-#define	INIT_LIFE	100
+#define	INIT_LIFE	 1
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -130,12 +130,12 @@
 		if ( frame >= 138 && frame <= 150 )
 		{
 			//	攻撃状態を有効にする
-			attackInfo.attackParam = AttackInfo::ATTACK1;
+			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}
 		else
 		{
 			//	攻撃状態を無効にする
-			attackInfo.attackParam = AttackInfo::NO_ATTACK;
+			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
 			if ( frame >= 170 )

@@ -35,32 +35,6 @@
 //	定数関連
 namespace
 {
-	//	モーション番号
-	enum MOTION_NUM
-	{
-		POSUTURE,						//	待機
-		RUN_START,						//	走り出し
-		RUN,									//	走り
-		ATTACK1,							//	攻撃１
-		ATTACK2,							//	攻撃２
-		STEP,								//	ステップ
-		MAGIC_CHANT_START,		//	詠唱開始
-		MAGIC_CHANT,					//	詠唱中
-		MAGIC_ACTUATION,			//	魔法発動
-		KNOCKBACK1,					//	仰け反り１
-		KNOCKBACK2,					//	仰け反り２
-		FALL,									//	倒れる
-		DEAD,								//	死亡
-		EAT,									//	食べる
-		MENU_OPEN,						//	メニューを開く
-		MENU,								//	メニュー操作中
-		LEVEL_UP,							//	レベルアップ
-		MENU_CLOSE,					//	メニューを閉じる
-		WIN,									//	勝利
-		WIN_KEEP,						//	勝利キープ
-		CRY									//	泣き
-	};
-
 	//	ボーン番号
 	enum BONE_NUM
 	{
@@ -74,7 +48,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void )
+	Player::Player( void ) : id( -1 )
 	{
 		//	関数ポインタ
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;
@@ -90,7 +64,7 @@ namespace
 	}
 
 	//	初期化
-	bool	Player::Initialize( void )
+	bool	Player::Initialize( int id )
 	{
 		//	読み込み
 		Load( "DATA/CHR/suppin/Suppin.IEM" );
@@ -106,11 +80,15 @@ namespace
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
 		//	変数初期化
+		this->id = id;
 		speed = MOVE_SPEED;
 		attackInfo.power = 1;
 		lifeInfo.active = true;
 		lifeInfo.isAlive = true;
 
+		//	テクスチャ書き換え
+		ChangeTexture( id );
+		
 		//	情報更新
 		UpdateInfo();
 
@@ -151,8 +129,8 @@ namespace
 		this->playerParam = playerParam;
 		SetPlayerParam( playerParam );
 
-		//	各モードに応じた動作関数
-		( this->*ModeFunction[mode] )();
+		//	剣攻撃
+		SwordAttack();
 
 		//	更新
 		BaseChara::Update();
@@ -160,10 +138,7 @@ namespace
 
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
-		BaseChara::Render();
-
-		drawShape->DrawCapsule( attackInfo.collisionShape.capsule.p1, attackInfo.collisionShape.capsule.p2, attackInfo.collisionShape.capsule.r, 0xFFFFFFFF );
-		
+		BaseChara::Render();		
 	}
 
 //------------------------------------------------------------------------------------
@@ -175,14 +150,6 @@ namespace
 	{
 		//	移動モーション設定
 		Move();
-
-		//	攻撃に移行
-		if ( KEY_Get( KEY_A ) == 3 )
-		{
-			if ( SetMode( MODE::SWOADATTACK ) )	SetMotion( MOTION_NUM::ATTACK1 );
-		}
-		//if ( KEY_Get( KEY_B ) == 3 ) SetMode( MODE::MAGICATTACK );
-		//if ( KEY_Get( KEY_C ) == 3 ) SetMode( MODE::AVOID );
 	}
 
 	void	Player::ModeSwordAttack( void )
@@ -211,37 +178,34 @@ namespace
 	//	移動
 	bool		Player::Move( void )
 	{
-		float x, y, length;
-		length = gameParam->GetStickInput( x, y );
+		//float x, y, length;
+		//length = gameParam->GetStickInput( x, y );
 
-		if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
-		else SetMotion( MOTION_NUM::POSUTURE );
+		//if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
+		//else SetMotion( MOTION_NUM::POSUTURE );
 		return false;
 	}
 
 	//剣攻撃
 	bool		Player::SwordAttack( void )
 	{
+		//	攻撃モーション以外ならスキップ
+		if ( GetMotion() != MOTION_NUM::ATTACK1 )
+		{
+			attackInfo.Reset();
+			return false;
+		}
+
 		//	攻撃情報設定
-		attackInfo.attackParam = AttackInfo::ATTACK1;
+		attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		
 		//	ボーンの座標取得、当たり判定用構造体にセット
 		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
 		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
 		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 1.0f ) );
 
-		//	フレームが移動にもどるのでもどったら移動に変更
-		if ( GetMotion() == POSUTURE )
-		{
-			attackInfo.Reset();
-			SetMode( MODE::MOVE );
-		}
 		return false;
 	}
-
-
-
-
 
 	//魔法攻撃
 	bool		Player::MagicAttack( void )
@@ -316,6 +280,17 @@ namespace
 		return false;
 	}
 
+	//	テクスチャ設定
+	void		Player::ChangeTexture( int colorNum )
+	{
+		//	ファイル設定
+		char	fileName[256] = "DATA/CHR/suppin/s_body_";
+		char playerNum[8] = "";
+		sprintf_s( playerNum, "%d.png", colorNum );
+		strcat_s( fileName, playerNum );
+		obj->SetTexture( 0, fileName );
+	}
+
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
@@ -325,7 +300,7 @@ namespace
 	{
 		pos = playerParam.pos;
 		angle = playerParam.angle;
-		//SetMotion( playerParam.motion );
+		SetMotion( playerParam.motion );
 	}
 
 //------------------------------------------------------------------------------------

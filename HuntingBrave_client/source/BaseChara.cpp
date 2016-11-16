@@ -81,7 +81,7 @@
 			obj->Render( shader, technique );
 		}
 
-		drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
+		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
 	}
 
 	//	情報更新
@@ -251,7 +251,7 @@
 //------------------------------------------------------------------------------------
 
 	//	攻撃情報取得
-	AttackInfo&	BaseChara::GetAttackInfo( void )
+	AttackInfo	BaseChara::GetAttackInfo( void )const
 	{
 		return	attackInfo;
 	}
@@ -337,4 +337,10 @@
 	int			BaseChara::GetMode( void )const
 	{
 		return	mode;
+	}
+
+	//	フレーム取得
+	int			BaseChara::GetFrame( void )const
+	{
+		return	obj->GetFrame();
 	}

@@ -50,7 +50,7 @@
 	//	更新
 	void	PlayerManager::Update( void )
 	{
-		//	全プレイヤー初期化
+		//	全プレイヤー更新
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			//	存在チェック
@@ -90,7 +90,7 @@
 
 		//	プレイヤー生成
 		player[id] = new Player();
-		player[id]->Initialize();
+		player[id]->Initialize( id );
 	}
 
 //-------------------------------------------------------------------------------------

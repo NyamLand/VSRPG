@@ -34,9 +34,6 @@
     <Filter Include="ソース ファイル\UDPServer">
       <UniqueIdentifier>{14488d16-5070-4bcd-8330-b539e199b489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Stage">
-      <UniqueIdentifier>{2338350b-c6b5-4f04-b1bb-ae12bf927d21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Manager">
       <UniqueIdentifier>{b9e49e64-c0fe-4bf2-9352-65e62c4ba62c}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,27 @@
     <Filter Include="ソース ファイル\Manager\PointManager">
       <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\InputManager">
+      <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\SendData">
+      <UniqueIdentifier>{202f5623-39fa-4062-8587-bb97e16241bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\GameData">
+      <UniqueIdentifier>{b36ce8c5-9c2d-49f4-a724-b598cd156c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\ReceiveData">
+      <UniqueIdentifier>{861daa82-ab78-490e-8af2-da9f089fb228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CharaInfo">
+      <UniqueIdentifier>{6709b4a8-10a6-4f5f-8385-5e2e32e860a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{47bff9ba-ed3b-4d65-b0fb-c4b93950cc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ShapeInfo">
+      <UniqueIdentifier>{c356096f-8b22-45b6-a036-bab7ab67a7bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -71,15 +89,6 @@
     </ClCompile>
     <ClCompile Include="Source\UDPServer.cpp">
       <Filter>ソース ファイル\UDPServer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\stage.cpp">
-      <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\IEX_RayMesh.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameData.cpp">
-      <Filter>ソース ファイル\GameData</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerManager.cpp">
       <Filter>ソース ファイル\Manager\PlayerManager</Filter>
@@ -105,25 +114,82 @@
     <ClCompile Include="Source\PointManager.cpp">
       <Filter>ソース ファイル\Manager\PointManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>ソース ファイル\Manager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameData.cpp">
+      <Filter>ソース ファイル\GameData\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SendData.cpp">
+      <Filter>ソース ファイル\GameData\SendData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ReceiveData.cpp">
+      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CharaInfo.cpp">
+      <Filter>ソース ファイル\CharaInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_2DObject.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_3DObject.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Audio.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Direct3D.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Input.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Light.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Math.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Mesh.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Particle.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Polygon.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_RenderState.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Shader.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_SkinMesh.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_System.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_Texture.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="IEX\IEX_View.cpp">
+      <Filter>IEX</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShapeInfo.cpp">
+      <Filter>ソース ファイル\ShapeInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IEX\iextreme.h">
-      <Filter>IEX</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameParam.h">
       <Filter>ソース ファイル\GameParam</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameData.h">
-      <Filter>ソース ファイル\GameData</Filter>
     </ClInclude>
     <ClInclude Include="Source\sceneMain.h">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
     </ClInclude>
     <ClInclude Include="Source\UDPServer.h">
       <Filter>ソース ファイル\UDPServer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\stage.h">
-      <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerManager.h">
       <Filter>ソース ファイル\Manager\PlayerManager</Filter>
@@ -148,6 +214,27 @@
     </ClInclude>
     <ClInclude Include="Source\PointManager.h">
       <Filter>ソース ファイル\Manager\PointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>ソース ファイル\Manager\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameData.h">
+      <Filter>ソース ファイル\GameData\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SendData.h">
+      <Filter>ソース ファイル\GameData\SendData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ReceiveData.h">
+      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CharaInfo.h">
+      <Filter>ソース ファイル\CharaInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="IEX\iextreme.h">
+      <Filter>IEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShapeInfo.h">
+      <Filter>ソース ファイル\ShapeInfo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,33 +31,71 @@ struct Status
 #include	"BaseEquipment.h"
 #include	"GameData.h"
 
-namespace MODE
+namespace
 {
-	enum	//	仮
+	//	モード管理
+	namespace MODE
 	{
-		MOVE,
-		//POSTURE,
-		SWOADATTACK,
-		MAGICATTACK,
-		AVOID,
-		MODE_MAX
-	};
+		enum	//	仮
+		{
+			MOVE,
+			//POSTURE,
+			SWOADATTACK,
+			MAGICATTACK,
+			AVOID,
+			MODE_MAX
+		};
+	}
+
+	//	モーション管理
+	namespace MOTION_NUM
+	{
+		//	モーション番号
+		enum
+		{
+			POSUTURE,						//	待機
+			RUN_START,						//	走り出し
+			RUN,									//	走り
+			ATTACK1,							//	攻撃１
+			ATTACK2,							//	攻撃２
+			STEP,								//	ステップ
+			MAGIC_CHANT_START,		//	詠唱開始
+			MAGIC_CHANT,					//	詠唱中
+			MAGIC_ACTUATION,			//	魔法発動
+			KNOCKBACK1,					//	仰け反り１
+			KNOCKBACK2,					//	仰け反り２
+			FALL,									//	倒れる
+			DEAD,								//	死亡
+			EAT,									//	食べる
+			MENU_OPEN,						//	メニューを開く
+			MENU,								//	メニュー操作中
+			LEVEL_UP,							//	レベルアップ
+			MENU_CLOSE,					//	メニューを閉じる
+			WIN,									//	勝利
+			WIN_KEEP,						//	勝利キープ
+			CRY									//	泣き
+		};
+	}
 }
+
 
 
 //	class
 class Player : public BaseChara
 {
 private:
+	//	パラメータ
+	int	id;
+
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );
-	PlayerParam	playerParam;
+	PlayerParam		playerParam;
 
 public:
 	//	初期化・解放
 	Player( void );
 	~Player( void )override;
-	bool	Initialize( void )override;
+	bool	Initialize( int id );
 	
 	//	更新・描画
 	void	Update( PlayerParam& playerParam );
@@ -74,6 +112,7 @@ public:
 	bool		Move( void );
 	bool		SwordAttack( void );		//行動が終了すれば1を返し、中断されれば2を返す
 	bool		MagicAttack( void );
+	void		ChangeTexture( int colorNum );
 	bool		Avoid( void );
 
 	//	情報設定
