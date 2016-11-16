@@ -18,14 +18,16 @@
 
 #define	PLAYER_ATTACK_HIT_DIST		2.0f
 
+Collision*	collision = nullptr;
+
 //--------------------------------------------------------------------------------------------
 //	初期化・解放
 //--------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Collision::Collision( GameParam* gameParam )
+	Collision::Collision( GameParam* gameParam ) : gameParam( gameParam )
 	{
-
+		
 	}
 
 	//	デストラクタ
@@ -49,69 +51,44 @@
 	void	Collision::PlayerAttackCollision( void )
 	{
 		//	変数準備
-		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
 
 		//	全プレイヤー回す
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			//	条件が合わないものはスキップ
-			if ( gameParam->GetPlayerActive( p ) == false )		continue;
+			if ( gameParam->GetPlayerActive( i ) == false )		continue;
 
 			//	攻撃情報取得、攻撃中でなければスキップ
-			AttackInfo	attackInfo = playerManager->GetPlayer( p )->GetAttackInfo();
+			AttackInfo	attackInfo = gameParam->GetAttackInfo( i );
 			if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		continue;
 
 			//	敵との当たり判定
-			for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+			for ( int j = 0; j < PLAYER_MAX; j++ )
 			{
+				//	自分同士はスキップ、アクティブ状態でないプレイヤーはスキップ
+				if( j == i )		continue;
+				if ( gameParam->GetPlayerActive( j ) == false )		continue;
+				if ( playerManager->GetPlayer( j )->GetLifeInfo().active == false )		continue;	
+
+				//	形状取得
+				CollisionShape	collisionShape;
+				ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
+				collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+				Vector3	pos = gameParam->GetPlayerParam( j ).pos;
+				collisionShape.SetCapsule( Capsule( pos, pos + Vector3( 0.0f, 2.5f, 0.0f ),  1.5f ) );
+
 				//	当たり判定チェック
 				isHit = CheckCollision( 
 					attackInfo.collisionShape, 
-					( *it )->GetCollisionInfo().collisionShape );
+					 collisionShape );
 
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
 					//	ライフ計算
-					( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer( p )->GetAttackInfo().power );
-					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
-				}
-			}
-		}
-	}
-
-	//	敵攻撃当たり判定
-	void	Collision::EnemyAttackCollision( void )
-	{
-		//	変数準備
-		list<Enemy*>	 enemyList = enemyManager->GetList();
-		bool	isHit = false;
-
-		//	全敵回す
-		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
-		{
-			//	攻撃情報取得、攻撃中でなければスキップ
-			AttackInfo	attackInfo = ( *it )->GetAttackInfo();
-			if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		continue;
-
-			//	全プレイヤー当たり判定
-			for ( int p = 0; p < PLAYER_MAX; p++ )
-			{
-				//	条件が合わないものはスキップ
-				if ( gameParam( p ) == false )		continue;
-
-				//	当たり判定チェック
-				isHit = CheckCollision(
-					attackInfo.collisionShape,
-					playerManager->GetPlayer( p )->GetCollisionInfo().collisionShape );
-
-				//	当たっていればライフ計算
-				if ( isHit == true )
-				{
-					////	ライフ計算
-					//( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer(p)->GetAttackInfo().power );
-					//gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
+					playerManager->GetPlayer( j )->GetLifeInfo().CulcLife( -attackInfo.power );
+					playerManager->GetPlayer( j )->SetMode( MODE::DAMAGE );
 				}
 			}
 		}

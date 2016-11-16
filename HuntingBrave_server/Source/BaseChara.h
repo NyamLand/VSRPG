@@ -20,6 +20,7 @@ namespace MODE
 		SWOADATTACK,
 		MAGICATTACK,
 		AVOID,
+		DAMAGE,
 		MODE_MAX
 	};
 }
@@ -29,6 +30,7 @@ class BaseChara
 {
 protected:
 	AttackInfo	attackInfo;
+	LifeInfo			lifeInfo;
 	Vector3	pos;
 	float			angle;
 	int			mode;
@@ -46,4 +48,5 @@ public:
 	//	èÓïÒéÊìæ
 	Vector3	GetPos( void )const;
 	AttackInfo	GetAttackInfo( void )const;
+	LifeInfo			GetLifeInfo( void )const ;
 };

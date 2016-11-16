@@ -123,7 +123,8 @@
 		SendCharaData sendCharaData( player, 
 			playerParam[player].pos, 
 			playerParam[player].angle,
-			playerParam[player].motion );
+			playerParam[player].motion,
+			playerParam[player].life );
 
 		//	送信
 		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
@@ -190,16 +191,13 @@
 	{
 		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
 		
-		AttackInfo	attackInfo;
-		attackInfo.attackParam = ( AttackInfo::ATTACK_PARAM )receiveAttackData->attackParam;
-		attackInfo.collisionShape.SetCapsule( 
+		attackInfo[client].attackParam = ( AttackInfo::ATTACK_PARAM )receiveAttackData->attackParam;
+		attackInfo[client].collisionShape.SetCapsule( 
 			Capsule( 	receiveAttackData->attackPos1, 
 							receiveAttackData->attackPos2,
 							receiveAttackData->radius ) );
-		attackInfo.collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
-		attackInfo.power = 1;
-		//playerManager->GetPlayer( client )->SetAttackInfo( attackInfo );
-
+		attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+		attackInfo[client].power = 1;
 		return	-1;
 	}
 
@@ -216,7 +214,9 @@
 
 		//	初期座標を送信
 		PlayerParam	initParam = gameManager->GetInitInfo( client );
-		SendCharaData	sendCharaData( client, initParam.pos, initParam.angle, initParam.motion );
+		SendCharaData	sendCharaData( client, 
+			initParam.pos, initParam.angle, initParam.motion, 
+			initParam.life );
 		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
 
 		//	全員にデータ送信

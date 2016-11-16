@@ -64,7 +64,10 @@ bool	sceneMain::Initialize( void )
 	enemyManager->Initialize();
 	
 	//	stageÝ’è
-	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
+	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
+	stage->SetPos( 0.0f, -5.0f, 0.0f );
+	stage->SetScale( 0.1f );
+	stage->Update();
 
 	baseEquipment = new BaseEquipment("DATA\\player_data.csv");
 
@@ -175,8 +178,9 @@ void	sceneMain::DebugRender( void )
 		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
 		int	point = gameParam->GetPointInfo( p ).point;
 		Vector3	p_pos = playerParam.pos;
+		int	life = playerParam.life;
 		char	str[256];
-		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point );
+		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d life = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point, life );
 		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
 	}
 }

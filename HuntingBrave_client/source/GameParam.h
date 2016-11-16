@@ -48,7 +48,7 @@ public:
 
 	//	プレイヤーパラメータ操作
 	void	SetPlayerParam( int id, const PlayerParam& param );
-	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
+	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life );
 	
 	//	情報設定
 	void  SetPlayerInfo( int id, char* name );

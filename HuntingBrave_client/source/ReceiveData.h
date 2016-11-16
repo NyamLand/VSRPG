@@ -44,8 +44,9 @@
 	struct ReceiveCharaData
 	{
 		char com = RECEIVE_COMMAND::CHARA_INFO;
-		int		id;
+		int			id;
+		int			life;
 		Vector3	pos;
-		float		angle;
+		float			angle;
 		int			motion;
 	};

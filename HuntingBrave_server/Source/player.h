@@ -10,12 +10,14 @@
 //	include
 #include	"GameData.h"
 #include	"BaseChara.h"
+#include	"CharaInfo.h"
 
 //	class
 class Player : public BaseChara
 {
 private:
 	PlayerParam	pParam;
+	LifeInfo		lifeInfo;
 	int		index;
 
 	//	モード別関数ポインタ

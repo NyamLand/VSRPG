@@ -180,6 +180,9 @@
     <ClCompile Include="Source\ShapeInfo.cpp">
       <Filter>ソース ファイル\ShapeInfo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="Source\ShapeInfo.h">
       <Filter>ソース ファイル\ShapeInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>ソース ファイル\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
