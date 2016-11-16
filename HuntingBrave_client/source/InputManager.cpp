@@ -60,7 +60,7 @@
 	}
 
 	//	“ü—Íî•ñæ“¾
-	BUTTON_TYPE	InputManager::GetInput( int& inputType )
+	BUTTON_TYPE	InputManager::GetInput( char& inputType )
 	{
 		//	•Ï”€”õ
 		BUTTON_TYPE	buttonType;

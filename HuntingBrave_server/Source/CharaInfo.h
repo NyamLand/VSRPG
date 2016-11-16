@@ -7,6 +7,13 @@
 //
 //***************************************************************
 
+//	include
+#include	"ShapeInfo.h"
+
+//----------------------------------------------------------------------------------------------
+//	構造体
+//----------------------------------------------------------------------------------------------
+
 	//	攻撃情報構造体
 	struct AttackInfo
 	{
@@ -20,10 +27,8 @@
 
 		//	パラメータ
 		int		power;
-		int		timer;
-		int		step;
-		bool		initFlag;
 		ATTACK_PARAM	attackParam;
+		CollisionShape		collisionShape;
 
 		//	初期化・解放
 		AttackInfo( void );
@@ -52,15 +57,15 @@
 	//	当たり判定形状構造体
 	struct CollisionInfo
 	{
-		//CollisionShape		collisionShape;
+		CollisionShape		collisionShape;
 		float					height;
 		float					radius;
 
 		//	初期化
-		CollisionInfo( void ){};
-		//CollisionInfo( const CollisionShape& collisionShape, float hitHeight, float hitRadius );
+		CollisionInfo( void );
+		CollisionInfo( const CollisionShape& collisionShape, float hitHeight, float hitRadius );
 
 		//	情報設定
-		//void	SetCollisionShape( const CollisionShape& colShape );
-		//void	Set( SHAPE_TYPE shapeType, float hitHeight, float hitRadius );
+		void	SetCollisionShape( const CollisionShape& colShape );
+		void	Set( SHAPE_TYPE shapeType, float hitHeight, float hitRadius );
 	};

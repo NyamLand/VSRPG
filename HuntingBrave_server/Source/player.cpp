@@ -55,7 +55,7 @@ namespace
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( int id ) :
+	Player::Player( int id ) : 
 		index( id )
 	{
 		ZeroMemory( &pParam, sizeof( PlayerParam ) );
@@ -68,7 +68,7 @@ namespace
 	//	デストラクタ
 	Player::~Player( void )
 	{
-
+		
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -150,6 +150,15 @@ namespace
 	{
 		// 一定以上のフレームに達すると移動に戻す
 		if ( pParam.frame >= 190 )
+		{
+			SetMode( MODE::MOVE );
+		}
+	}
+
+	//	ダメージ
+	void	Player::Damage( void )
+	{
+		if ( pParam.frame >= 465 )
 		{
 			SetMode( MODE::MOVE );
 		}

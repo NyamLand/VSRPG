@@ -102,3 +102,9 @@ PlayerManager*	playerManager = nullptr;
 	{
 		return	Vector3( 0.0f, 0.0f, 0.0f );
 	}
+
+	//	ƒvƒŒƒCƒ„[æ“¾
+	Player*&	PlayerManager::GetPlayer( int id )
+	{
+		return	player[id];
+	}

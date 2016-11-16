@@ -59,7 +59,7 @@ public:
 	//	“®ìŠÖ”
 
 	//	î•ñİ’è
-	void	SetInput( int id, int buttonType, int inputType );
+	void	SetInput( int id, char buttonType, char inputType );
 	void	SetAxis( int id, float axisX, float axisY );
 
 	//	î•ñæ“¾

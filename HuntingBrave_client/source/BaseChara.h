@@ -56,7 +56,7 @@ public:
 	void	SetObj( iex3DObj* obj );
 
 	//	î•ñæ“¾
-	AttackInfo&	GetAttackInfo( void );
+	AttackInfo	GetAttackInfo( void )const;
 	LifeInfo&		GetLifeInfo( void );
 	CollisionInfo GetCollisionInfo( void )const;
 	Matrix		GetMatrix( void )const;

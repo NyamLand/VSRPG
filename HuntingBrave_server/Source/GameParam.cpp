@@ -3,6 +3,7 @@
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
+#include	<thread>
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -14,6 +15,7 @@
 //----------------------------------------------------------------------------------------------
 //	グローバル
 //----------------------------------------------------------------------------------------------
+
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -47,7 +49,7 @@
 //----------------------------------------------------------------------------------------------
 
 	//	送信
-	int		GameParam::Send( int client )
+	int	GameParam::Send( int client )
 	{
 		if( client == -1 ) return -1;
 
@@ -77,7 +79,7 @@
 	}
 
 	//	受信
-	int		GameParam::Receive( void )
+	int	GameParam::Receive( void )
 	{
 		char	data[256];
 		int		size = sizeof( data );
@@ -87,25 +89,26 @@
 		switch( data[COMMAND] )
 		{
 		case RECEIVE_COMMAND::PLAYER_INFO:		//	パラメータ情報
-			ReceiveChara( client, data );
-			break;
-
-		case RECEIVE_COMMAND::INPUT_INFO:		//	入力情報
-			ReceiveInput( client, data );
+			client = ReceiveChara( client, data );
 			break;
 
 		case RECEIVE_COMMAND::POINT_INFO:		//	点数情報
-			ReceivePoint( client, data );
+			client = ReceivePoint( client, data );
+			break;
+
+		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
+			client = ReceiveAttackParam( client , data );
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
-			ReceiveSignUp( client, data );
+			client = ReceiveSignUp( client, data );
 			break;
 
 		case COMMANDS::SIGN_OUT:	//	脱退
-			ReceiveSignOut( client, data );
+			client = ReceiveSignOut( client, data );
 			break;
 		}
+
 		return client;
 	}
 
@@ -139,17 +142,11 @@
 	//	点数情報送信
 	void	GameParam::SendPointInfo( int client, int player )
 	{
-		//	加算分が０だとスキップ
-		if ( pointInfo[player].addPoint == 0 )	return;
-
 		//	情報設定
 		SendPointData	sendPointData( player, pointInfo[player].point );
 		
 		//	送信
 		send( client, ( char* )&sendPointData, sizeof( sendPointData ) );
-
-		//	加算点数リセット
-		pointInfo[player].addPoint = 0;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -157,37 +154,57 @@
 //----------------------------------------------------------------------------------------------
 
 	//	キャラ情報受信
-	void	GameParam::ReceiveChara( int client, const LPSTR& data )
+	int	GameParam::ReceiveChara( int client, const LPSTR& data )
 	{
 		ReceivePlayerData* receivePlayerData = ( ReceivePlayerData* )data;
 		
 		//	スティックの入力情報設定
-		inputManager->SetAxis( 
-			receivePlayerData->id, 
-			receivePlayerData->axisX, 
-			receivePlayerData->axisY );
+		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
+
+		//	ボタンの入力情報設定
+		inputManager->SetInput( client, receivePlayerData->button, receivePlayerData->inputType );
 		
 		//	フレーム情報設定
-		playerParam[receivePlayerData->id].frame = receivePlayerData->frame;
+		playerParam[client].frame = receivePlayerData->frame;
+
+		return	client;
 	}
 
 	//	点数情報受信
-	void	GameParam::ReceivePoint( int client, const LPSTR& data )
+	int	GameParam::ReceivePoint( int client, const LPSTR& data )
 	{
 		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
-		pointInfo[client].addPoint = receivePointData->addPoint;
+		pointInfo[client].point += receivePointData->addPoint;
+		
+		//	全プレイヤーに送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			SendPointInfo( client, p );
+		}
+
+		return	-1;
 	}
 
-	//	入力情報受信
-	void	GameParam::ReceiveInput( int client, const LPSTR& data )
+	//	攻撃情報受信
+	int	GameParam::ReceiveAttackParam( int client, const LPSTR& data )
 	{
-		ReceiveInputData* receiveInputData = ( ReceiveInputData* )data;
-		inputManager->SetInput( 
-			receiveInputData->id, receiveInputData->buttonType, receiveInputData->inputType );
+		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
+		
+		AttackInfo	attackInfo;
+		attackInfo.attackParam = ( AttackInfo::ATTACK_PARAM )receiveAttackData->attackParam;
+		attackInfo.collisionShape.SetCapsule( 
+			Capsule( 	receiveAttackData->attackPos1, 
+							receiveAttackData->attackPos2,
+							receiveAttackData->radius ) );
+		attackInfo.collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+		attackInfo.power = 1;
+		//playerManager->GetPlayer( client )->SetAttackInfo( attackInfo );
+
+		return	-1;
 	}
 
 	//	サインアップ情報受信
-	void	GameParam::ReceiveSignUp( int client, const LPSTR& data )
+	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
 	{
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
@@ -218,15 +235,20 @@
 			send( client, ( char* )signUp, sizeof( SignUp ) );
 		}
 		printf( "%dP %sさんが参加しました。\n", client + 1, signUp->name );
+
+		return	client;
 	}
 
 	//	サインアウト情報受信
-	void	GameParam::ReceiveSignOut( int client, const LPSTR& data )
+	int	GameParam::ReceiveSignOut( int client, const LPSTR& data )
 	{
 		//	プレイヤー解放
 		ReleasePlayer( client );
 
 		SignOut	signOut( client );
+
+		//	ソケットを閉じる
+		CloseClient( client );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -236,8 +258,7 @@
 		}
 		printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
 
-		//	ソケットを閉じる
-		CloseClient( client );
+		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------

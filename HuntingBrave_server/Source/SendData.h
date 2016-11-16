@@ -51,7 +51,7 @@
 	{
 		char com = SEND_COMMAND::CHARA_INFO;
 		int			id;
-		Vector3		pos;
+		Vector3	pos;
 		float			angle;
 		int			motion;
 		SendCharaData( int id, const Vector3& pos, float angle, int motion ) : 

@@ -47,7 +47,7 @@ private:
 public:
 	//	“®ìŠÖ”
 	bool StickInputCheck( const Vector3& inputVec, float minInput );
-	BUTTON_TYPE	GetInput( int& inputType );
+	BUTTON_TYPE	GetInput( char& inputType );
 
 	void	Update( void );
 

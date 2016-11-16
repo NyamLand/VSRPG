@@ -114,10 +114,8 @@ void	sceneMain::Update( void )
 	printf( "経過時間 : %f\n", elapseTime );
 
 	//	送受信
-	//	サーバーから情報受信
-	gameParam->Update();
-	//std::thread		ThreadFunc( ThreadFunction );
-	//ThreadFunc.join();
+	std::thread		ThreadFunc( ThreadFunction );
+	ThreadFunc.join();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -207,6 +205,8 @@ void	sceneMain::ThreadFunction( void )
 	//	サーバーから情報受信
 	gameParam->Update();
 }
+
+
 
 
 

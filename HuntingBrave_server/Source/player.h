@@ -36,6 +36,7 @@ public:
 	//	“®ìŠÖ”
 	void	Move( void );
 	void	SwordAttack( void );
+	void	Damage( void );
 	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
 	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
 

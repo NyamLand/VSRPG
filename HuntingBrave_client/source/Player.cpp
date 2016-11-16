@@ -35,32 +35,6 @@
 //	定数関連
 namespace
 {
-	//	モーション番号
-	enum MOTION_NUM
-	{
-		POSUTURE,						//	待機
-		RUN_START,						//	走り出し
-		RUN,									//	走り
-		ATTACK1,							//	攻撃１
-		ATTACK2,							//	攻撃２
-		STEP,								//	ステップ
-		MAGIC_CHANT_START,		//	詠唱開始
-		MAGIC_CHANT,					//	詠唱中
-		MAGIC_ACTUATION,			//	魔法発動
-		KNOCKBACK1,					//	仰け反り１
-		KNOCKBACK2,					//	仰け反り２
-		FALL,									//	倒れる
-		DEAD,								//	死亡
-		EAT,									//	食べる
-		MENU_OPEN,						//	メニューを開く
-		MENU,								//	メニュー操作中
-		LEVEL_UP,							//	レベルアップ
-		MENU_CLOSE,					//	メニューを閉じる
-		WIN,									//	勝利
-		WIN_KEEP,						//	勝利キープ
-		CRY									//	泣き
-	};
-
 	//	ボーン番号
 	enum BONE_NUM
 	{
@@ -74,7 +48,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void )
+	Player::Player( void ) : id( -1 )
 	{
 		//	関数ポインタ
 		ModeFunction[MODE::MOVE] = &Player::MoveMode;
@@ -106,19 +80,15 @@ namespace
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
 		//	変数初期化
+		this->id = id;
 		speed = MOVE_SPEED;
 		attackInfo.power = 1;
 		lifeInfo.active = true;
 		lifeInfo.isAlive = true;
 
 		//	テクスチャ書き換え
-		{
-			char	fileName[256] = "DATA/CHR/suppin/s_body_";
-			char playerNum[16] = "";
-			sprintf_s( playerNum, "%d.png", id );
-			strcat_s( fileName, playerNum );
-			obj->SetTexture( 0, fileName );
-		}
+		ChangeTexture( id );
+		
 		//	情報更新
 		UpdateInfo();
 
@@ -168,10 +138,7 @@ namespace
 
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
-		BaseChara::Render();
-
-		drawShape->DrawCapsule( attackInfo.collisionShape.capsule.p1, attackInfo.collisionShape.capsule.p2, attackInfo.collisionShape.capsule.r, 0xFFFFFFFF );
-		
+		BaseChara::Render();		
 	}
 
 //------------------------------------------------------------------------------------
@@ -223,14 +190,14 @@ namespace
 	bool		Player::SwordAttack( void )
 	{
 		//	攻撃モーション以外ならスキップ
-		if ( GetMotion() != ATTACK1 )
+		if ( GetMotion() != MOTION_NUM::ATTACK1 )
 		{
 			attackInfo.Reset();
 			return false;
 		}
 
 		//	攻撃情報設定
-		attackInfo.attackParam = AttackInfo::ATTACK1;
+		attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		
 		//	ボーンの座標取得、当たり判定用構造体にセット
 		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
@@ -239,10 +206,6 @@ namespace
 
 		return false;
 	}
-
-
-
-
 
 	//魔法攻撃
 	bool		Player::MagicAttack( void )
@@ -315,6 +278,17 @@ namespace
 
 
 		return false;
+	}
+
+	//	テクスチャ設定
+	void		Player::ChangeTexture( int colorNum )
+	{
+		//	ファイル設定
+		char	fileName[256] = "DATA/CHR/suppin/s_body_";
+		char playerNum[8] = "";
+		sprintf_s( playerNum, "%d.png", colorNum );
+		strcat_s( fileName, playerNum );
+		obj->SetTexture( 0, fileName );
 	}
 
 //------------------------------------------------------------------------------------

@@ -81,7 +81,7 @@
 			obj->Render( shader, technique );
 		}
 
-		drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
+		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
 	}
 
 	//	î•ñXV
@@ -251,7 +251,7 @@
 //------------------------------------------------------------------------------------
 
 	//	UŒ‚î•ñæ“¾
-	AttackInfo&	BaseChara::GetAttackInfo( void )
+	AttackInfo	BaseChara::GetAttackInfo( void )const
 	{
 		return	attackInfo;
 	}
