@@ -16,8 +16,7 @@
 class Player : public BaseChara
 {
 private:
-	PlayerParam	pParam;
-	LifeInfo		lifeInfo;
+	PlayerParam		pParam;
 	int		index;
 
 	//	モード別関数ポインタ

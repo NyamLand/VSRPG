@@ -11,8 +11,6 @@
 #include	"Collision.h"
 #include	"sceneMain.h"
 
-GameParam*		gameParam = nullptr;
-
 //*****************************************************************************************************************************
 //
 //	main
@@ -40,11 +38,11 @@ void main( void )
 		int client = gameParam->Receive();
 		if ( client != -1 )
 		{
-			//	全体更新
-			playerManager->Update( client );
-
 			//	当たり判定
 			collision->AllCollision();
+
+			//	全体更新
+			playerManager->Update( client );
 
 			//	クライアントへ送信
 			gameParam->Send( client );
@@ -53,7 +51,7 @@ void main( void )
 
 	//	解放
 	delete	gameParam;		gameParam = nullptr;
-	delete	gameManager;	gameManager = nullptr;
+	delete	gameManager;		gameManager = nullptr;
 	delete	playerManager;	playerManager = nullptr;
 	delete	inputManager;	inputManager = nullptr;
 }

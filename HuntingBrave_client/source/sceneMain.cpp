@@ -64,6 +64,7 @@ bool	sceneMain::Initialize( void )
 	enemyManager->Initialize();
 	
 	//	stageÝ’è
+	//stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
 	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
 	stage->SetPos( 0.0f, -5.0f, 0.0f );
 	stage->SetScale( 0.1f );

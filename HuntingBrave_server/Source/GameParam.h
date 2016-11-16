@@ -21,6 +21,7 @@ private:
 	PlayerParam	playerParam[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
 	AttackInfo	attackInfo[PLAYER_MAX];
+	LifeInfo			lifeInfo[PLAYER_MAX];
 	
 public:
 	//	èâä˙âªÅEâï˙
@@ -55,4 +56,7 @@ public:
 	PlayerParam&	GetPlayerParam( int id ){ return playerParam[id]; }
 	PointInfo&		GetPointInfo( int id ){ return pointInfo[id]; }
 	AttackInfo&		GetAttackInfo( int id ){ return attackInfo[id]; }
+	LifeInfo&			GetLifeInfo( int id ){ return	lifeInfo[id]; }
 };
+
+extern	GameParam*	gameParam;
