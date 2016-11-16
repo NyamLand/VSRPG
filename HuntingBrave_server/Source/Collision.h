@@ -8,15 +8,14 @@
 //****************************************************************************************
 
 //	include
-#include	"Singleton.h"
+//#include	"Singleton.h"
 #include	"ShapeInfo.h"
 
 //	class
-class Collision : public Singleton<Collision>
+class Collision
 {
-	friend Singleton<Collision>;
-
 public:
+	//	å`èÛëgÇ›çáÇÌÇπ
 	enum COLLISION_PAIR
 	{
 		SPHEREVSSPHERE,
@@ -25,8 +24,10 @@ public:
 		CAPSULEVSCAPSULE,
 	};
 
+	//	
+
 private:
-	Collision( void );
+	Collision( GameParam* gameParam );
 	~Collision( void );
 
 public:
