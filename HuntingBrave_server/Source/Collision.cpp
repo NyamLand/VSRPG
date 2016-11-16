@@ -1,6 +1,6 @@
 
 #include	"iextreme.h"
-#include	"GlobalFunction.h"
+//#include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
@@ -23,7 +23,7 @@
 //--------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Collision::Collision( void )
+	Collision::Collision( GameParam* gameParam )
 	{
 
 	}
@@ -99,7 +99,7 @@
 			for ( int p = 0; p < PLAYER_MAX; p++ )
 			{
 				//	条件が合わないものはスキップ
-				if ( gameParam->GetPlayerActive( p ) == false )		continue;
+				if ( gameParam( p ) == false )		continue;
 
 				//	当たり判定チェック
 				isHit = CheckCollision(
