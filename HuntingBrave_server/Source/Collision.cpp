@@ -70,6 +70,7 @@ Collision*	collision = nullptr;
 				if( j == i )		continue;
 				if ( gameParam->GetPlayerActive( j ) == false )		continue;
 				if ( playerManager->GetPlayer( j )->GetLifeInfo().active == false )		continue;	
+				int a = 0;
 
 				//	Œ`óæ“¾
 				CollisionShape	collisionShape;

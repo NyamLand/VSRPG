@@ -69,6 +69,7 @@ namespace
 
 		//	体力初期化
 		lifeInfo.Initialize( INIT_LIFE );
+		lifeInfo.active = true;
 	}
 
 	//	デストラクタ

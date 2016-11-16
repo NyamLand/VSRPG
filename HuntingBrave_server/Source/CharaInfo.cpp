@@ -68,7 +68,7 @@
 		life = initLife;
 		maxLife = initLife;
 		isAlive = true;
-		active = false;
+		active = true;
 	}
 
 //-------------------------------------------------------------------------------------
