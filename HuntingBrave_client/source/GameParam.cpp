@@ -129,7 +129,7 @@ GameParam*	gameParam = nullptr;
 		//	点数データ送信
 		SendPointInfo();
 
-		//SendAttackParam();
+		SendAttackParam();
 	}
 
 //----------------------------------------------------------------------------------------------
