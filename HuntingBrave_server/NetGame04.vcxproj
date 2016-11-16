@@ -115,6 +115,7 @@
     <ClCompile Include="IEX\IEX_View.cpp" />
     <ClCompile Include="Source\BaseChara.cpp" />
     <ClCompile Include="Source\CharaInfo.cpp" />
+    <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EnemyManager.cpp" />
     <ClCompile Include="Source\GameData.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="IEX\iextreme.h" />
     <ClInclude Include="Source\BaseChara.h" />
     <ClInclude Include="Source\CharaInfo.h" />
+    <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\EnemyManager.h" />
     <ClInclude Include="Source\GameData.h" />

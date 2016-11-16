@@ -61,7 +61,9 @@ GameParam*	gameParam = nullptr;
 		//	初期座標取得
 		ReceiveCharaData	receiveCharaData;
 		if ( receive( ( LPSTR )&receiveCharaData, sizeof( receiveCharaData ) ) <= 0 )	return	false;
-		SetPlayerParam( myIndex, receiveCharaData.pos, receiveCharaData.angle, receiveCharaData.motion );
+		SetPlayerParam( myIndex, 
+			receiveCharaData.pos, receiveCharaData.angle, 
+			receiveCharaData.motion, receiveCharaData.life );
 		return true;
 	}
 
@@ -129,6 +131,7 @@ GameParam*	gameParam = nullptr;
 		//	点数データ送信
 		SendPointInfo();
 
+		//	攻撃データ送信
 		SendAttackParam();
 	}
 
@@ -206,7 +209,8 @@ GameParam*	gameParam = nullptr;
 			receiveCharaData->id, 
 			receiveCharaData->pos, 
 			receiveCharaData->angle, 
-			receiveCharaData->motion );
+			receiveCharaData->motion,
+			receiveCharaData->life );
 	}
 
 	//	ゲーム情報受信
@@ -270,11 +274,12 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life )
 	{
 		playerParam[id].pos = pos;
 		playerParam[id].angle = angle;
 		playerParam[id].motion = motion;
+		playerParam[id].life = life;
 	}
 
 	//	プレイヤーパラメータ設定

@@ -13,6 +13,9 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
+//	初期パラメータ
+#define	INIT_LIFE		5
+
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
 
@@ -63,6 +66,9 @@ namespace
 		//	関数ポインタ設定
 		ModeFunction[MODE::MOVE] = &Player::ModeMove;
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
+
+		//	体力初期化
+		lifeInfo.Initialize( INIT_LIFE );
 	}
 
 	//	デストラクタ
@@ -80,11 +86,13 @@ namespace
 	{
 		//	情報受け取り
 		pParam = param;
+		lifeInfo.life = pParam.life;
 
 		//	モード別動作関数
 		( this->*ModeFunction[mode] )();
 
 		//	計算後情報反映
+		pParam.life = lifeInfo.life;
 		param = pParam;
 
 		return true;
@@ -158,9 +166,12 @@ namespace
 	//	ダメージ
 	void	Player::Damage( void )
 	{
+		SetMotion( MOTION_NUM::KNOCKBACK1 );
+		lifeInfo.active = false;
 		if ( pParam.frame >= 465 )
 		{
 			SetMode( MODE::MOVE );
+			lifeInfo.active = true;
 		}
 	}
 

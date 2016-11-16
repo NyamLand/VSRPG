@@ -52,7 +52,7 @@ public:
 
 	//	î•ñæ“¾
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }
-	PlayerParam& GetPlayerParam( int id ){ return playerParam[id]; }
+	PlayerParam&	GetPlayerParam( int id ){ return playerParam[id]; }
 	PointInfo&		GetPointInfo( int id ){ return pointInfo[id]; }
-
+	AttackInfo&		GetAttackInfo( int id ){ return attackInfo[id]; }
 };
