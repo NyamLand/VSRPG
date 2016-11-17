@@ -102,6 +102,7 @@
 		obj->SetScale( scale );
 		obj->Update();
 		obj->Animation();
+		//obj->Animation();
 	}
 
 	//	ˆÚ“®’l‰ÁŽZ

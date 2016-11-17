@@ -91,6 +91,10 @@ bool	sceneMain::Initialize( void )
 		exit( 0 );
 		return	false;
 	}
+
+	//	BGMÄ¶
+	//IEX_PlayStreamSound( "DATA/Sound/BGM/menu.ogg" );
+
 	return true;
 }
 
