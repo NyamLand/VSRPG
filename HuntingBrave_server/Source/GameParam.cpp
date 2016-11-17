@@ -16,6 +16,8 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
+#define	INIT_LIFE		7
+GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -29,6 +31,8 @@
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
+			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
+			lifeInfo[id].Initialize( INIT_LIFE );
 		}
 	}
 
@@ -124,7 +128,7 @@
 			playerParam[player].pos, 
 			playerParam[player].angle,
 			playerParam[player].motion,
-			playerParam[player].life );
+			lifeInfo[player].life );
 
 		//	送信
 		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
@@ -216,7 +220,7 @@
 		PlayerParam	initParam = gameManager->GetInitInfo( client );
 		SendCharaData	sendCharaData( client, 
 			initParam.pos, initParam.angle, initParam.motion, 
-			initParam.life );
+			lifeInfo[client].life );
 		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
 
 		//	全員にデータ送信

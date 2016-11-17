@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"GameParam.h"
 #include	"InputManager.h"
 #include	"Player.h"
 
@@ -14,7 +15,6 @@
 //----------------------------------------------------------------------------------------------
 
 //	初期パラメータ
-#define	INIT_LIFE		5
 
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
@@ -22,36 +22,6 @@
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED		0.3f
 #define	MOVE_SPEED		0.2f
-
-//	定数関連
-namespace
-{
-	//	モーション番号
-	enum MOTION_NUM
-	{
-		POSUTURE,						//	待機
-		RUN_START,						//	走り出し
-		RUN,									//	走り
-		ATTACK1,							//	攻撃１
-		ATTACK2,							//	攻撃２
-		STEP,								//	ステップ
-		MAGIC_CHANT_START,		//	詠唱開始
-		MAGIC_CHANT,					//	詠唱中
-		MAGIC_ACTUATION,			//	魔法発動
-		KNOCKBACK1,					//	仰け反り１
-		KNOCKBACK2,					//	仰け反り２
-		FALL,									//	倒れる
-		DEAD,								//	死亡
-		EAT,									//	食べる
-		MENU_OPEN,						//	メニューを開く
-		MENU,								//	メニュー操作中
-		LEVEL_UP,							//	レベルアップ
-		MENU_CLOSE,					//	メニューを閉じる
-		WIN,									//	勝利
-		WIN_KEEP,						//	勝利キープ
-		CRY									//	泣き
-	};
-}
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -66,9 +36,7 @@ namespace
 		//	関数ポインタ設定
 		ModeFunction[MODE::MOVE] = &Player::ModeMove;
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
-
-		//	体力初期化
-		lifeInfo.Initialize( INIT_LIFE );
+		ModeFunction[MODE::DAMAGE] = &Player::Damage;
 	}
 
 	//	デストラクタ
@@ -86,13 +54,11 @@ namespace
 	{
 		//	情報受け取り
 		pParam = param;
-		lifeInfo.life = pParam.life;
 
 		//	モード別動作関数
 		( this->*ModeFunction[mode] )();
 
 		//	計算後情報反映
-		pParam.life = lifeInfo.life;
 		param = pParam;
 
 		return true;
@@ -111,7 +77,7 @@ namespace
 		//	入力受付
 		if ( inputManager->GetInput( index ).inputType == InputManager::ENTER )
 		{
-			if( SetMode( MODE::SWOADATTACK ) ) SetMotion( MOTION_NUM::ATTACK1 );
+			if( SetMode( MODE::SWOADATTACK ) ) SetMotion( PLAYER_MOTION::ATTACK1 );
 			inputManager->GetInput( index ).inputType = InputManager::NO_INPUT;
 		}
 	}
@@ -145,11 +111,11 @@ namespace
 			pParam.pos += 
 				Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
 
-			SetMotion( MOTION_NUM::RUN );
+			SetMotion( PLAYER_MOTION::RUN );
 		}
 		else
 		{
-			SetMotion( MOTION_NUM::POSUTURE );
+			SetMotion( PLAYER_MOTION::POSUTURE );
 		}
 	}
 
@@ -166,12 +132,13 @@ namespace
 	//	ダメージ
 	void	Player::Damage( void )
 	{
-		SetMotion( MOTION_NUM::KNOCKBACK1 );
-		lifeInfo.active = false;
+		gameParam->GetLifeInfo( index ).active = false;
+		SetMotion( PLAYER_MOTION::KNOCKBACK1 );
+
 		if ( pParam.frame >= 465 )
 		{
+			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
-			lifeInfo.active = true;
 		}
 	}
 

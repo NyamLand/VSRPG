@@ -197,7 +197,16 @@ namespace
 		}
 
 		//	攻撃情報設定
-		attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+		int	frame = obj->GetFrame();
+
+		if ( frame >= 170 && frame <= 180 )
+		{
+			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+		}
+		else
+		{
+			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
+		}
 		
 		//	ボーンの座標取得、当たり判定用構造体にセット
 		Vector3	handPos = GetBonePos( BONE_NUM::HAND );

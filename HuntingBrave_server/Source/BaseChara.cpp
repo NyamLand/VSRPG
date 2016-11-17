@@ -22,7 +22,7 @@
 		angle( 0.0f ),
 		motion( 0 ), mode( MODE::MOVE )
 	{
-		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
+		
 	}
 
 	//	デストラクタ
@@ -72,10 +72,4 @@
 	AttackInfo	BaseChara::GetAttackInfo( void )const
 	{
 		return	attackInfo;
-	}
-
-	//	体力管理
-	LifeInfo		BaseChara::GetLifeInfo( void )const 
-	{
-		return	lifeInfo;
 	}

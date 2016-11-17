@@ -49,7 +49,7 @@
 	//	§ŒÀŠÔXV( w’è‚µ‚½ŠÔ‚ğ‚·‚¬‚é‚Ætrue‚ğ‚©‚¦‚· )
 	bool	Timer::LimitTimerUpdate( void )
 	{
-		if ( endTime - nowTime <= 0.0f )	return	true;
+		if ( endTime - nowTime <= 0 )	return	true;
 
 		//	Œ»İ‚ÌŠÔ‚ğŠi”[
 		time( &nowTime );

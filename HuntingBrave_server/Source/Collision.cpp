@@ -69,7 +69,9 @@ Collision*	collision = nullptr;
 				//	自分同士はスキップ、アクティブ状態でないプレイヤーはスキップ
 				if( j == i )		continue;
 				if ( gameParam->GetPlayerActive( j ) == false )		continue;
-				if ( playerManager->GetPlayer( j )->GetLifeInfo().active == false )		continue;	
+
+				bool	active = gameParam->GetLifeInfo( j ).active;
+				if ( active == false )		continue;	
 
 				//	形状取得
 				CollisionShape	collisionShape;
@@ -87,7 +89,7 @@ Collision*	collision = nullptr;
 				if ( isHit == true )
 				{
 					//	ライフ計算
-					playerManager->GetPlayer( j )->GetLifeInfo().CulcLife( -attackInfo.power );
+					gameParam->GetLifeInfo( j ).CulcLife( -attackInfo.power );
 					playerManager->GetPlayer( j )->SetMode( MODE::DAMAGE );
 				}
 			}

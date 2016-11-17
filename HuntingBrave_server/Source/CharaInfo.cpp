@@ -38,8 +38,8 @@
 
 	//	コンストラクタ
 	LifeInfo::LifeInfo( void ) :
-	life( 0 ), maxLife( 0 ),
-	isAlive( true ), active( false )
+		life( 0 ), maxLife( 0 ),
+		isAlive( true ), active( true )
 	{
 
 	}
@@ -68,7 +68,7 @@
 		life = initLife;
 		maxLife = initLife;
 		isAlive = true;
-		active = false;
+		active = true;
 	}
 
 //-------------------------------------------------------------------------------------
