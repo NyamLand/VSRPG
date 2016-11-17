@@ -181,15 +181,13 @@ GameParam*	gameParam = nullptr;
 		//	情報取得
 		AttackInfo	attackInfo = playerManager->GetPlayer( myIndex )->GetAttackInfo();
 
-		//	攻撃していなければスキップ
-		//if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )	return;
-
 		//	情報設定
 		SendAttackData	sendAttackData( 
 			attackInfo.attackParam, 
 			attackInfo.collisionShape.capsule.p1,
 			attackInfo.collisionShape.capsule.p2,
 			attackInfo.collisionShape.capsule.r );
+
 		//	送信
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
 	}

@@ -199,7 +199,7 @@ namespace
 		//	UŒ‚î•ñÝ’è
 		int	frame = obj->GetFrame();
 
-		if ( frame >= 170 && frame <= 180 )
+		if ( frame >= 140 && frame <= 150 )
 		{
 			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}

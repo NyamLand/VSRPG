@@ -23,6 +23,16 @@
 #define	ANGLE_ADJUST_MOVE_SPEED		0.3f
 #define	MOVE_SPEED		0.2f
 
+namespace
+{
+	namespace MOTION_FRAME
+	{
+		const int SWORDATTACK1_END = 160;
+		const int KNOCKBACK1_END = 405;
+
+	}
+}
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -122,8 +132,10 @@
 	//	剣攻撃
 	void	Player::SwordAttack( void )
 	{
+		
+
 		// 一定以上のフレームに達すると移動に戻す
-		if ( pParam.frame >= 190 )
+		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK1_END )
 		{
 			SetMode( MODE::MOVE );
 		}
@@ -135,7 +147,7 @@
 		gameParam->GetLifeInfo( index ).active = false;
 		SetMotion( PLAYER_MOTION::KNOCKBACK1 );
 
-		if ( pParam.frame >= 465 )
+		if ( pParam.frame >= MOTION_FRAME::KNOCKBACK1_END )
 		{
 			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
