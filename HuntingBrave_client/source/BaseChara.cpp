@@ -28,8 +28,6 @@
 		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ),
 		mode( 0 )
 	{
-		//	\‘¢‘Ì‰Šú‰»
-		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
 		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
 		ZeroMemory( &collisionInfo, sizeof( CollisionInfo ) );
 	}
@@ -250,12 +248,6 @@
 //------------------------------------------------------------------------------------
 //	î•ñæ“¾
 //------------------------------------------------------------------------------------
-
-	//	UŒ‚î•ñæ“¾
-	AttackInfo	BaseChara::GetAttackInfo( void )const
-	{
-		return	attackInfo;
-	}
 
 	//	ƒ‰ƒCƒtî•ñæ“¾
 	LifeInfo&		BaseChara::GetLifeInfo( void )

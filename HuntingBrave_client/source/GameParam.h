@@ -9,6 +9,7 @@
 
 //	include
 #include	"GameData.h"
+#include	"CharaInfo.h"
 #include	"SocketClient.h"
 
 //	class
@@ -19,8 +20,9 @@ private:
 	int		myIndex;
 	bool		inputAcceptance;	//	ì¸óÕéÛït
 
-	PlayerInfo	playerInfo[PLAYER_MAX];
+	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	AttackInfo	attackInfo[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
 
 public:
@@ -40,7 +42,7 @@ public:
 	void	SendAttackParam( void );
 
 	//	éÛêMèàóù
-	void	ReceiveCharaInfo(const LPSTR& data);
+	void	ReceiveCharaInfo( const LPSTR& data );
 	void	ReceivePointInfo( const LPSTR& data );
 	void	ReceiveSignUpInfo( const LPSTR& data );
 	void	ReceiveSignOutInfo( const LPSTR& data );
@@ -59,11 +61,12 @@ public:
 	//	èÓïÒéÊìæ
 	PlayerParam GetPlayerParam( int id )const{ return playerParam[id]; }
 	PlayerInfo	GetPlayerInfo( int id )const{ return playerInfo[id]; }
-	PointInfo&		GetPointInfo( int id ){ return	pointInfo[id]; };
-	bool  GetPlayerActive( int id ){ return playerInfo[id].active; }
+	AttackInfo&	GetAttackInfo( int id ){ return	attackInfo[id]; }
+	PointInfo&	GetPointInfo( int id ){ return	pointInfo[id]; }
+	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
-	char* GetPlayerName( int id ){ return playerInfo[id].name; }
-	float	GetStickInput( float& outX, float& outY );
+	char*	GetPlayerName( int id ){ return playerInfo[id].name; }
+	float		GetStickInput( float& outX, float& outY );
 };
 
 extern	GameParam*	gameParam;

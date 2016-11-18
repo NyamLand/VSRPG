@@ -48,12 +48,11 @@
 	struct SendAttackData
 	{
 		char			com = SEND_COMMAND::ATTACK_INFO;		//	1byte
-		char			attackParam;	//	1byte
+		float			radius;		//	4byte
 		Vector3	attackPos1;		//	12byte
 		Vector3	attackPos2;		//	12byte
-		float			radius;		//	4byte
-		SendAttackData( char attackParam, const Vector3& attackPos1, const Vector3& attackPos2, float radius ) :
-			attackParam( attackParam ), attackPos1( attackPos1 ), attackPos2( attackPos2 ), radius( radius ) {}
+		SendAttackData( const Vector3& attackPos1, const Vector3& attackPos2, float radius ) :
+			attackPos1( attackPos1 ), attackPos2( attackPos2 ), radius( radius ) {}
 	};
 
 	//	ì_êîèÓïÒ

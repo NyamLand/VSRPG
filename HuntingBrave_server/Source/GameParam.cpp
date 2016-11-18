@@ -194,8 +194,7 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveAttackParam( int client, const LPSTR& data )
 	{
 		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
-		
-		attackInfo[client].attackParam = ( AttackInfo::ATTACK_PARAM )receiveAttackData->attackParam;
+
 		attackInfo[client].collisionShape.SetCapsule( 
 			Capsule( 	receiveAttackData->attackPos1, 
 							receiveAttackData->attackPos2,

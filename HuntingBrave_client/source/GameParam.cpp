@@ -178,15 +178,9 @@ GameParam*	gameParam = nullptr;
 	//	UŒ‚î•ñ‘—M
 	void	GameParam::SendAttackParam( void )
 	{
-		//	î•ñæ“¾
-		AttackInfo	attackInfo = playerManager->GetPlayer( myIndex )->GetAttackInfo();
-
 		//	î•ñİ’è
-		SendAttackData	sendAttackData( 
-			attackInfo.attackParam, 
-			attackInfo.collisionShape.capsule.p1,
-			attackInfo.collisionShape.capsule.p2,
-			attackInfo.collisionShape.capsule.r );
+		AttackInfo	atkInfo = attackInfo[myIndex];
+		SendAttackData	sendAttackData( atkInfo.pos1, atkInfo.pos2, atkInfo.radius );
 
 		//	‘—M
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );

@@ -19,6 +19,13 @@ namespace
 		ATTACK1,
 		ATTACK2,
 	};
+
+	//	当たり判定形状
+	enum COLLISION_SHAPE
+	{
+		CAPSULE,
+		SPHERE,
+	};
 }
 
 
@@ -26,23 +33,24 @@ namespace
 struct AttackInfo
 {
 	//	パラメータ
-	int		power;
-	int		timer;
-	int		step;
-	bool		initFlag;
-	char		attackParam;
-	CollisionShape		collisionShape;
-
-	//	初期化・解放
-	AttackInfo( void );
-	void Reset( void );
+	char			shape;
+	float			radius;
+	Vector3	pos1;
+	Vector3	pos2;
+	void	Set( char shape, float radius, const Vector3& pos1, const Vector3& pos2 )
+	{
+		this->shape = shape;
+		this->radius = radius;
+		this->pos1 = pos1;
+		this->pos2 = pos2;
+	}
 };
 
 //	ライフ情報構造体
 struct LifeInfo
 {
-	bool	isAlive;
-	bool	active;
+	bool		isAlive;
+	bool		active;
 	int		maxLife;
 	int		life;
 

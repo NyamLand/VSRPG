@@ -27,6 +27,8 @@ namespace
 {
 	namespace MOTION_FRAME
 	{
+		const int SWORDATTACK_HIT_START = 140;
+		const int SWORDATTACK_HIT_END = 150;
 		const int SWORDATTACK1_END = 160;
 		const int KNOCKBACK1_END = 405;
 
@@ -133,6 +135,15 @@ namespace
 	void	Player::SwordAttack( void )
 	{
 		//	フレーム管理
+		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK_HIT_START &&
+			pParam.frame <= MOTION_FRAME::SWORDATTACK_HIT_END )
+		{
+			attackInfo.attackParam = AttackInfo::ATTACK1;
+		}
+		else
+		{
+			attackInfo.attackParam = AttackInfo::NO_ATTACK;
+		}
 
 		// 一定以上のフレームに達すると移動に戻す
 		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK1_END )
