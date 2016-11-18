@@ -132,7 +132,7 @@ namespace
 	//	剣攻撃
 	void	Player::SwordAttack( void )
 	{
-		
+		//	フレーム管理
 
 		// 一定以上のフレームに達すると移動に戻す
 		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK1_END )

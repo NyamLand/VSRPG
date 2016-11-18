@@ -35,14 +35,14 @@ int	UDPServer::receive( char *data, int *size )
 {
 	struct timeval tv;
 	tv.tv_sec  = 0;
-	tv.tv_usec = 0;
+	tv.tv_usec = 5000;
 
 	fd_set	fd_work;
-	memcpy(&fd_work, &fds, sizeof(fd_set));
+	memcpy( &fd_work, &fds, sizeof( fd_set ) );
 	// fdsに設定されたソケットが読み込み可能になるまで待ちます
-	int n = select(0, &fd_work, NULL, NULL, &tv);
+	int n = select( 0, &fd_work, NULL, NULL, &tv );
 	// タイムアウトの場合にselectは0を返します
-	if (n <= 0) return -1;
+	if ( n <= 0 ) return -1;
 
 	int		i, recvsize;
 	int		addr_len;
