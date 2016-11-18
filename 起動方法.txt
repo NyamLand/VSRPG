@@ -1,0 +1,14 @@
+ハンティングブレイブスの起動方法
+
+１、『HuntingBrave_server』内の『HuntingBrave_server.exe』を起動
+２、『HuntingBrave_client』内の『onlineinfo』一行目に
+　　『127.0.0.1』を入力
+３、『HuntingBrave_client』内の『HuntingBrave_client.exe』を起動
+
+
+
+
+ハンティングブレイブスの操作方法
+
+十字キー	→移動
+Zキー		→攻撃
