@@ -19,7 +19,6 @@
 //
 #include	"BaseEquipment.h"
 //
-
 #include	"sceneMain.h"
 
 //*****************************************************************************************************************************
@@ -48,7 +47,7 @@ bool	sceneMain::Initialize( void )
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
 	//	GameParam初期化
-	gameParam = new GameParam();
+	//gameParam = new GameParam();
 	
 	//	カメラ設定
 	mainView = new Camera();
@@ -74,21 +73,23 @@ bool	sceneMain::Initialize( void )
 	//	GameManagerの初期化
 	gameManager->Initialize();
 
-	//	テキスト読み込み
-	char addr[64], name[17];
-	std::ifstream	ifs( "onlineInfo.txt" );
-	ifs >> addr;
-	ifs >> name;
+	////	テキスト読み込み
+	//char addr[64], name[17];
+	//std::ifstream	ifs("onlineInfo.txt");
+	//ifs >> addr;
+	//ifs >> name;
 
-	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, 7000, name ) )
-	{
-		MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
-		exit( 0 );
-		return	false;
-	}
+	////	クライアント初期化( serverと接続 )
+	//if ( !gameParam->InitializeClient( addr, 7000, name ) )
+	//{
+	//	MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
+	//	exit(0);
+	//	return	false;
+	//}
 	//仮
 	//baseEquipment = new BaseEquipment();
+
+	int a = 0;
 	
 	return true;
 }

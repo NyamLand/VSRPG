@@ -20,6 +20,7 @@ private:
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
+	MatchingInfo		matchingInfo[PLAYER_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -36,6 +37,7 @@ public:
 	void	SendChraraInfo( void );
 	void	SendMove( void );
 	void	SendPoint( void );
+	void	SendMatching(void);
 
 	//	óMˆ—
 	void	ReceiveCharaInfo(const LPSTR& data);
@@ -44,6 +46,7 @@ public:
 	void	ReceiveCharaMove(const LPSTR& data);
 
 	void	ReceivePoint( const LPSTR& data );
+	void	ReceiveMatching(const LPSTR& data);
 	void	ReceiveSignUp( const LPSTR& data );
 	void	ReceiveSignOut( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
@@ -57,13 +60,15 @@ public:
 	//	î•ñİ’è
 	void  SetPlayerInfo( int id, char* name );
 	void	SetPointInfo( int id, int addPoint );
+	void	SetMachingInfo(int id, bool isComplete);
 	void	AddPoint( int id, int point );
 	void  RemovePlayerInfo( int id );
 	
 	//	î•ñæ“¾
 	PlayerParam GetPlayerParam( int id )const{ return playerParam[id]; }
 	PlayerInfo	GetPlayerInfo( int id )const{ return playerInfo[id]; }
-	PointInfo&		GetPointInfo( int id ){ return	pointInfo[id]; };
+	PointInfo&		GetPointInfo(int id){ return	pointInfo[id]; };
+	MatchingInfo&		GetMatchingInfo(int id){ return	matchingInfo[id]; };
 	bool  GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
 	char* GetPlayerName( int id ){ return playerInfo[id].name; }

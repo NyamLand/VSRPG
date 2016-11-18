@@ -1,7 +1,9 @@
 #include	"iextreme.h"
+#include	"Scene.h"
 #include	"Framework.h"
 #include	"sceneTitle.h"
 #include	"sceneMain.h"
+#include	"sceneMatching.h"
 
 //*****************************************************************************************************************************
 //
@@ -33,7 +35,7 @@ BOOL	InitApp( HWND hWnd )
 	MainFrame = new Framework( FPS_30 );
 
 	//	‰ŠúƒV[ƒ““o˜^
-	MainFrame->ChangeScene( new sceneMain() );
+	MainFrame->ChangeScene( new sceneMatching() );
 
 	return TRUE;
 }

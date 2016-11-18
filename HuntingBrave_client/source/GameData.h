@@ -47,6 +47,12 @@
 		int		addPoint;
 	};
 
+	struct MatchingInfo
+	{
+		//	変数
+		bool		isComplete;
+	};
+
 	//	データ構造
 	enum 
 	{
@@ -68,6 +74,7 @@
 		CHARA_RECEIVEDATA,
 		GAME_INFO,
 		POINT_INFO,
+		MATCHING,
 		SIGN_UP = 10,
 		SIGN_OUT,
 		CONTROLLE_AXIS,
@@ -106,6 +113,18 @@
 		NET_POINT( void );
 		NET_POINT( int id, int point );
 		void	Set( int id, int point );
+	};
+
+
+	//マッチング情報
+	struct NET_MATCHING
+	{
+		char com = COMMANDS::MATCHING;
+		int		id;
+		bool	isComplete;
+		NET_MATCHING(void);
+		NET_MATCHING(int id, int mode);
+		void	Set(int id, int mode);
 	};
 
 	//	移動情報

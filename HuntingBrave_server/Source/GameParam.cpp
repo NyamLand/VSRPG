@@ -25,7 +25,8 @@
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
-			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
+			ZeroMemory(&pointInfo[id], sizeof(PointInfo));
+			ZeroMemory(&matchingInfo[id], sizeof(MatchingInfo));
 		}
 	}
 
@@ -69,6 +70,9 @@
 
 				//	点数情報送信
 				SendPointInfo( clientNum, player );
+
+				//マッチング情報送信
+				SendMatchingInfo(clientNum, player);
 			}
 		}
 
@@ -106,6 +110,10 @@
 
 		case COMMANDS::POINT_INFO:		//	点数情報
 			ReceivePoint( client, data );
+			break;
+
+		case COMMANDS::MATCHING:		//	マッチング情報
+			ReceiveMatching(client, data);
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
@@ -163,6 +171,17 @@
 
 	}
 
+	//	マッチング情報
+	void	GameParam::SendMatchingInfo(int client, int player)
+	{
+		//	情報設定
+		NET_MATCHING	netMatching(player, matchingInfo[player].isComplete);
+
+		//	送信
+		send(client, (char*)&netMatching, sizeof(NET_POINT));
+
+	}
+
 //----------------------------------------------------------------------------------------------
 //	受信処理
 //----------------------------------------------------------------------------------------------
@@ -180,6 +199,13 @@
 	{
 		NET_POINT*	netPoint = ( NET_POINT* )data;
 		pointInfo[client].addPoint = netPoint->point;
+	}
+
+	//	マッチング情報
+	void	GameParam::ReceiveMatching(int client, const LPSTR& data)
+	{
+		NET_MATCHING*	netMatching = (NET_MATCHING*)data;
+		matchingInfo[client].isComplete = netMatching->isComplete;
 	}
 
 

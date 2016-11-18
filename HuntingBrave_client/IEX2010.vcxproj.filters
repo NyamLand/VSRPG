@@ -154,6 +154,9 @@
     <ClCompile Include="source\MapUI.cpp">
       <Filter>Source\UI\MapUI</Filter>
     </ClCompile>
+    <ClCompile Include="source\sceneMatching.cpp">
+      <Filter>Source\Scene\SceneMatching</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -266,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="source\MapUI.h">
       <Filter>Source\UI\MapUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneMatching.h">
+      <Filter>Source\Scene\SceneMatching</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +409,9 @@
     </Filter>
     <Filter Include="Source\UI\MapUI">
       <UniqueIdentifier>{66913ead-712a-4386-873c-0c725950c99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\SceneMatching">
+      <UniqueIdentifier>{4aee45e3-60d1-41b6-85b7-4a94c4d5b553}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

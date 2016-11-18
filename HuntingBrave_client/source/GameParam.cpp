@@ -1,9 +1,11 @@
 
 #include	"iextreme.h"
+#include	"system\/System.h"
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"GameParam.h"
+#include	"sceneMatching.h"
 
 //***************************************************************
 //
@@ -29,7 +31,8 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
-			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
+			ZeroMemory(&pointInfo[id], sizeof(PointInfo));
+			ZeroMemory(&matchingInfo[id], sizeof(MatchingInfo));
 		}
 	}
 
@@ -110,6 +113,10 @@ GameParam*	gameParam = nullptr;
 					ReceivePoint( data );
 					break;
 
+				case COMMANDS::MATCHING:		//	マッチング情報
+					ReceiveMatching(data);
+					break;
+
 				case COMMANDS::SIGN_UP:		//	参加情報
 					ReceiveSignUp( data );
 					break;
@@ -135,6 +142,9 @@ GameParam*	gameParam = nullptr;
 
 		//	点数データ送信
 		SendPoint();
+
+		//マッチング状態送信
+		SendMatching();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -184,6 +194,15 @@ GameParam*	gameParam = nullptr;
 		pointInfo[myIndex].addPoint = 0;
 	}
 
+	//	マッチング送信
+	void	GameParam::SendMatching(void)
+	{
+		NET_MATCHING netMatching;
+		netMatching.id = myIndex;
+		netMatching.isComplete = gameManager->GetIsComplete();
+		send((LPSTR)&netMatching, sizeof(netMatching));
+	}
+
 //----------------------------------------------------------------------------------------------
 //	データ受信
 //----------------------------------------------------------------------------------------------
@@ -207,6 +226,13 @@ GameParam*	gameParam = nullptr;
 	{
 		NET_POINT*	netPoint = ( NET_POINT* )data;
 		SetPointInfo( netPoint->id, netPoint->point );
+	}
+
+	//	マッチング情報
+	void	GameParam::ReceiveMatching(const LPSTR& data)
+	{
+		NET_MATCHING*	netMatching = (NET_MATCHING*)data;
+		SetMachingInfo(netMatching->id, netMatching->isComplete);
 	}
 
 	//*****************************************
@@ -276,6 +302,12 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SetPointInfo( int id, int point )
 	{
 		pointInfo[id].point = point;
+	}
+
+	//	マッチング情報
+	void	GameParam::SetMachingInfo(int id, bool isComplete)
+	{
+		matchingInfo[id].isComplete = isComplete;
 	}
 
 	//	加算情報設定

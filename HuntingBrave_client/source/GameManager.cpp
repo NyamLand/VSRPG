@@ -19,7 +19,7 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameManager::GameManager( void ) : timer( 0 ) 
+GameManager::GameManager(void) : timer(0), isComplete(false)
 	{
 	
 	}

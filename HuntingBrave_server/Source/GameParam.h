@@ -18,6 +18,7 @@ private:
 	PlayerInfo	playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
+	MatchingInfo		matchingInfo[PLAYER_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -30,12 +31,14 @@ public:
 
 	//	‘—Mˆ—
 	void	SendCharaInfo( int client, int player );
-	void	SendPointInfo( int client, int player );
+	void	SendPointInfo(int client, int player);
+	void	SendMatchingInfo(int client, int player);
 	void	SendGameInfo( int client );
 
 	//	óMˆ—
 	void	ReceiveChara( int client, const LPSTR& data );
-	void	ReceivePoint( int client, const LPSTR& data );
+	void	ReceivePoint(int client, const LPSTR& data);
+	void	ReceiveMatching(int client, const LPSTR& data);
 	void	ReceiveCharaDATA(int client, const LPSTR& data);
 	void	ReceiveControllerAxis(int client, const LPSTR& data);
 	void	ReceiveCharaMove(int client, const LPSTR& data);
