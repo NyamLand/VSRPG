@@ -62,19 +62,19 @@
 	bool SocketClient::InitializeUDP( WORD port, char* addr )
 	{
 		//	サーバー情報設定 	
-		ZeroMemory( &server, sizeof(server) );
+		ZeroMemory( &server, sizeof( server ) );
 		server.sin_family=AF_INET;
-		server.sin_port = htons(port);
+		server.sin_port = htons( port );
 
-		struct	hostent *host = gethostbyname(addr);
-		server.sin_addr.S_un.S_addr = *((ULONG*)host->h_addr_list[0]);
+		struct	hostent *host = gethostbyname( addr );
+		server.sin_addr.S_un.S_addr = *( ( ULONG* )host->h_addr_list[0] );
 
 		//	UDPソケットの作成	
-		sock = socket( AF_INET, SOCK_DGRAM, 0);
+		sock = socket( AF_INET, SOCK_DGRAM, 0 );
 		if( sock == INVALID_SOCKET ) return false;
 
-		//	タイムアウト設定(1000ms)	
-		int timeout = 1000;
+		//	タイムアウト設定(2000ms)	
+		int timeout = 5000;
 		if( setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(timeout) ) == SOCKET_ERROR ) return false;
 
 		return true;

@@ -178,15 +178,10 @@ namespace
 	//	移動
 	bool		Player::Move( void )
 	{
-		//float x, y, length;
-		//length = gameParam->GetStickInput( x, y );
-
-		//if ( length >= MIN_INPUT_STICK )	SetMotion( MOTION_NUM::RUN );
-		//else SetMotion( MOTION_NUM::POSUTURE );
 		return false;
 	}
 
-	//剣攻撃
+	//	剣攻撃
 	bool		Player::SwordAttack( void )
 	{
 		//	攻撃モーション以外ならスキップ
@@ -196,17 +191,10 @@ namespace
 			return false;
 		}
 
-		//	攻撃情報設定
+		//	攻撃判定
 		int	frame = obj->GetFrame();
-
-		if ( frame >= 140 && frame <= 150 )
-		{
-			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
-		}
-		else
-		{
-			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
-		}
+		if ( frame >= 140 && frame <= 150 )	attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+		else		attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 		
 		//	ボーンの座標取得、当たり判定用構造体にセット
 		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
@@ -235,7 +223,6 @@ namespace
 		switch ( attackInfo.step )
 		{
 		case 0:
-
 			//	入力があれば
 			if ( length >= MIN_INPUT_STICK )
 			{
@@ -247,7 +234,6 @@ namespace
 				//if (axisX > 0)	angle += 0.1f; 
 				//else			angle -= 0.1f;
 			}
-
 
 			if ( KEY_Get( KEY_B ) == 2 ) attackInfo.step++;
 			break;
