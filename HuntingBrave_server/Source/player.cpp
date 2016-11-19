@@ -138,11 +138,11 @@ namespace
 		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK_HIT_START &&
 			pParam.frame <= MOTION_FRAME::SWORDATTACK_HIT_END )
 		{
-			attackInfo.attackParam = AttackInfo::ATTACK1;
+			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK1;
 		}
 		else
 		{
-			attackInfo.attackParam = AttackInfo::NO_ATTACK;
+			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::NO_ATTACK;
 		}
 
 		// ˆê’èˆÈã‚ÌƒtƒŒ[ƒ€‚É’B‚·‚é‚ÆˆÚ“®‚É–ß‚·

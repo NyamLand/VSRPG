@@ -52,12 +52,6 @@
 		return	false;
 	}
 
-	//	UŒ‚î•ñİ’è
-	void	BaseChara::SetAttackInfo( const AttackInfo& attackInfo )
-	{
-		this->attackInfo = attackInfo;
-	}
-
 //----------------------------------------------------------------------------------------------
 //	î•ñæ“¾
 //----------------------------------------------------------------------------------------------
@@ -68,8 +62,3 @@
 		return	pos;
 	}
 	
-	//	UŒ‚î•ñæ“¾
-	AttackInfo	BaseChara::GetAttackInfo( void )const
-	{
-		return	attackInfo;
-	}

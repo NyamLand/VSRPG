@@ -33,6 +33,7 @@ namespace
 struct AttackInfo
 {
 	//	ƒpƒ‰ƒ[ƒ^
+	char			attackParam;
 	char			shape;
 	float			radius;
 	Vector3	pos1;

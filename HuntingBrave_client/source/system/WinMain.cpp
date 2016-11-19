@@ -35,7 +35,8 @@ BOOL	InitApp( HWND hWnd )
 	MainFrame = new Framework( FPS_FLEX );
 
 	//	‰ŠúƒV[ƒ““o˜^
-	MainFrame->ChangeScene( new sceneMatching() );
+	//MainFrame->ChangeScene( new sceneMatching() );
+	MainFrame->ChangeScene( new sceneMain() );
 
 	return TRUE;
 }

@@ -35,7 +35,7 @@ public:
 	void	PlayerAttackCollision( void );
 	void	EnemyAttackCollision( void );
 	bool	CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 );
-	COLLISION_PAIR	GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 );
+	COLLISION_PAIR	GetCollisionPair( char type1, char type2 );
 
 	//	çﬁéøîªíË
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );

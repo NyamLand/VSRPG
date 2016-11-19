@@ -43,10 +43,11 @@
 	//	キャラクター情報
 	struct ReceiveCharaData
 	{
-		char com = RECEIVE_COMMAND::CHARA_INFO;
+		char	com = RECEIVE_COMMAND::CHARA_INFO;
+		char	attackParam;
 		int			id;
 		int			life;
+		int			motion;
 		Vector3	pos;
 		float			angle;
-		int			motion;
 	};

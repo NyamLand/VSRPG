@@ -50,11 +50,12 @@
 	struct SendCharaData
 	{
 		char com = SEND_COMMAND::CHARA_INFO;
+		char	attackParam;
 		int			id;
 		int			life;
+		int			motion;
 		Vector3	pos;
 		float			angle;
-		int			motion;
-		SendCharaData( int id, const Vector3& pos, float angle, int motion, int life ) : 
-			id( id ), pos( pos ), angle( angle ), motion( motion ), life( life ){}
+		SendCharaData( int id, char attackParam, const Vector3& pos, float angle, int motion, int life ) : 
+			id( id ), attackParam( attackParam ), pos( pos ), angle( angle ), motion( motion ), life( life ){}
 	};

@@ -133,7 +133,10 @@ namespace
 
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
-		BaseChara::Render();		
+		BaseChara::Render();	
+
+		AttackInfo attackInfo= gameParam->GetAttackInfo( id );
+		//drawShape->DrawCapsule( attackInfo.pos1, attackInfo.pos2, attackInfo.radius, 0xFFFFFFFF );
 	}
 
 //------------------------------------------------------------------------------------
@@ -157,6 +160,7 @@ namespace
 		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
 
 		//	UŒ‚î•ñÝ’è
+		gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
 		gameParam->GetAttackInfo( id ).pos1 = handPos;
 		gameParam->GetAttackInfo( id ).pos2 = swordPos;
 		gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;

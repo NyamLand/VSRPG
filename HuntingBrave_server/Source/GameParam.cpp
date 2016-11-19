@@ -124,6 +124,7 @@ GameParam*	gameParam = nullptr;
 	{
 		//	î•ñÝ’è
 		SendCharaData sendCharaData( player, 
+			attackInfo[player].attackParam,
 			playerParam[player].pos, 
 			playerParam[player].angle,
 			playerParam[player].motion,
@@ -227,6 +228,7 @@ GameParam*	gameParam = nullptr;
 		//	‰ŠúÀ•W‚ð‘—M
 		PlayerParam	initParam = gameManager->GetInitInfo( client );
 		SendCharaData	sendCharaData( client, 
+			AttackInfo::NO_ATTACK,
 			initParam.pos, initParam.angle, initParam.motion, 
 			lifeInfo[client].life );
 		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );

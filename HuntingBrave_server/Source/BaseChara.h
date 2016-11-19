@@ -59,7 +59,6 @@ namespace
 class BaseChara
 {
 protected:
-	AttackInfo	attackInfo;
 	Vector3	pos;
 	float			angle;
 	int			mode;
@@ -76,5 +75,4 @@ public:
 
 	//	î•ñæ“¾
 	Vector3	GetPos( void )const;
-	AttackInfo	GetAttackInfo( void )const;
 };

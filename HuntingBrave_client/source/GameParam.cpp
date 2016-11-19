@@ -214,6 +214,9 @@ GameParam*	gameParam = nullptr;
 		ReceiveCharaData*	receiveCharaData = ( ReceiveCharaData* )data;
 
 		//	î•ñÝ’è
+		attackInfo[receiveCharaData->id].attackParam = 
+			receiveCharaData->attackParam;
+
 		SetPlayerParam( 
 			receiveCharaData->id, 
 			receiveCharaData->pos, 
