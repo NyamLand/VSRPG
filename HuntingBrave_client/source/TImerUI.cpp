@@ -23,8 +23,8 @@
 TimerUI::TimerUI(void) : timer( 0 )
 {
 	time_obj = new Image();
-	time_obj->Initialize("DATA/UI/main_UI/Number.png", 0, 500, 100, 100, 0, 0, 64 * 3, 64);
-	time_obj->SetWave(0.01f);
+	time_obj->Initialize("DATA/UI/main_UI/Number.png", 300, 500, 100, 100, 0, 0, 64 * 3, 64);
+	time_obj->SetFlash(0.1f);
 
 }
 
@@ -45,10 +45,9 @@ void	TimerUI::Update(void)
 {
 	timer = gameManager->GetTime();
 	if ( KEY_Get( KEY_SPACE ) == 1 ){
-		if ( time_obj->WaveUpdate( 100, 1.0f ) )
-		{
-			time_obj->SetWave( 0.01f );
-		}
+		time_obj->FlashUpdate();
+	//time_obj->SetFlash( 0.1f );
+
 	}
 }
 
@@ -59,7 +58,7 @@ void	TimerUI::Render(void)
 	sprintf_s( str, "timer = %d•b",timer );
 	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
 
-	//time_obj->Render( IMAGE_MODE::WAVE );
+	time_obj->Render( IMAGE_MODE::FLASH );
 }
 
 //--------------------------------------------------------------------------------------

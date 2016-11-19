@@ -40,6 +40,14 @@
 		this->color = Vector3(1.0f, 1.0f, 1.0f);
 		this->p = GetPoint(this->x, this->y);
 		this->renderflag = true;
+
+		this->waveSpeed = 0.0f;
+		this->waveAlpha = 0.0f;
+		this->waveState = false;
+
+		this->flashSpeed = 0.0f;
+		this->flashAlpha = 0.0f;
+		this->flashParam = 0.0f;
 	}
 
 //---------------------------------------------------------------------------------------
@@ -82,16 +90,16 @@
 				break;
 
 			case IMAGE_MODE::FLASH:
-					//obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, flashingAlpha));
+					obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, flashAlpha));
 				break;
 
 			case IMAGE_MODE::SCALING:
-				//width = image.w + image.plusScaleX;
-				//height = image.h + image.plusScaleY;
-				//posx = x - width / 2;
-				//posy = y - height / 2;
+				width = w + plusScaleX;
+				height = h + plusScaleY;
+				posx = x - width / 2;
+				posy = y - height / 2;
 
-					//obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 				break;
 			}
 		}
@@ -131,16 +139,16 @@
 					break;
 
 				case IMAGE_MODE::FLASH:
-					//obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, flashingAlpha));
+					obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, flashAlpha));
 					break;
 
 				case IMAGE_MODE::SCALING:
-					//width = image.w + image.plusScaleX;
-					//height = image.h + image.plusScaleY;
-					//posx = x - width / 2;
-					//posy = y - height / 2;
+					width = w + plusScaleX;
+					height = h + plusScaleY;
+					posx = x - width / 2;
+					posy = y - height / 2;
 
-					//obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 					break;
 				}
 			}
@@ -163,7 +171,8 @@
 			{
 				t = 1.0f;
 				waveState = false;
-				waveRenderflag = false;
+				renderflag = false;
+				return	true;
 			}
 
 			Interpolation::LinearInterpolation(waveAlpha, max_alpha, 0.0f, t);
@@ -172,9 +181,69 @@
 
 		}
 
-		if (t >= 1.0f)		return	true;
+		//if (t >= 1.0f)		return	true;
 		return	false;
 	}
+
+	//
+	void	Image::FlashUpdate()
+	{
+		flashParam += flashSpeed;
+
+		if (flashParam >= 6.0f)
+		{
+			flashParam = 0.0f;
+		}
+
+		flashAlpha = 0.5f + 0.5f * sinf(flashParam);
+
+	}
+
+	//	拡大縮小更新
+	void	Image::ScallBigUpdate( int max_scale)
+	{
+		if (!scalingFlag) return;
+
+		//	パラメータ加算
+		t += scalingspeed;
+
+		//-------------------------
+		//	拡大
+		//-------------------------
+		if (scalingState)
+		{
+			//	パラメータ上限設定
+			if (t >= 1.0f)
+			{
+				t = 1.0f;
+				scalingState = false;
+			}
+
+			Interpolation::LinearInterpolation(plusScaleX, 0, max_scale, t);
+			Interpolation::LinearInterpolation(plusScaleY, 0, max_scale, t);
+
+		}
+
+		//-------------------------
+		//	縮小
+		//-------------------------
+		else
+		{
+			//	パラメータ上限設定
+			if (t >= 1.0f)
+			{
+				t = 1.0f;
+				scalingState = true;
+			}
+
+			Interpolation::LinearInterpolation(plusScaleX, max_scale, 0, t);
+			Interpolation::LinearInterpolation(plusScaleY, max_scale, 0, t);
+
+		}
+
+		if (t >= 1.0f)		t = 0.0f;
+	}
+
 
 //---------------------------------------------------------------------------------------
 //	情報設定
@@ -187,7 +256,27 @@
 		waveAlpha = 1.0f;
 		waveState = true;
 		waveSpeed = speed;
-		waveRenderflag = true;
+	}
+
+	void	Image::SetFlash(float speed)
+	{
+		plusScaleX = 0;
+		plusScaleY = 0;
+		t = 0;
+		flashAlpha = 1.0f;
+		flashParam = 0.0f;
+		flashSpeed = speed;
+	}
+
+	void	Image::SetScaling(float speed)
+	{
+		plusScaleX = 0;
+		plusScaleY = 0;
+		t = 0;
+		alpha = 1.0f;
+		scalingFlag = false;
+		scalingState = true;
+		scalingspeed = 0.0f;
 	}
 //---------------------------------------------------------------------------------------
 //	情報取得
