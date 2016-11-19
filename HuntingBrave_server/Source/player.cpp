@@ -31,7 +31,6 @@ namespace
 		const int SWORDATTACK_HIT_END = 150;
 		const int SWORDATTACK1_END = 160;
 		const int KNOCKBACK1_END = 405;
-
 	}
 }
 
@@ -87,10 +86,13 @@ namespace
 		Move();
 
 		//	“ü—ÍŽó•t
-		if ( inputManager->GetInput( index ).inputType == InputManager::ENTER )
+		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
 		{
-			if( SetMode( MODE::SWOADATTACK ) ) SetMotion( PLAYER_MOTION::ATTACK1 );
-			inputManager->GetInput( index ).inputType = InputManager::NO_INPUT;
+			if ( SetMode( MODE::SWOADATTACK ) )
+			{
+				SetMotion( PLAYER_MOTION::ATTACK1 );
+				return;
+			}
 		}
 	}
 

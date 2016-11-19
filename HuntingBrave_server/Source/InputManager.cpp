@@ -43,10 +43,10 @@ InputManager*	inputManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	入力情報設定
-	void	InputManager::SetInput( int id, char buttonType, char inputType )
+	void	InputManager::SetInput( int id, int keyType, int keyState )
 	{
-		inputInfo[id].buttonType = buttonType;
-		inputInfo[id].inputType = inputType;
+		inputInfo[id].keyType = keyType;
+		inputInfo[id].keyState = keyState;
 	}
 
 	//	スティック入力情報せってい
@@ -64,6 +64,14 @@ InputManager*	inputManager = nullptr;
 	InputInfo&	InputManager::GetInput( int id )
 	{
 		return	inputInfo[id];
+	}
+
+	//	入力状態取得
+	bool	InputManager::GetInputState( int id, int keyType, int keyState )
+	{
+		if ( inputInfo[id].keyType != keyType )	return	false;
+		if ( inputInfo[id].keyState != keyState )		return	false;
+		return	true;
 	}
 
 //----------------------------------------------------------------------------------------------

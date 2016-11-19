@@ -75,12 +75,9 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	SafeDelete( gameParam );
 	playerManager->Release();
 	enemyManager->Release();
 	uiManager->Release();
-	
-
 }
 
 //*****************************************************************************************************************************

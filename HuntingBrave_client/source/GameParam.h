@@ -42,6 +42,7 @@ public:
 	void	SendPointInfo( void );
 	void	SendAttackParam( void );
 	void	SendMatching( void );
+	void	SendInputInfo( void );
 
 	//	受信処理
 	void	ReceiveCharaInfo( const LPSTR& data );
@@ -51,11 +52,12 @@ public:
 	void	ReceiveMatching( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
 
-	//	プレイヤーパラメータ操作
+	//	動作関数
+	void CheckInputData( int key );
+
+	//	情報設定
 	void	SetPlayerParam( int id, const PlayerParam& param );
 	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life );
-	
-	//	情報設定
 	void	SetPlayerInfo( int id, char* name );
 	void	SetPointInfo( int id, int addPoint );
 	void	SetMatchingInfo( int id, bool isComplete );
@@ -71,7 +73,6 @@ public:
 	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
 	char*	GetPlayerName( int id ){ return playerInfo[id].name; }
-	float		GetStickInput( float& outX, float& outY );
 };
 
 extern	GameParam*	gameParam;

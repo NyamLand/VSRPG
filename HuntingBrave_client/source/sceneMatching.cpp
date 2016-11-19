@@ -84,16 +84,12 @@ void	sceneMatching::Update( void )
 	//	ƒ‚ƒfƒ‹XV
 	ObjUpdate();
 
-
 	CheckComplete();
-
 
 	if ( KEY_Get( KEY_ENTER ) == 3 )
 	{
 		gameManager->isComplete = true;
 	}
-
-
 }
 
 void	sceneMatching::ObjUpdate()
@@ -109,7 +105,7 @@ void	sceneMatching::ObjUpdate()
 		{
 			obj[i]->SetPos( temppos );
 			obj[i]->SetAngle( 180 * PI / 180 );
-			obj[i]->SetScale(0.2f);
+			obj[i]->SetScale( 0.2f );
 			obj[i]->Animation();
 			obj[i]->Update();
 		}

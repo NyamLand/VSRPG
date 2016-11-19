@@ -53,5 +53,5 @@ void main( void )
 	delete	gameParam;		gameParam = nullptr;
 	delete	gameManager;		gameManager = nullptr;
 	delete	playerManager;	playerManager = nullptr;
-	delete	inputManager;	inputManager = nullptr;
+	delete	inputManager;		inputManager = nullptr;
 }

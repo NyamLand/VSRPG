@@ -34,14 +34,10 @@
 	{
 		char	com = SEND_COMMAND::PLAYER_INFO;	//1byte
 		float	axisX, axisY;	//	8byte
-		char	button;			//	1byte
-		char	inputType;	//	1byte
 		int 	frame;			//	4byte
-		//	15byte
-		SendPlayerData( float axisX, float axisY, char button, char inputType, int frame ) : 
-			axisX( axisX ), axisY( axisY ), 
-			button( button ), inputType( inputType ), 
-			frame( frame ){}
+		//	13byte
+		SendPlayerData( float axisX, float axisY, int frame ) : 
+			axisX( axisX ), axisY( axisY ), frame( frame ){}
 	};
 
 	//	çUåÇèÓïÒ
@@ -67,9 +63,9 @@
 	struct SendInputData
 	{
 		char		com = SEND_COMMAND::INPUT_INFO;
-		int		buttonType;
-		int		inputType;
+		int		keyType;
+		int		keyState;
 		SendInputData( void ){};
-		SendInputData( int buttonType, int inputType ) :
-			buttonType( buttonType ), inputType( inputType ){}
+		SendInputData( int keyType, int keyState ) :
+			keyType( keyType ), keyState( keyState ){}
 	};

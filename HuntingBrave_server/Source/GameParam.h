@@ -43,7 +43,8 @@ public:
 	int	ReceiveChara( int client, const LPSTR& data );
 	int	ReceivePoint( int client, const LPSTR& data );
 	int	ReceiveMatching( int client, const LPSTR& data );
-	int	ReceiveAttackParam( int client, const LPSTR& data );
+	int	ReceiveAttackInfo( int client, const LPSTR& data );
+	int	ReceiveInput( int client, const LPSTR& data );
 	int	ReceiveSignUp( int client, const LPSTR& data );
 	int	ReceiveSignOut( int client, const LPSTR& data );
 

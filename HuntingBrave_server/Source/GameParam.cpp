@@ -91,15 +91,19 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveChara( client, data );
 			break;
 
+		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
+			client = ReceiveAttackInfo( client , data );
+			break;
+
 		case RECEIVE_COMMAND::POINT_INFO:		//	点数情報
 			client = ReceivePoint( client, data );
 			break;
 
-		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
-			client = ReceiveAttackParam( client , data );
+		case RECEIVE_COMMAND::INPUT_INFO:	//	入力情報
+			client = ReceiveInput( client, data );
 			break;
 
-		case COMMANDS::MATCHING:
+		case COMMANDS::MATCHING:	//	マッチング
 			client = ReceiveMatching( client, data );
 			break;
 
@@ -176,9 +180,6 @@ GameParam*	gameParam = nullptr;
 		//	スティックの入力情報設定
 		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
 
-		//	ボタンの入力情報設定
-		inputManager->SetInput( client, receivePlayerData->button, receivePlayerData->inputType );
-		
 		//	フレーム情報設定
 		playerParam[client].frame = receivePlayerData->frame;
 
@@ -201,7 +202,7 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	攻撃情報受信
-	int	GameParam::ReceiveAttackParam( int client, const LPSTR& data )
+	int	GameParam::ReceiveAttackInfo( int client, const LPSTR& data )
 	{
 		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
 
@@ -211,6 +212,18 @@ GameParam*	gameParam = nullptr;
 							receiveAttackData->radius ) );
 		attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
 		attackInfo[client].power = 1;
+		return	-1;
+	}
+
+	//	入力情報取得
+	int	GameParam::ReceiveInput( int client, const LPSTR& data )
+	{
+		ReceiveInputData*	receiveInputData = ( ReceiveInputData* )data;
+
+		//	ボタンの入力情報設定
+		inputManager->SetInput( client, 
+			receiveInputData->keyType, receiveInputData->keyState );
+
 		return	-1;
 	}
 

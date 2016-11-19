@@ -141,6 +141,9 @@ GameParam*	gameParam = nullptr;
 
 		//	マッチング情報送信
 		SendMatching();
+
+		//	入力情報送信
+		SendInputInfo();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -152,17 +155,13 @@ GameParam*	gameParam = nullptr;
 	{
 		//	スティック入力情報取得
 		float axisX = 0.0f, axisY = 0.0f;
-		GetStickInput( axisX, axisY );
+		inputManager->GetStickInputLeft( axisX, axisY );
 
 		//	フレーム情報取得
 		int	frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
-		//	入力情報取得
-		char		inputType = inputManager->NO_INPUT;
-		char		buttonType = inputManager->GetInput( inputType );
-
 		//	送信情報設定
-		SendPlayerData	sendPlayerData( axisX, axisY, buttonType, inputType, frame  );
+		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
 
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
@@ -201,6 +200,18 @@ GameParam*	gameParam = nullptr;
 		matching.id = myIndex;
 		matching.isComplete = gameManager->GetIsComplete();
 		send( ( LPSTR )&matching, sizeof( matching ) );
+	}
+
+	//	入力情報送信
+	void	GameParam::SendInputInfo( void )
+	{
+		//	剣攻撃ボタン状態送信
+		CheckInputData( KEY_TYPE::B );
+		
+		//	魔法攻撃ボタン状態送信
+		CheckInputData( KEY_TYPE::A );
+
+		//	
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -262,6 +273,22 @@ GameParam*	gameParam = nullptr;
 	}
 
 //----------------------------------------------------------------------------------------------
+//	動作関数
+//----------------------------------------------------------------------------------------------
+
+	//	入力チェック＆送信
+	void	GameParam::CheckInputData( int key )
+	{
+		//	入力チェック
+		int inputType = KEY( key );
+		if ( inputType == 0 )	return; 
+
+		//	送信
+		SendInputData		sendInputData( key, inputType );
+		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
+	}
+
+//----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
@@ -317,12 +344,3 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
-
-	//	スティック入力情報取得( 返り値に入力の長さ、引数に入力値をかえす )
-	float	GameParam::GetStickInput( float& outX, float& outY )
-	{
-		outX = ( float )input[0]->Get( KEY_AXISX ) * 0.001f;
-		outY = -( float )input[0]->Get( KEY_AXISY ) * 0.001f;
-
-		return	Vector3( outX, 0.0f, outY ).Length();
-	}

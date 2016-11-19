@@ -30,10 +30,8 @@
 	//	キャラクターデータ送信用
 	struct ReceivePlayerData
 	{
-		char	com = RECEIVE_COMMAND::PLAYER_INFO;
+		char		com = RECEIVE_COMMAND::PLAYER_INFO;
 		float		axisX, axisY;
-		char		button;
-		char		inputType;
 		int		frame;
 	};
 
@@ -51,4 +49,12 @@
 		float			radius;
 		Vector3	attackPos1;
 		Vector3	attackPos2;
+	};
+
+	//	入力情報
+	struct ReceiveInputData
+	{
+		char		com = RECEIVE_COMMAND::INPUT_INFO;
+		int		keyType;
+		int		keyState;
 	};
