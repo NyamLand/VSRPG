@@ -57,6 +57,12 @@
 		int		addPoint;
 	};
 
+	//	マッチング情報
+	struct MatchingInfo
+	{
+		bool		isComplete;
+	};
+
 	//	データ構造
 	enum
 	{
@@ -73,7 +79,8 @@
 	{
 		enum
 		{
-			SIGN_UP = 10,
+			MATCHING = 10,
+			SIGN_UP,
 			SIGN_OUT
 		};
 	}
@@ -96,4 +103,15 @@
 		int	  id;
 		SignOut( void ){}
 		SignOut( int id ){ this->id = id; }
+	};
+
+	//	マッチング情報
+	struct Matching
+	{
+		char com = COMMANDS::MATCHING;
+		int	id;
+		bool	isComplete;
+		Matching( void );
+		Matching( int id, int mode );
+		void	Set( int id, int mode );
 	};

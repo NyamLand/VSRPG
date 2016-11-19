@@ -32,6 +32,7 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
+			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 			lifeInfo[id].Initialize( INIT_LIFE );
 		}
 	}
@@ -60,17 +61,11 @@ GameParam*	gameParam = nullptr;
 		//	全データ送信
 		for ( int clientNum = 0; clientNum < PLAYER_MAX; clientNum++ )
 		{
-			//	
-			if( playerInfo[clientNum].active == false ) continue;
-
 			//	アクティブでないプレイヤーはとばす
 			if ( playerInfo[clientNum].active == false ) continue;
 
 			//	移動情報送信
 			SendCharaInfo( client, clientNum );
-
-			//	点数情報送信
-			SendPointInfo( client, clientNum );	
 		}
 		
 		//	ゲーム情報送信
@@ -86,8 +81,8 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::Receive( void )
 	{
 		char	data[256];
-		int		size = sizeof( data );
-		int		client = receive( data, &size );
+		int	size = sizeof( data );
+		int	client = receive( data, &size );
 		if( client == -1 ) return -1;
 		
 		switch( data[COMMAND] )
@@ -102,6 +97,10 @@ GameParam*	gameParam = nullptr;
 
 		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
 			client = ReceiveAttackParam( client , data );
+			break;
+
+		case COMMANDS::MATCHING:
+			client = ReceiveMatching( client, data );
 			break;
 
 		case COMMANDS::SIGN_UP:	//	新規参入
@@ -152,6 +151,16 @@ GameParam*	gameParam = nullptr;
 		
 		//	送信
 		send( client, ( char* )&sendPointData, sizeof( sendPointData ) );
+	}
+
+	//	マッチング情報送信
+	void	GameParam::SendMatchingInfo( int client, int player )
+	{
+		//	情報設定
+		Matching	matching( player, matchingInfo[player].isComplete );
+
+		//	送信
+		send( client, ( char* )&matching, sizeof( matching ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -262,6 +271,22 @@ GameParam*	gameParam = nullptr;
 		printf( "%dP %sさんが脱退しました。\n", client + 1, playerInfo[client].name );
 
 		return	client;
+	}
+
+	//	マッチング情報受信
+	int	GameParam::ReceiveMatching( int client, const LPSTR& data )
+	{
+		Matching*	matching = ( Matching* )data;
+		matchingInfo[client].isComplete = matching->isComplete;
+
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			//	アクティブでないプレイヤーはとばす
+			if ( playerInfo[p].active == false ) continue;
+			SendMatchingInfo( client, p );
+		}
+
+		return	-1;
 	}
 
 //----------------------------------------------------------------------------------------------

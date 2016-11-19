@@ -5,11 +5,9 @@
 //
 //*****************************************************************************************************************************
 
+#include	"GameData.h"
 #include	<memory>
 using namespace std;
-
-//	ƒNƒ‰ƒX‘O•ûéŒ¾
-class GameParam;
 
 class	sceneMatching : public Scene
 {

@@ -35,6 +35,7 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
+			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
 	}
 
@@ -108,6 +109,10 @@ GameParam*	gameParam = nullptr;
 				ReceivePointInfo( data );
 				break;
 
+			case COMMANDS::MATCHING:
+				ReceiveMatching( data );
+				break;
+
 			case COMMANDS::SIGN_UP:		//	参加情報
 				ReceiveSignUpInfo( data );
 				break;
@@ -133,6 +138,9 @@ GameParam*	gameParam = nullptr;
 
 		//	攻撃データ送信
 		SendAttackParam();
+
+		//	マッチング情報送信
+		SendMatching();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -186,6 +194,15 @@ GameParam*	gameParam = nullptr;
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
 	}
 
+	//	マッチング状態送信
+	void	GameParam::SendMatching( void )
+	{
+		Matching	matching;
+		matching.id = myIndex;
+		matching.isComplete = gameManager->GetIsComplete();
+		send( ( LPSTR )&matching, sizeof( matching ) );
+	}
+
 //----------------------------------------------------------------------------------------------
 //	データ受信
 //----------------------------------------------------------------------------------------------
@@ -217,6 +234,13 @@ GameParam*	gameParam = nullptr;
 	{
 		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
 		SetPointInfo( receivePointData->id, receivePointData->point );
+	}
+
+	//	マッチング情報
+	void	GameParam::ReceiveMatching( const LPSTR& data )
+	{
+		Matching*	matching = ( Matching* )data;
+		SetMatchingInfo( matching->id, matching->isComplete );
 	}
 
 	//	サインアップ情報受信
@@ -251,6 +275,12 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SetPointInfo( int id, int point )
 	{
 		pointInfo[id].point = point;
+	}
+
+	//	マッチング情報設定
+	void	GameParam::SetMatchingInfo( int id, bool isComplete )
+	{
+		matchingInfo[id].isComplete = isComplete;
 	}
 
 	//	加算情報設定

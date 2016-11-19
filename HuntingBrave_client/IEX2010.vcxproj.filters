@@ -166,6 +166,9 @@
     <ClCompile Include="source\SharedData.cpp">
       <Filter>Source\GameData\SharedData</Filter>
     </ClCompile>
+    <ClCompile Include="source\sceneMatching.cpp">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -290,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="source\SharedData.h">
       <Filter>Source\GameData\SharedData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneMatching.h">
+      <Filter>Source\Scene\sceneMatching</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -442,6 +448,9 @@
     </Filter>
     <Filter Include="Source\GameData\SharedData">
       <UniqueIdentifier>{67dcb19f-222d-4dc2-9814-c671b4a9b2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching">
+      <UniqueIdentifier>{19c35837-0dd3-4892-afd4-02c509a31495}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -47,9 +47,6 @@ bool	sceneMain::Initialize( void )
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
-	//	GameParam初期化
-	gameParam = new GameParam();
-	
 	//	カメラ設定
 	mainView = new Camera();
 	mainView->Initialize(
@@ -57,14 +54,10 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
-	//	player設定
-	playerManager->Initialize();
-
-	//	enemy設定
+	//	enemy初期化
 	enemyManager->Initialize();
 	
-	//	stage設定
-	//stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
+	//	stage初期化
 	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
 	stage->SetPos( 0.0f, -5.0f, 0.0f );
 	stage->SetScale( 0.1f );
@@ -74,26 +67,6 @@ bool	sceneMain::Initialize( void )
 
 	//	uiの設定
 	uiManager->Initialize();
-
-	//	GameManagerの初期化
-	gameManager->Initialize();
-
-	//	テキスト読み込み
-	char addr[64], name[17];
-	std::ifstream	ifs( "onlineInfo.txt" );
-	ifs >> addr;
-	ifs >> name;
-
-	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, 7000, name ) )
-	{
-		MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
-		exit( 0 );
-		return	false;
-	}
-
-	//	BGM再生
-	//IEX_PlayStreamSound( "DATA/Sound/BGM/menu.ogg" );
 
 	return true;
 }
@@ -119,7 +92,6 @@ void	sceneMain::Update( void )
 {
 	//	経過時間取得
 	float elapseTime = GetElapseTime();
-	printf( "経過時間 : %f\n", elapseTime );
 
 	//	送受信
 	std::thread		ThreadFunc( ThreadFunction );

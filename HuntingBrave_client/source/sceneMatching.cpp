@@ -40,12 +40,12 @@
 bool	sceneMatching::Initialize(void)
 {
 	//	環境設定
-	iexLight::SetAmbient(0x404040);
-	iexLight::SetFog(800, 1000, 0);
+	iexLight::SetAmbient( 0x404040 );
+	iexLight::SetFog( 800, 1000, 0 );
 
-	Vector3 dir(1.0f, -1.0f, -0.5f);
+	Vector3 dir( 1.0f, -1.0f, -0.5f );
 	dir.Normalize();
-	iexLight::DirLight(shader, 0, &dir, 0.8f, 0.8f, 0.8f);
+	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
 	//	GameParam初期化
 	gameParam = new GameParam();
@@ -54,17 +54,14 @@ bool	sceneMatching::Initialize(void)
 	mainView = new Camera();
 	mainView->Initialize(
 		Camera::VIEW_MODE::TRACKING_VIEW,
-		Vector3(0.0f, 5.0f, -20.0f),
-		Vector3(0.0f, 3.0f, 0.0f));
+		Vector3( 0.0f, 5.0f, -20.0f ),
+		Vector3( 0.0f, 3.0f, 0.0f ) );
 
-
-	for (int i = 0; i < PLAYER_MAX; i++)
+	//	モデル初期化
+	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		obj[i] = make_unique<iex3DObj>(LPSTR("DATA/CHR/suppin/Suppin.IEM"));
+		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/Suppin.IEM" ) );
 	}
-
-	//	GameManagerの初期化
-	gameManager->Initialize();
 
 	//	テキスト読み込み
 	char addr[64], name[17];
@@ -73,25 +70,19 @@ bool	sceneMatching::Initialize(void)
 	ifs >> name;
 
 	//	クライアント初期化( serverと接続 )
-	if (!gameParam->InitializeClient(addr, 7000, name))
+	if ( !gameParam->InitializeClient( addr, 7000, name ) )
 	{
-		MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK);
-		exit(0);
+		MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
+		exit( 0 );
 		return	false;
 	}
-	//仮
-	//baseEquipment = new BaseEquipment();
 
 	return true;
 }
 
-sceneMatching::~sceneMatching(void)
+sceneMatching::~sceneMatching( void )
 {
-	SafeDelete(mainView);
-	//SafeDelete(gameParam);
-	//playerManager->Release();
-
-
+	SafeDelete( mainView );
 }
 
 //*****************************************************************************************************************************
@@ -99,7 +90,7 @@ sceneMatching::~sceneMatching(void)
 //		更新
 //
 //*****************************************************************************************************************************
-void	sceneMatching::Update(void)
+void	sceneMatching::Update( void )
 {
 	//	サーバーから情報受信
 	gameParam->Update();
@@ -107,16 +98,14 @@ void	sceneMatching::Update(void)
 	//	GameManager更新
 	gameManager->Update();
 
-	//	camera更新
-	//mainView->Update(playerManager->GetPlayer(0)->GetPos());
-
+	//	モデル更新
 	ObjUpdate();
 
 
 	CheckComplete();
 
 
-	if (KEY_Get(KEY_ENTER) == 3)
+	if ( KEY_Get( KEY_ENTER ) == 3 )
 	{
 		gameManager->isComplete = true;
 	}
@@ -147,18 +136,19 @@ void	sceneMatching::ObjUpdate()
 void	sceneMatching::CheckComplete()
 {
 	bool check = true;
-	for (int i = 0; i < PLAYER_MAX; i++)
+	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		if (gameParam->GetPlayerActive(i))
+		if ( gameParam->GetPlayerActive( i ) )
 		{
-			if (gameParam->GetMatchingInfo(i).isComplete == false) check = false;
+			if ( gameParam->GetMatchingInfo( i ).isComplete == false ) check = false;
 		}
 	}
 
-	if (check)
+	if ( check )
 	{
 		gameManager->isComplete = false;
-		MainFrame->ChangeScene(new sceneMain());
+		MainFrame->ChangeScene( new sceneMain() );
+		return;
 	}
 }
 
@@ -190,36 +180,34 @@ void	sceneMatching::Render(void)
 }
 
 //	debug用描画
-void	sceneMatching::DebugRender(void)
+void	sceneMatching::DebugRender( void )
 {
-	for (int p = 0; p < PLAYER_MAX; p++)
+	for ( int p = 0; p < PLAYER_MAX; p++ )
 	{
 		//	各プレイヤーログインしているかどうか
-		PlayerParam	playerParam = gameParam->GetPlayerParam(p);
-		int active = gameParam->GetPlayerActive(p);
-
-
+		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
+		int active = gameParam->GetPlayerActive( p );
 
 		char	str[256];
 		char	str2[256];
 
-		if (gameParam->GetMatchingInfo(p).isComplete == false)sprintf_s(str2, "Enterキーを押してください");
-		else sprintf_s(str2, "準備完了");
+		if ( gameParam->GetMatchingInfo( p ).isComplete == false )sprintf_s( str2, "Enterキーを押してください" );
+		else sprintf_s( str2, "準備完了" );
 
-		if (active)
+		if ( active )
 		{
-			sprintf_s(str, "%dP pos = 接続中 : %s", p + 1, str2 );
+			sprintf_s( str, "%dP pos = 接続中 : %s", p + 1, str2 );
 		}
 		else
 		{
-			sprintf_s(str, "%dP pos = 待機中 : %s", p + 1, str2);
+			sprintf_s( str, "%dP pos = 待機中 : %s", p + 1, str2 );
 		}
-		IEX_DrawText(str, 20, 300 + p * 50, 500, 200, 0xFFFFFF00);
+		IEX_DrawText( str, 20, 300 + p * 50, 500, 200, 0xFFFFFF00 );
 	}
 }
 
 //	自分の情報表示
-void	sceneMatching::MyInfoRender(void)
+void	sceneMatching::MyInfoRender( void )
 {
 	//	自分のID( Player番号 )
 	int	 id = gameParam->GetMyIndex();
