@@ -1,6 +1,7 @@
 #include	"iextreme.h"
-#include	"Scene.h"
+#include	"System.h"
 #include	"Framework.h"
+#include	"GameParam.h"
 #include	"sceneTitle.h"
 #include	"sceneMain.h"
 #include	"sceneMatching.h"
@@ -19,6 +20,31 @@ DWORD	ScreenMode  = SCREEN720p;
 Framework*	MainFrame = NULL;
 
 //*****************************************************************************************************************************
+//		ネットワーク初期化
+//*****************************************************************************************************************************
+BOOL	InitNetWork( void )
+{
+	//	GameParam初期化
+	gameParam = new GameParam();
+
+	//	テキスト読み込み
+	char addr[64], name[17];
+	std::ifstream	ifs( "onlineInfo.txt" );
+	ifs >> addr;
+	ifs >> name;
+
+	//	クライアント初期化( serverと接続 )
+	if ( !gameParam->InitializeClient( addr, 7000, name ) )
+	{
+		MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
+		exit( 0 );
+		return	FALSE;
+	}
+
+	return	TRUE;
+}
+
+//*****************************************************************************************************************************
 //		アプリケーション初期化
 //*****************************************************************************************************************************
 
@@ -35,10 +61,13 @@ BOOL	InitApp( HWND hWnd )
 	MainFrame = new Framework( FPS_FLEX );
 
 	//	初期シーン登録
-	//MainFrame->ChangeScene( new sceneMatching() );
-	MainFrame->ChangeScene( new sceneMain() );
+	MainFrame->ChangeScene( new sceneMatching() );
+	//MainFrame->ChangeScene( new sceneMain() );
 
-	return TRUE;
+	//	ネットワーク初期化
+	BOOL initNet = InitNetWork();
+
+	return initNet;
 }
 
 //*****************************************************************************************************************************
@@ -127,6 +156,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	//	全解放	
 	delete	MainFrame;
+	delete	gameParam;
 	SYSTEM_Release();
 	iexSystem::CloseDebugWindow();
 	IEX_ReleaseInput();
@@ -134,3 +164,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	return 0;
 }
+
+
+

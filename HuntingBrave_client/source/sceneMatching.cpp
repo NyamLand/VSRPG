@@ -47,9 +47,6 @@ bool	sceneMatching::Initialize(void)
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
-	//	GameParam初期化
-	gameParam = new GameParam();
-
 	//	カメラ設定
 	mainView = new Camera();
 	mainView->Initialize(
@@ -61,20 +58,6 @@ bool	sceneMatching::Initialize(void)
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
 		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/Suppin.IEM" ) );
-	}
-
-	//	テキスト読み込み
-	char addr[64], name[17];
-	std::ifstream	ifs("onlineInfo.txt");
-	ifs >> addr;
-	ifs >> name;
-
-	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, 7000, name ) )
-	{
-		MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
-		exit( 0 );
-		return	false;
 	}
 
 	return true;
@@ -117,15 +100,15 @@ void	sceneMatching::ObjUpdate()
 {
 	//接続してるかどうかだけの確認のため、座標決定や描画はクライアントでもいい・・・よくない？
 	Vector3 temppos;
-	for (int i = 0; i < PLAYER_MAX; i++)
+	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		temppos = Vector3(-10 + i * 5, 0, 0);
-		int active = gameParam->GetPlayerActive(i);
+		temppos = Vector3( -10.0f + i * 5.0f, 0, 0 );
+		int active = gameParam->GetPlayerActive( i );
 
-		if (active)
+		if ( active )
 		{
-			obj[i]->SetPos(temppos);
-			obj[i]->SetAngle(180 * PI / 180);
+			obj[i]->SetPos( temppos );
+			obj[i]->SetAngle( 180 * PI / 180 );
 			obj[i]->SetScale(0.2f);
 			obj[i]->Animation();
 			obj[i]->Update();
