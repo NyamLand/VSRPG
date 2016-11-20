@@ -205,13 +205,14 @@ GameParam*	gameParam = nullptr;
 	//	入力情報送信
 	void	GameParam::SendInputInfo( void )
 	{
-		//	剣攻撃ボタン状態送信
+		//	剣攻撃ボタン入力送信
 		CheckInputData( KEY_TYPE::B );
 		
-		//	魔法攻撃ボタン状態送信
+		//	魔法攻撃ボタン入力送信
 		CheckInputData( KEY_TYPE::A );
 
-		//	
+		//	スタートボタン入力送信
+		CheckInputData( KEY_TYPE::START );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -277,14 +278,14 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	入力チェック＆送信
-	void	GameParam::CheckInputData( int key )
+	void	GameParam::CheckInputData( int keyType )
 	{
 		//	入力チェック
-		int inputType = KEY( key );
-		if ( inputType == 0 )	return; 
+		int keyState = KEY( keyType );
+		//if ( keyState == 0 )	return;
 
 		//	送信
-		SendInputData		sendInputData( key, inputType );
+		SendInputData		sendInputData( keyType, keyState );
 		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
 	}
 

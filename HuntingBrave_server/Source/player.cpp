@@ -37,7 +37,7 @@ namespace
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
-
+	
 	//	コンストラクタ
 	Player::Player( int id ) : 
 		index( id )
@@ -85,15 +85,8 @@ namespace
 		//	移動
 		Move();
 
-		//	入力受付
-		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
-		{
-			if ( SetMode( MODE::SWOADATTACK ) )
-			{
-				SetMotion( PLAYER_MOTION::ATTACK1 );
-				return;
-			}
-		}
+		//	入力チェック
+		CheckInput();
 	}
 
 	//	剣攻撃
@@ -164,6 +157,20 @@ namespace
 		{
 			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
+		}
+	}
+
+	//	入力チェック
+	void	Player::CheckInput( void )
+	{
+		//	攻撃入力受付
+		if ( inputManager->GetInputState( index, KEY_TYPE::B, KEY_STATE::ENTER ) )
+		{
+			if ( SetMode( MODE::SWOADATTACK ) )
+			{
+				SetMotion( PLAYER_MOTION::ATTACK1 );
+				return;
+			}
 		}
 	}
 

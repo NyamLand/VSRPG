@@ -53,7 +53,7 @@ public:
 	void	ReceiveGameInfo( const LPSTR& data );
 
 	//	“®ìŠÖ”
-	void CheckInputData( int key );
+	void CheckInputData( int keyType );
 
 	//	î•ñİ’è
 	void	SetPlayerParam( int id, const PlayerParam& param );

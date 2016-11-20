@@ -9,6 +9,7 @@
 
 //	include
 #include	"GameData.h"
+#include	<map>
 
 //	íËêî( XBoxÉRÉìÉgÉçÅ[Éâ )
 namespace
@@ -18,7 +19,6 @@ namespace
 	{
 		enum 
 		{
-			NO_INPUT,
 			A = 4,
 			B,
 			X,
@@ -28,7 +28,7 @@ namespace
 			L3 = 12,
 			R3,
 			SELECT,
-			START,
+			START
 		};
 	}
 
@@ -40,19 +40,18 @@ namespace
 			NO_INPUT,
 			STAY,
 			UP,
-			ENTER
+			ENTER,
+			KEY_STATE_MAX
 		};
 	}
 }
 
 //	struct
 struct InputInfo
-	{
-		float	axisX, axisY;
-		int	keyType;
-		int	keyState;
-	};
-
+{
+	float	axisX, axisY;
+	std::map<int, int>	keyState;
+};
 
 //	class
 class InputManager
