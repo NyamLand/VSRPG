@@ -187,7 +187,7 @@ GameParam*	gameParam = nullptr;
 	{
 		//	î•ñİ’è
 		AttackInfo	atkInfo = attackInfo[myIndex];
-		SendAttackData	sendAttackData( atkInfo.pos1, atkInfo.pos2, atkInfo.radius );
+		SendAttackData	sendAttackData( atkInfo.shape, atkInfo.pos1, atkInfo.pos2, atkInfo.radius );
 
 		//	‘—M
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );

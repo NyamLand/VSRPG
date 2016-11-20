@@ -79,6 +79,12 @@
     <Filter Include="ソース ファイル\ShapeInfo">
       <UniqueIdentifier>{c356096f-8b22-45b6-a036-bab7ab67a7bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\MagicManager">
+      <UniqueIdentifier>{77deb41f-3577-401a-95ac-33bea287550a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Magic">
+      <UniqueIdentifier>{bc321496-9273-4457-a3a5-2ca35d0a55e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -183,6 +189,12 @@
     <ClCompile Include="Source\Collision.cpp">
       <Filter>ソース ファイル\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Magic.cpp">
+      <Filter>ソース ファイル\Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MagicManager.cpp">
+      <Filter>ソース ファイル\Manager\MagicManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -241,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="Source\Collision.h">
       <Filter>ソース ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Magic.h">
+      <Filter>ソース ファイル\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MagicManager.h">
+      <Filter>ソース ファイル\Manager\MagicManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

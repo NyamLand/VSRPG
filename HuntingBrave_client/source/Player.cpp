@@ -41,6 +41,7 @@ namespace
 	{
 		HAND = 27,
 		SWORD,
+		RIGHT_HAND = 35
 	};
 }
 
@@ -144,7 +145,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	移動
-	bool		Player::Move( void )
+	bool	Player::Move( void )
 	{
 		return false;
 	}
@@ -153,21 +154,26 @@ namespace
 	void	Player::SetAttackShape( void )
 	{
 		//	仮、モーション番号でスキップ
-		if ( playerParam.motion != MOTION_NUM::ATTACK1 )		return;
+		Vector3	pos1, pos2;
 
-		//	ボーン情報取得
-		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
-		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
+		switch ( playerParam.motion )
+		{
+		case MOTION_NUM::ATTACK1:
+			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
+			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
+			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::HAND );
+			gameParam->GetAttackInfo( id ).pos2 = GetBonePos( BONE_NUM::SWORD );
+			break;
 
-		//	攻撃情報設定
-		gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
-		gameParam->GetAttackInfo( id ).pos1 = handPos;
-		gameParam->GetAttackInfo( id ).pos2 = swordPos;
-		gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
+		case MOTION_NUM::MAGIC_ACTUATION:
+			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
+			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			break;
+		}
 	}
 
 	//	テクスチャ設定
-	void		Player::ChangeTexture( int colorNum )
+	void	Player::ChangeTexture( int colorNum )
 	{
 		//	ファイル設定
 		char	fileName[256] = "DATA/CHR/suppin/s_body_";

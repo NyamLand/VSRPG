@@ -38,6 +38,9 @@ public:
 	void	SendPointInfo( int client, int player );
 	void	SendMatchingInfo( int client, int player );
 	void	SendGameInfo( int client );
+	void	SendMagicInfo( int client, int index, const Vector3& pos );
+	void	SendMagicAppendInfo( int client, int id, const Vector3& pos );
+	void	SendMagicEraseInfo( int client, int index );
 
 	//	óMˆ—
 	int	ReceiveChara( int client, const LPSTR& data );

@@ -20,8 +20,9 @@
 
 	//	コンストラクタ
 	AttackInfo::AttackInfo( void ) : attackParam( NO_ATTACK ),
-		power( 0 )
+		power( 0 ), step( 0 )
 	{
+		timer.Initialize();
 		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
 	}
 
@@ -29,6 +30,8 @@
 	void	AttackInfo::Reset( void )
 	{
 		attackParam = NO_ATTACK;
+		step = 0;
+		timer.Initialize();
 		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
 	}
 

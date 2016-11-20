@@ -54,7 +54,7 @@ GameManager*	gameManager = nullptr;
 	//	XV
 	void	GameManager::Update( void )
 	{
-		timer->LimitTimerUpdate();
+		timer->Update();
 	}
 
 //----------------------------------------------------------------------------------------------

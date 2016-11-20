@@ -168,6 +168,27 @@ GameParam*	gameParam = nullptr;
 		send( client, ( char* )&matching, sizeof( matching ) );
 	}
 
+	//	魔法情報送信
+	void	GameParam::SendMagicInfo( int client, int index, const Vector3& pos )
+	{
+		SendMagicData		sendMagicData( index, pos );
+		send( client, ( LPSTR )&sendMagicData, sizeof( sendMagicData ) );
+	}
+
+	//	魔法追加情報送信
+	void	GameParam::SendMagicAppendInfo( int client, int id, const Vector3& pos )
+	{
+		SendMagicAppend sendMagicAppend( id, pos );
+		send( client, ( LPSTR )&sendMagicAppend, sizeof( sendMagicAppend ) );
+	}
+
+	//	魔法消去情報送信
+	void	GameParam::SendMagicEraseInfo( int client, int index )
+	{
+		SendMagicErase	sendMagicErase( index );
+		send( client, ( LPSTR )&sendMagicErase, sizeof( sendMagicErase ) );
+	}
+
 //----------------------------------------------------------------------------------------------
 //	受信処理
 //----------------------------------------------------------------------------------------------
@@ -205,12 +226,23 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveAttackInfo( int client, const LPSTR& data )
 	{
 		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
+		switch ( receiveAttackData->shape )
+		{
+		case SHAPE_TYPE::SPHERE:
+			attackInfo[client].collisionShape.SetSphere(
+				Sphere(	receiveAttackData->attackPos1,
+								receiveAttackData->radius ) );
+			attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::SPHERE;
+			break;
 
-		attackInfo[client].collisionShape.SetCapsule( 
-			Capsule( 	receiveAttackData->attackPos1, 
-							receiveAttackData->attackPos2,
-							receiveAttackData->radius ) );
-		attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+		case SHAPE_TYPE::CAPSULE:
+			attackInfo[client].collisionShape.SetCapsule( 
+				Capsule( 	receiveAttackData->attackPos1, 
+								receiveAttackData->attackPos2,
+								receiveAttackData->radius ) );
+			attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+			break;
+		}
 		attackInfo[client].power = 1;
 		return	-1;
 	}

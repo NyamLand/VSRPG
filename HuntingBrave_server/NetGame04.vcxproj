@@ -122,6 +122,8 @@
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GameParam.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\Magic.cpp" />
+    <ClCompile Include="Source\MagicManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerManager.cpp" />
     <ClCompile Include="Source\PointManager.cpp" />
@@ -143,6 +145,8 @@
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameParam.h" />
     <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\Magic.h" />
+    <ClInclude Include="Source\MagicManager.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerManager.h" />
     <ClInclude Include="Source\PointManager.h" />

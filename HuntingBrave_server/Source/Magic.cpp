@@ -1,71 +1,88 @@
 
 #include	"iextreme.h"
-#include	"Timer.h"
+#include	"GameParam.h"
+#include	"Magic.h"
 
-//*****************************************************************************************************************************
+//**************************************************************************
 //
-//		ゲームデータ管理
+//	Magicクラス
 //
-//*****************************************************************************************************************************
+//**************************************************************************
 
 //----------------------------------------------------------------------------------------------
 //	グローバル
 //----------------------------------------------------------------------------------------------
+
+#define	MAGIC_ACTIVE_TIME		1
+#define	MAGIC_SPEED		0.3f
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Timer::Timer( void ) : startTime( 0 ), endTime( 0 ), nowTime( 0 )
+	Magic::Magic( void ) : timer( nullptr ),
+		pos( 0.0f, 0.0f, 0.0f ), vec( 0.0f, 0.0f, 0.0f ),
+		speed( MAGIC_SPEED ),
+		mode( 0 ),
+		isHit( false )
 	{
-		
+	
 	}
 
 	//	デストラクタ
-	Timer::~Timer( void )
+	Magic::~Magic( void )
 	{
-
+		if ( timer != nullptr )
+		{
+			delete	timer;	
+			timer = nullptr;
+		}
 	}
 
 	//	初期化
-	void	Timer::Initialize( void )
+	bool	Magic::Initialize( int id, const Vector3& pos, const Vector3& vec )
 	{
-		startTime = 0;
-		endTime = 0;
-		nowTime = 0;
+		this->pos = pos;
+		this->vec = vec;
+		this->vec.Normalize();
+		timer = new Timer();
+		timer->Start( MAGIC_ACTIVE_TIME );
+
+		return	true;
 	}
 
 //----------------------------------------------------------------------------------------------
 //	更新
 //----------------------------------------------------------------------------------------------
 
+	//	更新
+	bool	Magic::Update( void )
+	{
+		//	移動
+		Move();
+
+		//	タイマー更新
+		bool	ret = !timer->Update();
+
+		//if ( isHit )	return	false;
+		return	true;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
-	//	タイマースタート
-	void	Timer::Start( int limit )
+	//	移動
+	void	Magic::Move( void )
 	{
-		//	スタート時の時間を格納
-		time( &startTime );
-		
-		//	終了時間を設定
-		endTime = startTime + limit;
+		pos += vec * speed;
 	}
 
-	//	制限時間更新( 指定した時間をすぎるとtrueをかえす )
-	bool	Timer::Update( void )
+	//	拡大
+	void	Magic::Scaling( void )
 	{
-		//	値が０ならスキップ
-		if ( startTime == 0 || endTime == 0 )	return	false;
-
-		//	現在の時間を格納
-		time( &nowTime );
 		
-		//	時間計算
-		if ( endTime - nowTime <= 0 )		return	true;
-		return	false;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -76,10 +93,13 @@
 //	情報取得
 //----------------------------------------------------------------------------------------------
 
-	//	現在の残り時間を取得
-	int		Timer::GetLimitTime( void )const
+	//	座標取得
+	Vector3	Magic::GetPos( void )const
 	{
-		int remainingTime = ( int )( endTime - nowTime );
-		if ( remainingTime <= 0 )	return 0;
-		else return	remainingTime;
+		return	pos;
 	}
+
+
+
+
+
