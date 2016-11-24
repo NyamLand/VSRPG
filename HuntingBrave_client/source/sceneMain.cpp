@@ -3,6 +3,7 @@
 #include	"system/system.h"
 #include	<fstream>
 #include	<iostream>
+#include	<vector>
 #include	<thread>
 #include	"GlobalFunction.h"
 #include	"Image.h"
@@ -14,6 +15,7 @@
 #include	"Camera.h"
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
+#include	"MagicManager.h"
 #include	"Collision.h"
 
 //
@@ -29,6 +31,7 @@
 //*****************************************************************************************************************************
 
 iexMesh*	stage = nullptr;	//	‰¼(â‘ÎÁ‚·)
+iexMesh*	magic = nullptr;	//	‰¼(â‘ÎÁ‚·)
 BaseEquipment* baseEquipment;	//	‰¼(â‘ÎÁ‚·)
 
 //*****************************************************************************************************************************
@@ -56,6 +59,9 @@ bool	sceneMain::Initialize( void )
 
 	//	enemy‰Šú‰»
 	enemyManager->Initialize();
+
+	//	magic‰Šú‰»
+	magicManager->Initialize();
 	
 	//	stage‰Šú‰»
 	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
@@ -78,6 +84,7 @@ sceneMain::~sceneMain( void )
 	playerManager->Release();
 	enemyManager->Release();
 	uiManager->Release();
+	magicManager->Release();
 }
 
 //*****************************************************************************************************************************
@@ -133,6 +140,9 @@ void	sceneMain::Render( void )
 
 	//	enemy•`‰æ
 	enemyManager->Render();
+
+	//	magic•`‰æ
+	magicManager->Render();
 
 	//	ui•`‰æ
 	uiManager->Render();

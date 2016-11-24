@@ -1,12 +1,12 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	<vector>
-#include	"MagicManager.h"
+#include	"GameParam.h"
+#include	"Magic.h"
 
 //***************************************************************
 //
-//	MagicManagerクラス
+//	Magicクラス
 //
 //***************************************************************
 
@@ -19,87 +19,69 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	MagicManager::MagicManager( void ) : org( nullptr )
+	Magic::Magic( void ) : obj( nullptr ),
+		pos( 0.0f, 0.0f, 0.0f ), 
+		angle( 0.0f )
 	{
-
+	
 	}
 
 	//	デストラクタ
-	MagicManager::~MagicManager( void )
+	Magic::~Magic( void )
 	{
-		//Release();
+		//SafeDelete( obj );
 	}
 
 	//	初期化
-	bool	MagicManager::Initialize( void )
+	void	Magic::Initialize( iexMesh* org, const Vector3& Pos, float Angle )
 	{
-		if ( org == nullptr )
-			org = new iexMesh( "DATA/Effect/magic/MagicBullet/magic-Bullet.IMO" );
-		org->SetScale( 0.01f );
-		org->Update();
-		magicList.clear();
-		return	true;
-	}
-
-	//	解放
-	void	MagicManager::Release( void )
-	{
-		for ( auto it = magicList.begin(); it != magicList.end(); )
-		{
-			it = magicList.erase( it );
-		}
-
-		SafeDelete( org );
+		this->pos = Pos;
+		this->angle = Angle;
+		obj = org;
+		obj->SetPos( pos );
+		obj->SetAngle( angle );
+		obj->Update();
 	}
 
 //----------------------------------------------------------------------------------------------
 //	更新・描画
 //----------------------------------------------------------------------------------------------
-	
+
 	//	更新
-	void	MagicManager::Update( void )
+	void	Magic::Update( void )
 	{
+		obj->SetPos( pos );
+		obj->Update();
 	}
 
 	//	描画
-	void	MagicManager::Render( void )
+	void	Magic::Render( void )
 	{
-		org->Render();
-
-		for ( auto it = magicList.begin(); it != magicList.end(); it++ )
-		{
-			( *it )->Render();
-		}
+		obj->Render();
 	}
 
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
-	//	リストに追加
-	void	MagicManager::Append( int id, const Vector3& pos, float angle )
-	{
-		//	実体
-		Magic*	magic = new Magic();
-
-		//	初期化
-		magic->Initialize( org->Clone(), pos, angle );
-
-		//	リストに追加
-		magicList.push_back( magic );
-	}
-
-	//	リストから削除
-	void	MagicManager::Erase( int index )
-	{
-		magicList.erase( magicList.begin() + index );
-	}
-
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
+	//	座標設定
+	void	Magic::SetPos( const Vector3& pos )
+	{
+		this->pos = pos;
+	}
+
+	//	メッシュ設定
+	void	Magic::SetMesh( iexMesh*	mesh )
+	{
+		obj = mesh;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------
+
 

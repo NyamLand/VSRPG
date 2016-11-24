@@ -169,6 +169,12 @@
     <ClCompile Include="source\sceneMatching.cpp">
       <Filter>Source\Scene\sceneMatching</Filter>
     </ClCompile>
+    <ClCompile Include="source\MagicManager.cpp">
+      <Filter>Source\Manager\MagicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Magic.cpp">
+      <Filter>Source\Magic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -296,6 +302,12 @@
     </ClInclude>
     <ClInclude Include="source\sceneMatching.h">
       <Filter>Source\Scene\sceneMatching</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MagicManager.h">
+      <Filter>Source\Manager\MagicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Magic.h">
+      <Filter>Source\Magic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -451,6 +463,12 @@
     </Filter>
     <Filter Include="Source\Scene\sceneMatching">
       <UniqueIdentifier>{19c35837-0dd3-4892-afd4-02c509a31495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\MagicManager">
+      <UniqueIdentifier>{21483965-abcd-4f22-a950-c208ae760416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Magic">
+      <UniqueIdentifier>{c44f9b51-4493-4e6c-b494-4bf8adb41693}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

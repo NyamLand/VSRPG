@@ -19,9 +19,9 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-GameManager::GameManager(void) : timer(0), isComplete(false)
+	GameManager::GameManager(void) : timer(0), isComplete(false)
 	{
-	
+		int a = 0;
 	}
 
 	//	デストラクタ
