@@ -63,19 +63,16 @@ public:
 
 	//	wave用パラメータ
 	float	waveSpeed;
-	float	waveAlpha;
 	bool	waveState;
 
 	//	flashing用パラメータ
 	float	flashSpeed;
-	float	flashAlpha;
 	float	flashParam;
 
 	//	scaling用パラメータ
-	float	scalingspeed;
-	float	scalingAlpha;
+	float	scalingSpeed;
 	bool	scalingAlphaFlag;
-	bool	scalingState;
+	int		scalingState;
 	bool	scalingFlag;
 
 
@@ -96,7 +93,7 @@ public:
 	void	SetWave(float speed);
 
 	//	波紋更新（波紋大きさ、スタート時透明度）波紋終了時trueをかえす
-	bool	WaveUpdate(int max_scale = 140, float max_alpha = 1.0f);
+	bool	WaveUpdate(int max_scale, float start_alpha = 1.0f);
 
 	//--------------------------------
 	//	点滅
@@ -115,6 +112,6 @@ public:
 	//	拡大縮小用設定(拡大スピード)
 	void	SetScaling(float speed);
 
-	//	
+	//	拡大縮小更新(最大サイズ)
 	void	ScallBigUpdate(int max_scale);
 };
