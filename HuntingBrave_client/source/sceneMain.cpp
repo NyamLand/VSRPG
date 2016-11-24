@@ -110,6 +110,9 @@ void	sceneMain::Update( void )
 	//	enemy更新
 	enemyManager->Update();
 
+	//	magic更新
+	magicManager->Update();
+
 	//	ui更新
 	uiManager->Update();
 
