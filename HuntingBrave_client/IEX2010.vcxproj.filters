@@ -166,6 +166,9 @@
     <ClCompile Include="source\SharedData.cpp">
       <Filter>Source\GameData\SharedData</Filter>
     </ClCompile>
+    <ClCompile Include="source\EnemyHp.cpp">
+      <Filter>Source\UI\EnemyHp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -290,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="source\SharedData.h">
       <Filter>Source\GameData\SharedData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyHp.h">
+      <Filter>Source\UI\EnemyHp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -442,6 +448,9 @@
     </Filter>
     <Filter Include="Source\GameData\SharedData">
       <UniqueIdentifier>{67dcb19f-222d-4dc2-9814-c671b4a9b2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\EnemyHp">
+      <UniqueIdentifier>{226f2010-51fa-4782-9250-d1aca048d061}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
