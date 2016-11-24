@@ -127,6 +127,8 @@
     <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
+    <ClCompile Include="source\Magic.cpp" />
+    <ClCompile Include="source\MagicManager.cpp" />
     <ClCompile Include="source\MapUI.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
@@ -185,6 +187,8 @@
     <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\ItemUI.h" />
+    <ClInclude Include="source\Magic.h" />
+    <ClInclude Include="source\MagicManager.h" />
     <ClInclude Include="source\MapUI.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
