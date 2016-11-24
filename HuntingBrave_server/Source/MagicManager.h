@@ -30,6 +30,7 @@ public:
 	//	î•ñİ’è
 
 	//	î•ñæ“¾
+	std::vector<Magic*>& GetList( void );
 
 };
 

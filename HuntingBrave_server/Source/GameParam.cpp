@@ -142,7 +142,7 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendGameInfo( int client )
 	{
 		//	î•ñÝ’è
-		SendGameData	 sendGameData( gameManager->GetTimer()->GetLimitTime() ); 
+		SendGameData	 sendGameData( gameManager->GetTimer()->GetRemainingTime() ); 
 
 		//	‘—M
 		send( client, ( LPSTR )&sendGameData, sizeof( sendGameData ) );
@@ -178,7 +178,7 @@ GameParam*	gameParam = nullptr;
 	//	–‚–@’Ç‰Áî•ñ‘—M
 	void	GameParam::SendMagicAppendInfo( int client, int id, const Vector3& pos )
 	{
-		SendMagicAppend sendMagicAppend( id, pos );
+		SendMagicAppend sendMagicAppend( id, pos, playerParam[id].angle );
 		send( client, ( LPSTR )&sendMagicAppend, sizeof( sendMagicAppend ) );
 	}
 
@@ -226,23 +226,12 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveAttackInfo( int client, const LPSTR& data )
 	{
 		ReceiveAttackData*	receiveAttackData = ( ReceiveAttackData* )data;
-		switch ( receiveAttackData->shape )
-		{
-		case SHAPE_TYPE::SPHERE:
-			attackInfo[client].collisionShape.SetSphere(
-				Sphere(	receiveAttackData->attackPos1,
-								receiveAttackData->radius ) );
-			attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::SPHERE;
-			break;
-
-		case SHAPE_TYPE::CAPSULE:
-			attackInfo[client].collisionShape.SetCapsule( 
-				Capsule( 	receiveAttackData->attackPos1, 
-								receiveAttackData->attackPos2,
-								receiveAttackData->radius ) );
-			attackInfo[client].collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
-			break;
-		}
+		
+		//	UŒ‚î•ñÝ’è
+		attackInfo[client].shapeType = receiveAttackData->shape;
+		attackInfo[client].vec1 = receiveAttackData->vec1;
+		attackInfo[client].vec2 = receiveAttackData->vec2;
+		attackInfo[client].radius = receiveAttackData->radius;
 		attackInfo[client].power = 1;
 		return	-1;
 	}

@@ -17,7 +17,7 @@
 //----------------------------------------------------------------------------------------------
 
 //	íËêî
-#define	CHANT_TIME	2
+#define	CHANT_TIME	1.0f
 
 //	ì¸óÕèÓïÒ
 #define	MIN_INPUT_STICK		0.3f
@@ -196,8 +196,8 @@ namespace
 		if ( pParam.frame == MOTION_FRAME::MAGICACTIVATION )
 		{
 			magicManager->Append( index, 
-				gameParam->GetAttackInfo( index ).collisionShape.sphere.center,
-				Vector3( 0.0f, 0.0f, 0.0f ) );
+				gameParam->GetAttackInfo( index ).vec1,
+				gameParam->GetAttackInfo( index ).vec2 );
 		}
 
 		if ( pParam.frame >= MOTION_FRAME::MAGICATTACK_END )
@@ -343,5 +343,11 @@ namespace
 		{
 			pParam.motion = motion;
 		}
+	}
+
+	//	ç¿ïWê›íË
+	void	Player::SetPos( const Vector3& pos )
+	{
+		pParam.pos = pos;
 	}
 

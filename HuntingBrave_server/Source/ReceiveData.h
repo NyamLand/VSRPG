@@ -48,8 +48,8 @@
 		char			com = RECEIVE_COMMAND::ATTACK_INFO;
 		char			shape;
 		float			radius;
-		Vector3	attackPos1;
-		Vector3	attackPos2;
+		Vector3	vec1;
+		Vector3	vec2;
 	};
 
 	//	“ü—Íî•ñ

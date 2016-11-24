@@ -223,7 +223,7 @@ namespace
 	//	ˆê’èŠÔ‚²‚Æ‚É“G‚ğ¶¬
 	void	EnemyManager::AddRegularTimeIntervals( void )
 	{
-		if ( gameManager->GetTime() % APPEND_INTERVAL != 0 )
+		if ( ( int )gameManager->GetTime() % APPEND_INTERVAL != 0 )
 		{
 			//	¶¬ƒtƒ‰ƒO‚ğtrue‚É‚·‚é
 			appendOK = true;

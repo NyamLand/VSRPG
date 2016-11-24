@@ -197,7 +197,7 @@ GameParam*	gameParam = nullptr;
 	{
 		//	î•ñİ’è
 		AttackInfo	atkInfo = attackInfo[myIndex];
-		SendAttackData	sendAttackData( atkInfo.shape, atkInfo.pos1, atkInfo.pos2, atkInfo.radius );
+		SendAttackData	sendAttackData( atkInfo.shape, atkInfo.vec1, atkInfo.vec2, atkInfo.radius );
 
 		//	‘—M
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
@@ -282,7 +282,7 @@ GameParam*	gameParam = nullptr;
 		magicManager->Append( 
 			receiveMagicAppend->id,
 			receiveMagicAppend->pos, 
-			0.0f );
+			receiveMagicAppend->angle );
 	}
 
 	//	–‚–@Á‹î•ñóM

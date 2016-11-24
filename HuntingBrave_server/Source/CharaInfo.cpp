@@ -20,10 +20,12 @@
 
 	//	コンストラクタ
 	AttackInfo::AttackInfo( void ) : attackParam( NO_ATTACK ),
-		power( 0 ), step( 0 )
+		power( 0 ), step( 0 ),
+		shapeType( 0 ),
+		vec1( 0.0f, 0.0f, 0.0f ), vec2( 0.0f, 0.0f, 0.0f ),
+		radius( 0.0f )
 	{
-		timer.Initialize();
-		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
+		
 	}
 
 	//	リセット
@@ -31,8 +33,6 @@
 	{
 		attackParam = NO_ATTACK;
 		step = 0;
-		timer.Initialize();
-		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
 	}
 
 //-------------------------------------------------------------------------------------

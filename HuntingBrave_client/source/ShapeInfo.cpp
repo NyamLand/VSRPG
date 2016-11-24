@@ -91,20 +91,3 @@
 		this->r = r;
 	}
 
-//---------------------------------------------------------------------------------------------
-//	全形状まとめ
-//---------------------------------------------------------------------------------------------
-
-	//	カプセル設定
-	void	CollisionShape::SetCapsule( const Capsule& capsule )
-	{
-		this->capsule = capsule;
-		shapeType = SHAPE_TYPE::CAPSULE;
-	}
-
-	//	球設定
-	void	CollisionShape::SetSphere( const Sphere& sphere )
-	{
-		this->sphere = sphere;
-		shapeType = SHAPE_TYPE::SPHERE;
-	}

@@ -161,20 +161,22 @@ namespace
 		case MOTION_NUM::ATTACK1:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
 			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
-			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::HAND );
-			gameParam->GetAttackInfo( id ).pos2 = GetBonePos( BONE_NUM::SWORD );
+			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::HAND );
+			gameParam->GetAttackInfo( id ).vec2 = GetBonePos( BONE_NUM::SWORD );
 			break;
 
 		case MOTION_NUM::MAGIC_ACTUATION:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
-			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
+			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			gameParam->GetAttackInfo( id ).vec2 = GetFront();
 			break;
 
 		default:
-			printf( "default\n" );
+			return;
 		}
 
-		//	UŒ‚î•ñ‘—M
+		//	î•ñ‘—M
 		gameParam->SendAttackParam();
 	}
 

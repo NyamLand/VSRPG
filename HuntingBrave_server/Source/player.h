@@ -51,6 +51,7 @@ public:
 
 	//	î•ñİ’è
 	void	SetMotion( int motion );
+	void	SetPos( const Vector3& pos );
 };
 
 

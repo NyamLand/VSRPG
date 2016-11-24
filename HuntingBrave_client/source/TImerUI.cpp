@@ -55,7 +55,7 @@ void	TimerUI::Update(void)
 void	TimerUI::Render(void)
 {
 	char str[64];
-	sprintf_s( str, "timer = %d•b",timer );
+	sprintf_s( str, "timer = %f•b",timer );
 	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
 
 	time_obj->Render( IMAGE_MODE::FLASH );

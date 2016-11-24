@@ -179,18 +179,16 @@
 		switch ( collisionInfo.collisionShape.shapeType )
 		{
 		case SHAPE_TYPE::SPHERE:
-			collisionInfo.collisionShape.SetSphere( 
-				Sphere( 
+			collisionInfo.collisionShape.sphere = Sphere( 
 					Vector3( pos.x, pos.y + collisionInfo.height, pos.z ), 
-					collisionInfo.radius ) );
+					collisionInfo.radius );
 			break;
 
 		case SHAPE_TYPE::CAPSULE:
-			collisionInfo.collisionShape.SetCapsule(
-				Capsule(
+			collisionInfo.collisionShape.capsule = Capsule(
 					Vector3( pos.x, pos.y + collisionInfo.radius, pos.z ), 
 					Vector3( pos.x, pos.y + collisionInfo.height + collisionInfo.radius, pos.z ), 
-					collisionInfo.radius ) );
+					collisionInfo.radius );
 			break;
 		}
 	}

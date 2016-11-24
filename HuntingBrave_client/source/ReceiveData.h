@@ -30,7 +30,7 @@
 	struct ReceiveGameData
 	{
 		char	com = RECEIVE_COMMAND::GAME_INFO;
-		int		limitTimer;
+		float		limitTimer;
 	};
 
 	//	“_”î•ñ
@@ -69,9 +69,10 @@
 		char	com = RECEIVE_COMMAND::MAGIC_APPEND;
 		int	id;
 		Vector3	pos;
+		float			angle;
 
-		ReceiveMagicAppend( int id, const Vector3& pos ) :
-			id( id ), pos( pos ) {}
+		ReceiveMagicAppend( int id, const Vector3& pos, float angle ) :
+			id( id ), pos( pos ), angle( angle ) {}
 	};
 
 	//	–‚–@Á‹î•ñ

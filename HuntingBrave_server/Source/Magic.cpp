@@ -13,8 +13,9 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	MAGIC_ACTIVE_TIME		1
+#define	MAGIC_ACTIVE_TIME		0.5f
 #define	MAGIC_SPEED		0.3f
+#define	MAGIC_RADIUS	1.25f
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -23,7 +24,7 @@
 	//	コンストラクタ
 	Magic::Magic( void ) : timer( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), vec( 0.0f, 0.0f, 0.0f ),
-		speed( MAGIC_SPEED ),
+		speed( MAGIC_SPEED ), radius( MAGIC_RADIUS ),
 		mode( 0 ),
 		isHit( false )
 	{
@@ -43,6 +44,7 @@
 	//	初期化
 	bool	Magic::Initialize( int id, const Vector3& pos, const Vector3& vec )
 	{
+		this->id = id;
 		this->pos = pos;
 		this->vec = vec;
 		this->vec.Normalize();
@@ -65,8 +67,7 @@
 		//	タイマー更新
 		bool	ret = !timer->Update();
 
-		if ( ret )	return	true;
-		return	true;
+		return	ret;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -76,7 +77,7 @@
 	//	移動
 	void	Magic::Move( void )
 	{
-		//pos += vec * speed;
+		pos += vec * speed;
 	}
 
 	//	拡大
@@ -89,6 +90,7 @@
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
+
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------
@@ -97,6 +99,18 @@
 	Vector3	Magic::GetPos( void )const
 	{
 		return	pos;
+	}
+
+	//	半径取得
+	float			Magic::GetRadius( void )const
+	{
+		return	radius;
+	}
+
+	//	ID取得
+	int			Magic::GetID( void )const
+	{
+		return	id;
 	}
 
 

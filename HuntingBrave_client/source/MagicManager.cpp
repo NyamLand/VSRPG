@@ -68,8 +68,6 @@
 	//	描画
 	void	MagicManager::Render( void )
 	{
-		org->Render();
-
 		for ( auto it = magicList.begin(); it != magicList.end(); it++ )
 		{
 			( *it )->Render();
@@ -87,7 +85,7 @@
 		Magic*	magic = new Magic();
 
 		//	初期化
-		magic->Initialize( org->Clone(), pos, angle );
+		magic->Initialize( org->Clone(), id, pos, angle );
 
 		//	リストに追加
 		magicList.push_back( magic );
@@ -113,3 +111,8 @@
 //	情報取得
 //----------------------------------------------------------------------------------------------
 
+	//	リスト取得
+	std::vector<Magic*>&		MagicManager::GetList( void )
+	{
+		return	magicList;
+	}

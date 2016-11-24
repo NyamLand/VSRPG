@@ -1,9 +1,11 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	<vector>
 #include	"GameParam.h"
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
+#include	"MagicManager.h"
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -43,6 +45,9 @@
 	{
 		//	プレイヤーの攻撃判定
 		PlayerAttackCollision();
+
+		//	魔法判定
+		MagicCollision();
 	}
 
 	//	プレイヤー攻撃当たり判定
@@ -68,12 +73,11 @@
 				//	当たり判定用情報設定
 				CollisionShape hitCollisionShape = ( *it )->GetCollisionInfo().collisionShape;
 				CollisionShape attackCollisionShape;
-				attackCollisionShape.shapeType = attackInfo.shape;
-				attackCollisionShape.capsule = Capsule( attackInfo.pos1, attackInfo.pos2, attackInfo.radius );
-				
+				attackCollisionShape = SetCollisionShape( attackInfo.shape, attackInfo.vec1, attackInfo.vec2, attackInfo.radius );
+
 				//	当たり判定チェック
 				isHit = CheckCollision( attackCollisionShape, hitCollisionShape );
-				int a = 0;
+
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
@@ -117,6 +121,41 @@
 		//		}
 		//	}
 		//}
+	}
+
+	//	魔法当たり判定
+	void	Collision::MagicCollision( void )
+	{
+		//	変数準備
+		bool	isHit = false;
+		std::vector<Magic*>	magicList = magicManager->GetList();
+		std::list<Enemy*>		enemyList = enemyManager->GetList();
+
+		//	全魔法回す
+		for ( auto it = magicList.begin(); it != magicList.end(); it++)
+		{
+			if ( ( *it )->GetID() != gameParam->GetMyIndex() )		continue;
+
+			//	敵との当たり判定
+			for ( auto enemyIt = enemyList.begin(); enemyIt != enemyList.end(); enemyIt++ )
+			{
+				//	当たり判定用情報設定
+				CollisionShape hitCollisionShape = ( *enemyIt )->GetCollisionInfo().collisionShape;
+				CollisionShape attackCollisionShape = SetCollisionShape( SHAPE_TYPE::SPHERE,
+					( *it )->GetPos(), Vector3( 0.0f, 0.0f, 0.0f ), ( *it )->GetRadius() );
+
+				//	当たり判定チェック
+				isHit = CheckCollision( attackCollisionShape, hitCollisionShape );
+
+				//	当たっていればライフ計算
+				if ( isHit == true )
+				{
+					//	ライフ計算
+					( *enemyIt )->GetLifeInfo().CulcLife( -1 );
+					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
+				}
+			}
+		}
 	}
 
 	//	ヒットチェック
@@ -187,6 +226,29 @@
 		}
 
 		return	collisionPair;
+	}
+
+	//	当たり判定形状設定
+	CollisionShape	Collision::SetCollisionShape( char shapeType, const Vector3& vec1, const Vector3& vec2, float radius )
+	{
+		CollisionShape	collisionShape;
+		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
+
+		//	形状タイプ設定
+		collisionShape.shapeType = ( SHAPE_TYPE )shapeType;
+
+		switch ( shapeType )
+		{
+		case SHAPE_TYPE::SPHERE:
+			collisionShape.sphere = Sphere( vec1, radius );
+			break;
+
+		case SHAPE_TYPE::CAPSULE:
+			collisionShape.capsule = Capsule( vec1, vec2, radius );
+			break;
+		}
+
+		return	collisionShape;
 	}
 
 //--------------------------------------------------------------------------------------------
