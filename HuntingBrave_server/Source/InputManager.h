@@ -9,43 +9,53 @@
 
 //	include
 #include	"GameData.h"
+#include	<map>
 
-//	定数
-enum BUTTON_TYPE
+//	定数( XBoxコントローラ )
+namespace
 {
-	NO_INPUT = -1,
-	A = 1,
-	B,
-	X,
-	Y,
-	R1,
-	R3,
-	L1,
-	L3,
-	START,
-	SELECT,
-};
+	//	キー
+	namespace KEY_TYPE
+	{
+		enum 
+		{
+			A = 4,
+			B,
+			X,
+			Y,
+			L1 = 8,
+			R1,
+			L3 = 12,
+			R3,
+			SELECT,
+			START
+		};
+	}
+
+	//	入力状態
+	namespace KEY_STATE
+	{
+		enum
+		{
+			NO_INPUT,
+			STAY,
+			UP,
+			ENTER,
+			KEY_STATE_MAX
+		};
+	}
+}
 
 //	struct
 struct InputInfo
 {
 	float	axisX, axisY;
-	int	buttonType;
-	int	inputType;
+	std::map<int, int>	keyState;
 };
 
 //	class
 class InputManager
 {
-public:
-	enum BUTTON_STATE
-	{
-		NO_INPUT = -1,
-		STAY = 1,
-		UP,
-		ENTER
-	};
-
 private:
 	InputInfo	inputInfo[PLAYER_MAX];
 
@@ -54,16 +64,13 @@ public:
 	InputManager( void );
 	~InputManager( void );
 
-	//	更新
-
-	//	動作関数
-
 	//	情報設定
-	void	SetInput( int id, char buttonType, char inputType );
+	void	SetInput( int id, int keyType, int keyState );
 	void	SetAxis( int id, float axisX, float axisY );
 
 	//	情報取得
 	InputInfo&	GetInput( int id );
+	bool	GetInputState( int id, int keyType, int keyState );
 };
 
 extern	InputManager*	inputManager;

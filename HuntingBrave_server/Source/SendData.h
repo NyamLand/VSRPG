@@ -1,11 +1,11 @@
 
 #pragma once
 
-//******************************************************************
+//**************************************************************************
 //
 //	SendData
 //
-//******************************************************************
+//**************************************************************************
 
 	//	送信コマンド
 	namespace
@@ -19,8 +19,9 @@
 			GAME_INFO,
 			POINT_INFO,
 			CHARA_INFO,
-			SIGN_UP = 10,
-			SIGN_OUT,
+			MAGIC_INFO,
+			MAGIC_APPEND,
+			MAGIC_ERASE
 		};
 	}
 }
@@ -50,11 +51,41 @@
 	struct SendCharaData
 	{
 		char com = SEND_COMMAND::CHARA_INFO;
+		char	attackParam;
 		int			id;
 		int			life;
+		int			motion;
 		Vector3	pos;
 		float			angle;
-		int			motion;
-		SendCharaData( int id, const Vector3& pos, float angle, int motion, int life ) : 
-			id( id ), pos( pos ), angle( angle ), motion( motion ), life( life ){}
+		SendCharaData( int id, char attackParam, const Vector3& pos, float angle, int motion, int life ) : 
+			id( id ), attackParam( attackParam ), pos( pos ), angle( angle ), motion( motion ), life( life ){}
+	};
+
+	//	魔法攻撃情報
+	struct SendMagicData
+	{
+		char	com = SEND_COMMAND::MAGIC_INFO;
+		int	index;
+		Vector3	pos;
+		SendMagicData( int index, const Vector3& pos ) :
+			index( index ), pos( pos ) {}
+	};
+
+	//	魔法発動情報
+	struct SendMagicAppend
+	{
+		char	com = SEND_COMMAND::MAGIC_APPEND;
+		int	id;
+		Vector3	pos;
+
+		SendMagicAppend( int id, const Vector3& pos ) :
+			id( id ), pos( pos ) {}
+	};
+
+	//	魔法消去情報
+	struct SendMagicErase
+	{
+		char	com = SEND_COMMAND::MAGIC_ERASE;
+		int	index;
+		SendMagicErase( int index ) : index( index ){}
 	};

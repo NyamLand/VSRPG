@@ -19,9 +19,9 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameManager::GameManager( void ) : timer( 0 ) 
+	GameManager::GameManager(void) : timer(0), isComplete(false)
 	{
-	
+		int a = 0;
 	}
 
 	//	デストラクタ
@@ -45,9 +45,9 @@
 	//	クライアント初期化
 	void	GameManager::InitializeClient( void )
 	{
-		//	WinSock初期化
-		WSADATA	wsaData;
-		WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
+		////	WinSock初期化
+		//WSADATA	wsaData;
+		//WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
 	}
 
 //---------------------------------------------------------------------------------------

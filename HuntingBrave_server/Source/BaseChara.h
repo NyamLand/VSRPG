@@ -39,7 +39,7 @@ namespace
 		STEP,								//	ステップ
 		MAGIC_CHANT_START,		//	詠唱開始
 		MAGIC_CHANT,					//	詠唱中
-		MAGIC_ACTUATION,			//	魔法発動
+		MAGIC_ACTIVATION,			//	魔法発動
 		KNOCKBACK1,					//	仰け反り１
 		KNOCKBACK2,					//	仰け反り２
 		FALL,									//	倒れる
@@ -59,7 +59,6 @@ namespace
 class BaseChara
 {
 protected:
-	AttackInfo	attackInfo;
 	Vector3	pos;
 	float			angle;
 	int			mode;
@@ -76,5 +75,4 @@ public:
 
 	//	情報取得
 	Vector3	GetPos( void )const;
-	AttackInfo	GetAttackInfo( void )const;
 };

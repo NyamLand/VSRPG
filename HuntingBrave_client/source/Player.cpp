@@ -23,6 +23,7 @@
 #define	PLAYER_SCALE	0.2f
 #define	PLAYER_HEIGHT		2.5f
 #define	PLAYER_RADIUS		1.5f
+#define	ATTACK_RADIUS		0.5f
 
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED	0.3f
@@ -40,6 +41,7 @@ namespace
 	{
 		HAND = 27,
 		SWORD,
+		RIGHT_HAND = 35
 	};
 }
 
@@ -50,11 +52,6 @@ namespace
 	//	コンストラクタ
 	Player::Player( void ) : id( -1 )
 	{
-		//	関数ポインタ
-		ModeFunction[MODE::MOVE] = &Player::MoveMode;
-		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
-		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
-		ModeFunction[MODE::AVOID] = &Player::ModeAvoid;
 	}
 
 	//	デストラクタ
@@ -82,7 +79,6 @@ namespace
 		//	変数初期化
 		this->id = id;
 		speed = MOVE_SPEED;
-		attackInfo.power = 1;
 		lifeInfo.active = true;
 		lifeInfo.isAlive = true;
 
@@ -129,8 +125,8 @@ namespace
 		this->playerParam = playerParam;
 		SetPlayerParam( playerParam );
 
-		//	剣攻撃
-		SwordAttack();
+		//	攻撃情報設定
+		SetAttackShape();
 
 		//	更新
 		BaseChara::Update();
@@ -138,37 +134,10 @@ namespace
 
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
-		BaseChara::Render();		
-	}
+		BaseChara::Render();	
 
-//------------------------------------------------------------------------------------
-//	動作関数
-//------------------------------------------------------------------------------------
-
-	//	移動モード動作
-	void	Player::MoveMode( void )
-	{
-		//	移動モーション設定
-		Move();
-	}
-
-	void	Player::ModeSwordAttack( void )
-	{
-		bool param = SwordAttack();
-
-		if( param )	SetMode( MODE::MOVE );
-	}
-
-	void	Player::ModeMagicAttack( void )
-	{
-		bool param = MagicAttack();
-		if( param )SetMode( MODE::MOVE );
-	}
-
-	void	Player::ModeAvoid( void )
-	{
-		bool param = Avoid();
-		if( param )SetMode( MODE::MOVE );
+		AttackInfo attackInfo= gameParam->GetAttackInfo( id );
+		//drawShape->DrawCapsule( attackInfo.pos1, attackInfo.pos2, attackInfo.radius, 0xFFFFFFFF );
 	}
 
 //------------------------------------------------------------------------------------
@@ -176,107 +145,35 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	移動
-	bool		Player::Move( void )
+	bool	Player::Move( void )
 	{
 		return false;
 	}
 
 	//	剣攻撃
-	bool		Player::SwordAttack( void )
+	void	Player::SetAttackShape( void )
 	{
-		//	攻撃モーション以外ならスキップ
-		if ( GetMotion() != MOTION_NUM::ATTACK1 )
+		//	仮、モーション番号でスキップ
+		Vector3	pos1, pos2;
+
+		switch ( playerParam.motion )
 		{
-			attackInfo.Reset();
-			return false;
-		}
-
-		//	攻撃判定
-		int	frame = obj->GetFrame();
-		if ( frame >= 140 && frame <= 150 )	attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
-		else		attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
-		
-		//	ボーンの座標取得、当たり判定用構造体にセット
-		Vector3	handPos = GetBonePos( BONE_NUM::HAND );
-		Vector3	swordPos = GetBonePos( BONE_NUM::SWORD );
-		attackInfo.collisionShape.SetCapsule( Capsule( handPos, swordPos, 1.0f ) );
-
-		return false;
-	}
-
-	//魔法攻撃
-	bool		Player::MagicAttack( void )
-	{
-		SetMotion( MOTION_NUM::MAGIC_CHANT );		//仮
-
-		if ( !attackInfo.initFlag )
-		{
-			attackInfo.initFlag = true;
-			attackInfo.timer = 0;
-			move = Vector3( 0, 0, 0 );
-		}
-
-		//	左スティックの入力チェック
-		float	axisX = ( float )input[0]->Get( KEY_AXISX );
-		float	axisY = -( float )input[0]->Get( KEY_AXISY );
-		float	length = sqrtf( axisX * axisX + axisY * axisY ) * 0.001f;
-		switch ( attackInfo.step )
-		{
-		case 0:
-			//	入力があれば
-			if ( length >= MIN_INPUT_STICK )
-			{
-				//	向き調整
-				AngleAdjust(
-					Vector3( axisX, 0.0f, axisY ),
-					ANGLE_ADJUST_MAGIC_SPEED );
-
-				//if (axisX > 0)	angle += 0.1f; 
-				//else			angle -= 0.1f;
-			}
-
-			if ( KEY_Get( KEY_B ) == 2 ) attackInfo.step++;
+		case MOTION_NUM::ATTACK1:
+			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
+			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
+			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::HAND );
+			gameParam->GetAttackInfo( id ).pos2 = GetBonePos( BONE_NUM::SWORD );
 			break;
-		case 1:
-			attackInfo.timer++;		//硬直
-			SetMotion( MOTION_NUM::MAGIC_CHANT );
-			if (attackInfo.timer > 100)
-			{
-				attackInfo.initFlag = false;
-				return true;
-			}
+
+		case MOTION_NUM::MAGIC_ACTUATION:
+			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
+			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			break;
 		}
-		return false;
-	}
-
-	//回避
-	bool		Player::Avoid( void )
-	{
-		Vector3 front = GetFront();
-		SetMotion( MOTION_NUM::STEP );
-
-		if ( !attackInfo.initFlag )
-		{
-			attackInfo.initFlag = true;
-			attackInfo.timer = 0;
-			move.x += front.x * 1.1f;
-			move.z += front.z * 1.1f;
-		}
-
-		attackInfo.timer++;
-
-		if (attackInfo.timer > 30)
-		{
-			attackInfo.initFlag = false;
-			return true;
-		}
-
-
-		return false;
 	}
 
 	//	テクスチャ設定
-	void		Player::ChangeTexture( int colorNum )
+	void	Player::ChangeTexture( int colorNum )
 	{
 		//	ファイル設定
 		char	fileName[256] = "DATA/CHR/suppin/s_body_";

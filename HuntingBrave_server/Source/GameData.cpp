@@ -66,3 +66,26 @@
 		this->id = id;
 		strcpy( this->name, name );
 	}
+
+//----------------------------------------------------------------------------------------------
+//	Matching構造体
+//----------------------------------------------------------------------------------------------
+
+	//	コンストラクタ
+	Matching::Matching( void ) : id( 0 )
+	{
+
+	}
+	
+	//	コンストラクタ
+	Matching::Matching( int id, int mode )
+	{
+		Set( id, mode );
+	}
+
+	//	情報設定
+	void Matching::Set( int id, int mode )
+	{
+		this->id = id;
+		this->isComplete = mode;
+	}

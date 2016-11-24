@@ -13,29 +13,6 @@
 //	グローバル
 //-------------------------------------------------------------------------------------
 
-
-//-------------------------------------------------------------------------------------
-//	AttackInfo構造体
-//-------------------------------------------------------------------------------------
-
-	//	コンストラクタ
-	AttackInfo::AttackInfo( void ) : attackParam( NO_ATTACK ),
-		power( power ), step( 0 ), timer( 0 ),
-		initFlag( false )
-	{
-		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
-	}
-
-	//	リセット
-	void	AttackInfo::Reset( void )
-	{
-		attackParam = NO_ATTACK;
-		step = 0; 
-		timer = 0;
-		initFlag = false;
-		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
-	}
-
 //-------------------------------------------------------------------------------------
 //	LifeInfo構造体
 //-------------------------------------------------------------------------------------

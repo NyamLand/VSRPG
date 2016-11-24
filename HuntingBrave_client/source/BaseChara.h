@@ -25,7 +25,6 @@ protected:
 	float			scale;
 	int				mode;
 	CollisionInfo	collisionInfo;
-	AttackInfo		attackInfo;
 	LifeInfo			lifeInfo;
 
 public:
@@ -56,7 +55,6 @@ public:
 	void	SetObj( iex3DObj* obj );
 
 	//	èÓïÒéÊìæ
-	AttackInfo	GetAttackInfo( void )const;
 	LifeInfo&		GetLifeInfo( void );
 	CollisionInfo GetCollisionInfo( void )const;
 	Matrix		GetMatrix( void )const;

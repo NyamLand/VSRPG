@@ -133,12 +133,12 @@
 		if ( frame >= 138 && frame <= 150 )
 		{
 			//	UŒ‚ó‘Ô‚ð—LŒø‚É‚·‚é
-			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+			//attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}
 		else
 		{
 			//	UŒ‚ó‘Ô‚ð–³Œø‚É‚·‚é
-			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
+			//attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	’Êíƒ‚[ƒh‚ÖˆÚs
 			if ( frame >= 170 )

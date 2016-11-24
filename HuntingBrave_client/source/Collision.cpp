@@ -59,26 +59,27 @@
 			if ( gameParam->GetPlayerActive( p ) == false )		continue;
 
 			//	攻撃情報取得、攻撃中でなければスキップ
-			AttackInfo	attackInfo = playerManager->GetPlayer( p )->GetAttackInfo();
+			AttackInfo	attackInfo = gameParam->GetAttackInfo( p );
 			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
 
 			//	敵との当たり判定
 			for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
 			{
+				//	当たり判定用情報設定
+				CollisionShape hitCollisionShape = ( *it )->GetCollisionInfo().collisionShape;
+				CollisionShape attackCollisionShape;
+				attackCollisionShape.shapeType = attackInfo.shape;
+				attackCollisionShape.capsule = Capsule( attackInfo.pos1, attackInfo.pos2, attackInfo.radius );
+				
 				//	当たり判定チェック
-				isHit = CheckCollision( 
-					attackInfo.collisionShape, 
-					( *it )->GetCollisionInfo().collisionShape );
-
+				isHit = CheckCollision( attackCollisionShape, hitCollisionShape );
+				int a = 0;
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
-					if ((*it)->GetLifeInfo().active){
-						//	ライフ計算
-						(*it)->SetMode((*it)->DAMAGE);
-						(*it)->GetLifeInfo().CulcLife(-playerManager->GetPlayer(p)->GetAttackInfo().power);
-						gameParam->AddPoint(gameParam->GetMyIndex(), 1000);
-					}
+					//	ライフ計算
+					( *it )->GetLifeInfo().CulcLife( -1 );
+					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
 				}
 			}
 		}
@@ -87,37 +88,35 @@
 	//	敵攻撃当たり判定
 	void	Collision::EnemyAttackCollision( void )
 	{
-		//	変数準備
-		list<Enemy*>	 enemyList = enemyManager->GetList();
-		bool	isHit = false;
+		////	変数準備
+		//list<Enemy*>	 enemyList = enemyManager->GetList();
+		//bool	isHit = false;
 
-		//	全敵回す
-		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
-		{
-			//	攻撃情報取得、攻撃中でなければスキップ
-			AttackInfo	attackInfo = ( *it )->GetAttackInfo();
-			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
+		////	全敵回す
+		//for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		//{
+		//	//	攻撃情報取得、攻撃中でなければスキップ
+		//	AttackInfo	attackInfo = ( *it )->GetAttackInfo();
+		//	if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
 
-			//	全プレイヤー当たり判定
-			for ( int p = 0; p < PLAYER_MAX; p++ )
-			{
-				//	条件が合わないものはスキップ
-				if ( gameParam->GetPlayerActive( p ) == false )		continue;
+		//	//	全プレイヤー当たり判定
+		//	for ( int p = 0; p < PLAYER_MAX; p++ )
+		//	{
+		//		//	条件が合わないものはスキップ
+		//		if ( gameParam->GetPlayerActive( p ) == false )		continue;
 
-				//	当たり判定チェック
-				isHit = CheckCollision(
-					attackInfo.collisionShape,
-					playerManager->GetPlayer( p )->GetCollisionInfo().collisionShape );
+		//		//	当たり判定チェック
+		//		isHit = CheckCollision(
+		//			attackInfo.collisionShape,
+		//			playerManager->GetPlayer( p )->GetCollisionInfo().collisionShape );
 
-				//	当たっていればライフ計算
-				if ( isHit == true )
-				{
-					////	ライフ計算
-					//( *it )->GetLifeInfo().CulcLife( -playerManager->GetPlayer(p)->GetAttackInfo().power );
-					//gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
-				}
-			}
-		}
+		//		//	当たっていればライフ計算
+		//		if ( isHit == true )
+		//		{
+
+		//		}
+		//	}
+		//}
 	}
 
 	//	ヒットチェック
@@ -145,13 +144,16 @@
 		case COLLISION_PAIR::CAPSULEVSCAPSULE:
 			isHit = CapsuleVSCapsule( shape1.capsule, shape2.capsule );
 			break;
+
+		default:
+			break;
 		}
 
 		return	isHit;
 	}
 
 	//	形状組み合わせ
-	Collision::COLLISION_PAIR	Collision::GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 )
+	Collision::COLLISION_PAIR	Collision::GetCollisionPair( char type1, char type2 )
 	{
 		COLLISION_PAIR	collisionPair;
 

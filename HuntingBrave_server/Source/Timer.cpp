@@ -17,15 +17,23 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Timer::Timer( void )
+	Timer::Timer( void ) : startTime( 0 ), endTime( 0 ), nowTime( 0 )
 	{
-	
+		
 	}
 
 	//	デストラクタ
 	Timer::~Timer( void )
 	{
 
+	}
+
+	//	初期化
+	void	Timer::Initialize( void )
+	{
+		startTime = 0;
+		endTime = 0;
+		nowTime = 0;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -47,12 +55,16 @@
 	}
 
 	//	制限時間更新( 指定した時間をすぎるとtrueをかえす )
-	bool	Timer::LimitTimerUpdate( void )
+	bool	Timer::Update( void )
 	{
-		if ( endTime - nowTime <= 0 )	return	true;
+		//	値が０ならスキップ
+		if ( startTime == 0 || endTime == 0 )	return	false;
 
 		//	現在の時間を格納
 		time( &nowTime );
+		
+		//	時間計算
+		if ( endTime - nowTime <= 0 )		return	true;
 		return	false;
 	}
 

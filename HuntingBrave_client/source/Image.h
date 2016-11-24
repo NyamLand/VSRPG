@@ -26,6 +26,15 @@ namespace IMAGE_MODE
 	};
 }
 
+namespace IMAGE_SCALING
+{
+	enum
+	{
+		BIG,				//	拡大
+		SMALL,				//	縮小
+	};
+}
+
 
 //**********************************************************************
 //
@@ -56,13 +65,11 @@ public:
 	float	waveSpeed;
 	float	waveAlpha;
 	bool	waveState;
-	bool	waveRenderflag;
 
 	//	flashing用パラメータ
-	float	flashingSpeed;
-	float	flashingAlpha;
-	float	flashingRenderflag;
-	float	flashingParam;
+	float	flashSpeed;
+	float	flashAlpha;
+	float	flashParam;
 
 	//	scaling用パラメータ
 	float	scalingspeed;
@@ -70,7 +77,6 @@ public:
 	bool	scalingAlphaFlag;
 	bool	scalingState;
 	bool	scalingFlag;
-	bool	scalingrenderflag;
 
 
 public:
@@ -82,13 +88,33 @@ public:
 	void	Render(int mode);		//	描画
 	void	Render(int mode, int x, int y, int w, int h, int sx, int sy, int sw, int sh);
 
-	//	波紋の設定(波紋出したいオブジェクト、波紋スピード)
+	//--------------------------------
+	//	波紋
+	//--------------------------------
+
+	//	波紋の設定(波紋スピード)
 	void	SetWave(float speed);
 
-	//	波紋更新（波紋出したいオブジェクト、波紋大きさ、スタート時透明度）波紋終了時trueをかえす
+	//	波紋更新（波紋大きさ、スタート時透明度）波紋終了時trueをかえす
 	bool	WaveUpdate(int max_scale = 140, float max_alpha = 1.0f);
 
-	//	点滅更新（点滅させたいオブジェクト、点滅スピード）
-	void	FlashingUpdate(float speed = -1.0f);
+	//--------------------------------
+	//	点滅
+	//--------------------------------
 
+	//	点滅更新（）
+	void	FlashUpdate();
+
+	//	点滅の設定(点滅スピード)
+	void	SetFlash(float speed);
+
+	//--------------------------------
+	//	拡大縮小
+	//--------------------------------
+
+	//	拡大縮小用設定(拡大スピード)
+	void	SetScaling(float speed);
+
+	//	
+	void	ScallBigUpdate(int max_scale);
 };

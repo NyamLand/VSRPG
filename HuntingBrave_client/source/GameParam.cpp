@@ -35,6 +35,7 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
+			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
 	}
 
@@ -108,6 +109,10 @@ GameParam*	gameParam = nullptr;
 				ReceivePointInfo( data );
 				break;
 
+			case COMMANDS::MATCHING:
+				ReceiveMatching( data );
+				break;
+
 			case COMMANDS::SIGN_UP:		//	参加情報
 				ReceiveSignUpInfo( data );
 				break;
@@ -133,6 +138,12 @@ GameParam*	gameParam = nullptr;
 
 		//	攻撃データ送信
 		SendAttackParam();
+
+		//	マッチング情報送信
+		SendMatching();
+
+		//	入力情報送信
+		SendInputInfo();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -144,17 +155,13 @@ GameParam*	gameParam = nullptr;
 	{
 		//	スティック入力情報取得
 		float axisX = 0.0f, axisY = 0.0f;
-		GetStickInput( axisX, axisY );
+		inputManager->GetStickInputLeft( axisX, axisY );
 
 		//	フレーム情報取得
 		int	frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
-		//	入力情報取得
-		char		inputType = inputManager->NO_INPUT;
-		char		buttonType = inputManager->GetInput( inputType );
-
 		//	送信情報設定
-		SendPlayerData	sendPlayerData( axisX, axisY, buttonType, inputType, frame  );
+		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
 
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
@@ -178,18 +185,34 @@ GameParam*	gameParam = nullptr;
 	//	攻撃情報送信
 	void	GameParam::SendAttackParam( void )
 	{
-		//	情報取得
-		AttackInfo	attackInfo = playerManager->GetPlayer( myIndex )->GetAttackInfo();
-
 		//	情報設定
-		SendAttackData	sendAttackData( 
-			attackInfo.attackParam, 
-			attackInfo.collisionShape.capsule.p1,
-			attackInfo.collisionShape.capsule.p2,
-			attackInfo.collisionShape.capsule.r );
+		AttackInfo	atkInfo = attackInfo[myIndex];
+		SendAttackData	sendAttackData( atkInfo.shape, atkInfo.pos1, atkInfo.pos2, atkInfo.radius );
 
 		//	送信
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
+	}
+
+	//	マッチング状態送信
+	void	GameParam::SendMatching( void )
+	{
+		Matching	matching;
+		matching.id = myIndex;
+		matching.isComplete = gameManager->GetIsComplete();
+		send( ( LPSTR )&matching, sizeof( matching ) );
+	}
+
+	//	入力情報送信
+	void	GameParam::SendInputInfo( void )
+	{
+		//	剣攻撃ボタン入力送信
+		CheckInputData( KEY_TYPE::B );
+		
+		//	魔法攻撃ボタン入力送信
+		CheckInputData( KEY_TYPE::A );
+
+		//	スタートボタン入力送信
+		CheckInputData( KEY_TYPE::START );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -203,6 +226,9 @@ GameParam*	gameParam = nullptr;
 		ReceiveCharaData*	receiveCharaData = ( ReceiveCharaData* )data;
 
 		//	情報設定
+		attackInfo[receiveCharaData->id].attackParam = 
+			receiveCharaData->attackParam;
+
 		SetPlayerParam( 
 			receiveCharaData->id, 
 			receiveCharaData->pos, 
@@ -225,6 +251,13 @@ GameParam*	gameParam = nullptr;
 		SetPointInfo( receivePointData->id, receivePointData->point );
 	}
 
+	//	マッチング情報
+	void	GameParam::ReceiveMatching( const LPSTR& data )
+	{
+		Matching*	matching = ( Matching* )data;
+		SetMatchingInfo( matching->id, matching->isComplete );
+	}
+
 	//	サインアップ情報受信
 	void	GameParam::ReceiveSignUpInfo( const LPSTR& data )
 	{
@@ -238,6 +271,22 @@ GameParam*	gameParam = nullptr;
 		SignOut*	signOut = ( SignOut* )data;
 
 		RemovePlayerInfo( signOut->id ); 
+	}
+
+//----------------------------------------------------------------------------------------------
+//	動作関数
+//----------------------------------------------------------------------------------------------
+
+	//	入力チェック＆送信
+	void	GameParam::CheckInputData( int keyType )
+	{
+		//	入力チェック
+		int keyState = KEY( keyType );
+		//if ( keyState == 0 )	return;
+
+		//	送信
+		SendInputData		sendInputData( keyType, keyState );
+		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -257,6 +306,12 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SetPointInfo( int id, int point )
 	{
 		pointInfo[id].point = point;
+	}
+
+	//	マッチング情報設定
+	void	GameParam::SetMatchingInfo( int id, bool isComplete )
+	{
+		matchingInfo[id].isComplete = isComplete;
 	}
 
 	//	加算情報設定
@@ -290,12 +345,3 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
-
-	//	スティック入力情報取得( 返り値に入力の長さ、引数に入力値をかえす )
-	float	GameParam::GetStickInput( float& outX, float& outY )
-	{
-		outX = ( float )input[0]->Get( KEY_AXISX ) * 0.001f;
-		outY = -( float )input[0]->Get( KEY_AXISY ) * 0.001f;
-
-		return	Vector3( outX, 0.0f, outY ).Length();
-	}

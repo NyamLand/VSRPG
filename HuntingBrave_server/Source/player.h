@@ -33,11 +33,19 @@ public:
 	//	ƒ‚[ƒh•Ê“®ìŠÖ”
 	void	ModeMove( void );
 	void	ModeSwordAttack( void );
+	void	ModeMagicAttack( void );
+	void	ModeDamage( void );
 
 	//	“®ìŠÖ”
 	void	Move( void );
 	void	SwordAttack( void );
+	void	MagicAttack( void );
+	void	MagicChant( void );
+	void	MagicChantStart( void );
 	void	Damage( void );
+	void	CheckInput( void );
+
+	//	Œü‚«’²®
 	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
 	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
 

@@ -20,13 +20,14 @@ public:
 	//	初期化・解放
 	Timer( void );
 	~Timer( void );
+	void	Initialize( void );
 
 	//	スタート設定
 	void	Start( int limit );
 
 	//	更新
-	bool	LimitTimerUpdate( void );
+	bool	Update( void );
 
 	//	情報取得
-	int		GetLimitTime( void )const;
+	int	GetLimitTime( void )const;
 };

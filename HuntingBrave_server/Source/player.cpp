@@ -1,7 +1,9 @@
 
 #include	"iextreme.h"
+#include	<vector>
 #include	"GameParam.h"
 #include	"InputManager.h"
+#include	"MagicManager.h"
 #include	"Player.h"
 
 //*****************************************************************************************************************************
@@ -14,7 +16,8 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-//	初期パラメータ
+//	定数
+#define	CHANT_TIME	2
 
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
@@ -27,16 +30,30 @@ namespace
 {
 	namespace MOTION_FRAME
 	{
+		const int SWORDATTACK_HIT_START = 140;
+		const int SWORDATTACK_HIT_END = 150;
 		const int SWORDATTACK1_END = 160;
+		const int MAGICCHANT_END = 290;
+		const int MAGICACTIVATION = 340;
+		const int MAGICATTACK_END = 370;
 		const int KNOCKBACK1_END = 405;
+	}
 
+	namespace ATTACK_STEP
+	{
+		enum
+		{
+			CHANT_START,
+			CHANT,
+			ACTIVATION,
+		};
 	}
 }
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
-
+	
 	//	コンストラクタ
 	Player::Player( int id ) : 
 		index( id )
@@ -46,7 +63,8 @@ namespace
 		//	関数ポインタ設定
 		ModeFunction[MODE::MOVE] = &Player::ModeMove;
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
-		ModeFunction[MODE::DAMAGE] = &Player::Damage;
+		ModeFunction[MODE::DAMAGE] = &Player::ModeDamage;
+		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 	}
 
 	//	デストラクタ
@@ -84,18 +102,39 @@ namespace
 		//	移動
 		Move();
 
-		//	入力受付
-		if ( inputManager->GetInput( index ).inputType == InputManager::ENTER )
-		{
-			if( SetMode( MODE::SWOADATTACK ) ) SetMotion( PLAYER_MOTION::ATTACK1 );
-			inputManager->GetInput( index ).inputType = InputManager::NO_INPUT;
-		}
+		//	入力チェック
+		CheckInput();
 	}
 
 	//	剣攻撃
 	void	Player::ModeSwordAttack( void )
 	{
 		SwordAttack();
+	}
+
+	//	魔法攻撃
+	void	Player::ModeMagicAttack( void )
+	{
+		switch ( gameParam->GetAttackInfo( index ).step )
+		{
+		case ATTACK_STEP::CHANT_START:
+			MagicChantStart();
+			break;
+
+		case ATTACK_STEP::CHANT:
+			MagicChant();
+			break;
+
+		case ATTACK_STEP::ACTIVATION:
+			MagicAttack();
+			break;
+		}
+	}
+
+	//	ダメージ
+	void	Player::ModeDamage( void )
+	{
+		Damage();
 	}
 	
 //----------------------------------------------------------------------------------------------
@@ -133,11 +172,82 @@ namespace
 	void	Player::SwordAttack( void )
 	{
 		//	フレーム管理
+		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK_HIT_START &&
+			pParam.frame <= MOTION_FRAME::SWORDATTACK_HIT_END )
+		{
+			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK1;
+		}
+		else
+		{
+			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::NO_ATTACK;
+		}
 
 		// 一定以上のフレームに達すると移動に戻す
 		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK1_END )
 		{
 			SetMode( MODE::MOVE );
+			gameParam->GetAttackInfo( index ).Reset();
+		}
+	}
+
+	//	魔法攻撃
+	void	Player::MagicAttack( void )
+	{
+		if ( pParam.frame == MOTION_FRAME::MAGICACTIVATION )
+		{
+			magicManager->Append( index, 
+				gameParam->GetAttackInfo( index ).collisionShape.sphere.center,
+				Vector3( 0.0f, 0.0f, 0.0f ) );
+		}
+
+		if ( pParam.frame >= MOTION_FRAME::MAGICATTACK_END )
+		{
+			SetMode( MODE::MOVE );
+			gameParam->GetAttackInfo( index ).Reset();
+		}
+	}
+
+	//	魔法詠唱
+	void	Player::MagicChant( void )
+	{
+		//	離したとき発動可能状態なら発動、発動不可なら移動に戻る
+		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::UP ) )
+		{
+			//	タイマー更新
+			bool	chantState = gameParam->GetAttackInfo( index ).timer.Update();
+
+			if ( chantState )
+			{
+				SetMotion( PLAYER_MOTION::MAGIC_ACTIVATION );
+				gameParam->GetAttackInfo( index ).step = ATTACK_STEP::ACTIVATION;
+			}
+			else
+			{
+				//	移動に戻る（パラメータリセット）
+				SetMode( MODE::MOVE );
+				gameParam->GetAttackInfo( index ).Reset();
+			}
+		}
+	}
+
+	//	魔法詠唱開始
+	void	Player::MagicChantStart( void )
+	{
+		//	押している間詠唱、一定時間経過で発動可能
+		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::STAY ) )
+		{
+			if ( pParam.frame >= MOTION_FRAME::MAGICCHANT_END )
+			{
+				SetMotion( PLAYER_MOTION::MAGIC_CHANT );
+				gameParam->GetAttackInfo( index ).timer.Start( CHANT_TIME );
+				gameParam->GetAttackInfo( index ).step = ATTACK_STEP::CHANT;
+			}
+		}
+		else
+		{
+			//	移動に戻る（ パラメータリセット ）
+			SetMode( MODE::MOVE );
+			gameParam->GetAttackInfo( index ).Reset();
 		}
 	}
 
@@ -151,6 +261,30 @@ namespace
 		{
 			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
+		}
+	}
+
+	//	入力チェック
+	void	Player::CheckInput( void )
+	{
+		//	剣攻撃入力受付
+		if ( inputManager->GetInputState( index, KEY_TYPE::B, KEY_STATE::ENTER ) )
+		{
+			if ( SetMode( MODE::SWOADATTACK ) )
+			{
+				SetMotion( PLAYER_MOTION::ATTACK1 );
+				return;
+			}
+		}
+
+		//	魔法攻撃入力受付
+		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
+		{
+			if ( SetMode( MODE::MAGICATTACK ) )
+			{
+				SetMotion( PLAYER_MOTION::MAGIC_CHANT_START );
+				return;
+			}
 		}
 	}
 

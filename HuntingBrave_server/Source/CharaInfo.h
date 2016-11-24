@@ -9,6 +9,7 @@
 
 //	include
 #include	"ShapeInfo.h"
+#include	"Timer.h"
 
 //----------------------------------------------------------------------------------------------
 //	構造体
@@ -26,7 +27,9 @@
 		};
 
 		//	パラメータ
-		int		power;
+		int	power;
+		int	step;
+		Timer	timer;
 		ATTACK_PARAM	attackParam;
 		CollisionShape		collisionShape;
 
