@@ -65,7 +65,7 @@
 		//	タイマー更新
 		bool	ret = !timer->Update();
 
-		//if ( isHit )	return	false;
+		if ( ret )	return	true;
 		return	true;
 	}
 
@@ -76,7 +76,7 @@
 	//	移動
 	void	Magic::Move( void )
 	{
-		pos += vec * speed;
+		//pos += vec * speed;
 	}
 
 	//	拡大

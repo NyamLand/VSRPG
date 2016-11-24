@@ -20,8 +20,9 @@
 			GAME_INFO,
 			POINT_INFO,
 			CHARA_INFO,
-			SIGN_UP = 10,
-			SIGN_OUT,
+			MAGIC_INFO,
+			MAGIC_APPEND,
+			MAGIC_ERASE
 		};
 	}
 
@@ -50,4 +51,33 @@
 		int			motion;
 		Vector3	pos;
 		float			angle;
+	};
+
+	//	ñÇñ@çUåÇèÓïÒ
+	struct ReceiveMagicData
+	{
+		char	com = RECEIVE_COMMAND::MAGIC_INFO;
+		int	index;
+		Vector3	pos;
+		ReceiveMagicData( int index, const Vector3& pos ) :
+			index( index ), pos( pos ) {}
+	};
+
+	//	ñÇñ@î≠ìÆèÓïÒ
+	struct ReceiveMagicAppend
+	{
+		char	com = RECEIVE_COMMAND::MAGIC_APPEND;
+		int	id;
+		Vector3	pos;
+
+		ReceiveMagicAppend( int id, const Vector3& pos ) :
+			id( id ), pos( pos ) {}
+	};
+
+	//	ñÇñ@è¡ãéèÓïÒ
+	struct ReceiveMagicErase
+	{
+		char	com = RECEIVE_COMMAND::MAGIC_ERASE;
+		int	index;
+		ReceiveMagicErase( int index ) : index( index ){}
 	};

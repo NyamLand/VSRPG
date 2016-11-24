@@ -51,7 +51,10 @@ public:
 	void	ReceiveSignOutInfo( const LPSTR& data );
 	void	ReceiveMatching( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
-
+	void	ReceiveMagicInfo( const LPSTR& data );
+	void	ReceiveMagicAppendInfo( const LPSTR& data );
+	void	ReceiveMagicEraseInfo( const LPSTR& data );
+	
 	//	ìÆçÏä÷êî
 	void CheckInputData( int keyType );
 

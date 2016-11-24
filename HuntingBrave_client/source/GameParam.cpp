@@ -4,6 +4,7 @@
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
+#include	"MagicManager.h"
 #include	<thread>
 #include	"GameParam.h"
 
@@ -109,6 +110,18 @@ GameParam*	gameParam = nullptr;
 				ReceivePointInfo( data );
 				break;
 
+			case RECEIVE_COMMAND::MAGIC_INFO:
+				ReceiveMagicInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::MAGIC_APPEND:
+				ReceiveMagicAppendInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::MAGIC_ERASE:
+				ReceiveMagicEraseInfo( data );
+				break;
+
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;
@@ -135,9 +148,6 @@ GameParam*	gameParam = nullptr;
 
 		//	点数データ送信
 		SendPointInfo();
-
-		//	攻撃データ送信
-		SendAttackParam();
 
 		//	マッチング情報送信
 		SendMatching();
@@ -256,6 +266,30 @@ GameParam*	gameParam = nullptr;
 	{
 		Matching*	matching = ( Matching* )data;
 		SetMatchingInfo( matching->id, matching->isComplete );
+	}
+
+	//	魔法情報受信
+	void	GameParam::ReceiveMagicInfo( const LPSTR& data )
+	{
+		ReceiveMagicData	* receiveMagicData = ( ReceiveMagicData* )data;
+		magicManager->SetPos( receiveMagicData->index, receiveMagicData->pos );
+	}
+
+	//	魔法追加情報受信
+	void	GameParam::ReceiveMagicAppendInfo( const LPSTR& data )
+	{
+		ReceiveMagicAppend*	receiveMagicAppend = ( ReceiveMagicAppend* )data;
+		magicManager->Append( 
+			receiveMagicAppend->id,
+			receiveMagicAppend->pos, 
+			0.0f );
+	}
+
+	//	魔法消去情報受信
+	void	GameParam::ReceiveMagicEraseInfo( const LPSTR& data )
+	{
+		ReceiveMagicErase*	receiveMagicErase = ( ReceiveMagicErase* )data;
+		magicManager->Erase( receiveMagicErase->index );
 	}
 
 	//	サインアップ情報受信

@@ -169,7 +169,13 @@ namespace
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
 			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::RIGHT_HAND );
 			break;
+
+		default:
+			printf( "default\n" );
 		}
+
+		//	攻撃情報送信
+		gameParam->SendAttackParam();
 	}
 
 	//	テクスチャ設定

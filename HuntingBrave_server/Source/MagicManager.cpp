@@ -79,10 +79,14 @@ MagicManager*	magicManager = nullptr;
 	//	’Ç‰Á
 	void	MagicManager::Append( int id, const Vector3& pos, const Vector3& vec )
 	{
+		//	‰Šú‰»
 		Magic*	magic = new Magic();
 		magic->Initialize( id, pos, vec );
+
+		//	ƒŠƒXƒg‚É’Ç‰Á
 		magicList.push_back( magic );
 
+		//	î•ñ‘—M
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			gameParam->SendMagicAppendInfo( p, id, pos );
