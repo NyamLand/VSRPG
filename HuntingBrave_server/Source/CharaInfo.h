@@ -30,8 +30,11 @@
 		int	power;
 		int	step;
 		Timer	timer;
+
+		char	shapeType;
+		Vector3	vec1, vec2;
+		float			radius;
 		ATTACK_PARAM	attackParam;
-		CollisionShape		collisionShape;
 
 		//	‰Šú‰»E‰ğ•ú
 		AttackInfo( void );
@@ -50,7 +53,7 @@
 		LifeInfo( void );
 
 		//	“®ìŠÖ”
-		void	CulcLife( int param );
+		bool	CulcLife( int param );
 		void	Reset( void );
 
 		//	î•ñİ’è

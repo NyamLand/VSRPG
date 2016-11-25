@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	<vector>
 #include	"GameParam.h"
+#include	"GameManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
 #include	"Player.h"
@@ -17,7 +18,8 @@
 //----------------------------------------------------------------------------------------------
 
 //	定数
-#define	CHANT_TIME	2
+#define	CHANT_TIME	1.0f
+#define	DEATH_TIME	3.0f
 
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
@@ -37,6 +39,7 @@ namespace
 		const int MAGICACTIVATION = 340;
 		const int MAGICATTACK_END = 370;
 		const int KNOCKBACK1_END = 405;
+		const int FALL_END = 555;
 	}
 
 	namespace ATTACK_STEP
@@ -55,7 +58,7 @@ namespace
 //----------------------------------------------------------------------------------------------
 	
 	//	コンストラクタ
-	Player::Player( int id ) : 
+	Player::Player( int id ) : timer( nullptr ),
 		index( id )
 	{
 		ZeroMemory( &pParam, sizeof( PlayerParam ) );
@@ -65,13 +68,21 @@ namespace
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
 		ModeFunction[MODE::DAMAGE] = &Player::ModeDamage;
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
+		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
 	}
 
 	//	デストラクタ
 	Player::~Player( void )
 	{
-		
+		if ( timer != nullptr )
+		{
+			delete timer;
+			timer = nullptr;
+		}
 	}
+
+	//	初期化
+
 
 //----------------------------------------------------------------------------------------------
 //	更新
@@ -136,6 +147,32 @@ namespace
 	{
 		Damage();
 	}
+
+	//	死亡
+	void	Player::ModeDeath( void )
+	{
+		//	情報保存
+		int motion = gameParam->GetPlayerParam( index ).motion;
+		int frame = gameParam->GetPlayerParam( index ).frame;
+
+		//	倒れるモーション時
+		if ( motion == PLAYER_MOTION::FALL )
+		{
+			if ( frame >= MOTION_FRAME::FALL_END )
+			{ 
+				SetMotion( PLAYER_MOTION::DEAD );
+				timer->Start( DEATH_TIME );
+			}
+		}
+		else if ( motion == PLAYER_MOTION::DEAD )
+		{
+			if ( timer->Update() )
+			{
+				gameParam->InitializePlayer( index );
+				SetMode( MODE::MOVE );
+			}
+		}
+	}
 	
 //----------------------------------------------------------------------------------------------
 //	動作関数
@@ -196,8 +233,8 @@ namespace
 		if ( pParam.frame == MOTION_FRAME::MAGICACTIVATION )
 		{
 			magicManager->Append( index, 
-				gameParam->GetAttackInfo( index ).collisionShape.sphere.center,
-				Vector3( 0.0f, 0.0f, 0.0f ) );
+				gameParam->GetAttackInfo( index ).vec1,
+				gameParam->GetAttackInfo( index ).vec2 );
 		}
 
 		if ( pParam.frame >= MOTION_FRAME::MAGICATTACK_END )
@@ -343,5 +380,19 @@ namespace
 		{
 			pParam.motion = motion;
 		}
+	}
+
+	//	座標設定
+	void	Player::SetPos( const Vector3& pos )
+	{
+		pParam.pos = pos;
+	}
+
+	//	死亡設定
+	void	Player::SetDeath( void )
+	{
+		SetMode( MODE::DEATH );
+		SetMotion( PLAYER_MOTION::FALL );
+		gameParam->GetLifeInfo( index ).active = false;
 	}
 

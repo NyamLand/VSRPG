@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"BaseChara.h"
+#include	"PlayerManager.h"
 #include	"CharaInfo.h"
 
 //***************************************************************
@@ -20,10 +21,12 @@
 
 	//	コンストラクタ
 	AttackInfo::AttackInfo( void ) : attackParam( NO_ATTACK ),
-		power( 0 ), step( 0 )
+		power( 0 ), step( 0 ),
+		shapeType( 0 ),
+		vec1( 0.0f, 0.0f, 0.0f ), vec2( 0.0f, 0.0f, 0.0f ),
+		radius( 0.0f )
 	{
-		timer.Initialize();
-		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
+		
 	}
 
 	//	リセット
@@ -31,8 +34,6 @@
 	{
 		attackParam = NO_ATTACK;
 		step = 0;
-		timer.Initialize();
-		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -47,8 +48,8 @@
 
 	}
 
-	//	ライフ計算
-	void	LifeInfo::CulcLife( int param )
+	//	ライフ計算( 死んだらfalseをかえす )
+	bool	LifeInfo::CulcLife( int param )
 	{
 		life += param;
 		if ( life >= maxLife )	life = maxLife;
@@ -56,7 +57,11 @@
 		{
 			life = 0;
 			isAlive = false;
+			active = false;
+			return	false;
 		}
+
+		return	true;
 	}
 
 	//	リセット

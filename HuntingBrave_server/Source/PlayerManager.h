@@ -27,6 +27,7 @@ public:
 	void	Update( int id );
 
 	//	î•ñİ’è
+	void	PosCheck( int client );
 	void	SetPlayer( int id );
 	void	ReleasePlayer( int id );
 

@@ -17,6 +17,7 @@ class Player : public BaseChara
 {
 private:
 	PlayerParam		pParam;
+	Timer*				timer;
 	int		index;
 
 	//	モード別関数ポインタ
@@ -26,6 +27,7 @@ public:
 	//	初期化・解放
 	Player( int id );
 	~Player( void )override;
+	bool	Initialize( void );
 
 	//	更新
 	bool Update( PlayerParam& param );
@@ -35,6 +37,7 @@ public:
 	void	ModeSwordAttack( void );
 	void	ModeMagicAttack( void );
 	void	ModeDamage( void );
+	void	ModeDeath( void );
 
 	//	動作関数
 	void	Move( void );
@@ -51,6 +54,8 @@ public:
 
 	//	情報設定
 	void	SetMotion( int motion );
+	void	SetPos( const Vector3& pos );
+	void	SetDeath( void );
 };
 
 

@@ -79,10 +79,14 @@ MagicManager*	magicManager = nullptr;
 	//	追加
 	void	MagicManager::Append( int id, const Vector3& pos, const Vector3& vec )
 	{
+		//	初期化
 		Magic*	magic = new Magic();
 		magic->Initialize( id, pos, vec );
+
+		//	リストに追加
 		magicList.push_back( magic );
 
+		//	情報送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			gameParam->SendMagicAppendInfo( p, id, pos );
@@ -96,3 +100,9 @@ MagicManager*	magicManager = nullptr;
 //------------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------------
+
+	//	リスト取得
+	std::vector<Magic*>&		MagicManager::GetList( void )
+	{
+		return	magicList;
+	}

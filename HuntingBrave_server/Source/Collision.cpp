@@ -1,9 +1,10 @@
 
 #include	"iextreme.h"
-//#include	"GlobalFunction.h"
+#include	<vector>
 #include	"GameParam.h"
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
+#include	"MagicManager.h"
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -45,6 +46,9 @@ Collision*	collision = nullptr;
 	{
 		//	プレイヤーの攻撃判定
 		PlayerAttackCollision();
+
+		//	魔法当たり判定
+		MagicCollision();
 	}
 
 	//	プレイヤー攻撃当たり判定
@@ -69,28 +73,65 @@ Collision*	collision = nullptr;
 				//	自分同士はスキップ、アクティブ状態でないプレイヤーはスキップ
 				if( j == i )		continue;
 				if ( gameParam->GetPlayerActive( j ) == false )		continue;
-
 				bool	active = gameParam->GetLifeInfo( j ).active;
 				if ( active == false )		continue;	
 
 				//	形状取得
-				CollisionShape	collisionShape;
-				ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
-				collisionShape.shapeType = SHAPE_TYPE::CAPSULE;
+				CollisionShape	colShape1, colShape2;
+				colShape1 = SetCollisionShape( attackInfo.shapeType, attackInfo.vec1, attackInfo.vec2, attackInfo.radius );
 				Vector3	pos = gameParam->GetPlayerParam( j ).pos;
-				collisionShape.SetCapsule( Capsule( pos, pos + Vector3( 0.0f, 2.5f, 0.0f ),  1.5f ) );
+				colShape2 = SetCollisionShape( CAPSULE, pos, pos + Vector3( 0.0f, 2.5f, 0.0f ), 1.5f );
 
 				//	当たり判定チェック
-				isHit = CheckCollision( 
-					attackInfo.collisionShape, 
-					 collisionShape );
+				isHit = CheckCollision(	colShape1, colShape2 );
 
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
 					//	ライフ計算
-					gameParam->GetLifeInfo( j ).CulcLife( -attackInfo.power );
-					playerManager->GetPlayer( j )->SetMode( MODE::DAMAGE );
+					bool isAlive = gameParam->GetLifeInfo( j ).CulcLife( -attackInfo.power );
+					if( isAlive ) playerManager->GetPlayer( j )->SetMode( MODE::DAMAGE );
+					else playerManager->GetPlayer( j )->SetDeath();
+				}
+			}
+		}
+	}
+
+	//	魔法当たり判定
+	void	Collision::MagicCollision( void )
+	{
+		//	変数準備
+		bool	isHit = false;
+		std::vector<Magic*>	magicList = magicManager->GetList();
+
+		//	全魔法回す
+		for ( auto it = magicList.begin(); it != magicList.end(); it++ )
+		{
+			for ( int p = 0; p < PLAYER_MAX; p++ )
+			{
+				//	条件に合わないものはスキップ
+				if ( ( *it )->GetID() == p )	continue;
+				if ( gameParam->GetPlayerActive( p ) == false )		continue;
+				bool	active = gameParam->GetLifeInfo( p ).active;
+				if ( active == false )		continue;
+
+				//	形状設定
+				CollisionShape	colShape1, colShape2;
+				colShape1 = SetCollisionShape( SHAPE_TYPE::SPHERE, 
+					( *it )->GetPos(), Vector3( 0.0f, 0.0f, 0.0f ), ( *it )->GetRadius() );
+				Vector3	pos = gameParam->GetPlayerParam( p ).pos;
+				colShape2 = SetCollisionShape( SHAPE_TYPE::CAPSULE, pos, pos + Vector3( 0.0f, 2.5f, 0.0f ), 1.5f );
+
+				//	当たり判定チェック
+				isHit = CheckCollision( colShape1, colShape2 );
+
+				//	当たっていればライフ計算
+				if ( isHit == true )
+				{
+					//	ライフ計算
+					bool isAlive = gameParam->GetLifeInfo( p ).CulcLife( -gameParam->GetAttackInfo( p ).power );
+					if( isAlive ) playerManager->GetPlayer( p )->SetMode( MODE::DAMAGE );
+					else playerManager->GetPlayer( p )->SetDeath();
 				}
 			}
 		}
@@ -161,6 +202,29 @@ Collision*	collision = nullptr;
 		}
 
 		return	collisionPair;
+	}
+
+	//	当たり判定形状設定
+	CollisionShape	Collision::SetCollisionShape( char shapeType, const Vector3& vec1, const Vector3& vec2, float radius )
+	{
+		CollisionShape	collisionShape;
+		ZeroMemory( &collisionShape, sizeof( CollisionShape ) );
+
+		//	形状タイプ設定
+		collisionShape.shapeType = ( SHAPE_TYPE )shapeType;
+
+		switch ( shapeType )
+		{
+		case SPHERE:
+			collisionShape.sphere = Sphere( vec1, radius );
+			break;
+
+		case CAPSULE:
+			collisionShape.capsule = Capsule( vec1, vec2, radius );
+			break;
+		}
+
+		return	collisionShape;
 	}
 
 //--------------------------------------------------------------------------------------------

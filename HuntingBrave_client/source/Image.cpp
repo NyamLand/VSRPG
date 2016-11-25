@@ -18,15 +18,18 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Image::Image()
+	Image::Image() : x(0), y(0), w(0), h(0), sx(0), sy(0), sw(0), sh(0), alpha(1.0f), angle(0.0f), renderflag(true),
+	waveSpeed(0.0f), waveState(false), flashSpeed(0.0f), flashParam(0.0f), scalingFlag(false), scalingSpeed(0.0f), scalingState(0)
 	{
-
+		this->color = Vector3(1.0f, 1.0f, 1.0f);
+		this->p = GetPoint(this->x, this->y);
+		this->obj = nullptr;
 	}
 
 	//	デストラクタ
 	Image::~Image()
 	{
-
+		SafeDelete(obj);
 	}
 
 	//	初期化
@@ -35,19 +38,21 @@
 		obj = new iex2DObj(image);
 		this->x = x;		this->y = y;		this->w = w;		this->h = h;
 		this->sx = sx;		this->sy = sy;		this->sw = sw;		this->sh = sh;
-		this->alpha = 1.0f;
-		this->angle = 0.0f;
-		this->color = Vector3(1.0f, 1.0f, 1.0f);
 		this->p = GetPoint(this->x, this->y);
-		this->renderflag = true;
+		//this->alpha = 1.0f;
+		//this->angle = 0.0f;
+		//this->color = Vector3(1.0f, 1.0f, 1.0f);
+		//this->renderflag = true;
 
-		this->waveSpeed = 0.0f;
-		this->waveAlpha = 0.0f;
-		this->waveState = false;
+		//this->waveSpeed = 0.0f;
+		//this->waveState = false;
 
-		this->flashSpeed = 0.0f;
-		this->flashAlpha = 0.0f;
-		this->flashParam = 0.0f;
+		//this->flashSpeed = 0.0f;
+		//this->flashParam = 0.0f;
+
+		//this->scalingFlag = false;
+		//this->scalingState = 0;
+		//this->scalingSpeed = 0.0f;
 	}
 
 //---------------------------------------------------------------------------------------
@@ -70,15 +75,15 @@
 			switch (mode)
 			{
 			case IMAGE_MODE::NORMAL:
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh);
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh);
 				break;
 
 			case IMAGE_MODE::ADOPTPARAM:
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 				break;
 
 			case IMAGE_MODE::ADD:
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_ADD, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_ADD, GetColor(color, alpha));
 				break;
 
 			case IMAGE_MODE::WAVE:
@@ -86,11 +91,11 @@
 				height = this->h + this->plusScaleY;
 				posx = x - width / 2;
 				posy = y - height / 2;
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, waveAlpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 				break;
 
 			case IMAGE_MODE::FLASH:
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, flashAlpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 				break;
 
 			case IMAGE_MODE::SCALING:
@@ -99,7 +104,7 @@
 				posx = x - width / 2;
 				posy = y - height / 2;
 
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 				break;
 			}
 		}
@@ -135,11 +140,11 @@
 					height = h + this->plusScaleY;
 					posx = x - width / 2;
 					posy = y - height / 2;
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, waveAlpha));
+					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 					break;
 
 				case IMAGE_MODE::FLASH:
-					obj->Render(posx, posy, width, height, sx, sy, sw, sh, RS_COPY, GetColor(color, flashAlpha));
+					obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
 					break;
 
 				case IMAGE_MODE::SCALING:
@@ -159,7 +164,7 @@
 //	動作関数
 //---------------------------------------------------------------------------------------
 	//	波紋更新（波紋大きさ、スタート時透明度）波紋終了時trueをかえす
-	bool	Image::WaveUpdate(int max_scale, float max_alpha)
+	bool	Image::WaveUpdate(int max_scale, float start_alpha)
 	{
 		if (waveState)
 		{
@@ -175,7 +180,7 @@
 				return	true;
 			}
 
-			Interpolation::LinearInterpolation(waveAlpha, max_alpha, 0.0f, t);
+			Interpolation::LinearInterpolation(alpha, start_alpha, 0.0f, t);
 			Interpolation::LinearInterpolation(plusScaleX, 0, max_scale, t);
 			Interpolation::LinearInterpolation(plusScaleY, 0, max_scale, t);
 
@@ -195,7 +200,7 @@
 			flashParam = 0.0f;
 		}
 
-		flashAlpha = 0.5f + 0.5f * sinf(flashParam);
+		alpha = 0.5f + 0.5f * sinf(flashParam);
 
 	}
 
@@ -205,35 +210,33 @@
 		if (!scalingFlag) return;
 
 		//	パラメータ加算
-		t += scalingspeed;
+		t += scalingSpeed;
 
+		switch (scalingState)
+		{
 		//-------------------------
 		//	拡大
 		//-------------------------
-		if (scalingState)
-		{
+		case IMAGE_SCALING::BIG:
 			//	パラメータ上限設定
 			if (t >= 1.0f)
 			{
 				t = 1.0f;
-				scalingState = false;
+				scalingState = IMAGE_SCALING::SMALL;
 			}
 
 			Interpolation::LinearInterpolation(plusScaleX, 0, max_scale, t);
 			Interpolation::LinearInterpolation(plusScaleY, 0, max_scale, t);
 
-		}
-
 		//-------------------------
 		//	縮小
 		//-------------------------
-		else
-		{
+		case IMAGE_SCALING::SMALL:
 			//	パラメータ上限設定
 			if (t >= 1.0f)
 			{
 				t = 1.0f;
-				scalingState = true;
+				scalingState = IMAGE_SCALING::BIG;
 			}
 
 			Interpolation::LinearInterpolation(plusScaleX, max_scale, 0, t);
@@ -253,7 +256,6 @@
 		plusScaleX = 0;
 		plusScaleY = 0;
 		t = 0;
-		waveAlpha = 1.0f;
 		waveState = true;
 		waveSpeed = speed;
 	}
@@ -262,8 +264,7 @@
 	{
 		plusScaleX = 0;
 		plusScaleY = 0;
-		t = 0;
-		flashAlpha = 1.0f;
+		t = 0.0f;
 		flashParam = 0.0f;
 		flashSpeed = speed;
 	}
@@ -272,11 +273,11 @@
 	{
 		plusScaleX = 0;
 		plusScaleY = 0;
-		t = 0;
+		t = 0.0f;
 		alpha = 1.0f;
 		scalingFlag = false;
-		scalingState = true;
-		scalingspeed = 0.0f;
+		scalingState = IMAGE_SCALING::BIG;
+		scalingSpeed = 0.0f;
 	}
 //---------------------------------------------------------------------------------------
 //	情報取得

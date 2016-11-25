@@ -38,8 +38,10 @@ public:
 	void	Append( int id, const Vector3& pos, float angle );
 
 	//	î•ñİ’è
+	void	SetPos( int index, const Vector3& pos );
 
 	//	î•ñæ“¾
+	std::vector<Magic*>&		GetList( void );
 
 };
 

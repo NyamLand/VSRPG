@@ -34,8 +34,8 @@
 	struct SendGameData
 	{
 		char		com = SEND_COMMAND::GAME_INFO;
-		int		limitTimer;
-		SendGameData( int timer ) : limitTimer( timer ){}
+		float		limitTimer;
+		SendGameData( float timer ) : limitTimer( timer ){}
 	};
 
 	//	“_”î•ñ
@@ -77,9 +77,10 @@
 		char	com = SEND_COMMAND::MAGIC_APPEND;
 		int	id;
 		Vector3	pos;
+		float			angle;
 
-		SendMagicAppend( int id, const Vector3& pos ) :
-			id( id ), pos( pos ) {}
+		SendMagicAppend( int id, const Vector3& pos, float angle ) :
+			id( id ), pos( pos ), angle( angle ) {}
 	};
 
 	//	–‚–@Á‹î•ñ
