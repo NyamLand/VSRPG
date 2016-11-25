@@ -9,6 +9,7 @@
 
 //	include
 #include	"BaseChara.h"
+#include	"EnemyHp.h"
 
 //	class
 class Enemy : public BaseChara
@@ -48,6 +49,7 @@ public:
 	
 
 	//	“®ìŠÖ”
+	virtual void Update( void );
 	void	Move( float speed ) ;
 	void	FacingPlayer( void );
 	void	Advance( float speed );

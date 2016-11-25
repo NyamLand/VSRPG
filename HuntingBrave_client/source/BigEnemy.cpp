@@ -69,6 +69,8 @@
 		lifeInfo.Initialize( INIT_LIFE );
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
 		//	î•ñXV
 		UpdateInfo();
 
