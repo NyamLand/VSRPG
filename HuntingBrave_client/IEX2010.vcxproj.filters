@@ -175,6 +175,9 @@
     <ClCompile Include="source\Magic.cpp">
       <Filter>Source\Magic</Filter>
     </ClCompile>
+    <ClCompile Include="source\EnemyHp.cpp">
+      <Filter>Source\UI\EnemyHpUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -308,6 +311,9 @@
     </ClInclude>
     <ClInclude Include="source\Magic.h">
       <Filter>Source\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyHp.h">
+      <Filter>Source\UI\EnemyHpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +475,9 @@
     </Filter>
     <Filter Include="Source\Magic">
       <UniqueIdentifier>{c44f9b51-4493-4e6c-b494-4bf8adb41693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\EnemyHpUI">
+      <UniqueIdentifier>{a3c194a7-4c70-4441-bd62-0070304a4bdc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

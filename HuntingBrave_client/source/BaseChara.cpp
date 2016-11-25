@@ -30,12 +30,14 @@
 	{
 		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
 		ZeroMemory( &collisionInfo, sizeof( CollisionInfo ) );
+		
 	}
 
 	//	デストラクタ
 	BaseChara::~BaseChara( void )
 	{
 		SafeDelete( obj );
+		SafeDelete(bar);
 	}
 
 	//	読み込み
@@ -78,7 +80,7 @@
 		{
 			obj->Render( shader, technique );
 		}
-
+		bar->Render(GetLifeInfo().life, GetPos(), GetUp());
 		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
 	}
 
