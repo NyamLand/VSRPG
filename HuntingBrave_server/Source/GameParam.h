@@ -28,6 +28,7 @@ public:
 	//	初期化・解放
 	GameParam( void );
 	bool InitializeServer( void );
+	void	InitializePlayer( int id );
 
 	//	データ送受信
 	int Receive( void );

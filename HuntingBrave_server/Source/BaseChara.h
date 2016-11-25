@@ -21,6 +21,7 @@ namespace MODE
 		MAGICATTACK,
 		AVOID,
 		DAMAGE,
+		DEATH,
 		MODE_MAX
 	};
 }

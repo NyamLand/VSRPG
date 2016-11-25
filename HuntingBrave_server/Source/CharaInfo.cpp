@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"BaseChara.h"
+#include	"PlayerManager.h"
 #include	"CharaInfo.h"
 
 //***************************************************************
@@ -47,8 +48,8 @@
 
 	}
 
-	//	ライフ計算
-	void	LifeInfo::CulcLife( int param )
+	//	ライフ計算( 死んだらfalseをかえす )
+	bool	LifeInfo::CulcLife( int param )
 	{
 		life += param;
 		if ( life >= maxLife )	life = maxLife;
@@ -56,7 +57,11 @@
 		{
 			life = 0;
 			isAlive = false;
+			active = false;
+			return	false;
 		}
+
+		return	true;
 	}
 
 	//	リセット
