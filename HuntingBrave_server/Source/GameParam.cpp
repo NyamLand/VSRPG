@@ -49,6 +49,13 @@ GameParam*	gameParam = nullptr;
 		return successInit;
 	}
 
+	//	プレイヤー初期化
+	void	GameParam::InitializePlayer( int id )
+	{
+		lifeInfo[id].Initialize( INIT_LIFE );
+		playerParam[id] = gameManager->GetInitInfo( id );
+	}
+
 //----------------------------------------------------------------------------------------------
 //	データ送受信
 //----------------------------------------------------------------------------------------------

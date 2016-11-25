@@ -80,7 +80,7 @@ PlayerManager*	playerManager = nullptr;
 			if ( gameParam->GetPlayerActive( p ) == false )		continue;
 
 			//	Ž©•ª¨‘ŠŽè‚Ö‚ÌƒxƒNƒgƒ‹
-			Vector3	vec = gameParam->GetPlayerParam( p ).pos - gameParam->GetPlayerParam( client ).pos;
+			Vector3	vec = gameParam->GetPlayerParam( client ).pos - gameParam->GetPlayerParam( p ).pos;
 			float		length = vec.Length();
 
 			float collisionDist = 3.0f;

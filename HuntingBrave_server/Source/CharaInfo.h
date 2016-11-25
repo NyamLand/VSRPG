@@ -53,7 +53,7 @@
 		LifeInfo( void );
 
 		//	“®ìŠÖ”
-		void	CulcLife( int param );
+		bool	CulcLife( int param );
 		void	Reset( void );
 
 		//	î•ñİ’è

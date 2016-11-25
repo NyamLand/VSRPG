@@ -89,8 +89,9 @@ Collision*	collision = nullptr;
 				if ( isHit == true )
 				{
 					//	ライフ計算
-					gameParam->GetLifeInfo( j ).CulcLife( -attackInfo.power );
-					playerManager->GetPlayer( j )->SetMode( MODE::DAMAGE );
+					bool isAlive = gameParam->GetLifeInfo( j ).CulcLife( -attackInfo.power );
+					if( isAlive ) playerManager->GetPlayer( j )->SetMode( MODE::DAMAGE );
+					else playerManager->GetPlayer( j )->SetDeath();
 				}
 			}
 		}
@@ -128,8 +129,9 @@ Collision*	collision = nullptr;
 				if ( isHit == true )
 				{
 					//	ライフ計算
-					gameParam->GetLifeInfo( p ).CulcLife( -gameParam->GetAttackInfo( p ).power );
-					playerManager->GetPlayer( p )->SetMode( MODE::DAMAGE );
+					bool isAlive = gameParam->GetLifeInfo( p ).CulcLife( -gameParam->GetAttackInfo( p ).power );
+					if( isAlive ) playerManager->GetPlayer( p )->SetMode( MODE::DAMAGE );
+					else playerManager->GetPlayer( p )->SetDeath();
 				}
 			}
 		}
