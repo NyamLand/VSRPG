@@ -55,7 +55,7 @@ public:
 	//	î•ñİ’è
 
 	//	î•ñæ“¾
-	list<Enemy*>&	GetList( void );
+	std::list<Enemy*>&	GetList( void );
 };
 
 #define	enemyManager ( EnemyManager::GetInstance() )

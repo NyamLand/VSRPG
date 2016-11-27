@@ -9,13 +9,14 @@
 
 //	include
 #include	"CharaInfo.h"
-
+#include	"EnemyHp.h"
 //	class
 class BaseChara
 {
 protected:
 	//	モデル
 	iex3DObj*	obj;
+	EnemyHpUI*	bar;
 
 	//	パラメータ
 	Vector3		pos;

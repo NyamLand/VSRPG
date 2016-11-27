@@ -33,6 +33,9 @@
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
 
+//	ライフ設定
+#define MAX_LIFE	20
+
 //	定数関連
 namespace
 {
@@ -72,7 +75,7 @@ namespace
 		SetScale( PLAYER_SCALE );
 		SetMotion( MOTION_NUM::POSUTURE );
 		SetMode( MODE::MOVE );
-
+		lifeInfo.Initialize(MAX_LIFE);
 		//	当たり判定形状設定
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
@@ -106,7 +109,8 @@ namespace
 		//csv.Close();
 		//return 0;
 		//---------------------------------
-
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::PLAYER, GetLifeInfo().maxLife);
 
 		if ( obj == nullptr )	return	false;
 		return	true;
@@ -201,6 +205,7 @@ namespace
 		pos = playerParam.pos;
 		angle = playerParam.angle;
 		SetMotion( playerParam.motion );
+		lifeInfo.life = (playerParam.life);
 	}
 
 //------------------------------------------------------------------------------------

@@ -62,7 +62,7 @@ PlayerManager*	playerManager = nullptr;
 			//	XVEî•ñ‚ð”½‰f
 			player[id]->Update( param );
 			gameParam->SetPlayerParam( id, param.pos, param.angle, param.motion );
-			PosCheck( id );
+			//PosCheck( id );
 		}
 	}
 
