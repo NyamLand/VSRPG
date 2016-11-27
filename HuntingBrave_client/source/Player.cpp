@@ -205,7 +205,7 @@ namespace
 		pos = playerParam.pos;
 		angle = playerParam.angle;
 		SetMotion( playerParam.motion );
-		lifeInfo.life = (playerParam.life);
+		lifeInfo.life = ( playerParam.life );
 	}
 
 //------------------------------------------------------------------------------------

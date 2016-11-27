@@ -48,11 +48,11 @@ void main( void )
 			//	魔法更新
 			magicManager->Update();
 
-			//	全体更新
-			playerManager->Update( client );
-
 			//	当たり判定
 			collision->AllCollision();
+
+			//	全体更新
+			playerManager->Update( client );
 
 			//	クライアントへ送信
 			gameParam->Send( client );

@@ -123,6 +123,10 @@ GameParam*	gameParam = nullptr;
 		case COMMANDS::SIGN_OUT:	//	’E‘Þ
 			client = ReceiveSignOut( client, data );
 			break;
+
+		default:
+			printf( "“ä\n" );
+			break;
 		}
 
 		return client;
@@ -233,7 +237,7 @@ GameParam*	gameParam = nullptr;
 
 			for ( int p = 0; p < PLAYER_MAX; p++ )
 			{
-				SendPointInfo( client, p );
+				SendPointInfo( p, client );
 			}
 		}
 
