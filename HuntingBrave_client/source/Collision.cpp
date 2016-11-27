@@ -2,10 +2,12 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	<vector>
+#include	<map>
 #include	"GameParam.h"
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
+#include	"LevelManager.h"
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -44,47 +46,47 @@
 	void	Collision::AllCollision( void )
 	{
 		//	プレイヤーの攻撃判定
-		PlayerAttackCollision();
+		for ( int player = 0; player < PLAYER_MAX; player++ )
+		{
+			//	生存チェック
+			if ( gameParam->GetPlayerActive( player ) == false )		continue;
 
-		//	魔法判定
+			//	プレイヤー攻撃当たり判定
+			PlayerAttackCollision( player );
+		}
+
+		//	魔法攻撃当たり判定
 		MagicCollision();
 	}
 
 	//	プレイヤー攻撃当たり判定
-	void	Collision::PlayerAttackCollision( void )
+	void	Collision::PlayerAttackCollision( int player )
 	{
 		//	変数準備
 		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
 
-		//	全プレイヤー回す
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		//	攻撃情報取得、攻撃中でなければスキップ
+		AttackInfo	attackInfo = gameParam->GetAttackInfo( player );
+		if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )	return;
+
+		//	敵との当たり判定
+		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
 		{
-			//	条件が合わないものはスキップ
-			if ( gameParam->GetPlayerActive( p ) == false )		continue;
+			//	当たり判定用情報設定
+			CollisionShape hitCollisionShape = ( *it )->GetCollisionInfo().collisionShape;
+			CollisionShape attackCollisionShape;
+			attackCollisionShape = SetCollisionShape( attackInfo.shape, attackInfo.vec1, attackInfo.vec2, attackInfo.radius );
 
-			//	攻撃情報取得、攻撃中でなければスキップ
-			AttackInfo	attackInfo = gameParam->GetAttackInfo( p );
-			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
+			//	当たり判定チェック
+			isHit = CheckCollision( attackCollisionShape, hitCollisionShape );
 
-			//	敵との当たり判定
-			for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+			//	当たっていればライフ計算
+			if ( isHit == true )
 			{
-				//	当たり判定用情報設定
-				CollisionShape hitCollisionShape = ( *it )->GetCollisionInfo().collisionShape;
-				CollisionShape attackCollisionShape;
-				attackCollisionShape = SetCollisionShape( attackInfo.shape, attackInfo.vec1, attackInfo.vec2, attackInfo.radius );
-
-				//	当たり判定チェック
-				isHit = CheckCollision( attackCollisionShape, hitCollisionShape );
-
-				//	当たっていればライフ計算
-				if ( isHit == true )
-				{
-					//	ライフ計算
-					( *it )->GetLifeInfo().CulcLife( -1 );
-					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
-				}
+				//	ライフ計算
+				( *it )->GetLifeInfo().CulcLife( -1 );
+				gameParam->SendHuntInfo( ( *it )->GetEnemyType() );
 			}
 		}
 	}
@@ -134,7 +136,8 @@
 		//	全魔法回す
 		for ( auto it = magicList.begin(); it != magicList.end(); it++)
 		{
-			if ( ( *it )->GetID() != gameParam->GetMyIndex() )		continue;
+			int id = ( *it )->GetID();
+			if ( id != gameParam->GetMyIndex() )		continue;
 
 			//	敵との当たり判定
 			for ( auto enemyIt = enemyList.begin(); enemyIt != enemyList.end(); enemyIt++ )
@@ -152,7 +155,7 @@
 				{
 					//	ライフ計算
 					( *enemyIt )->GetLifeInfo().CulcLife( -1 );
-					gameParam->AddPoint( gameParam->GetMyIndex(), 1000 );
+					gameParam->SendHuntInfo( ( *enemyIt )->GetEnemyType() );
 				}
 			}
 		}

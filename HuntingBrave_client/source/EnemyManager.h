@@ -47,7 +47,7 @@ public:
 	void	Render( void );
 
 	//	“®ìŠÖ”
-	void	Append( const Vector3& pos, int type );
+	void	Append( const Vector3& pos, char type );
 	void	PosCheck( Enemy*	enemy );
 	void	PlayerPosCheck( Enemy*	eneny );
 	void	AddRegularTimeIntervals( void );

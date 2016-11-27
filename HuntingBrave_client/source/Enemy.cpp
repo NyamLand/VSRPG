@@ -143,8 +143,19 @@
 	{
 		targetPos = pos;
 	}
+
+	//	敵タイプ設定
+	void	Enemy::SetEnemyType( char enemyType )
+	{
+		this->enemyType = enemyType;
+	}
 	
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
 
+	//	敵タイプ取得
+	char	Enemy::GetEnemyType( void )const
+	{
+		return	enemyType;
+	}

@@ -2,6 +2,7 @@
 #define	_CRT_SECURE_NO_WARNINGS
 #include	<stdio.h>
 #include	<vector>
+#include	<map>
 #include	"iextreme.h"
 #include	"GameData.h"
 #include	"GameManager.h"
@@ -10,6 +11,7 @@
 #include	"PointManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
+#include	"LevelManager.h"
 #include	"Collision.h"
 #include	"sceneMain.h"
 
@@ -27,6 +29,7 @@ void main( void )
 	gameParam = new GameParam();
 	inputManager = new InputManager();
 	magicManager = new MagicManager();
+	levelManager = new LevelManager();
 	playerManager = new PlayerManager( gameParam );
 	collision = new Collision( gameParam );
 	gameParam->InitializeServer();
@@ -39,16 +42,17 @@ void main( void )
 		
 		//	クライアントから受信
 		int client = gameParam->Receive();
+
 		if ( client != -1 )
 		{
 			//	魔法更新
 			magicManager->Update();
 
-			//	当たり判定
-			collision->AllCollision();
-
 			//	全体更新
 			playerManager->Update( client );
+
+			//	当たり判定
+			collision->AllCollision();
 
 			//	クライアントへ送信
 			gameParam->Send( client );

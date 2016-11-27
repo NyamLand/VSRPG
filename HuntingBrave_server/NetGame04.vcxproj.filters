@@ -85,6 +85,9 @@
     <Filter Include="ソース ファイル\Collision\Enemy">
       <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\LevelManager">
+      <UniqueIdentifier>{afc70951-4417-4516-9515-59778bf5d2c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -125,12 +128,6 @@
     </ClCompile>
     <ClCompile Include="Source\GameData.cpp">
       <Filter>ソース ファイル\GameData\GameData</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SendData.cpp">
-      <Filter>ソース ファイル\GameData\SendData</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ReceiveData.cpp">
-      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharaInfo.cpp">
       <Filter>ソース ファイル\CharaInfo</Filter>
@@ -194,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="Source\MagicManager.cpp">
       <Filter>ソース ファイル\Manager\MagicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelManager.cpp">
+      <Filter>ソース ファイル\Manager\LevelManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="Source\MagicManager.h">
       <Filter>ソース ファイル\Manager\MagicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelManager.h">
+      <Filter>ソース ファイル\Manager\LevelManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

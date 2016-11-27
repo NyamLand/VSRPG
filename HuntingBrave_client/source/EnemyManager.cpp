@@ -138,7 +138,7 @@ namespace
 //-------------------------------------------------------------------------------------
 	
 	//	ƒŠƒXƒg‚É’Ç‰Á
-	void	EnemyManager::Append( const Vector3& pos,int type )
+	void	EnemyManager::Append( const Vector3& pos, char type )
 	{
 		Enemy* enemy = nullptr;
 
@@ -159,6 +159,7 @@ namespace
 		}
 
 		//	‰Šú‰»
+		enemy->SetEnemyType( type );
 		enemy->SetObj( org[type]->Clone() );
 		enemy->Initialize();
 		enemy->SetPos( pos );

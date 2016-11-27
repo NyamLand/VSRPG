@@ -16,6 +16,7 @@
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
 #include	"MagicManager.h"
+#include	"LevelManager.h"
 #include	"Collision.h"
 
 //
@@ -167,7 +168,7 @@ void	sceneMain::DebugRender( void )
 		Vector3	p_pos = playerParam.pos;
 		int	life = playerParam.life;
 		char	str[256];
-		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d life = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point, life );
+		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d, life = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point, life );
 		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
 	}
 }
@@ -184,9 +185,12 @@ void	sceneMain::MyInfoRender( void )
 	//	自分の座標
 	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
 
+	//	経験値
+	int	exp = levelManager->GetExp();
+
 	//	表示
 	char	str[256];
-	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z );
+	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d", id + 1, name, pos.x, pos.y, pos.z, exp );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 

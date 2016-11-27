@@ -39,9 +39,6 @@ public:
 	void	SendPointInfo( int client, int player );
 	void	SendMatchingInfo( int client, int player );
 	void	SendGameInfo( int client );
-	void	SendMagicInfo( int client, int index, const Vector3& pos );
-	void	SendMagicAppendInfo( int client, int id, const Vector3& pos );
-	void	SendMagicEraseInfo( int client, int index );
 
 	//	óMˆ—
 	int	ReceiveChara( int client, const LPSTR& data );
@@ -49,6 +46,7 @@ public:
 	int	ReceiveMatching( int client, const LPSTR& data );
 	int	ReceiveAttackInfo( int client, const LPSTR& data );
 	int	ReceiveInput( int client, const LPSTR& data );
+	int	ReceiveHuntInfo( int client, const LPSTR& data );
 	int	ReceiveSignUp( int client, const LPSTR& data );
 	int	ReceiveSignOut( int client, const LPSTR& data );
 

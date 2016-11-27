@@ -154,12 +154,6 @@
     <ClCompile Include="source\InputManager.cpp">
       <Filter>Source\Manager\InputManager</Filter>
     </ClCompile>
-    <ClCompile Include="source\ReceiveData.cpp">
-      <Filter>Source\GameData\ReceiveData</Filter>
-    </ClCompile>
-    <ClCompile Include="source\SendData.cpp">
-      <Filter>Source\GameData\SendData</Filter>
-    </ClCompile>
     <ClCompile Include="source\GameData.cpp">
       <Filter>Source\GameData\GameData</Filter>
     </ClCompile>
@@ -177,6 +171,12 @@
     </ClCompile>
     <ClCompile Include="source\EnemyHp.cpp">
       <Filter>Source\UI\EnemyHpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LevelManager.cpp">
+      <Filter>Source\Manager\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NetState.cpp">
+      <Filter>Source\NetState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +314,12 @@
     </ClInclude>
     <ClInclude Include="source\EnemyHp.h">
       <Filter>Source\UI\EnemyHpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LevelManager.h">
+      <Filter>Source\Manager\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NetState.h">
+      <Filter>Source\NetState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +484,12 @@
     </Filter>
     <Filter Include="Source\UI\EnemyHpUI">
       <UniqueIdentifier>{a3c194a7-4c70-4441-bd62-0070304a4bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\LevelManager">
+      <UniqueIdentifier>{b5eca729-56a8-45c8-a649-49ab67b5cbce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\NetState">
+      <UniqueIdentifier>{dab78abc-762e-475e-a7c9-cdf2e2763af1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

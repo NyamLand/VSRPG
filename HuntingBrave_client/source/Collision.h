@@ -32,7 +32,7 @@ private:
 public:
 	//	“–‚½‚è”»’è
 	void	AllCollision( void );
-	void	PlayerAttackCollision( void );
+	void	PlayerAttackCollision( int player );
 	void	EnemyAttackCollision( void );
 	void	MagicCollision( void );
 	bool	CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 );
