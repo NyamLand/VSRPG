@@ -19,7 +19,8 @@
 				ATTACK_INFO,
 				INPUT_INFO,
 				LEVEL_INFO,
-				HUNT_INFO
+				HUNT_INFO,
+				COMMAND_MAX
 			};
 		}
 	}

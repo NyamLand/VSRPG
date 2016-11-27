@@ -26,6 +26,9 @@ private:
 	PointInfo		pointInfo[PLAYER_MAX];
 	MatchingInfo	matchingInfo[PLAYER_MAX];
 
+	//	関数ポインタ
+	void( GameParam::*ReceiveFunction[RECEIVE_COMMAND::COMMAND_MAX] )( const LPSTR& data );
+
 public:
 	//	初期化・解放
 	GameParam( void );
@@ -47,15 +50,17 @@ public:
 	//	受信処理
 	void	ReceiveCharaInfo( const LPSTR& data );
 	void	ReceivePointInfo( const LPSTR& data );
-	void	ReceiveSignUpInfo( const LPSTR& data );
-	void	ReceiveSignOutInfo( const LPSTR& data );
-	void	ReceiveMatching( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
 	void	ReceiveMagicInfo( const LPSTR& data );
 	void	ReceiveMagicAppendInfo( const LPSTR& data );
 	void	ReceiveMagicEraseInfo( const LPSTR& data );
 	void	ReceiveLevelInfo( const LPSTR& data );
 	void	ReceiveExpInfo( const LPSTR& data );
+
+	//	ログイン情報受信
+	void	ReceiveSignUpInfo( const LPSTR& data );
+	void	ReceiveSignOutInfo( const LPSTR& data );
+	void	ReceiveMatching( const LPSTR& data );
 	
 	//	動作関数
 	void CheckInputData( int keyType );

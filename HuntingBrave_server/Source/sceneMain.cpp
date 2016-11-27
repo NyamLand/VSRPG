@@ -30,8 +30,9 @@ void main( void )
 	inputManager = new InputManager();
 	magicManager = new MagicManager();
 	levelManager = new LevelManager();
-	playerManager = new PlayerManager( gameParam );
+	pointManager = new PointManager();
 	collision = new Collision( gameParam );
+	playerManager = new PlayerManager( gameParam );
 	gameParam->InitializeServer();
 
 	//	–³ŒÀƒ‹[ƒv
@@ -65,4 +66,5 @@ void main( void )
 	delete	playerManager;	playerManager = nullptr;
 	delete	inputManager;		inputManager = nullptr;
 	delete	magicManager;	magicManager = nullptr;
+	delete	pointManager;		pointManager = nullptr;
 }

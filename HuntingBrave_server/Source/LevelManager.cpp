@@ -58,8 +58,6 @@ LevelManager*	levelManager = nullptr;
 	void	LevelManager::AddLevel( int id, char levelType )
 	{
 		levelInfo[id].level[levelType]++;
-
-		SendLevel( id, levelType, levelInfo[id].level[levelType] );
 	}
 
 	//	経験値計算
@@ -84,10 +82,10 @@ LevelManager*	levelManager = nullptr;
 	}
 
 	//	レベル送信
-	void	LevelManager::SendLevel( int id, char levelType, char level )
+	void	LevelManager::SendLevel( int id, char levelType )
 	{
 		//	情報設定
-		SendLevelData	sendLevelData( levelType, level );
+		SendLevelData	sendLevelData( levelType, levelInfo[id].level[levelType] );
 
 		//	情報送信
 		gameParam->send( id, ( LPSTR )&sendLevelData, sizeof( sendLevelData ) );

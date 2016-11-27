@@ -6,6 +6,7 @@
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"LevelManager.h"
+#include	"PointManager.h"
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -32,11 +33,17 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
-			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 			lifeInfo[id].Initialize( INIT_LIFE );
 		}
+
+		//	関数ポインタ
+		ReceiveFunction[RECEIVE_COMMAND::PLAYER_INFO] = &GameParam::ReceiveChara;
+		ReceiveFunction[RECEIVE_COMMAND::ATTACK_INFO] = &GameParam::ReceiveAttackInfo;
+		ReceiveFunction[RECEIVE_COMMAND::INPUT_INFO] = &GameParam::ReceiveInput;
+		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
+		ReceiveFunction[RECEIVE_COMMAND::HUNT_INFO] = &GameParam::ReceiveHuntInfo;
 	}
 
 	//	サーバー初期化
@@ -94,24 +101,9 @@ GameParam*	gameParam = nullptr;
 		int	client = receive( data, &size );
 		if( client == -1 ) return -1;
 		
+		//	ネット関連
 		switch( data[COMMAND] )
 		{
-		case RECEIVE_COMMAND::PLAYER_INFO:		//	パラメータ情報
-			client = ReceiveChara( client, data );
-			break;
-
-		case RECEIVE_COMMAND::ATTACK_INFO:		//	攻撃情報
-			client = ReceiveAttackInfo( client , data );
-			break;
-
-		case RECEIVE_COMMAND::INPUT_INFO:	//	入力情報
-			client = ReceiveInput( client, data );
-			break;
-
-		case RECEIVE_COMMAND::HUNT_INFO:		//	討伐情報
-			client = ReceiveHuntInfo( client, data );
-			break;
-
 		case COMMANDS::MATCHING:	//	マッチング
 			client = ReceiveMatching( client, data );
 			break;
@@ -123,6 +115,10 @@ GameParam*	gameParam = nullptr;
 		case COMMANDS::SIGN_OUT:	//	脱退
 			client = ReceiveSignOut( client, data );
 			break;
+
+		default:
+			//	ゲーム情報処理
+			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
 		}
 
 		return client;
@@ -155,16 +151,6 @@ GameParam*	gameParam = nullptr;
 
 		//	送信
 		send( client, ( LPSTR )&sendGameData, sizeof( sendGameData ) );
-	}
-
-	//	点数情報送信
-	void	GameParam::SendPointInfo( int client, int player )
-	{
-		//	情報設定
-		SendPointData	sendPointData( player, pointInfo[player].point );
-		
-		//	送信
-		send( client, ( char* )&sendPointData, sizeof( sendPointData ) );
 	}
 
 	//	マッチング情報送信
@@ -229,12 +215,8 @@ GameParam*	gameParam = nullptr;
 		//	大型の時点数を加算
 		if ( receiveHuntData->enemyType == ENEMY_EXP::BIG_ENEMY )
 		{
-			pointInfo[client].point += 1000;
-
-			for ( int p = 0; p < PLAYER_MAX; p++ )
-			{
-				SendPointInfo( client, p );
-			}
+			pointManager->CalcPoint( client, 1000 );
+			pointManager->SendPoint( client );
 		}
 
 		//	経験値計算
@@ -242,6 +224,20 @@ GameParam*	gameParam = nullptr;
 		levelManager->SendExp( client );
 		return	-1;
 	}
+
+	//	レベル情報取得
+	int	GameParam::ReceiveLevelInfo( int client, const LPSTR& data )
+	{
+		ReceiveLevelData*	receiveLevelData = ( ReceiveLevelData* )data;
+		levelManager->AddLevel( client, receiveLevelData->levelType );
+		levelManager->SendLevel( client, receiveLevelData->levelType );
+
+		return	-1;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	ログイン関連受信処理
+//----------------------------------------------------------------------------------------------
 
 	//	サインアップ情報受信
 	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
@@ -357,10 +353,3 @@ GameParam*	gameParam = nullptr;
 		playerParam[id].pos    = param.pos;
 		playerParam[id].angle  = param.angle;
 	}
-
-	//	点数情報設定
-	void	GameParam::SetPointInfo( int id, const PointInfo& pointInfo )
-	{
-		this->pointInfo[id] = pointInfo;
-	}
-
