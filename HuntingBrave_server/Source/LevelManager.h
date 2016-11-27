@@ -59,7 +59,7 @@ public:
 	void	AddLevel( int id, char levelType );
 	//void	CalcExp( int id, int exp );
 	void	CalcExp( int id, char enemyType );
-	void	SendLevel( int id, char levelType, char level );
+	void	SendLevel( int id, char levelType );
 	void	SendExp( int id );
 
 	//	î•ñæ“¾
