@@ -17,8 +17,9 @@
 				NO_COMMAND = -1,
 				PLAYER_INFO = 1,
 				ATTACK_INFO,
-				POINT_INFO,
 				INPUT_INFO,
+				LEVEL_INFO,
+				HUNT_INFO
 			};
 		}
 	}
@@ -33,13 +34,6 @@
 		char		com = RECEIVE_COMMAND::PLAYER_INFO;
 		float		axisX, axisY;
 		int		frame;
-	};
-
-	//	点数情報
-	struct ReceivePointData
-	{
-		char		com = RECEIVE_COMMAND::POINT_INFO;
-		int		addPoint;
 	};
 
 	//	攻撃情報
@@ -58,4 +52,18 @@
 		char		com = RECEIVE_COMMAND::INPUT_INFO;
 		int		keyType;
 		int		keyState;
+	};
+
+	//	レベル情報
+	struct ReceiveLevelData
+	{
+		char	com = RECEIVE_COMMAND::LEVEL_INFO;
+		char levelType;
+	};
+
+	//	経験値情報
+	struct ReceiveHuntData
+	{
+		char com = RECEIVE_COMMAND::HUNT_INFO;
+		char	enemyType;
 	};

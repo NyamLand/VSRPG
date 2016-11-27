@@ -22,7 +22,9 @@
 			CHARA_INFO,
 			MAGIC_INFO,
 			MAGIC_APPEND,
-			MAGIC_ERASE
+			MAGIC_ERASE,
+			LEVEL_INFO,
+			EXP_INFO
 		};
 	}
 
@@ -82,3 +84,20 @@
 		int	index;
 		ReceiveMagicErase( int index ) : index( index ){}
 	};
+
+	//	ÉåÉxÉãèÓïÒ
+	struct ReceiveLevelData
+	{
+		char com = RECEIVE_COMMAND::LEVEL_INFO;
+		int	id;
+		char levelType;
+		char level;
+	};
+
+	//	åoå±ílèÓïÒ
+	struct ReceiveExpData
+	{
+		char com = RECEIVE_COMMAND::EXP_INFO;
+		int exp;
+	};
+

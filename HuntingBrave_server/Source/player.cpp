@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	<vector>
+#include	<map>
 #include	"GameParam.h"
 #include	"GameManager.h"
 #include	"InputManager.h"

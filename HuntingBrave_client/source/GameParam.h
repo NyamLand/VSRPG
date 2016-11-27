@@ -39,10 +39,10 @@ public:
 
 	//	‘—Mˆ—
 	void	SendPlayerInfo( void );
-	void	SendPointInfo( void );
 	void	SendAttackParam( void );
 	void	SendMatching( void );
 	void	SendInputInfo( void );
+	void	SendHuntInfo( char enemyType );
 
 	//	óMˆ—
 	void	ReceiveCharaInfo( const LPSTR& data );
@@ -54,6 +54,8 @@ public:
 	void	ReceiveMagicInfo( const LPSTR& data );
 	void	ReceiveMagicAppendInfo( const LPSTR& data );
 	void	ReceiveMagicEraseInfo( const LPSTR& data );
+	void	ReceiveLevelInfo( const LPSTR& data );
+	void	ReceiveExpInfo( const LPSTR& data );
 	
 	//	“®ìŠÖ”
 	void CheckInputData( int keyType );

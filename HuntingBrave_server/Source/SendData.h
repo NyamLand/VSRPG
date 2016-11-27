@@ -21,7 +21,9 @@
 			CHARA_INFO,
 			MAGIC_INFO,
 			MAGIC_APPEND,
-			MAGIC_ERASE
+			MAGIC_ERASE,
+			LEVEL_INFO,
+			EXP_INFO
 		};
 	}
 }
@@ -89,4 +91,24 @@
 		char	com = SEND_COMMAND::MAGIC_ERASE;
 		int	index;
 		SendMagicErase( int index ) : index( index ){}
+	};
+
+	//	ÉåÉxÉãèÓïÒ
+	struct SendLevelData
+	{
+		char com = SEND_COMMAND::LEVEL_INFO;
+		char levelType;
+		char level;
+
+		SendLevelData( char levelType, char level ) :
+			levelType( levelType ), level( level ){}
+	};
+
+	//	åoå±ílèÓïÒ
+	struct SendExpData
+	{
+		char com = SEND_COMMAND::EXP_INFO;
+		int	exp;
+
+		SendExpData( int exp ) :	exp( exp ){}
 	};

@@ -20,6 +20,7 @@ protected:
 	float		interpolationParam;
 	float		searchDist;
 	float		attackDist;
+	char		enemyType;
 
 	//float		elife;			//“G‚Ì‘Ì—Í
 	int	count;		//‰¼‘½’iƒqƒbƒg—p
@@ -62,6 +63,10 @@ public:
 	//	UŒ‚ŠÖ”
 	virtual void	Attack( void )=0;
 
+	//	î•ñİ’è
+	void	SetTargetPos( const Vector3& pos );
+	void	SetEnemyType( char enemyType );
+	
 	//	î•ñæ“¾
-	void	SetTargetPos( const Vector3& pos );	
+	char	GetEnemyType( void )const;
 };
