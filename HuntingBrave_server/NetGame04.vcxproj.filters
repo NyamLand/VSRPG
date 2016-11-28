@@ -52,9 +52,6 @@
     <Filter Include="ソース ファイル\Timer">
       <UniqueIdentifier>{f0af59b6-6349-4757-a705-e0f87f635d4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Manager\PointManager">
-      <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Manager\InputManager">
       <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Collision\Enemy">
       <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\LevelManager">
+      <UniqueIdentifier>{afc70951-4417-4516-9515-59778bf5d2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PointManager">
+      <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,20 +120,11 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>ソース ファイル\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PointManager.cpp">
-      <Filter>ソース ファイル\Manager\PointManager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>ソース ファイル\Manager\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameData.cpp">
       <Filter>ソース ファイル\GameData\GameData</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SendData.cpp">
-      <Filter>ソース ファイル\GameData\SendData</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ReceiveData.cpp">
-      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharaInfo.cpp">
       <Filter>ソース ファイル\CharaInfo</Filter>
@@ -195,6 +189,12 @@
     <ClCompile Include="Source\MagicManager.cpp">
       <Filter>ソース ファイル\Manager\MagicManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LevelManager.cpp">
+      <Filter>ソース ファイル\Manager\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PointManager.cpp">
+      <Filter>ソース ファイル\Manager\PointManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -227,9 +227,6 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>ソース ファイル\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PointManager.h">
-      <Filter>ソース ファイル\Manager\PointManager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>ソース ファイル\Manager\InputManager</Filter>
     </ClInclude>
@@ -259,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="Source\MagicManager.h">
       <Filter>ソース ファイル\Manager\MagicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelManager.h">
+      <Filter>ソース ファイル\Manager\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PointManager.h">
+      <Filter>ソース ファイル\Manager\PointManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

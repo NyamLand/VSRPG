@@ -1,7 +1,5 @@
 
 #include	"iextreme.h"
-#include	"BaseChara.h"
-#include	"PlayerManager.h"
 #include	"CharaInfo.h"
 
 //***************************************************************

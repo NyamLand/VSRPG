@@ -22,7 +22,10 @@
 			CHARA_INFO,
 			MAGIC_INFO,
 			MAGIC_APPEND,
-			MAGIC_ERASE
+			MAGIC_ERASE,
+			LEVEL_INFO,
+			EXP_INFO,
+			COMMAND_MAX
 		};
 	}
 
@@ -59,8 +62,6 @@
 		char	com = RECEIVE_COMMAND::MAGIC_INFO;
 		int	index;
 		Vector3	pos;
-		ReceiveMagicData( int index, const Vector3& pos ) :
-			index( index ), pos( pos ) {}
 	};
 
 	//	魔法発動情報
@@ -70,9 +71,6 @@
 		int	id;
 		Vector3	pos;
 		float			angle;
-
-		ReceiveMagicAppend( int id, const Vector3& pos, float angle ) :
-			id( id ), pos( pos ), angle( angle ) {}
 	};
 
 	//	魔法消去情報
@@ -82,3 +80,19 @@
 		int	index;
 		ReceiveMagicErase( int index ) : index( index ){}
 	};
+
+	//	レベル情報
+	struct ReceiveLevelData
+	{
+		char com = RECEIVE_COMMAND::LEVEL_INFO;
+		char levelType;
+		char level;
+	};
+
+	//	経験値情報
+	struct ReceiveExpData
+	{
+		char com = RECEIVE_COMMAND::EXP_INFO;
+		int exp;
+	};
+

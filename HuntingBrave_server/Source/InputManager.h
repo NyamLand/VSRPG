@@ -9,7 +9,7 @@
 
 //	include
 #include	"GameData.h"
-#include	<map>
+
 
 //	’è”( XBoxƒRƒ“ƒgƒ[ƒ‰ )
 namespace
