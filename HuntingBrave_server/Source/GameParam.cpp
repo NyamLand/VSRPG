@@ -19,7 +19,7 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	INIT_LIFE		7
+#define	INIT_LIFE		5
 GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	受信
-	int	GameParam::Receive( void )
+	int	GameParam::Receive( char scene )
 	{
 		char	data[256];
 		int	size = sizeof( data );
@@ -122,6 +122,34 @@ GameParam*	gameParam = nullptr;
 		}
 
 		return client;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	シーン毎の受信処理
+//----------------------------------------------------------------------------------------------
+
+	//	タイトル受信処理
+	void	GameParam::TitleReceive( int client, const LPSTR& data )
+	{
+
+	}
+
+	//	マッチング受信処理
+	void	GameParam::MatchingReceive( int client, const LPSTR& data )
+	{
+
+	}
+
+	//	メイン受信処理
+	void	GameParam::MainReceive( int client, const LPSTR& data )
+	{
+
+	}
+
+	//	リザルト受信処理
+	void	GameParam::ResultReceive( int client, const LPSTR& data )
+	{
+
 	}
 
 //----------------------------------------------------------------------------------------------

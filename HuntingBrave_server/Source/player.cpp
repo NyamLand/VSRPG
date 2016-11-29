@@ -393,7 +393,7 @@ namespace
 	void	Player::SetDeath( void )
 	{
 		SetMode( MODE::DEATH );
-		SetMotion( PLAYER_MOTION::FALL );
+		gameParam->GetPlayerParam( index ).motion = PLAYER_MOTION::FALL;
 		gameParam->GetLifeInfo( index ).active = false;
 	}
 

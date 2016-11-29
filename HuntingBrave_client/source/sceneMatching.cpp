@@ -60,6 +60,16 @@ bool	sceneMatching::Initialize(void)
 		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/Suppin.IEM" ) );
 	}
 
+	//	GameParam初期化
+	gameParam = new GameParam();
+	
+	//	テキスト読み込み
+	std::ifstream	ifs("onlineInfo.txt");
+	ifs >> addr;
+	ifs >> name;
+
+
+	step = 0;
 	return true;
 }
 
@@ -78,18 +88,30 @@ void	sceneMatching::Update( void )
 	//	サーバーから情報受信
 	gameParam->Update();
 
-	//	GameManager更新
-	gameManager->Update();
-
-	//	モデル更新
-	ObjUpdate();
-
-	CheckComplete();
-
-	if ( KEY_Get( KEY_ENTER ) == 3 )
+	//	テスト
+	switch ( step )
 	{
-		gameManager->isComplete = true;
+	case 0:
+		//	クライアント初期化( serverと接続 )
+		if( gameParam->InitializeClient( addr, 7000, name ) )	step++;
+		break;
+
+	case 1:
+		//	GameManager更新
+		gameManager->Update();
+	
+		//	モデル更新
+		ObjUpdate();
+	
+		CheckComplete();
+	
+		if ( KEY_Get( KEY_ENTER ) == 3 )
+		{
+			gameManager->isComplete = true;
+		}
+		break;
 	}
+
 }
 
 void	sceneMatching::ObjUpdate()

@@ -21,10 +21,18 @@
 //
 //*****************************************************************************************************************************
 
+
+//	プロトタイプ宣言
+void	sceneTitleUpdate( void );
+void	sceneMatchingUpdate( void );
+void	sceneMainUpdate( void );
+void	sceneResultUpdate( void );
+
 //	main
 void main( void )
 {
 	//	初期化
+	GameState	gameState;
 	gameManager = new GameManager();
 	gameParam = new GameParam();
 	inputManager = new InputManager();
@@ -42,7 +50,7 @@ void main( void )
 		gameManager->Update();
 		
 		//	クライアントから受信
-		int client = gameParam->Receive();
+		int client = gameParam->Receive( gameState.scene );
 
 		if ( client != -1 )
 		{
@@ -67,4 +75,29 @@ void main( void )
 	delete	inputManager;		inputManager = nullptr;
 	delete	magicManager;	magicManager = nullptr;
 	delete	pointManager;		pointManager = nullptr;
+}
+
+
+//	タイトル更新
+void	sceneTitleUpdate( void )
+{
+
+}
+
+//	マッチング更新
+void	sceneMatchingUpdate( void )
+{
+
+}
+
+//	メイン更新
+void	sceneMainUpdate( void )
+{
+
+}
+
+//	リザルト更新
+void	sceneResultUpdate( void )
+{
+
 }

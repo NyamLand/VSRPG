@@ -65,9 +65,9 @@ BOOL	InitApp( HWND hWnd )
 	//MainFrame->ChangeScene( new sceneMain() );
 
 	//	ネットワーク初期化
-	BOOL initNet = InitNetWork();
+	//BOOL initNet = InitNetWork();
 
-	return initNet;
+	return TRUE;
 }
 
 //*****************************************************************************************************************************

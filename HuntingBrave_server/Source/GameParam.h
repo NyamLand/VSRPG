@@ -33,8 +33,14 @@ public:
 	void	InitializePlayer( int id );
 
 	//	データ送受信
-	int Receive( void );
+	int Receive( char scene );
 	int Send( int client );
+
+	//	シーンごとの受信処理
+	void	MainReceive( int client, const LPSTR& data );
+	void	MatchingReceive( int client, const LPSTR& data );
+	void	TitleReceive( int client, const LPSTR& data );
+	void	ResultReceive( int client, const LPSTR& data );
 
 	//	送信処理
 	void	SendCharaInfo( int client, int player );
