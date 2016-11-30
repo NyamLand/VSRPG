@@ -491,6 +491,12 @@
     <Filter Include="Source\NetState">
       <UniqueIdentifier>{dab78abc-762e-475e-a7c9-cdf2e2763af1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene\sceneLoad">
+      <UniqueIdentifier>{30cbf0d5-f499-439f-b127-f8b4b7c82db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneResult">
+      <UniqueIdentifier>{12049d46-c22b-4c18-9ca3-bcfdb62e3319}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">

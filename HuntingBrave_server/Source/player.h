@@ -17,8 +17,9 @@ class Player : public BaseChara
 {
 private:
 	PlayerParam		pParam;
+	float					stepSpeed;
 	Timer*				timer;
-	int		index;
+	int					index;
 
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );
@@ -38,15 +39,18 @@ public:
 	void	ModeMagicAttack( void );
 	void	ModeDamage( void );
 	void	ModeDeath( void );
+	void	ModeStep( void );
 
 	//	動作関数
 	void	Move( void );
 	void	SwordAttack( void );
-	void	MagicAttack( void );
-	void	MagicChant( void );
-	void	MagicChantStart( void );
 	void	Damage( void );
 	void	CheckInput( void );
+	void	AddMove( const Vector3& move );
+	void	MagicAttack( void );
+	void	MagicChant( void );
+	void	MagicChantRoll( void );
+	void	MagicChantStart( void );
 
 	//	向き調整
 	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );

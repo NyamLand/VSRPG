@@ -47,12 +47,13 @@ Collision*	collision = nullptr;
 		for ( int player = 0; player < PLAYER_MAX; player++ )
 		{
 			//	条件が合わないものはスキップ
-			if ( gameParam->GetPlayerActive( player ) == false )		continue;
+			bool isActive = gameParam->GetPlayerActive( player );
+			if (  isActive == false )		continue;
 
 			for ( int target = 0; target < PLAYER_MAX; target++ )
 			{
 				//	自分同士はスキップ、アクティブ状態でないプレイヤーはスキップ
-				if ( player == target )		return;
+				if ( player == target )		continue;
 				if ( gameParam->GetPlayerActive( target ) == false )		continue;
 
 				//	プレイヤーの攻撃判定

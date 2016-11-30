@@ -191,10 +191,10 @@ GameParam*	gameParam = nullptr;
 		CheckInputData( KEY_TYPE::B );
 		
 		//	魔法攻撃ボタン入力送信
-		CheckInputData( KEY_TYPE::A );
+		CheckInputData( KEY_TYPE::X );
 
-		//	スタートボタン入力送信
-		CheckInputData( KEY_TYPE::START );
+		//	回避ボタン入力送信
+		CheckInputData( KEY_TYPE::A );
 	}
 
 	//	討伐情報送信
