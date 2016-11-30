@@ -59,12 +59,12 @@ bool	sceneMatching::Initialize(void)
 	//	ƒ‚ƒfƒ‹‰Šú‰»
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/Suppin.IEM" ) );		
-		char	fileName[256] = "DATA/CHR/suppin/s_body_";
-		char playerNum[8] = "";
-		sprintf_s( playerNum, "%d.png", i );
-		strcat_s( fileName, playerNum );
-		obj[i]->SetTexture( 0, fileName );
+		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/Fighter/fighter.IEM" ) );		
+		//char	fileName[256] = "DATA/CHR/suppin/s_body_";
+		//char playerNum[8] = "";
+		//sprintf_s( playerNum, "%d.png", i );
+		//strcat_s( fileName, playerNum );
+		//obj[i]->SetTexture( 0, fileName );
 	}
 
 	//	GameParam‰Šú‰»

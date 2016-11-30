@@ -178,6 +178,9 @@
     <ClCompile Include="source\NetState.cpp">
       <Filter>Source\NetState</Filter>
     </ClCompile>
+    <ClCompile Include="source\Effect.cpp">
+      <Filter>Source\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="source\NetState.h">
       <Filter>Source\NetState</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effect.h">
+      <Filter>Source\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -496,6 +502,9 @@
     </Filter>
     <Filter Include="Source\Scene\sceneResult">
       <UniqueIdentifier>{12049d46-c22b-4c18-9ca3-bcfdb62e3319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Effect">
+      <UniqueIdentifier>{5d14bf3d-8135-4237-ae3e-85b6ee928934}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

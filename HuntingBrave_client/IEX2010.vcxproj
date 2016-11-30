@@ -116,6 +116,7 @@
     <ClCompile Include="source\CharaInfo.cpp" />
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\CSVReader.cpp" />
+    <ClCompile Include="source\Effect.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyHp.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="source\CharaInfo.h" />
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\CSVReader.h" />
+    <ClInclude Include="source\Effect.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\EnemyHp.h" />
