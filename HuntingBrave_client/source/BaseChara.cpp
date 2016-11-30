@@ -80,7 +80,7 @@
 		{
 			obj->Render( shader, technique );
 		}
-		bar->Render(GetLifeInfo().life, GetPos(), GetUp());
+		//bar->Render(GetLifeInfo().life, GetPos(), GetUp());
 		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
 	}
 
