@@ -42,7 +42,7 @@ namespace
 		const int MAGICACTIVATION = 340;
 		const int MAGICATTACK_END = 370;
 		const int KNOCKBACK1_END = 405;
-		const int FALL_END = 555;
+		const int FALL_END = 495;
 	}
 
 	namespace ATTACK_STEP
