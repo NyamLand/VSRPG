@@ -55,11 +55,13 @@
 	struct SendInputData
 	{
 		char		com = SEND_COMMAND::INPUT_INFO;
-		int		keyType;
-		int		keyState;
+		char		keyA;
+		char		keyB;
+		char		keyX;
+		char		keyY;
 		SendInputData( void ){};
-		SendInputData( int keyType, int keyState ) :
-			keyType( keyType ), keyState( keyState ){}
+		SendInputData( char keyA, char keyB, char keyX, char keyY ) :
+			keyA( keyA ), keyB( keyB ), keyX( keyX ), keyY( keyY ){}
 	};
 
 	//	ƒŒƒxƒ‹î•ñ

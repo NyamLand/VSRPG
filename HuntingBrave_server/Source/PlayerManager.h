@@ -22,6 +22,7 @@ public:
 	//	初期化・解放
 	PlayerManager( GameParam* gameParam );
 	~PlayerManager( void );
+	bool	Initialize( void );
 
 	//	更新・描画
 	void	Update( int id );

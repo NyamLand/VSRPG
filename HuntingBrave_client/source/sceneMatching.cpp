@@ -59,22 +59,24 @@ bool	sceneMatching::Initialize(void)
 	//	モデル初期化
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/Fighter/fighter.IEM" ) );		
-		//char	fileName[256] = "DATA/CHR/suppin/s_body_";
-		//char playerNum[8] = "";
-		//sprintf_s( playerNum, "%d.png", i );
-		//strcat_s( fileName, playerNum );
-		//obj[i]->SetTexture( 0, fileName );
+		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/suppin.IEM" ) );		
+		char	fileName[256] = "DATA/CHR/suppin/s_body_";
+		char playerNum[8] = "";
+		sprintf_s( playerNum, "%d.png", i );
+		strcat_s( fileName, playerNum );
+		obj[i]->SetTexture( 0, fileName );
 	}
 
 	//	GameParam初期化
 	gameParam = new GameParam();
 	
 	//	テキスト読み込み
-	std::ifstream	ifs("onlineInfo.txt");
+	std::ifstream	ifs( "onlineInfo.txt" );
 	ifs >> addr;
 	ifs >> name;
 
+	//	画像読み込み
+	back = new iex2DObj( "DATA/UI/BackGround/name_input_gamen.png" );
 
 	step = 0;
 	return true;
@@ -83,6 +85,7 @@ bool	sceneMatching::Initialize(void)
 sceneMatching::~sceneMatching( void )
 {
 	SafeDelete( mainView );
+	SafeDelete( back );
 }
 
 //*****************************************************************************************************************************
@@ -171,11 +174,14 @@ void	sceneMatching::Render(void)
 	mainView->Activate();
 	mainView->Clear();
 
-	for (int i = 0; i < PLAYER_MAX; i++)
-	{
-		int active = gameParam->GetPlayerActive(i);
+	//	back
+	//back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
 
-		if (active)
+	for ( int i = 0; i < PLAYER_MAX; i++ )
+	{
+		int active = gameParam->GetPlayerActive( i );
+
+		if ( active )
 		{
 			obj[i]->Render();
 		}

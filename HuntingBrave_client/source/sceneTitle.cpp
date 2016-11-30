@@ -3,11 +3,13 @@
 #include	"system/Scene.h"
 #include	"system/Framework.h"
 #include	"GlobalFunction.h"
+#include	"Interpolation.h"
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"GameParam.h"
 #include	"Camera.h"
-#include	"sceneMain.h"
+#include	"InputManager.h"
+#include	"sceneMatching.h"
 #include	"sceneTitle.h"
 
 //***************************************************************
@@ -27,12 +29,24 @@
 	//	‰Šú‰»
 	bool	sceneTitle::Initialize( void )
 	{
+		//	ŠÂ‹«Ý’è
+		iexLight::SetAmbient( 0x404040 );
+		iexLight::SetFog( 800, 1000, 0 );
+
+		Vector3 dir( 1.0f, -1.0f, -0.5f );
+		dir.Normalize();
+		iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
+
 		//	ƒJƒƒ‰‰Šú‰»
 		mainView = new Camera();
 
-		//	•Ï”‰Šú‰»
-		connectionOK = false;
+		//	‰æ‘œ‰Šú‰»
+		bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
+		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
+		pushState = false;
+		percentage = 0.0f;
+		alpha = 1.0f;
 		return	true;
 	}
 
@@ -40,6 +54,7 @@
 	sceneTitle::~sceneTitle( void )
 	{
 		SafeDelete( mainView );
+		SafeDelete( bg );
 	}
 
 //-----------------------------------------------------------------------------------
@@ -49,15 +64,25 @@
 	//	XV
 	void	sceneTitle::Update( void )
 	{
-		if ( !connectionOK )
+		if ( !pushState )
 		{
-			if ( KEY( KEY_ENTER ) == 3 )
+			if ( KEY( KEY_B ) == 3 || 
+				KEY( KEY_SPACE ) == 3 || 
+				KEY( KEY_ENTER ) == 3 || 
+				KEY( KEY_A ) == 3 )	pushState = true; 
+		}
+		else
+		{
+			Interpolation::PercentageUpdate( percentage, 0.01f );
+			
+			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.5f, percentage );
+
+			if ( state )
 			{
-				MainFrame->ChangeScene( new sceneMain() );
+				MainFrame->ChangeScene( new sceneMatching() );
 				return;
 			}
 		}
-
 	}
 
 	//	•`‰æ
@@ -67,12 +92,9 @@
 		mainView->Activate();
 		mainView->Clear();
 
-		if ( connectionOK )
-		{
-			char	str[256];
-			sprintf_s( str, "connectionOK\n" );
-			IEX_DrawText( str, 1000, 600, 200, 200, 0xFFFFFF00 );
-		}
+		//	bg•`‰æ
+		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
+		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
 	}
 
 //-----------------------------------------------------------------------------------

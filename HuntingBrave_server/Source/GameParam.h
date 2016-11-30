@@ -37,10 +37,9 @@ public:
 	int Send( int client );
 
 	//	シーンごとの受信処理
-	void	MainReceive( int client, const LPSTR& data );
-	void	MatchingReceive( int client, const LPSTR& data );
-	void	TitleReceive( int client, const LPSTR& data );
-	void	ResultReceive( int client, const LPSTR& data );
+	int	MainReceive( int client, const LPSTR& data );
+	int	MatchingReceive( int client, const LPSTR& data );
+	int	ResultReceive( int client, const LPSTR& data );
 
 	//	送信処理
 	void	SendCharaInfo( int client, int player );

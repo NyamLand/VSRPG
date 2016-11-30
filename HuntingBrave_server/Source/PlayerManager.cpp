@@ -43,6 +43,17 @@ PlayerManager*	playerManager = nullptr;
 		}
 	}
 
+	//	初期化
+	bool	PlayerManager::Initialize( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			//	プレイヤーがアクティブ状態なら
+			if ( gameParam->GetPlayerActive( p ) )	SetPlayer( p );
+		}
+		return	true;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	更新
 //----------------------------------------------------------------------------------------------

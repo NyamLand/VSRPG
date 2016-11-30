@@ -16,6 +16,8 @@ private:
 	int step;
 	char name[17];
 	char	addr[64];
+	iex2DObj*	back;
+
 public:
 	~sceneMatching(void);
 	//	‰Šú‰»
