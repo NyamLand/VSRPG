@@ -54,10 +54,18 @@ bool	sceneMatching::Initialize(void)
 		Vector3( 0.0f, 5.0f, -20.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	ファイル設定
+	char	fileName[256] = "DATA/CHR/suppin/s_body_";
+	char playerNum[8] = "";
+
 	//	モデル初期化
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
 		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/Suppin.IEM" ) );
+		
+		sprintf_s( playerNum, "%d.png", i );
+		strcat_s( fileName, playerNum );
+		obj[i]->SetTexture( 0, fileName );
 	}
 
 	//	GameParam初期化

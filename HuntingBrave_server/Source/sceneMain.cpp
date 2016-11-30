@@ -52,11 +52,11 @@ void main( void )
 		//	クライアントから受信
 		int client = gameParam->Receive( gameState.scene );
 
+		//	魔法更新
+		magicManager->Update();
+
 		if ( client != -1 )
 		{
-			//	魔法更新
-			magicManager->Update();
-
 			//	全体更新
 			playerManager->Update( client );
 
