@@ -26,9 +26,8 @@
 	//	コンストラクタ
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
-		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f)
+		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), count(50)
 	{
-		
 	}
 
 	//	デストラクタ
@@ -102,11 +101,11 @@
 	//	ライフチェック（ ０以下なら死亡モードに移行 ）
 	void	Enemy::LifeCheck( void )
 	{
-		if ( !active )	return;
+		if ( !lifeInfo.active )	return;
 
 		if ( lifeInfo.life <= 0 )
 		{
-			active = false;
+			lifeInfo.active = false;
 			SetMode( MODE::DEAD );
 		}
 	}
@@ -114,6 +113,26 @@
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
+	void	Enemy::Update()
+	{
+
+	}
+//------------------------------------------------------------------------------------
+//	モード関数
+//------------------------------------------------------------------------------------
+
+	//仮(後で消す)
+	void	Enemy::DamageMode(void)
+	{
+		lifeInfo.active = false;
+		count--;
+		if (count <= 0){
+			count = 50;
+			lifeInfo.active = true;
+			SetMode(MODE::MOVE);
+		}
+
+	}
 
 //------------------------------------------------------------------------------------
 //	情報設定
@@ -125,20 +144,18 @@
 		targetPos = pos;
 	}
 
-	//	アクティブ状態取得
-	bool	Enemy::GetActive( void )const
+	//	敵タイプ設定
+	void	Enemy::SetEnemyType( char enemyType )
 	{
-		return	active;
+		this->enemyType = enemyType;
 	}
-
-	//	消去可能状態取得
-	bool	Enemy::GetIsAlive( void )const
-	{
-		return	lifeInfo.isAlive;
-	}
-
 	
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
-	
+
+	//	敵タイプ取得
+	char	Enemy::GetEnemyType( void )const
+	{
+		return	enemyType;
+	}

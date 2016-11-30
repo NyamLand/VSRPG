@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"DrawShape.h"
 #include	"Camera.h"
 #include	"BaseChara.h"
 
@@ -24,19 +25,19 @@
 	//	コンストラクタ
 	BaseChara::BaseChara( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		angle(0.0f), scale(1.0f), speed(0.0f), rad( 0.0f ),
-		active( false ),
+		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ),
 		mode( 0 )
 	{
-		//	構造体初期化
-		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
 		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
+		ZeroMemory( &collisionInfo, sizeof( CollisionInfo ) );
+		
 	}
 
 	//	デストラクタ
 	BaseChara::~BaseChara( void )
 	{
 		SafeDelete( obj );
+		SafeDelete( bar );
 	}
 
 	//	読み込み
@@ -79,6 +80,8 @@
 		{
 			obj->Render( shader, technique );
 		}
+		bar->Render(GetLifeInfo().life, GetPos(), GetUp());
+		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
 	}
 
 	//	情報更新
@@ -90,11 +93,15 @@
 			return;
 		}
 
-		obj->Animation();
+		//	当たり判定形状更新
+		SetCollisionShape();
+
+		//	モデル情報更新
 		obj->SetPos( pos );
 		obj->SetAngle( angle );
 		obj->SetScale( scale );
 		obj->Update();
+		obj->Animation();
 	}
 
 	//	移動値加算
@@ -167,6 +174,26 @@
 //	情報設定
 //------------------------------------------------------------------------------------
 
+	//	当たり判定用形状設定
+	void	BaseChara::SetCollisionShape( void )
+	{
+		switch ( collisionInfo.collisionShape.shapeType )
+		{
+		case SHAPE_TYPE::SPHERE:
+			collisionInfo.collisionShape.sphere = Sphere( 
+					Vector3( pos.x, pos.y + collisionInfo.height, pos.z ), 
+					collisionInfo.radius );
+			break;
+
+		case SHAPE_TYPE::CAPSULE:
+			collisionInfo.collisionShape.capsule = Capsule(
+					Vector3( pos.x, pos.y + collisionInfo.radius, pos.z ), 
+					Vector3( pos.x, pos.y + collisionInfo.height + collisionInfo.radius, pos.z ), 
+					collisionInfo.radius );
+			break;
+		}
+	}
+
 	//	座標設定
 	void	BaseChara::SetPos( const Vector3& Pos )
 	{
@@ -221,16 +248,16 @@
 //	情報取得
 //------------------------------------------------------------------------------------
 
-	//	攻撃情報取得
-	AttackInfo&	BaseChara::GetAttackInfo( void )
-	{
-		return	attackInfo;
-	}
-
 	//	ライフ情報取得
 	LifeInfo&		BaseChara::GetLifeInfo( void )
 	{
 		return	lifeInfo;
+	}
+
+	//	当たり判定用形状取得
+	CollisionInfo	BaseChara::GetCollisionInfo( void )const
+	{
+		return	collisionInfo;
 	}
 
 	//	行列取得
@@ -304,8 +331,8 @@
 		return	mode;
 	}
 
-	//半径取得
-	float	BaseChara::GetRad(void)const
+	//	フレーム取得
+	int			BaseChara::GetFrame( void )const
 	{
-		return	rad;
+		return	obj->GetFrame();
 	}

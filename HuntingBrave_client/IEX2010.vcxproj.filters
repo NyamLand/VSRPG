@@ -103,9 +103,6 @@
     <ClCompile Include="source\Equipments.cpp">
       <Filter>Source\Equipment\Equipments</Filter>
     </ClCompile>
-    <ClCompile Include="source\GameData.cpp">
-      <Filter>Source\GameData</Filter>
-    </ClCompile>
     <ClCompile Include="source\GameManager.cpp">
       <Filter>Source\Manager\GameManager</Filter>
     </ClCompile>
@@ -141,6 +138,45 @@
     </ClCompile>
     <ClCompile Include="source\CharaInfo.cpp">
       <Filter>Source\BaseChara\CharaInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Image.cpp">
+      <Filter>Source\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ExpUI.cpp">
+      <Filter>Source\UI\ExpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ItemUI.cpp">
+      <Filter>Source\UI\ItemUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MapUI.cpp">
+      <Filter>Source\UI\MapUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\InputManager.cpp">
+      <Filter>Source\Manager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameData.cpp">
+      <Filter>Source\GameData\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SharedData.cpp">
+      <Filter>Source\GameData\SharedData</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sceneMatching.cpp">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MagicManager.cpp">
+      <Filter>Source\Manager\MagicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Magic.cpp">
+      <Filter>Source\Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EnemyHp.cpp">
+      <Filter>Source\UI\EnemyHpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LevelManager.cpp">
+      <Filter>Source\Manager\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NetState.cpp">
+      <Filter>Source\NetState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +237,6 @@
     <ClInclude Include="source\Equipments.h">
       <Filter>Source\Equipment\Equipments</Filter>
     </ClInclude>
-    <ClInclude Include="source\GameData.h">
-      <Filter>Source\GameData</Filter>
-    </ClInclude>
     <ClInclude Include="source\GameManager.h">
       <Filter>Source\Manager\GameManager</Filter>
     </ClInclude>
@@ -242,6 +275,51 @@
     </ClInclude>
     <ClInclude Include="source\CharaInfo.h">
       <Filter>Source\BaseChara\CharaInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Image.h">
+      <Filter>Source\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ExpUI.h">
+      <Filter>Source\UI\ExpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ItemUI.h">
+      <Filter>Source\UI\ItemUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MapUI.h">
+      <Filter>Source\UI\MapUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\InputManager.h">
+      <Filter>Source\Manager\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ReceiveData.h">
+      <Filter>Source\GameData\ReceiveData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SendData.h">
+      <Filter>Source\GameData\SendData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameData.h">
+      <Filter>Source\GameData\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SharedData.h">
+      <Filter>Source\GameData\SharedData</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneMatching.h">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MagicManager.h">
+      <Filter>Source\Manager\MagicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Magic.h">
+      <Filter>Source\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyHp.h">
+      <Filter>Source\UI\EnemyHpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LevelManager.h">
+      <Filter>Source\Manager\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NetState.h">
+      <Filter>Source\NetState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +445,57 @@
     </Filter>
     <Filter Include="Source\BaseChara\CharaInfo">
       <UniqueIdentifier>{9ee647b7-ea1c-4b18-a5e7-6753e9254306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Image">
+      <UniqueIdentifier>{6e0b5205-f20d-4baf-8776-ac4d4515a565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ExpUI">
+      <UniqueIdentifier>{c1391f02-854e-4d6b-b5cd-d7906a2fdbea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ItemUI">
+      <UniqueIdentifier>{8fcc2c22-1743-4491-8c92-2ef72173033e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\MapUI">
+      <UniqueIdentifier>{66913ead-712a-4386-873c-0c725950c99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\InputManager">
+      <UniqueIdentifier>{4a6fa8c4-bd1c-48f9-91ad-a0a5c31aec6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\ReceiveData">
+      <UniqueIdentifier>{549dc27f-5307-4072-9cf8-6fcedf651439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\SendData">
+      <UniqueIdentifier>{e73e0922-dd89-449a-b8c1-7c3a30496d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\GameData">
+      <UniqueIdentifier>{97f29bec-23cf-4ecd-bc9b-e287d66a2d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameData\SharedData">
+      <UniqueIdentifier>{67dcb19f-222d-4dc2-9814-c671b4a9b2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching">
+      <UniqueIdentifier>{19c35837-0dd3-4892-afd4-02c509a31495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\MagicManager">
+      <UniqueIdentifier>{21483965-abcd-4f22-a950-c208ae760416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Magic">
+      <UniqueIdentifier>{c44f9b51-4493-4e6c-b494-4bf8adb41693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\EnemyHpUI">
+      <UniqueIdentifier>{a3c194a7-4c70-4441-bd62-0070304a4bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\LevelManager">
+      <UniqueIdentifier>{b5eca729-56a8-45c8-a649-49ab67b5cbce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\NetState">
+      <UniqueIdentifier>{dab78abc-762e-475e-a7c9-cdf2e2763af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneLoad">
+      <UniqueIdentifier>{30cbf0d5-f499-439f-b127-f8b4b7c82db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneResult">
+      <UniqueIdentifier>{12049d46-c22b-4c18-9ca3-bcfdb62e3319}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

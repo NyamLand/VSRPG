@@ -19,7 +19,7 @@
 	//	コンストラクタ
 	Timer::Timer( void )
 	{
-	
+		
 	}
 
 	//	デストラクタ
@@ -37,22 +37,29 @@
 //----------------------------------------------------------------------------------------------
 
 	//	タイマースタート
-	void	Timer::Start( int limit )
+	void	Timer::Start( float limit )
 	{
 		//	スタート時の時間を格納
-		time( &startTime );
-		
-		//	終了時間を設定
-		endTime = startTime + limit;
+		start = std::chrono::system_clock::now();
+
+		end = limit;
 	}
 
 	//	制限時間更新( 指定した時間をすぎるとtrueをかえす )
-	bool	Timer::LimitTimerUpdate( void )
+	bool	Timer::Update( void )
 	{
-		if ( endTime - nowTime <= 0.0f )	return	true;
+		//	現在の時間を取得
+		now = std::chrono::system_clock::now();
 
-		//	現在の時間を格納
-		time( &nowTime );
+		//	スタート時の時間との差分を求める
+		float difference = 
+			( float )std::chrono::duration_cast<std::chrono::milliseconds>( now - start ).count();
+		
+		//	桁調整にする
+		remaining = end - difference / 1000.0f;
+
+		//	指定した時間より差が大きければtrueをかえす
+		if ( remaining <= 0.0f )		return	true;
 		return	false;
 	}
 
@@ -65,9 +72,7 @@
 //----------------------------------------------------------------------------------------------
 
 	//	現在の残り時間を取得
-	int		Timer::GetLimitTime( void )const
+	float	Timer::GetRemainingTime( void )const
 	{
-		int remainingTime = ( int )( endTime - nowTime );
-		if ( remainingTime <= 0 )	return 0;
-		else return	remainingTime;
+		return	remaining;
 	}

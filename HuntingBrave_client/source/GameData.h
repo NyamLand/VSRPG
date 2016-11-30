@@ -9,6 +9,8 @@
 
 //	include
 #include	"iextreme.h"
+#include	"SendData.h"
+#include	"ReceiveData.h"
 #include	"CSVReader.h"
 #include	"BaseEquipment.h"
 
@@ -32,11 +34,27 @@
 	struct PlayerParam
 	{
 		Vector3 pos;
-		float		angle; 
-		int			motion;
+		float	angle; 
+		int	motion;
+		int	frame;
+		int	life;
 		PlayerParam( void ){};
-		PlayerParam( const Vector3& pos, float angle, int motion );
-		void Set( const Vector3& pos, float angle, int motion );
+		PlayerParam( const Vector3& pos, float angle, int motion, int frame, int life );
+		void Set( const Vector3& pos, float angle, int motion, int frame, int life );
+	};
+
+	//	点数、順位情報
+	struct PointInfo
+	{
+		//	変数
+		int		point;
+		int		addPoint;
+	};
+
+	//	マッチング用
+	struct MatchingInfo
+	{
+		bool	isComplete;
 	};
 
 	//	データ構造
@@ -47,115 +65,65 @@
 		DATA,
 	};
 
-//*****************************************************************************************************************************
+	//	レベル情報
+	namespace LEVEL_INFO
+	{
+		enum
+		{
+			ATTACK,
+			MAGIC_ATTACK,
+			DEFENSE,
+			MAGIC_DEFENSE,
+			SPEED,
+			GET_BOOST
+		};
+	}
+
+//-------------------------------------------------------------------------------------
 //	ネットデータ
-//*****************************************************************************************************************************
+//-------------------------------------------------------------------------------------
 
 	//	コマンド
-	enum COMMANDS
+	namespace COMMANDS
 	{
-		NO_COMMAND = -1,
-		CHARA_INFO,
-		CHAR_MOVE,
-		CHARA_RECEIVEDATA,
-		GAME_INFO,
-		SIGN_UP = 10,
-		SIGN_OUT,
-		CONTROLLE_AXIS,
-	};
+		enum
+		{
+			MATCHING = 10,
+			SIGN_UP,
+			SIGN_OUT
+		};
+	}
 
 	//	新規参加情報
-	struct NET_IN
+	struct SignUp
 	{
 		char	com = COMMANDS::SIGN_UP;
 		int		id;
 		char	name[17];
-		NET_IN( void ){}
-		NET_IN( int id, const LPSTR& name );
+		SignUp( void ){}
+		SignUp( int id, const LPSTR& name );
 		void Set( int id, const LPSTR& name );
 	};
 
-	//	キャラデータ
-	struct NET_CHARA
-	{
-		char com = COMMANDS::CHARA_INFO;
-		int		id;
-		Vector3	pos;
-		float		angle;
-		int			motion;
-		NET_CHARA( void ){}
-		NET_CHARA(int id, const Vector3& pos, float angle, int motion );
-		void	Set( int id, const Vector3& pos, float angle, int motion );
-	};
-
-	//	移動情報
-	struct NET_MOVE
-	{
-		char com = COMMANDS::CHAR_MOVE;
-		int		id;
-		float	axisX, axisY;
-		NET_MOVE( void ){};
-		NET_MOVE( int id, float axisX, float axisY );
-		void	Set( int id, float axisX, float axisY );
-	};
-
-	//	ゲーム情報
-	struct NET_GAME
-	{
-		char	com = GAME_INFO;
-		int		limitTimer;
-		NET_GAME( void ){};
-		NET_GAME( int timer ){ limitTimer = timer; }
-	};
-
-	//	送るデータの塊
-	struct NET_CHAR_RECEIVEDATA
-	{
-		char com = COMMANDS::CHARA_RECEIVEDATA;
-		int		id;
-		float	axisX, axisY;
-		float	angle;
-		NET_CHAR_RECEIVEDATA(void){}
-		NET_CHAR_RECEIVEDATA(int id, const float& axisX, const float& axisY, const float& angle);
-		void	Set(int id, const float& axisX, const float& axisY, float& angle);
-	};
-
-//***************************今後使うか分からん******************
-//	コントローラー軸情報
-	struct NET_CONTROLLE_AXIS
-	{
-		char com = COMMANDS::CONTROLLE_AXIS;
-		int		id;
-		float axisX,axisY;
-		NET_CONTROLLE_AXIS(void){}
-		NET_CONTROLLE_AXIS(int id, const float axisX, const float axisY);
-		void	Set(int id, const float axisX, const float axisY);
-	};
-
-
-	//	キャラ移動データ
-	struct NET_CHARA_MOVE
-	{
-		char com = COMMANDS::CHAR_MOVE;
-		int		id;
-		Vector3	move;
-		NET_CHARA_MOVE(void){}
-		NET_CHARA_MOVE(int id, const Vector3& move);
-		void	Set(int id, const Vector3& move);
-	};
-
-//****************************************************************
-	
 	//	脱退情報
-	struct NET_OUT
+	struct SignOut
 	{
 		char  com = COMMANDS::SIGN_OUT;
 		int	  id;
-		NET_OUT( void ){}
-		NET_OUT( int id ){ this->id; }
+		SignOut( void ){}
+		SignOut( int id ){ this->id; }
 	};
 
-
+	//マッチング情報
+	struct Matching
+	{
+		char com = COMMANDS::MATCHING;
+		int	id;
+		bool	isComplete;
+		Matching( void );
+		Matching( int id, int mode );
+		void	Set( int id, int mode );
+	};
 
 //*****************************************************************************************************************************
 //	装備品データ

@@ -9,13 +9,14 @@
 
 //	include
 #include	"CharaInfo.h"
-
+#include	"EnemyHp.h"
 //	class
 class BaseChara
 {
 protected:
 	//	モデル
 	iex3DObj*	obj;
+	EnemyHpUI*	bar;
 
 	//	パラメータ
 	Vector3		pos;
@@ -23,18 +24,16 @@ protected:
 	float			angle;
 	float			speed;
 	float			scale;
-	bool			active;
 	int				mode;
-	AttackInfo	attackInfo;
-	LifeInfo		lifeInfo;
-	float		rad;
+	CollisionInfo	collisionInfo;
+	LifeInfo			lifeInfo;
 
 public:
 	//	初期化・解放
 	BaseChara( void );
 	virtual ~BaseChara( void );
 	bool	Load( LPSTR filename );
-	virtual bool Initialize( void ) = 0;
+	virtual bool Initialize( void ){ return true; }
 	
 	//	更新・描画
 	virtual void	Update( void );
@@ -47,6 +46,7 @@ public:
 	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
 
 	//	情報設定
+	void	SetCollisionShape( void );
 	void	SetPos( const Vector3& Pos );
 	void	SetMove( const Vector3& Move );
 	void	SetAngle( float Angle );
@@ -56,17 +56,17 @@ public:
 	void	SetObj( iex3DObj* obj );
 
 	//	情報取得
-	AttackInfo&	GetAttackInfo( void );
 	LifeInfo&		GetLifeInfo( void );
-	Matrix	GetMatrix( void )const;
+	CollisionInfo GetCollisionInfo( void )const;
+	Matrix		GetMatrix( void )const;
 	Vector3	GetBonePos( int boneNum )const;
 	Vector3	GetPos( void )const;
 	Vector3	GetMove( void )const;
 	Vector3	GetFront( void )const;
 	Vector3	GetUp( void )const;
 	Vector3	GetRight( void )const;
-	float		GetAngle( void )const;
+	float			GetAngle( void )const;
 	int			GetMotion( void )const;
 	int			GetMode( void )const;
-	float	GetRad( void )const;
+	int			GetFrame( void )const;
 };

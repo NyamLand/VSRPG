@@ -58,6 +58,8 @@ namespace
 
 		//	モデル読み込み
 		Load();
+		
+		
 
 		return	true;
 	}
@@ -102,7 +104,7 @@ namespace
 			( *it )->Update();
 		
 			//	生存チェック
-			bool isAlive = ( *it )->GetIsAlive();
+			bool isAlive = ( *it )->GetLifeInfo().isAlive;
 
 			//	死亡していたらリストから削除
 			if ( !isAlive )
@@ -136,7 +138,7 @@ namespace
 //-------------------------------------------------------------------------------------
 	
 	//	リストに追加
-	void	EnemyManager::Append( const Vector3& pos,int type )
+	void	EnemyManager::Append( const Vector3& pos, char type )
 	{
 		Enemy* enemy = nullptr;
 
@@ -144,10 +146,12 @@ namespace
 		{
 		case BIG_ENEMY:
 			enemy = new BigEnemy();
+			//enemy->GetLifeInfo().maxLife = 80.0f;
 			break;
 
 		case SMALL_ENEMY:
 			enemy = new SmallEnemy();
+			//enemy->GetLifeInfo().maxLife = 20.0f;
 			break;
 
 		default:
@@ -155,9 +159,11 @@ namespace
 		}
 
 		//	初期化
+		enemy->SetEnemyType( type );
 		enemy->SetObj( org[type]->Clone() );
 		enemy->Initialize();
 		enemy->SetPos( pos );
+		
 
 		//	リストに追加
 		enemylist.push_back( enemy );
@@ -175,7 +181,7 @@ namespace
 			Vector3	vec = enemy->GetPos() - ( *it )->GetPos();
 			float		length = vec.Length();
 
-			float collisionDist = enemy->GetRad() + (*it)->GetRad();
+			float collisionDist = enemy->GetCollisionInfo().radius + ( *it )->GetCollisionInfo().radius;
 			//	近い場合は離す
 			if ( length < collisionDist )
 			{
@@ -191,7 +197,6 @@ namespace
 	//	プレイヤーとの座標チェック
 	void	EnemyManager::PlayerPosCheck( Enemy* enemy )
 	{
-		
 		//	自分→相手へのベクトル
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -203,9 +208,9 @@ namespace
 			Vector3	vec = pPos - enemy->GetPos();
 			float		length = vec.Length();
 			
-			float collisionDist = enemy->GetRad() + playerManager->GetPlayer( p )->GetRad();
+			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer( p )->GetCollisionInfo().radius;
 			//	近い場合は離す
-			if ( length <  collisionDist)
+			if ( length <  collisionDist )
 			{
 				//	ベクトル正規化
 				vec.Normalize();
@@ -219,7 +224,7 @@ namespace
 	//	一定時間ごとに敵を生成
 	void	EnemyManager::AddRegularTimeIntervals( void )
 	{
-		if ( gameManager->GetTime() % APPEND_INTERVAL != 0 )
+		if ( ( int )gameManager->GetTime() % APPEND_INTERVAL != 0 )
 		{
 			//	生成フラグをtrueにする
 			appendOK = true;
@@ -236,6 +241,7 @@ namespace
 		
 		//	リストに追加
 		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
+		
 		//	生成フラグをfalseにする
 		appendOK = false;
 	}

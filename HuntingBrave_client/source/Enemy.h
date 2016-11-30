@@ -9,6 +9,7 @@
 
 //	include
 #include	"BaseChara.h"
+#include	"EnemyHp.h"
 
 //	class
 class Enemy : public BaseChara
@@ -19,13 +20,19 @@ protected:
 	float		interpolationParam;
 	float		searchDist;
 	float		attackDist;
-	float		rad;
+	char		enemyType;
+
+	//float		elife;			//敵の体力
+	int	count;		//仮多段ヒット用
+
+public:
 
 	enum MODE	//	仮
 	{
 		ENTRY,
 		MOVE,
 		ATTACK,
+		DAMAGE,
 		DEAD,
 		MODE_MAX
 	};
@@ -36,21 +43,30 @@ public:
 	~Enemy( void )override;
 
 	//	各モード動作関数
-	void	MoveMode( void );
+	virtual void	EntryMode( void ) = 0;
+	virtual void	MoveMode( void ) = 0;
+	virtual void	AttackMode( void ) = 0;
+	void	DamageMode( void );
+	
 
 	//	動作関数
+	virtual void Update( void );
 	void	Move( float speed ) ;
 	void	FacingPlayer( void );
 	void	Advance( float speed );
 	bool	DistCheck( float& length );
 	void	LifeCheck( void );
+	//virtual bool	DamageFlgCheck( void )=0;
+
+	//モード関数
 
 	//	攻撃関数
 	virtual void	Attack( void )=0;
 
-	//	情報取得
+	//	情報設定
 	void	SetTargetPos( const Vector3& pos );
-	bool	GetActive( void )const;
-	bool	GetIsAlive( void )const;
+	void	SetEnemyType( char enemyType );
 	
+	//	情報取得
+	char	GetEnemyType( void )const;
 };

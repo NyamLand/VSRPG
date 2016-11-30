@@ -10,8 +10,7 @@
 //	include
 #include	"ShapeInfo.h"
 
-//	攻撃情報構造体
-struct AttackInfo
+namespace
 {
 	//	定数
 	enum ATTACK_PARAM
@@ -21,23 +20,38 @@ struct AttackInfo
 		ATTACK2,
 	};
 
-	//	パラメータ
-	int		power;
-	int		timer;
-	int		step;
-	bool	initFlag;
-	ATTACK_PARAM	attackParam;
-	CollisionShape		collisionShape;
+	//	当たり判定形状
+	enum COLLISION_SHAPE
+	{
+		CAPSULE,
+		SPHERE,
+	};
+}
 
-	//	初期化・解放
-	AttackInfo( void );
-	void Reset( void );
+
+//	攻撃情報構造体
+struct AttackInfo
+{
+	//	パラメータ
+	char			attackParam;
+	char			shape;
+	float			radius;
+	Vector3	vec1;
+	Vector3	vec2;
+	void	Set( char shape, float radius, const Vector3& vec1, const Vector3& vec2 )
+	{
+		this->shape = shape;
+		this->radius = radius;
+		this->vec1 = vec1;
+		this->vec2 = vec2;
+	}
 };
 
 //	ライフ情報構造体
 struct LifeInfo
 {
-	bool	isAlive;
+	bool		isAlive;
+	bool		active;
 	int		maxLife;
 	int		life;
 
@@ -50,4 +64,20 @@ struct LifeInfo
 	
 	//	情報設定
 	void	Initialize( int initLife );
+};
+
+//	当たり判定形状構造体
+struct CollisionInfo
+{
+	CollisionShape		collisionShape;
+	float					height;
+	float					radius;
+
+	//	初期化
+	CollisionInfo( void );
+	CollisionInfo( const CollisionShape& collisionShape, float hitHeight, float hitRadius );
+
+	//	情報設定
+	void	SetCollisionShape( const CollisionShape& colShape );
+	void	Set( SHAPE_TYPE shapeType, float hitHeight, float hitRadius );
 };

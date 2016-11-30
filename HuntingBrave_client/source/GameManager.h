@@ -10,6 +10,15 @@
 //	include
 #include	"Singleton.h"
 
+namespace SCENE
+{
+	enum
+	{
+		MATCHING,
+		MAIN
+	};
+}
+
 //	class
 class GameManager : public Singleton<GameManager>
 {
@@ -17,7 +26,9 @@ class GameManager : public Singleton<GameManager>
 	friend Singleton<GameManager>;
 
 public:
-	int		timer;
+	float		timer;
+	bool	isComplete;		//Ú‘±‚É€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
+
 
 private:
 	//	‰Šú‰»E‰ğ•ú
@@ -34,10 +45,11 @@ public:
 	void	Update( void );
 
 	//	î•ñİ’è
-	void	SetTimer( int time ){ timer = time; }
+	void	SetTimer( float time ){ timer = time; }
 
 	//	î•ñæ“¾
-	int		GetTime( void ){ return timer; }
+	float		GetTime( void ){ return timer; }
+	bool		GetIsComplete(void){ return isComplete; }
 };
 
 #define	gameManager ( GameManager::GetInstance() )

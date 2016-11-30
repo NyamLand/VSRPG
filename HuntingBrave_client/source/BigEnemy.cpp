@@ -17,7 +17,9 @@
 
 //	モデル情報
 #define	MINOTAURUS_SCALE	0.02f
-#define	INIT_LIFE	1
+#define	MINOTAURUS_HEIGHT	2.0f
+#define	MINOTAURUS_RADIUS	1.5f
+#define	INIT_LIFE	 1
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -37,13 +39,17 @@
 		ModeFunction[MODE::ENTRY] = &BigEnemy::EntryMode;
 		ModeFunction[MODE::MOVE] = &BigEnemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &BigEnemy::AttackMode;
+		ModeFunction[MODE::DAMAGE] = &BigEnemy::DamageMode;
 		
 		//	変数初期化
 		speed = MOVE_SPEED;
-		active = false;
-		lifeInfo.isAlive = true;
 		searchDist = SEARCH_DIST;
 		attackDist = ATTACK_DIST;
+		lifeInfo.isAlive = true;
+		lifeInfo.active = false;
+
+		
+
 	}
 
 	//	デストラクタ
@@ -61,8 +67,10 @@
 		SetMotion( 1 );	//	数値仮
 		
 		lifeInfo.Initialize( INIT_LIFE );
-		rad = 0.2f;
+		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
 		//	情報更新
 		UpdateInfo();
 
@@ -103,7 +111,7 @@
 		//	補間終了後移動
 		if ( expantion )
 		{
-			active = true;
+			lifeInfo.active = true;
 			SetMode( MODE::MOVE );
 		}
 	}
@@ -127,12 +135,12 @@
 		if ( frame >= 138 && frame <= 150 )
 		{
 			//	攻撃状態を有効にする
-			attackInfo.attackParam = AttackInfo::ATTACK1;
+			//attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}
 		else
 		{
 			//	攻撃状態を無効にする
-			attackInfo.attackParam = AttackInfo::NO_ATTACK;
+			//attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
 			if ( frame >= 170 )
@@ -140,14 +148,17 @@
 		}
 	}
 
+
+	
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
 
-void	BigEnemy::Attack()
-{
+	void	BigEnemy::Attack()
+	{
 
-}
+	}
+
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------

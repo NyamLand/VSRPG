@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"GameParam.h"
 #include	"GameManager.h"
 
 //*****************************************************************************************************************************
@@ -12,7 +13,8 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	TIME_MAX	( 5 * MINUTE )
+#define	TIME_MAX	( 7.0f * MINUTE )
+#define	INIT_LIFE		7
 
 //	実体
 GameManager*	gameManager = nullptr;
@@ -26,10 +28,10 @@ GameManager*	gameManager = nullptr;
 	{
 		//	初期座標設定
 		int initMotion = 0;
-		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, 15.0f ), 0.0f, 0.0f, D3DX_PI, initMotion );
-		initPlayerParam[1].Set( Vector3( 15.0f, 0.0f, 0.0f ), 0.0f, 0.0f, D3DX_PI * 1.5f, initMotion );
-		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -15.0f ), 0.0f, 0.0f, 0.0f, initMotion );
-		initPlayerParam[3].Set( Vector3( -15.0f, 0.0f, 0.0f ), 0.0f, 0.0f, D3DX_PI * 0.5f, initMotion );
+		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, 15.0f ), D3DX_PI, initMotion, 0 );
+		initPlayerParam[1].Set( Vector3( 15.0f, 0.0f, 0.0f ), D3DX_PI * 1.5f, initMotion, 0 );
+		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -15.0f ), 0.0f, initMotion, 0 );
+		initPlayerParam[3].Set( Vector3( -15.0f, 0.0f, 0.0f ), D3DX_PI * 0.5f, initMotion, 0 );
 
 		timer = new Timer();
 		timer->Start( TIME_MAX );
@@ -52,7 +54,7 @@ GameManager*	gameManager = nullptr;
 	//	更新
 	void	GameManager::Update( void )
 	{
-		timer->LimitTimerUpdate();
+		timer->Update();
 	}
 
 //----------------------------------------------------------------------------------------------

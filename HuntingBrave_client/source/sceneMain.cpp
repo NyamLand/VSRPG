@@ -3,8 +3,10 @@
 #include	"system/system.h"
 #include	<fstream>
 #include	<iostream>
+#include	<vector>
 #include	<thread>
 #include	"GlobalFunction.h"
+#include	"Image.h"
 #include	"DrawShape.h"
 #include	"GameData.h"
 #include	"GameParam.h"
@@ -13,6 +15,8 @@
 #include	"Camera.h"
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
+#include	"MagicManager.h"
+#include	"LevelManager.h"
 #include	"Collision.h"
 
 //
@@ -28,6 +32,7 @@
 //*****************************************************************************************************************************
 
 iexMesh*	stage = nullptr;	//	仮(絶対消す)
+iexMesh*	magic = nullptr;	//	仮(絶対消す)
 BaseEquipment* baseEquipment;	//	仮(絶対消す)
 
 //*****************************************************************************************************************************
@@ -46,9 +51,6 @@ bool	sceneMain::Initialize( void )
 	dir.Normalize();
 	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
-	//	GameParam初期化
-	gameParam = new GameParam();
-	
 	//	カメラ設定
 	mainView = new Camera();
 	mainView->Initialize(
@@ -56,39 +58,23 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
-	//	player設定
-	playerManager->Initialize();
-
-	//	enemy設定
+	//	enemy初期化
 	enemyManager->Initialize();
+
+	//	magic初期化
+	magicManager->Initialize();
 	
-	//	stage設定
-	stage = new iexMesh( "DATA/BG/2_1/FIELD2_1.IMO" );
+	//	stage初期化
+	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
+	stage->SetPos( 0.0f, -5.0f, 0.0f );
+	stage->SetScale( 0.1f );
+	stage->Update();
 
 	baseEquipment = new BaseEquipment("DATA\\player_data.csv");
 
 	//	uiの設定
 	uiManager->Initialize();
 
-	//	GameManagerの初期化
-	gameManager->Initialize();
-
-	//	テキスト読み込み
-	char addr[64], name[17];
-	std::ifstream	ifs( "onlineInfo.txt" );
-	ifs >> addr;
-	ifs >> name;
-
-	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, 7000, name ) )
-	{
-		MessageBox(iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
-		exit( 0 );
-		return	false;
-	}
-	//仮
-	//baseEquipment = new BaseEquipment();
-	
 	return true;
 }
 
@@ -96,12 +82,10 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	SafeDelete( gameParam );
 	playerManager->Release();
 	enemyManager->Release();
 	uiManager->Release();
-	
-
+	magicManager->Release();
 }
 
 //*****************************************************************************************************************************
@@ -113,10 +97,10 @@ void	sceneMain::Update( void )
 {
 	//	経過時間取得
 	float elapseTime = GetElapseTime();
-	printf( "経過時間 : %f\n", elapseTime );
 
-	//	サーバーから情報受信
-	gameParam->Update();
+	//	送受信
+	std::thread		ThreadFunc( ThreadFunction );
+	ThreadFunc.join();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -127,11 +111,15 @@ void	sceneMain::Update( void )
 	//	enemy更新
 	enemyManager->Update();
 
+	//	magic更新
+	magicManager->Update();
+
 	//	ui更新
 	uiManager->Update();
 
 	//	camera更新
-	mainView->Update( playerManager->GetPlayer( 0 )->GetPos() );
+	int index = gameParam->GetMyIndex();
+	mainView->Update( playerManager->GetPlayer( index )->GetPos() );
 
 	//	collision
 	collision->AllCollision();
@@ -157,6 +145,9 @@ void	sceneMain::Render( void )
 	//	enemy描画
 	enemyManager->Render();
 
+	//	magic描画
+	magicManager->Render();
+
 	//	ui描画
 	uiManager->Render();
 
@@ -173,9 +164,11 @@ void	sceneMain::DebugRender( void )
 	{
 		//	各プレイヤー座標描画
 		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
+		int	point = gameParam->GetPointInfo( p ).point;
 		Vector3	p_pos = playerParam.pos;
+		int	life = playerParam.life;
 		char	str[256];
-		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f )",  p + 1, p_pos.x, p_pos.y, p_pos.z );
+		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d, life = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point, life );
 		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
 	}
 }
@@ -190,13 +183,25 @@ void	sceneMain::MyInfoRender( void )
 	LPSTR name = gameParam->GetPlayerName( id );
 	
 	//	自分の座標
-	Vector3	pos = playerManager->GetPlayer( 0 )->GetPos();
+	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
+
+	//	経験値
+	int	exp = levelManager->GetExp();
 
 	//	表示
 	char	str[256];
-	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z );
+	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d", id + 1, name, pos.x, pos.y, pos.z, exp );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
+
+//	受信送信
+void	sceneMain::ThreadFunction( void )
+{
+	//	サーバーから情報受信
+	gameParam->Update();
+}
+
+
 
 
 

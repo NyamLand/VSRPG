@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
+#include	"Image.h"
 #include	"TimerUI.h"
 
 //***************************************************************
@@ -18,38 +19,50 @@
 //	初期化・解放
 //---------------------------------------------------------------------------------------
 
-	//	コンストラクタ
-	TimerUI::TimerUI( void ) : timer( 0 )
-	{
+//	コンストラクタ
+TimerUI::TimerUI(void) : timer( 0 )
+{
+	time_obj = new Image();
+	time_obj->Initialize("DATA/UI/main_UI/Number.png", 300, 500, 100, 100, 0, 0, 64 * 3, 64);
+	time_obj->SetFlash(0.1f);
 
-	}
+}
 
-	//	デストラクタ
-	TimerUI::~TimerUI( void )
-	{
+//	デストラクタ
+TimerUI::~TimerUI(void)
+{
 
-	}
+}
+
+
 
 //---------------------------------------------------------------------------------------
 //	更新・描画
 //---------------------------------------------------------------------------------------
 
-	//	更新
-	void	TimerUI::Update( void )
-	{
-		timer = gameManager->GetTime();
-	}
+//	更新
+void	TimerUI::Update(void)
+{
+	timer = gameManager->GetTime();
+	if ( KEY_Get( KEY_SPACE ) == 1 ){
+		time_obj->FlashUpdate();
+	//time_obj->SetFlash( 0.1f );
 
-	//	描画
-	void	TimerUI::Render( void )
-	{
-		char str[64];
-		sprintf_s( str, "timer = %dsec", timer );
-		IEX_DrawText( str, 600, 50, 400, 100, 0xFF00FF00 );
 	}
+}
 
-//---------------------------------------------------------------------------------------
-//	動作関数
+//	描画
+void	TimerUI::Render(void)
+{
+	char str[64];
+	sprintf_s( str, "timer = %f秒",timer );
+	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
+
+	time_obj->Render( IMAGE_MODE::FLASH );
+}
+
+//--------------------------------------------------------------------------------------
+//	動作関数-
 //---------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------

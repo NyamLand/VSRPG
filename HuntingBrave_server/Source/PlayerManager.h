@@ -27,11 +27,13 @@ public:
 	void	Update( int id );
 
 	//	î•ñİ’è
+	void	PosCheck( int client );
 	void	SetPlayer( int id );
 	void	ReleasePlayer( int id );
 
 	//	À•Wæ“¾
 	Vector3	GetPos( int id );
+	Player*	&	GetPlayer( int id );
 };
 
 extern	PlayerManager*	playerManager;

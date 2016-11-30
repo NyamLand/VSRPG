@@ -4,9 +4,9 @@
 //
 //*****************************************************************************************************************************
 
-//	クラス前方宣言
-class GameParam;
+//	class前方宣言
 
+//	class
 class	sceneMain : public Scene
 {
 private:
@@ -22,6 +22,7 @@ public:
 	//	動作関数
 	void	DebugRender( void );
 	void	MyInfoRender( void );
+	static		void	ThreadFunction( void );
 };
 
 

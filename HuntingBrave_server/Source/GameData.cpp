@@ -19,8 +19,7 @@
 	//	コンストラクタ
 	PlayerInfo::PlayerInfo( bool active, const LPSTR& name )
 	{
-		this->active = active;
-		strcpy( this->name, name );
+		Set( active, name );
 	}
 
 	//	情報設定
@@ -35,34 +34,33 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PlayerParam::PlayerParam( const Vector3& pos, float moveX, float moveZ, float angle, int motion )
+	PlayerParam::PlayerParam( const Vector3& pos, float angle, int motion, int frame )
 	{
-		Set( pos, moveX, moveZ, angle, motion );
+		Set( pos,angle, motion, frame );
 	}
 
 	//	情報設定
-	void	PlayerParam::Set( const Vector3& pos, float moveX, float moveZ, float angle, int motion )
+	void	PlayerParam::Set( const Vector3& pos, float angle, int motion, int frame )
 	{
 		this->pos = pos;
-		this->moveX = moveX;
-		this->moveZ = moveZ;
 		this->angle = angle;
 		this->motion = motion;
+		this->frame = frame;
 	}
 
 //----------------------------------------------------------------------------------------------
-//	NET_IN	構造体
+//	SignUp構造体
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	NET_IN::NET_IN( int id, const LPSTR& name )
+	SignUp::SignUp( int id, const LPSTR& name )
 	{
 		this->id = id;
 		strcpy( this->name, name );
 	}
 
 	//	情報設定
-	void	NET_IN::Set( int id, const LPSTR& name )
+	void	SignUp::Set( int id, const LPSTR& name )
 	{
 		this->com = com;
 		this->id = id;
@@ -70,94 +68,24 @@
 	}
 
 //----------------------------------------------------------------------------------------------
-//	NET_	CHARA構造体
+//	Matching構造体
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	NET_CHARA::NET_CHARA( int id, const Vector3& pos, float angle, int motion )
+	Matching::Matching( void ) : id( 0 )
 	{
-		Set( id, pos, angle, motion );
+
 	}
-
-	//	情報設定
-	void	NET_CHARA::Set( int id, const Vector3& pos, float angle, int motion )
-	{
-		this->id = id;
-		this->pos = pos;
-		this->angle = angle;
-		this->motion = motion;
-	}
-
-//----------------------------------------------------------------------------------------------
-//	NET_MOVE構造体
-//----------------------------------------------------------------------------------------------
-
+	
 	//	コンストラクタ
-	NET_MOVE::NET_MOVE( int id, float axisX, float axisY )
+	Matching::Matching( int id, int mode )
 	{
-		Set( id, axisX, axisY );
+		Set( id, mode );
 	}
 
 	//	情報設定
-	void	NET_MOVE::Set( int id, float axisX, float axisY )
+	void Matching::Set( int id, int mode )
 	{
 		this->id = id;
-		this->axisX = axisX;
-		this->axisY = axisY;
-	}
-
-//----------------------------------------------------------------------------------------------
-//	NET_	SEMDDATA構造体
-//----------------------------------------------------------------------------------------------
-	NET_CHAR_RECEIVEDATA::NET_CHAR_RECEIVEDATA(int id, const float& axisX, const float& axisY, const float& angle)
-	{
-		this->id = id;
-		this->axisX = axisX;
-		this->axisY = axisY;
-		this->angle = angle;
-	}
-
-	void NET_CHAR_RECEIVEDATA::Set(int id, const float& axisX, const float& axisY, float& angle)
-	{
-		this->id = id;
-		this->axisX = axisX;
-		this->axisY = axisY;
-		this->angle = angle;
-	}
-//----------------------------------------------------------------------------------------------
-//	NET_CONTROLLE_AXIS構造体
-//----------------------------------------------------------------------------------------------
-
-	//	コンストラクタ
-	NET_CONTROLLE_AXIS::NET_CONTROLLE_AXIS(int id, const float& axisX, const float& axisY)
-	{
-		this->id = id;
-		this->axisX = axisX;
-		this->axisY = axisY;
-	}
-
-	//	情報設定
-	void	NET_CONTROLLE_AXIS::Set(int id, const float& axisX, const float& axisY)
-	{
-		this->id = id;
-		this->axisX = axisX;
-		this->axisY = axisY;
-	}
-
-//----------------------------------------------------------------------------------------------
-//	NET_	CHARA_MOVE構造体
-//----------------------------------------------------------------------------------------------
-
-	//	コンストラクタ
-	NET_CHARA_MOVE::NET_CHARA_MOVE(int id, const Vector3& move)
-	{
-		this->id = id;
-		this->move = move;
-	}
-
-	//	情報設定
-	void	NET_CHARA_MOVE::Set(int id, const Vector3& move)
-	{
-		this->id = id;
-		this->move = move;
+		this->isComplete = mode;
 	}
