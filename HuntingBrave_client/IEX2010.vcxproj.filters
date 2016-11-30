@@ -175,6 +175,15 @@
     <ClCompile Include="source\Magic.cpp">
       <Filter>Source\Magic</Filter>
     </ClCompile>
+    <ClCompile Include="source\ScoreUI.cpp">
+      <Filter>Source\UI\ScoreUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScoreBoardUI.cpp">
+      <Filter>Source\UI\ScoreBoardUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NumberUI.cpp">
+      <Filter>Source\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -308,6 +317,15 @@
     </ClInclude>
     <ClInclude Include="source\Magic.h">
       <Filter>Source\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScoreUI.h">
+      <Filter>Source\UI\ScoreUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScoreBoardUI.h">
+      <Filter>Source\UI\ScoreBoardUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NumberUI.h">
+      <Filter>Source\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +487,12 @@
     </Filter>
     <Filter Include="Source\Magic">
       <UniqueIdentifier>{c44f9b51-4493-4e6c-b494-4bf8adb41693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ScoreUI">
+      <UniqueIdentifier>{d384f36b-548b-4121-8839-72b23077ed4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ScoreBoardUI">
+      <UniqueIdentifier>{63b2710b-5d4f-4947-a6e5-9ad1f1fe0927}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -4,12 +4,11 @@
 #include	"GameManager.h"
 #include	"Image.h"
 #include	"NumberUI.h"
-#include	"ScoreUI.h"
 #include	<math.h>
 
 //***************************************************************
 //
-//	ScoreUIクラス
+//	NumberUIクラス
 //
 //***************************************************************
 
@@ -22,7 +21,7 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-ScoreUI::ScoreUI(int x, int y, int w, int h)
+NumberUI::NumberUI(int x, int y, int w, int h)
 {
 	//	座標、サイズ情報格納
 	size = w;
@@ -31,7 +30,7 @@ ScoreUI::ScoreUI(int x, int y, int w, int h)
 
 	//	SCORE文字アイコン
 	icon = new Image();
-	icon->Initialize("DATA/UI/main_UI/ExpIcon.png", posx, posy, size, size, 0, 0, SCORE_MAX::ICON_SIZE, SCORE_MAX::ICON_SIZE);
+//	icon->Initialize("DATA/UI/main_UI/ExpIcon.png", posx, posy, size, size, 0, 0, SCORE_MAX::ICON_SIZE, SCORE_MAX::ICON_SIZE);
 
 	//	経験値の値
 	for (int i = 0; i < DIGIT_MAX; i++)
@@ -46,7 +45,7 @@ ScoreUI::ScoreUI(int x, int y, int w, int h)
 }
 
 //	デストラクタ
-ScoreUI::~ScoreUI(void)
+NumberUI::~NumberUI(void)
 {
 	SafeDelete(icon);
 	for (int i = 0; i < DIGIT_MAX; i++)
@@ -62,10 +61,10 @@ ScoreUI::~ScoreUI(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	ScoreUI::Update(void)
+void	NumberUI::Update(void)
 {
 	//	経験値を1桁ずつに分ける
-	ScoreManager();
+	NumberManager();
 
 	//	各値に合わせたパラメータを入れる
 	for (int i = 0; i < DIGIT_MAX; i++){
@@ -80,7 +79,7 @@ void	ScoreUI::Update(void)
 //---------------------------------------------------------------------------------------
 
 //	経験値の値調整関数
-void	ScoreUI::ScoreManager(void)
+void	NumberUI::NumberManager(void)
 {
 
 	//	桁数分の入れ物を用意(初期化)
@@ -127,7 +126,7 @@ void	ScoreUI::ScoreManager(void)
 
 }
 
-void	ScoreUI::NumberSet(Image* img, const int num, const int digit)
+void	NumberUI::NumberSet(Image* img, const int num, const int digit)
 {
 	//	0～9以外の値の場合飛ばす。
 	if (num < 0 || num > 9)
@@ -151,7 +150,7 @@ void	ScoreUI::NumberSet(Image* img, const int num, const int digit)
 //	描画
 //---------------------------------------------------------------------------------------
 
-void	ScoreUI::Render(void)
+void	NumberUI::Render(void)
 {
 	icon->Render(IMAGE_MODE::ADOPTPARAM);
 
@@ -165,7 +164,7 @@ void	ScoreUI::Render(void)
 //---------------------------------------------------------------------------------------
 //	情報設定
 //---------------------------------------------------------------------------------------
-void	ScoreUI::SetParam(int x, int y, int w, int h)
+void	NumberUI::SetParam(int x, int y, int w, int h)
 {
 	size = w;
 	posx = x;
@@ -176,7 +175,7 @@ void	ScoreUI::SetParam(int x, int y, int w, int h)
 
 }
 
-void	ScoreUI::SetRenderFlag(bool c)
+void	NumberUI::SetRenderFlag(bool c)
 {
 	icon->renderflag = c;
 	for (int i = 0; i < DIGIT_MAX; i++)
