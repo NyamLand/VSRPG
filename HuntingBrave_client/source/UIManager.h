@@ -7,15 +7,19 @@
 //
 //***************************************************************
 
+
 //	include
 #include	"Singleton.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	"NumberUI.h"
 #include	"TimerUI.h"
 #include	"HpUI.h"
 #include	"ExpUI.h"
 #include	"ItemUI.h"
 #include	"MapUI.h"
+#include	"ScoreUI.h"
+#include	"ScoreBoardUI.h"
 
 //	class
 class UIManager : public Singleton<UIManager> 
@@ -29,11 +33,13 @@ private:
 	~UIManager(void)override;
 
 private:
-	TimerUI*	timerUI;
-	HpUI*		hpUI;
-	ExpUI*		expUI;
-	ItemUI*		itemUI;
-	MapUI*		mapUI;
+	TimerUI*		timerUI;
+	HpUI*			hpUI;
+	ExpUI*			expUI;
+	ItemUI*			itemUI;
+	MapUI*			mapUI;
+	ScoreUI*		scoreUI;
+	ScoreBoardUI*	boardUI;
 
 public:
 	//	èâä˙âªÅEâï˙
