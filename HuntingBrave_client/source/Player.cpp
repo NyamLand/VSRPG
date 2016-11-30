@@ -67,7 +67,7 @@ namespace
 	bool	Player::Initialize( int id )
 	{
 		//	読み込み
-		Load( "DATA/CHR/Fighter/Fighter.IEM" );
+		Load( "DATA/CHR/suppin/suppin.IEM" );
 
 		//	情報設定
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
@@ -86,7 +86,7 @@ namespace
 		lifeInfo.isAlive = true;
 
 		//	テクスチャ書き換え
-		//ChangeTexture( id );
+		ChangeTexture( id );
 		
 		//	情報更新
 		UpdateInfo();

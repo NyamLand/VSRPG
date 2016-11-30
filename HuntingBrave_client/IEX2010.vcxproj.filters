@@ -181,6 +181,12 @@
     <ClCompile Include="source\Effect.cpp">
       <Filter>Source\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="source\ScoreBoardUI.cpp">
+      <Filter>Source\UI\ScoreBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScoreUI.cpp">
+      <Filter>Source\UI\ScoreUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -326,6 +332,12 @@
     </ClInclude>
     <ClInclude Include="source\Effect.h">
       <Filter>Source\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScoreBoardUI.h">
+      <Filter>Source\UI\ScoreBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScoreUI.h">
+      <Filter>Source\UI\ScoreUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +517,12 @@
     </Filter>
     <Filter Include="Source\Effect">
       <UniqueIdentifier>{5d14bf3d-8135-4237-ae3e-85b6ee928934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ScoreBoard">
+      <UniqueIdentifier>{16203dba-35d8-48f3-8c30-5ace129dcccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ScoreUI">
+      <UniqueIdentifier>{a09cdc2f-0d58-4aaf-9cf9-42d5aeb6972e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
