@@ -21,17 +21,26 @@
 //
 //*****************************************************************************************************************************
 
+
+//	プロトタイプ宣言
+void	sceneTitleUpdate( void );
+void	sceneMatchingUpdate( void );
+void	sceneMainUpdate( void );
+void	sceneResultUpdate( void );
+
 //	main
 void main( void )
 {
 	//	初期化
+	GameState	gameState;
 	gameManager = new GameManager();
 	gameParam = new GameParam();
 	inputManager = new InputManager();
 	magicManager = new MagicManager();
 	levelManager = new LevelManager();
-	playerManager = new PlayerManager( gameParam );
+	pointManager = new PointManager();
 	collision = new Collision( gameParam );
+	playerManager = new PlayerManager( gameParam );
 	gameParam->InitializeServer();
 
 	//	無限ループ
@@ -41,18 +50,18 @@ void main( void )
 		gameManager->Update();
 		
 		//	クライアントから受信
-		int client = gameParam->Receive();
+		int client = gameParam->Receive( gameState.scene );
+
+		//	魔法更新
+		magicManager->Update();
 
 		if ( client != -1 )
 		{
-			//	魔法更新
-			magicManager->Update();
+			//	全体更新
+			playerManager->Update( client );
 
 			//	当たり判定
 			collision->AllCollision();
-
-			//	全体更新
-			playerManager->Update( client );
 
 			//	クライアントへ送信
 			gameParam->Send( client );
@@ -65,4 +74,30 @@ void main( void )
 	delete	playerManager;	playerManager = nullptr;
 	delete	inputManager;		inputManager = nullptr;
 	delete	magicManager;	magicManager = nullptr;
+	delete	pointManager;		pointManager = nullptr;
+}
+
+
+//	タイトル更新
+void	sceneTitleUpdate( void )
+{
+
+}
+
+//	マッチング更新
+void	sceneMatchingUpdate( void )
+{
+
+}
+
+//	メイン更新
+void	sceneMainUpdate( void )
+{
+
+}
+
+//	リザルト更新
+void	sceneResultUpdate( void )
+{
+
 }

@@ -13,6 +13,9 @@ class	sceneMatching : public Scene
 {
 private:
 	unique_ptr<iex3DObj>	obj[PLAYER_MAX];
+	int step;
+	char name[17];
+	char	addr[64];
 public:
 	~sceneMatching(void);
 	//	‰Šú‰»

@@ -39,6 +39,16 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
+
+		//	関数ポインタ
+		ReceiveFunction[RECEIVE_COMMAND::GAME_INFO] = &GameParam::ReceiveGameInfo;
+		ReceiveFunction[RECEIVE_COMMAND::POINT_INFO] = &GameParam::ReceivePointInfo;
+		ReceiveFunction[RECEIVE_COMMAND::CHARA_INFO] = &GameParam::ReceiveCharaInfo;
+		ReceiveFunction[RECEIVE_COMMAND::MAGIC_INFO] = &GameParam::ReceiveMagicInfo;
+		ReceiveFunction[RECEIVE_COMMAND::MAGIC_APPEND] = &GameParam::ReceiveMagicAppendInfo;
+		ReceiveFunction[RECEIVE_COMMAND::MAGIC_ERASE] = &GameParam::ReceiveMagicEraseInfo;
+		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
+		ReceiveFunction[RECEIVE_COMMAND::EXP_INFO] = &GameParam::ReceiveExpInfo;
 	}
 
 	//	デストラクタ
@@ -99,38 +109,6 @@ GameParam*	gameParam = nullptr;
 			//	先頭バイト（コマンド）による処理分岐
 			switch( data[COMMAND] )
 			{
-			case RECEIVE_COMMAND::CHARA_INFO:	//	移動情報
-				ReceiveCharaInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::GAME_INFO:	//	ゲーム情報
-				ReceiveGameInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::POINT_INFO:	//	点数情報
-				ReceivePointInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_INFO:
-				ReceiveMagicInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_APPEND:
-				ReceiveMagicAppendInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_ERASE:
-				ReceiveMagicEraseInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::LEVEL_INFO:
-				ReceiveLevelInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::EXP_INFO:
-				ReceiveExpInfo( data );
-				break;
-
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;
@@ -142,6 +120,10 @@ GameParam*	gameParam = nullptr;
 			case COMMANDS::SIGN_OUT:		//	脱退情報
 				ReceiveSignOutInfo( data );
 				break;
+
+			default:
+				//	ゲーム情報処理
+				( this->*ReceiveFunction[data[COMMAND]] )( data );
 			}
 		}
 	}
@@ -209,10 +191,10 @@ GameParam*	gameParam = nullptr;
 		CheckInputData( KEY_TYPE::B );
 		
 		//	魔法攻撃ボタン入力送信
-		CheckInputData( KEY_TYPE::A );
+		CheckInputData( KEY_TYPE::X );
 
-		//	スタートボタン入力送信
-		CheckInputData( KEY_TYPE::START );
+		//	回避ボタン入力送信
+		CheckInputData( KEY_TYPE::A );
 	}
 
 	//	討伐情報送信

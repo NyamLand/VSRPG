@@ -7,26 +7,22 @@
 //
 //****************************************************************
 
-//	include
-#include	"GameParam.h"
-
 //	class
 class PointManager
 {
 private:
-	GameParam*	gameParam;
 	int		point[PLAYER_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú
-	PointManager( GameParam* gameParam );
+	PointManager( void );
 	~PointManager( void );
 
-	//	XV
-	void	Update( int client );
+	//	“®ìŠÖ”
+	void	CalcPoint( int id, int point );
+	void	SendPoint( int id );
 
 	//	î•ñİ’è
-	void	SetHitParam( int client );
 };
 
 extern	PointManager*	pointManager;

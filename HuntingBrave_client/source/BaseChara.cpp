@@ -37,7 +37,7 @@
 	BaseChara::~BaseChara( void )
 	{
 		SafeDelete( obj );
-		SafeDelete(bar);
+		SafeDelete( bar );
 	}
 
 	//	“Ç‚Ýž‚Ý
@@ -102,7 +102,6 @@
 		obj->SetScale( scale );
 		obj->Update();
 		obj->Animation();
-		//obj->Animation();
 	}
 
 	//	ˆÚ“®’l‰ÁŽZ

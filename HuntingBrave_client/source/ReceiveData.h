@@ -24,7 +24,8 @@
 			MAGIC_APPEND,
 			MAGIC_ERASE,
 			LEVEL_INFO,
-			EXP_INFO
+			EXP_INFO,
+			COMMAND_MAX
 		};
 	}
 
@@ -61,8 +62,6 @@
 		char	com = RECEIVE_COMMAND::MAGIC_INFO;
 		int	index;
 		Vector3	pos;
-		ReceiveMagicData( int index, const Vector3& pos ) :
-			index( index ), pos( pos ) {}
 	};
 
 	//	ñÇñ@î≠ìÆèÓïÒ
@@ -72,9 +71,6 @@
 		int	id;
 		Vector3	pos;
 		float			angle;
-
-		ReceiveMagicAppend( int id, const Vector3& pos, float angle ) :
-			id( id ), pos( pos ), angle( angle ) {}
 	};
 
 	//	ñÇñ@è¡ãéèÓïÒ
@@ -89,7 +85,6 @@
 	struct ReceiveLevelData
 	{
 		char com = RECEIVE_COMMAND::LEVEL_INFO;
-		int	id;
 		char levelType;
 		char level;
 	};

@@ -22,7 +22,7 @@
 #define	MINOTAURUS_HEIGHT	0.125f
 #define	MINOTAURUS_RADIUS	1.0f
 
-#define	INIT_LIFE	 5
+#define	INIT_LIFE	 1
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f

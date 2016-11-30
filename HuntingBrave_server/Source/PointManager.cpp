@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"GameParam.h"
 #include	"PointManager.h"
 
 //****************************************************************
@@ -20,7 +21,7 @@ PointManager*	pointManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PointManager::PointManager( GameParam* gameParam ) : gameParam( gameParam )
+	PointManager::PointManager( void )
 	{
 
 	}
@@ -32,29 +33,27 @@ PointManager*	pointManager = nullptr;
 	}
 
 //----------------------------------------------------------------------------------------------
-//	更新
+//	動作関数
 //----------------------------------------------------------------------------------------------
 
-	//	更新
-	void	PointManager::Update( int client )
+	//	ポイント計算
+	void	PointManager::CalcPoint( int id, int point )
 	{
-		//	ポイント構造体取得
-		PointInfo	pointInfo = gameParam->GetPointInfo( client );
+		this->point[id] += point;
 
-		//	あたり情報
-		if ( pointInfo.addPoint == -1 )		return;
-
-		//	点数加算
-		pointInfo.point += pointInfo.addPoint;
-
-		//	情報反映
-		gameParam->SetPointInfo( client, pointInfo );
+		if ( this->point[id] <= 0 )	this->point[id] = 0;
 	}
 
-//----------------------------------------------------------------------------------------------
-//	初期化・解放
-//----------------------------------------------------------------------------------------------
+	//	ポイント送信
+	void	PointManager::SendPoint( int id )
+	{
+		SendPointData	sendPointData( id, point[id] );
 
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( id, ( LPSTR )&sendPointData, sizeof( sendPointData ) );
+		}
+	}
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
