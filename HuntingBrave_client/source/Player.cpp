@@ -67,7 +67,7 @@ namespace
 	bool	Player::Initialize( int id )
 	{
 		//	ì«Ç›çûÇ›
-		Load( "DATA/CHR/suppin/Suppin.IEM" );
+		Load( "DATA/CHR/suppin/suppin.IEM" );
 
 		//	èÓïÒê›íË
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
@@ -205,7 +205,7 @@ namespace
 		pos = playerParam.pos;
 		angle = playerParam.angle;
 		SetMotion( playerParam.motion );
-		lifeInfo.life = (playerParam.life);
+		lifeInfo.life = ( playerParam.life );
 	}
 
 //------------------------------------------------------------------------------------

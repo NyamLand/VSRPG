@@ -13,8 +13,12 @@
 class sceneTitle : public Scene
 {
 private:
-	bool	connectionOK;
+	iex2DObj*	bg;
+	iex2DObj*	lovelive;
 
+	bool		pushState;
+	float		percentage;
+	float		alpha;
 public:
 	//	‰Šú‰»E‰ğ•ú
 	bool	Initialize( void )override;

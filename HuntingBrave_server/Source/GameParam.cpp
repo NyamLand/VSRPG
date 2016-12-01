@@ -19,7 +19,7 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	INIT_LIFE		7
+#define	INIT_LIFE		5
 GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -94,8 +94,9 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	受信
-	int	GameParam::Receive( void )
+	int	GameParam::Receive( char scene )
 	{
+		//	データ受信
 		char	data[256];
 		int	size = sizeof( data );
 		int	client = receive( data, &size );
@@ -116,12 +117,74 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveSignOut( client, data );
 			break;
 
-		default:
-			//	ゲーム情報処理
+		default:	//	ゲーム情報処理
 			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
 		}
 
 		return client;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	シーン毎の受信処理
+//----------------------------------------------------------------------------------------------
+
+	//	マッチング受信処理
+	int	GameParam::MatchingReceive( int client, const LPSTR& data )
+	{
+		//	ネット関連
+		switch ( data[COMMAND] )
+		{
+		case COMMANDS::MATCHING:	//	マッチング
+			client = ReceiveMatching( client, data );
+			break;
+
+		case COMMANDS::SIGN_UP:		//	新規参入
+			client = ReceiveSignUp( client, data );
+			break;
+
+		case COMMANDS::SIGN_OUT:		//	脱退
+			client = ReceiveSignOut( client, data );
+			break;
+
+		default:
+			break;
+		}
+
+		return	client;
+	}
+
+	//	メイン受信処理
+	int	GameParam::MainReceive( int client, const LPSTR& data )
+	{
+		//	ネット関連
+		switch ( data[COMMAND] )
+		{
+		case COMMANDS::SIGN_OUT:	//	脱退
+			client = ReceiveSignOut( client, data );
+			break;
+
+		default:	//	ゲーム情報処理
+			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
+		}
+
+		return	client;
+	}
+
+	//	リザルト受信処理
+	int	GameParam::ResultReceive( int client, const LPSTR& data )
+	{
+		//	ネット関連
+		switch ( data[COMMAND] )
+		{
+		case COMMANDS::SIGN_OUT:	//	脱退
+			client = ReceiveSignOut( client, data );
+			break;
+
+		default:	//	ゲーム情報処理
+			client = ( this->*ReceiveFunction[data[COMMAND]])( client, data );
+		}
+
+		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -201,9 +264,10 @@ GameParam*	gameParam = nullptr;
 		ReceiveInputData*	receiveInputData = ( ReceiveInputData* )data;
 
 		//	ボタンの入力情報設定
-		inputManager->SetInput( client, 
-			receiveInputData->keyType, receiveInputData->keyState );
-
+		inputManager->SetInput( client, KEY_TYPE::A, receiveInputData->keyA );
+		inputManager->SetInput( client, KEY_TYPE::B, receiveInputData->keyB );
+		inputManager->SetInput( client, KEY_TYPE::X, receiveInputData->keyX );
+		inputManager->SetInput( client, KEY_TYPE::Y, receiveInputData->keyY );
 		return	-1;
 	}
 

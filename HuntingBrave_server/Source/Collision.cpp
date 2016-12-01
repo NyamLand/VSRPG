@@ -47,12 +47,13 @@ Collision*	collision = nullptr;
 		for ( int player = 0; player < PLAYER_MAX; player++ )
 		{
 			//	条件が合わないものはスキップ
-			if ( gameParam->GetPlayerActive( player ) == false )		continue;
+			bool isActive = gameParam->GetPlayerActive( player );
+			if (  isActive == false )		continue;
 
 			for ( int target = 0; target < PLAYER_MAX; target++ )
 			{
 				//	自分同士はスキップ、アクティブ状態でないプレイヤーはスキップ
-				if ( player == target )		return;
+				if ( player == target )		continue;
 				if ( gameParam->GetPlayerActive( target ) == false )		continue;
 
 				//	プレイヤーの攻撃判定
@@ -113,7 +114,7 @@ Collision*	collision = nullptr;
 		{
 			//	ライフ計算
 			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -attackInfo.power );
-			if( isAlive ) playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
+			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
 			else playerManager->GetPlayer( target )->SetDeath();
 		}
 	}
@@ -148,7 +149,7 @@ Collision*	collision = nullptr;
 			{
 				//	ライフ計算
 				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -gameParam->GetAttackInfo( player ).power );
-				if( isAlive ) playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
+				if ( isAlive )playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
 				else playerManager->GetPlayer( player )->SetDeath();
 			}
 		}

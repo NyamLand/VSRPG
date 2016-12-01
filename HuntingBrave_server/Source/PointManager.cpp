@@ -51,7 +51,7 @@ PointManager*	pointManager = nullptr;
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			gameParam->send( id, ( LPSTR )&sendPointData, sizeof( sendPointData ) );
+			gameParam->send( p, ( LPSTR )&sendPointData, sizeof( sendPointData ) );
 		}
 	}
 

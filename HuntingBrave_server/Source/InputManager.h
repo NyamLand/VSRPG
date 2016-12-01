@@ -50,7 +50,7 @@ namespace
 struct InputInfo
 {
 	float	axisX, axisY;
-	std::map<int, int>	keyState;
+	std::map<char, char>	keyState;
 };
 
 //	class
@@ -65,12 +65,12 @@ public:
 	~InputManager( void );
 
 	//	î•ñİ’è
-	void	SetInput( int id, int keyType, int keyState );
+	void	SetInput( int id, char keyType, char keyState );
 	void	SetAxis( int id, float axisX, float axisY );
 
 	//	î•ñæ“¾
 	InputInfo&	GetInput( int id );
-	bool	GetInputState( int id, int keyType, int keyState );
+	bool	GetInputState( int id, char keyType, char keyState );
 };
 
 extern	InputManager*	inputManager;

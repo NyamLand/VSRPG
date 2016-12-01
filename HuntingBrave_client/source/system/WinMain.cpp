@@ -63,11 +63,12 @@ BOOL	InitApp( HWND hWnd )
 	//	初期シーン登録
 	MainFrame->ChangeScene( new sceneMatching() );
 	//MainFrame->ChangeScene( new sceneMain() );
+	//MainFrame->ChangeScene( new sceneTitle() );
 
 	//	ネットワーク初期化
-	BOOL initNet = InitNetWork();
+	//BOOL initNet = InitNetWork();
 
-	return initNet;
+	return TRUE;
 }
 
 //*****************************************************************************************************************************
@@ -150,7 +151,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		} else {
-			if( MainFrame->Update() ) MainFrame->Render();
+			if( MainFrame->Update() )
+			{
+				MainFrame->Render();
+			}
 		}
 	}
 
