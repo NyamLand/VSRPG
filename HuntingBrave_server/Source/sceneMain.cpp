@@ -1,70 +1,42 @@
 
-#define	_CRT_SECURE_NO_WARNINGS
-#include	<stdio.h>
-#include	<vector>
-#include	<map>
 #include	"iextreme.h"
-#include	"GameData.h"
-#include	"GameManager.h"
 #include	"GameParam.h"
-#include	"PlayerManager.h"
-#include	"PointManager.h"
-#include	"InputManager.h"
-#include	"MagicManager.h"
-#include	"LevelManager.h"
-#include	"Collision.h"
+#include	"GameManager.h"
 #include	"sceneMain.h"
 
-//*****************************************************************************************************************************
+//************************************************************************
 //
-//	main
+//	sceneMainクラス
 //
-//*****************************************************************************************************************************
+//************************************************************************
 
-//	main
-void main( void )
-{
+//--------------------------------------------------------------------------------------------
+//	グローバル
+//--------------------------------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------------------------------
+//	初期化・解放
+//--------------------------------------------------------------------------------------------
+
 	//	初期化
-	gameManager = new GameManager();
-	gameParam = new GameParam();
-	inputManager = new InputManager();
-	magicManager = new MagicManager();
-	levelManager = new LevelManager();
-	pointManager = new PointManager();
-	collision = new Collision( gameParam );
-	playerManager = new PlayerManager( gameParam );
-	gameParam->InitializeServer();
-
-	//	無限ループ
-	for (;;)
+	bool	sceneMain::Initialize( void )
 	{
-		//	マネージャー更新
-		gameManager->Update();
-		
-		//	クライアントから受信
-		int client = gameParam->Receive( GameState::SCENE_MAIN );
-
-		//	魔法更新
-		magicManager->Update();
-
-		if ( client != -1 )
-		{
-			//	全体更新
-			playerManager->Update( client );
-
-			//	当たり判定
-			collision->AllCollision();
-
-			//	クライアントへ送信
-			gameParam->Send( client );
-		}
+		return	true;
 	}
 
 	//	解放
-	delete	gameParam;		gameParam = nullptr;
-	delete	gameManager;		gameManager = nullptr;
-	delete	playerManager;	playerManager = nullptr;
-	delete	inputManager;		inputManager = nullptr;
-	delete	magicManager;	magicManager = nullptr;
-	delete	pointManager;		pointManager = nullptr;
-}
+	sceneMain::~sceneMain( void )
+	{
+
+	}
+
+//--------------------------------------------------------------------------------------------
+//	更新
+//--------------------------------------------------------------------------------------------
+
+	//	更新
+	void	sceneMain::Update( void )
+	{
+	
+	}

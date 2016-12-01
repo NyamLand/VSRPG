@@ -16,7 +16,7 @@ protected:
 public:
 	//	‰Šú‰»E‰ğ•ú
 	Scene( void );
-	virtual	~Scene( void );
+	virtual	~Scene( void ){};
 	virtual	bool	Initialize( void ) = 0;
 
 	//	XV

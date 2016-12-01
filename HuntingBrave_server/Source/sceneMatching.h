@@ -16,9 +16,9 @@ class sceneMatching : public Scene
 private:
 public:
 	//	‰Šú‰»E‰ğ•ú
-	bool	Initialize(void);
-	~sceneMatching(void);
+	bool	Initialize( void );
+	~sceneMatching( void );
 
 	//	XV
-	void	Update(void);
+	void	Update( void );
 };

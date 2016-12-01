@@ -222,6 +222,9 @@
     <ClCompile Include="Source\sceneMatching.cpp">
       <Filter>ソース ファイル\Scene\sceneMatching</Filter>
     </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>ソース ファイル\Scene\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="Source\sceneMatching.h">
       <Filter>ソース ファイル\Scene\sceneMatching</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\main.h">
+      <Filter>ソース ファイル\Scene\main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

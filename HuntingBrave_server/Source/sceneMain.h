@@ -1,15 +1,27 @@
 
 #pragma once
 
-struct GameState
-{
-	enum scene
-	{
-		SCENE_TITLE,
-		SCENE_MATCHING,
-		SCENE_MAIN,
-		SCENE_RESULT
-	};
 
-	char	scene = SCENE_TITLE;
+#pragma once
+
+//************************************************************************
+//
+//	sceneMainクラス
+//
+//************************************************************************
+
+//	include
+#include	"Scene.h"
+
+//	class
+class sceneMain : public Scene
+{
+private:
+public:
+	//	初期化・解放
+	bool	Initialize( void )override;
+	~sceneMain( void )override;
+
+	//	更新
+	void	Update( void )override;
 };
