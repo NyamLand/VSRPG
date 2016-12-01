@@ -76,7 +76,7 @@ bool	sceneMatching::Initialize(void)
 	ifs >> name;
 
 	//	‰æ‘œ“Ç‚Ýž‚Ý
-	back = new iex2DObj( "DATA/UI/BackGround/name_input_gamen.png" );
+	back = new iex2DObj( "DATA/UI/BackGround/matching_gamen.png" );
 
 	step = 0;
 	return true;
@@ -175,7 +175,9 @@ void	sceneMatching::Render(void)
 	mainView->Clear();
 
 	//	back
-	//back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+	iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
+	back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+	iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
 
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{

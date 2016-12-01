@@ -61,9 +61,9 @@ BOOL	InitApp( HWND hWnd )
 	MainFrame = new Framework( FPS_FLEX );
 
 	//	初期シーン登録
-	MainFrame->ChangeScene( new sceneMatching() );
+	//MainFrame->ChangeScene( new sceneMatching() );
 	//MainFrame->ChangeScene( new sceneMain() );
-	//MainFrame->ChangeScene( new sceneTitle() );
+	MainFrame->ChangeScene( new sceneTitle() );
 
 	//	ネットワーク初期化
 	//BOOL initNet = InitNetWork();
