@@ -5,6 +5,7 @@
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
+#include	"LevelManager.h"
 #include	<thread>
 #include	"GameParam.h"
 
@@ -38,6 +39,16 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
+
+		//	関数ポインタ
+		ReceiveFunction[RECEIVE_COMMAND::GAME_INFO] = &GameParam::ReceiveGameInfo;
+		ReceiveFunction[RECEIVE_COMMAND::POINT_INFO] = &GameParam::ReceivePointInfo;
+		ReceiveFunction[RECEIVE_COMMAND::CHARA_INFO] = &GameParam::ReceiveCharaInfo;
+		ReceiveFunction[RECEIVE_COMMAND::MAGIC_INFO] = &GameParam::ReceiveMagicInfo;
+		ReceiveFunction[RECEIVE_COMMAND::MAGIC_APPEND] = &GameParam::ReceiveMagicAppendInfo;
+		ReceiveFunction[RECEIVE_COMMAND::MAGIC_ERASE] = &GameParam::ReceiveMagicEraseInfo;
+		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
+		ReceiveFunction[RECEIVE_COMMAND::EXP_INFO] = &GameParam::ReceiveExpInfo;
 	}
 
 	//	デストラクタ
@@ -98,30 +109,6 @@ GameParam*	gameParam = nullptr;
 			//	先頭バイト（コマンド）による処理分岐
 			switch( data[COMMAND] )
 			{
-			case RECEIVE_COMMAND::CHARA_INFO:	//	移動情報
-				ReceiveCharaInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::GAME_INFO:	//	ゲーム情報
-				ReceiveGameInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::POINT_INFO:	//	点数情報
-				ReceivePointInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_INFO:
-				ReceiveMagicInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_APPEND:
-				ReceiveMagicAppendInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_ERASE:
-				ReceiveMagicEraseInfo( data );
-				break;
-
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;
@@ -133,6 +120,10 @@ GameParam*	gameParam = nullptr;
 			case COMMANDS::SIGN_OUT:		//	脱退情報
 				ReceiveSignOutInfo( data );
 				break;
+
+			default:
+				//	ゲーム情報処理
+				( this->*ReceiveFunction[data[COMMAND]] )( data );
 			}
 		}
 	}
@@ -145,9 +136,6 @@ GameParam*	gameParam = nullptr;
 
 		//	キャラクター情報送信
 		SendPlayerInfo();
-
-		//	点数データ送信
-		SendPointInfo();
 
 		//	マッチング情報送信
 		SendMatching();
@@ -176,28 +164,12 @@ GameParam*	gameParam = nullptr;
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 
-	//	点数情報送信
-	void	GameParam::SendPointInfo( void )
-	{
-		//	加算分が０ならスキップ
-		if ( pointInfo[myIndex].addPoint == 0 )	return;
-
-		//	情報格納
-		SendPointData	sendPointData( pointInfo[myIndex].addPoint );
-
-		//	送信
-		send( ( LPSTR )&sendPointData, sizeof( sendPointData ) );
-
-		//	加算情報リセット
-		pointInfo[myIndex].addPoint = 0;
-	}
-
 	//	攻撃情報送信
 	void	GameParam::SendAttackParam( void )
 	{
 		//	情報設定
 		AttackInfo	atkInfo = attackInfo[myIndex];
-		SendAttackData	sendAttackData( atkInfo.shape, atkInfo.pos1, atkInfo.pos2, atkInfo.radius );
+		SendAttackData	sendAttackData( atkInfo.shape, atkInfo.radius, atkInfo.vec1, atkInfo.vec2 );
 
 		//	送信
 		send( ( LPSTR )&sendAttackData, sizeof( sendAttackData ) );
@@ -215,14 +187,28 @@ GameParam*	gameParam = nullptr;
 	//	入力情報送信
 	void	GameParam::SendInputInfo( void )
 	{
-		//	剣攻撃ボタン入力送信
-		CheckInputData( KEY_TYPE::B );
-		
-		//	魔法攻撃ボタン入力送信
-		CheckInputData( KEY_TYPE::A );
+		//	回避ボタン入力
+		char	keyA = ( char )KEY( KEY_TYPE::A );
 
-		//	スタートボタン入力送信
-		CheckInputData( KEY_TYPE::START );
+		//	剣攻撃ボタン入力
+		char	keyB = ( char )KEY( KEY_TYPE::B );
+		
+		//	魔法攻撃ボタン入力
+		char	keyX = ( char )KEY( KEY_TYPE::X );
+
+		//	Yボタン入力
+		char	keyY = ( char )KEY( KEY_TYPE::Y );
+
+		//	送信
+		SendInputData		sendInputData( keyA, keyB, keyX, keyY );
+		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
+	}
+
+	//	討伐情報送信
+	void	GameParam::SendHuntInfo( char enemyType )
+	{
+		SendHuntData	sendHuntData( enemyType );
+		send( ( LPSTR )&sendHuntData, sizeof( sendHuntData ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -260,14 +246,7 @@ GameParam*	gameParam = nullptr;
 		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
 		SetPointInfo( receivePointData->id, receivePointData->point );
 	}
-
-	//	マッチング情報
-	void	GameParam::ReceiveMatching( const LPSTR& data )
-	{
-		Matching*	matching = ( Matching* )data;
-		SetMatchingInfo( matching->id, matching->isComplete );
-	}
-
+	
 	//	魔法情報受信
 	void	GameParam::ReceiveMagicInfo( const LPSTR& data )
 	{
@@ -282,7 +261,7 @@ GameParam*	gameParam = nullptr;
 		magicManager->Append( 
 			receiveMagicAppend->id,
 			receiveMagicAppend->pos, 
-			0.0f );
+			receiveMagicAppend->angle );
 	}
 
 	//	魔法消去情報受信
@@ -290,6 +269,27 @@ GameParam*	gameParam = nullptr;
 	{
 		ReceiveMagicErase*	receiveMagicErase = ( ReceiveMagicErase* )data;
 		magicManager->Erase( receiveMagicErase->index );
+	}
+
+	//	レベル情報受信
+	void	GameParam::ReceiveLevelInfo( const LPSTR& data )
+	{
+		ReceiveLevelData* receiveLevelData = ( ReceiveLevelData* )data;
+		levelManager->SetLevelInfo( receiveLevelData->levelType, receiveLevelData->level );
+	}
+
+	//	経験値情報受信
+	void	GameParam::ReceiveExpInfo( const LPSTR& data )
+	{
+		ReceiveExpData*	receiveExpdata = ( ReceiveExpData* )data;
+		levelManager->SetExp( receiveExpdata->exp );
+	}
+
+	//	マッチング情報
+	void	GameParam::ReceiveMatching( const LPSTR& data )
+	{
+		Matching*	matching = ( Matching* )data;
+		SetMatchingInfo( matching->id, matching->isComplete );
 	}
 
 	//	サインアップ情報受信
@@ -310,19 +310,6 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
-
-	//	入力チェック＆送信
-	void	GameParam::CheckInputData( int keyType )
-	{
-		//	入力チェック
-		int keyState = KEY( keyType );
-		//if ( keyState == 0 )	return;
-
-		//	送信
-		SendInputData		sendInputData( keyType, keyState );
-		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
-	}
-
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------

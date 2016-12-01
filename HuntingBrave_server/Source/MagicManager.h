@@ -26,10 +26,14 @@ public:
 
 	//	“®ìŠÖ”
 	void	Append( int id, const Vector3& pos, const Vector3& vec );
+	void	SendMagicInfo( int index, const Vector3& pos );
+	void	SendMagicEraseInfo( int index );
+	void	SendMagicAppendInfo( int id, const Vector3& pos );
 
 	//	î•ñİ’è
 
 	//	î•ñæ“¾
+	std::vector<Magic*>& GetList( void );
 
 };
 

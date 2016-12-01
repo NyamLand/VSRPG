@@ -94,8 +94,4 @@ struct CollisionShape
 	char			shapeType;
 	Sphere		sphere;
 	Capsule	capsule;
-
-	//	î•ñİ’è
-	void	SetCapsule( const Capsule& capsule );
-	void	SetSphere( const Sphere& sphere );
 };

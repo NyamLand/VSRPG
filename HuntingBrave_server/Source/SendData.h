@@ -21,7 +21,9 @@
 			CHARA_INFO,
 			MAGIC_INFO,
 			MAGIC_APPEND,
-			MAGIC_ERASE
+			MAGIC_ERASE,
+			LEVEL_INFO,
+			EXP_INFO
 		};
 	}
 }
@@ -34,8 +36,8 @@
 	struct SendGameData
 	{
 		char		com = SEND_COMMAND::GAME_INFO;
-		int		limitTimer;
-		SendGameData( int timer ) : limitTimer( timer ){}
+		float		limitTimer;
+		SendGameData( float timer ) : limitTimer( timer ){}
 	};
 
 	//	点数情報
@@ -77,9 +79,10 @@
 		char	com = SEND_COMMAND::MAGIC_APPEND;
 		int	id;
 		Vector3	pos;
+		float			angle;
 
-		SendMagicAppend( int id, const Vector3& pos ) :
-			id( id ), pos( pos ) {}
+		SendMagicAppend( int id, const Vector3& pos, float angle ) :
+			id( id ), pos( pos ), angle( angle ) {}
 	};
 
 	//	魔法消去情報
@@ -88,4 +91,24 @@
 		char	com = SEND_COMMAND::MAGIC_ERASE;
 		int	index;
 		SendMagicErase( int index ) : index( index ){}
+	};
+
+	//	レベル情報
+	struct SendLevelData
+	{
+		char com = SEND_COMMAND::LEVEL_INFO;
+		char levelType;
+		char level;
+
+		SendLevelData( char levelType, char level ) :
+			levelType( levelType ), level( level ){}
+	};
+
+	//	経験値情報
+	struct SendExpData
+	{
+		char com = SEND_COMMAND::EXP_INFO;
+		int	exp;
+
+		SendExpData( int exp ) :	exp( exp ){}
 	};

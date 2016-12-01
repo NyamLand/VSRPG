@@ -36,14 +36,14 @@ struct AttackInfo
 	char			attackParam;
 	char			shape;
 	float			radius;
-	Vector3	pos1;
-	Vector3	pos2;
-	void	Set( char shape, float radius, const Vector3& pos1, const Vector3& pos2 )
+	Vector3	vec1;
+	Vector3	vec2;
+	void	Set( char shape, float radius, const Vector3& vec1, const Vector3& vec2 )
 	{
 		this->shape = shape;
 		this->radius = radius;
-		this->pos1 = pos1;
-		this->pos2 = pos2;
+		this->vec1 = vec1;
+		this->vec2 = vec2;
 	}
 };
 

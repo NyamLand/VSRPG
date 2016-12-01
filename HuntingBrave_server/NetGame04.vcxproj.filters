@@ -46,17 +46,11 @@
     <Filter Include="ソース ファイル\Manager\EnemyManager">
       <UniqueIdentifier>{108be3e4-fdca-4318-91e6-3115e8c992d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Enemy">
-      <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Manager\GameManager">
       <UniqueIdentifier>{88df4ce4-73dc-4b03-a59c-1751ccaeb688}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Timer">
       <UniqueIdentifier>{f0af59b6-6349-4757-a705-e0f87f635d4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\PointManager">
-      <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Manager\InputManager">
       <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
@@ -85,6 +79,30 @@
     <Filter Include="ソース ファイル\Magic">
       <UniqueIdentifier>{bc321496-9273-4457-a3a5-2ca35d0a55e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Collision\Enemy">
+      <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\LevelManager">
+      <UniqueIdentifier>{afc70951-4417-4516-9515-59778bf5d2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PointManager">
+      <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\SceneManager">
+      <UniqueIdentifier>{9b87f1e9-69c2-40a4-a5c2-781a0cee554d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SYSTEM">
+      <UniqueIdentifier>{e203447f-a8ae-4700-b3b7-3dd3fa368895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SYSTEM\Scene">
+      <UniqueIdentifier>{00ea94ae-0cf6-490b-8549-5a4835ae8920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SYSTEM\FrameWork">
+      <UniqueIdentifier>{a5ec5e97-042d-47d9-92bb-12d76d43375e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\main">
+      <UniqueIdentifier>{2ececea5-b935-43b7-a989-94a408ccb2c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -109,7 +127,7 @@
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
+      <Filter>ソース ファイル\Collision\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameManager.cpp">
       <Filter>ソース ファイル\Manager\GameManager</Filter>
@@ -117,20 +135,11 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>ソース ファイル\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PointManager.cpp">
-      <Filter>ソース ファイル\Manager\PointManager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>ソース ファイル\Manager\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameData.cpp">
       <Filter>ソース ファイル\GameData\GameData</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SendData.cpp">
-      <Filter>ソース ファイル\GameData\SendData</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ReceiveData.cpp">
-      <Filter>ソース ファイル\GameData\ReceiveData</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharaInfo.cpp">
       <Filter>ソース ファイル\CharaInfo</Filter>
@@ -195,6 +204,18 @@
     <ClCompile Include="Source\MagicManager.cpp">
       <Filter>ソース ファイル\Manager\MagicManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LevelManager.cpp">
+      <Filter>ソース ファイル\Manager\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PointManager.cpp">
+      <Filter>ソース ファイル\Manager\PointManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>ソース ファイル\Manager\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FrameWork.cpp">
+      <Filter>ソース ファイル\SYSTEM\FrameWork</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -219,16 +240,13 @@
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
-      <Filter>ソース ファイル\Enemy</Filter>
+      <Filter>ソース ファイル\Collision\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameManager.h">
       <Filter>ソース ファイル\Manager\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>ソース ファイル\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PointManager.h">
-      <Filter>ソース ファイル\Manager\PointManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>ソース ファイル\Manager\InputManager</Filter>
@@ -259,6 +277,21 @@
     </ClInclude>
     <ClInclude Include="Source\MagicManager.h">
       <Filter>ソース ファイル\Manager\MagicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelManager.h">
+      <Filter>ソース ファイル\Manager\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PointManager.h">
+      <Filter>ソース ファイル\Manager\PointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>ソース ファイル\Manager\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>ソース ファイル\SYSTEM\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FrameWork.h">
+      <Filter>ソース ファイル\SYSTEM\FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

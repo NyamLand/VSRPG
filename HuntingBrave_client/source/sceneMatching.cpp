@@ -54,18 +54,38 @@ bool	sceneMatching::Initialize(void)
 		Vector3( 0.0f, 5.0f, -20.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	ファイル設定
+
 	//	モデル初期化
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/Suppin.IEM" ) );
+		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/suppin.IEM" ) );		
+		char	fileName[256] = "DATA/CHR/suppin/s_body_";
+		char playerNum[8] = "";
+		sprintf_s( playerNum, "%d.png", i );
+		strcat_s( fileName, playerNum );
+		obj[i]->SetTexture( 0, fileName );
 	}
 
+	//	GameParam初期化
+	gameParam = new GameParam();
+	
+	//	テキスト読み込み
+	std::ifstream	ifs( "onlineInfo.txt" );
+	ifs >> addr;
+	ifs >> name;
+
+	//	画像読み込み
+	back = new iex2DObj( "DATA/UI/BackGround/matching_gamen.png" );
+
+	step = 0;
 	return true;
 }
 
 sceneMatching::~sceneMatching( void )
 {
 	SafeDelete( mainView );
+	SafeDelete( back );
 }
 
 //*****************************************************************************************************************************
@@ -78,18 +98,30 @@ void	sceneMatching::Update( void )
 	//	サーバーから情報受信
 	gameParam->Update();
 
-	//	GameManager更新
-	gameManager->Update();
-
-	//	モデル更新
-	ObjUpdate();
-
-	CheckComplete();
-
-	if ( KEY_Get( KEY_ENTER ) == 3 )
+	//	テスト
+	switch ( step )
 	{
-		gameManager->isComplete = true;
+	case 0:
+		//	クライアント初期化( serverと接続 )
+		if( gameParam->InitializeClient( addr, 7000, name ) )	step++;
+		break;
+
+	case 1:
+		//	GameManager更新
+		gameManager->Update();
+	
+		//	モデル更新
+		ObjUpdate();
+	
+		CheckComplete();
+	
+		if ( KEY_Get( KEY_ENTER ) == 3 )
+		{
+			gameManager->isComplete = true;
+		}
+		break;
 	}
+
 }
 
 void	sceneMatching::ObjUpdate()
@@ -142,11 +174,16 @@ void	sceneMatching::Render(void)
 	mainView->Activate();
 	mainView->Clear();
 
-	for (int i = 0; i < PLAYER_MAX; i++)
-	{
-		int active = gameParam->GetPlayerActive(i);
+	//	back
+	iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
+	back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+	iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
 
-		if (active)
+	for ( int i = 0; i < PLAYER_MAX; i++ )
+	{
+		int active = gameParam->GetPlayerActive( i );
+
+		if ( active )
 		{
 			obj[i]->Render();
 		}

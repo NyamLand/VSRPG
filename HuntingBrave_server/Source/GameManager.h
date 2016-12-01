@@ -11,12 +11,27 @@
 #include	"GameData.h"
 #include	"Timer.h"
 
+//	define
+namespace
+{
+	namespace SCENE
+	{
+		enum
+		{
+			MATCHING,
+			MAIN,
+			RESULT
+		};
+	}
+}
+
 //	class
 class GameManager
 {
 private:
 	PlayerParam	initPlayerParam[PLAYER_MAX];
 	Timer*	timer;
+	char	scene;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -28,8 +43,6 @@ public:
 
 	//	“®ìŠÖ”
 	void	TimerUpdate( void );
-
-	//	î•ñİ’è
 
 	//	î•ñæ“¾
 	Timer*	GetTimer( void )const;

@@ -14,15 +14,6 @@
 class SmallEnemy : public Enemy
 {
 private:
-	enum MODE	//	仮
-	{
-		ENTRY,
-		MOVE,
-		ATTACK,
-		DAMAGE,
-		DEAD,
-		MODE_MAX
-	};
 
 	//	モード別関数ポインタ
 	void( SmallEnemy::*ModeFunction[MODE_MAX] )( void );
@@ -37,9 +28,9 @@ public:
 	void	Update( void )override;
 
 	//	各モード動作関数
-	void	EntryMode( void );
-	void	MoveMode( void );
-	void	AttackMode( void );
+	void	EntryMode( void )override;
+	void	MoveMode( void )override;
+	void	AttackMode( void )override;
 	//bool	DamageFlgCheck(void)override;
 	//	動作関数
 

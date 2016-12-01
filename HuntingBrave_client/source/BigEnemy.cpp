@@ -48,6 +48,8 @@
 		lifeInfo.isAlive = true;
 		lifeInfo.active = false;
 
+		
+
 	}
 
 	//	デストラクタ
@@ -67,6 +69,8 @@
 		lifeInfo.Initialize( INIT_LIFE );
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
 		//	情報更新
 		UpdateInfo();
 
@@ -144,10 +148,7 @@
 		}
 	}
 
-	void	BigEnemy::DamageMode(void)
-	{
-		
-	}
+
 	
 //------------------------------------------------------------------------------------
 //	動作関数

@@ -138,7 +138,7 @@ namespace
 //-------------------------------------------------------------------------------------
 	
 	//	リストに追加
-	void	EnemyManager::Append( const Vector3& pos,int type )
+	void	EnemyManager::Append( const Vector3& pos, char type )
 	{
 		Enemy* enemy = nullptr;
 
@@ -159,6 +159,7 @@ namespace
 		}
 
 		//	初期化
+		enemy->SetEnemyType( type );
 		enemy->SetObj( org[type]->Clone() );
 		enemy->Initialize();
 		enemy->SetPos( pos );
@@ -223,7 +224,7 @@ namespace
 	//	一定時間ごとに敵を生成
 	void	EnemyManager::AddRegularTimeIntervals( void )
 	{
-		if ( gameManager->GetTime() % APPEND_INTERVAL != 0 )
+		if ( ( int )gameManager->GetTime() % APPEND_INTERVAL != 0 )
 		{
 			//	生成フラグをtrueにする
 			appendOK = true;

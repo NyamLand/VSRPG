@@ -12,16 +12,8 @@
 //	class
 class BigEnemy : public Enemy
 {
-private:
-	enum MODE	//	仮
-	{
-		ENTRY,
-		MOVE,
-		ATTACK,
-		DAMAGE,
-		DEAD,
-		MODE_MAX
-	};
+
+	
 
 	//	モード別関数ポインタ
 	void( BigEnemy::*ModeFunction[MODE_MAX] )( void );
@@ -36,10 +28,10 @@ public:
 	void	Update( void );
 
 	//	各モード動作関数
-	void	EntryMode( void );
-	void	MoveMode( void );
-	void	AttackMode( void );
-	void	DamageMode( void );
+	void	EntryMode( void )override;
+	void	MoveMode( void )override;
+	void	AttackMode( void )override;
+	//void	DamageMode( void );
 	//bool	DamageFlgCheck( void )override;
 	//	動作関数
 

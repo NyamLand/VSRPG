@@ -18,6 +18,8 @@ private:
 	Vector3	vec;
 	Timer*		timer;
 	float			speed;
+	float			angle;
+	float			radius;
 	int			mode;
 	int			id;
 	bool			isHit;
@@ -35,8 +37,8 @@ public:
 	void	Move( void );
 	void	Scaling( void );
 
-	//	î•ñİ’è
-	Vector3	GetPos( void )const;
-
 	//	î•ñæ“¾
+	Vector3	GetPos( void )const;
+	float			GetRadius( void )const;
+	int			GetID( void )const;
 };

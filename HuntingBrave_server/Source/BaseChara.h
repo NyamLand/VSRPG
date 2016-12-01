@@ -19,8 +19,9 @@ namespace MODE
 		MOVE,
 		SWOADATTACK,
 		MAGICATTACK,
-		AVOID,
 		DAMAGE,
+		DEATH,
+		STEP,
 		MODE_MAX
 	};
 }

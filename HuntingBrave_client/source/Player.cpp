@@ -33,6 +33,9 @@
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
 
+//	ライフ設定
+#define MAX_LIFE	20
+
 //	定数関連
 namespace
 {
@@ -64,7 +67,7 @@ namespace
 	bool	Player::Initialize( int id )
 	{
 		//	読み込み
-		Load( "DATA/CHR/suppin/Suppin.IEM" );
+		Load( "DATA/CHR/suppin/suppin.IEM" );
 
 		//	情報設定
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
@@ -72,7 +75,7 @@ namespace
 		SetScale( PLAYER_SCALE );
 		SetMotion( MOTION_NUM::POSUTURE );
 		SetMode( MODE::MOVE );
-
+		lifeInfo.Initialize(MAX_LIFE);
 		//	当たり判定形状設定
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
@@ -106,7 +109,8 @@ namespace
 		//csv.Close();
 		//return 0;
 		//---------------------------------
-
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::PLAYER, GetLifeInfo().maxLife);
 
 		if ( obj == nullptr )	return	false;
 		return	true;
@@ -161,20 +165,22 @@ namespace
 		case MOTION_NUM::ATTACK1:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
 			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
-			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::HAND );
-			gameParam->GetAttackInfo( id ).pos2 = GetBonePos( BONE_NUM::SWORD );
+			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::HAND );
+			gameParam->GetAttackInfo( id ).vec2 = GetBonePos( BONE_NUM::SWORD );
 			break;
 
 		case MOTION_NUM::MAGIC_ACTUATION:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
-			gameParam->GetAttackInfo( id ).pos1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
+			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			gameParam->GetAttackInfo( id ).vec2 = GetFront();
 			break;
 
 		default:
-			printf( "default\n" );
+			return;
 		}
 
-		//	攻撃情報送信
+		//	情報送信
 		gameParam->SendAttackParam();
 	}
 
@@ -199,6 +205,7 @@ namespace
 		pos = playerParam.pos;
 		angle = playerParam.angle;
 		SetMotion( playerParam.motion );
+		lifeInfo.life = ( playerParam.life );
 	}
 
 //------------------------------------------------------------------------------------

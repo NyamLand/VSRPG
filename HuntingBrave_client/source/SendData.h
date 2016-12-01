@@ -7,8 +7,6 @@
 //
 //****************************************************************
 
-#include	"iextreme.h"
-
 	//	送信コマンド
 	namespace
 	{
@@ -19,8 +17,9 @@
 				NO_COMMAND = -1,
 				PLAYER_INFO = 1,
 				ATTACK_INFO,
-				POINT_INFO,
 				INPUT_INFO,
+				LEVEL_INFO,
+				HUNT_INFO
 			};
 		}
 	}
@@ -44,29 +43,39 @@
 	struct SendAttackData
 	{
 		char			com = SEND_COMMAND::ATTACK_INFO;		//	1byte
-		char			shape;
+		char			shape;		//	1byte
 		float			radius;		//	4byte
-		Vector3	attackPos1;		//	12byte
-		Vector3	attackPos2;		//	12byte
-		SendAttackData( char shape, const Vector3& attackPos1, const Vector3& attackPos2, float radius ) :
-			attackPos1( attackPos1 ), attackPos2( attackPos2 ), radius( radius ) {}
-	};
-
-	//	点数情報
-	struct SendPointData
-	{
-		char		com = SEND_COMMAND::POINT_INFO;
-		int		addPoint;
-		SendPointData( int addPoint ) : addPoint( addPoint ){};
+		Vector3	vec1;		//	12byte
+		Vector3	vec2;		//	12byte
+		SendAttackData( char shape, float radius, const Vector3& vec1, const Vector3& vec2 ) : 
+			shape( shape ), radius( radius ), vec1( vec1 ), vec2( vec2 ){}
 	};
 
 	//	入力情報
 	struct SendInputData
 	{
 		char		com = SEND_COMMAND::INPUT_INFO;
-		int		keyType;
-		int		keyState;
+		char		keyA;
+		char		keyB;
+		char		keyX;
+		char		keyY;
 		SendInputData( void ){};
-		SendInputData( int keyType, int keyState ) :
-			keyType( keyType ), keyState( keyState ){}
+		SendInputData( char keyA, char keyB, char keyX, char keyY ) :
+			keyA( keyA ), keyB( keyB ), keyX( keyX ), keyY( keyY ){}
+	};
+
+	//	レベル情報
+	struct SendLevelData
+	{
+		char com = SEND_COMMAND::LEVEL_INFO;
+		char levelType;
+		SendLevelData( char levelType ) : levelType( levelType ){}
+	};
+
+	//	経験値情報
+	struct SendHuntData
+	{
+		char com = SEND_COMMAND::HUNT_INFO;
+		char	enemyType;
+		SendHuntData( char enemyType ) : enemyType( enemyType ){}
 	};

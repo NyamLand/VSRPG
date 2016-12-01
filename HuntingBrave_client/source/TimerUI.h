@@ -13,7 +13,7 @@
 class TimerUI
 {
 private:
-	int		timer;
+	float		timer;
 	Image* time_obj;
 
 public:

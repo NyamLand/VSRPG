@@ -42,6 +42,7 @@
 		ModeFunction[MODE::ENTRY] = &SmallEnemy::EntryMode;
 		ModeFunction[MODE::MOVE] = &SmallEnemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &SmallEnemy::AttackMode;
+		ModeFunction[MODE::DAMAGE] = &SmallEnemy::DamageMode;
 
 		//	•Ï”‰Šú‰»
 		speed = MOVE_SPEED;
@@ -68,6 +69,8 @@
 		lifeInfo.Initialize( INIT_LIFE );
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
 		//	î•ñXV
 		UpdateInfo();
 

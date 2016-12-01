@@ -47,24 +47,15 @@ MagicManager*	magicManager = nullptr;
 			bool	isAlive = ( *it )->Update();
 			int	index = std::distance( magicList.begin(), it );
 
-			if ( !isAlive )	//	消滅しているとき
+			if ( !isAlive )	//	消滅しているときリストから削除し、削除情報送信
 			{
 				it = magicList.erase( it );
-
-				//	消去情報送信
-				for ( int p = 0; p < PLAYER_MAX; p++ )
-				{
-					gameParam->SendMagicEraseInfo( p, index );
-				}
+				SendMagicEraseInfo( index );
 				continue;
 			}
-			else	//	生存しているとき
+			else	//	生存しているとき座標情報送信
 			{
-				//	情報送信
-				for ( int p = 0; p < PLAYER_MAX; p++ )
-				{
-					gameParam->SendMagicInfo( p, index, ( *it )->GetPos() );
-				}
+				SendMagicInfo( index, ( *it )->GetPos() );
 			}
 
 			//	次へ
@@ -86,10 +77,46 @@ MagicManager*	magicManager = nullptr;
 		//	リストに追加
 		magicList.push_back( magic );
 
+		//	リスト追加情報送信
+		SendMagicAppendInfo( id, pos );
+	}
+
+	//	座標送信
+	void	MagicManager::SendMagicInfo( int index, const Vector3& pos )
+	{
+		//	情報設定
+		SendMagicData sendMagicData( index, pos );
+		
 		//	情報送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			gameParam->SendMagicAppendInfo( p, id, pos );
+			gameParam->send( p, ( LPSTR )&sendMagicData, sizeof( sendMagicData ) );
+		}
+	}
+
+	//	削除情報送信
+	void	MagicManager::SendMagicEraseInfo( int index )
+	{
+		//	情報設定
+		SendMagicErase	sendMagicErase( index );
+
+		//	情報送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( p, ( LPSTR )&sendMagicErase, sizeof( sendMagicErase ) );
+		}
+	}
+
+	//	リスト追加情報送信
+	void	MagicManager::SendMagicAppendInfo( int id, const Vector3& pos )
+	{
+		//	情報設定
+		SendMagicAppend	sendMagicAppend( id, pos, gameParam->GetPlayerParam( id ).angle );
+		
+		//	情報送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( p, ( LPSTR )&sendMagicAppend, sizeof( sendMagicAppend ) );
 		}
 	}
 
@@ -100,3 +127,9 @@ MagicManager*	magicManager = nullptr;
 //------------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------------
+
+	//	リスト取得
+	std::vector<Magic*>&		MagicManager::GetList( void )
+	{
+		return	magicList;
+	}

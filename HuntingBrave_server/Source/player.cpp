@@ -1,7 +1,9 @@
 
 #include	"iextreme.h"
 #include	<vector>
+#include	<map>
 #include	"GameParam.h"
+#include	"GameManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
 #include	"Player.h"
@@ -17,7 +19,9 @@
 //----------------------------------------------------------------------------------------------
 
 //	定数
-#define	CHANT_TIME	2
+#define	CHANT_TIME	1.0f
+#define	DEATH_TIME	3.0f
+#define	STEP_DRAG		0.97f
 
 //	入力情報
 #define	MIN_INPUT_STICK		0.3f
@@ -25,6 +29,7 @@
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED		0.3f
 #define	MOVE_SPEED		0.2f
+#define	STEP_SPEED		0.5f
 
 namespace
 {
@@ -37,6 +42,7 @@ namespace
 		const int MAGICACTIVATION = 340;
 		const int MAGICATTACK_END = 370;
 		const int KNOCKBACK1_END = 405;
+		const int FALL_END = 493;
 	}
 
 	namespace ATTACK_STEP
@@ -55,7 +61,8 @@ namespace
 //----------------------------------------------------------------------------------------------
 	
 	//	コンストラクタ
-	Player::Player( int id ) : 
+	Player::Player( int id ) : timer( nullptr ),
+		stepSpeed( 0.0f ),
 		index( id )
 	{
 		ZeroMemory( &pParam, sizeof( PlayerParam ) );
@@ -65,12 +72,20 @@ namespace
 		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
 		ModeFunction[MODE::DAMAGE] = &Player::ModeDamage;
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
+		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
+		ModeFunction[MODE::STEP] = &Player::ModeStep;
+
+		timer = new Timer();
 	}
 
 	//	デストラクタ
 	Player::~Player( void )
 	{
-		
+		if ( timer != nullptr )
+		{
+			delete timer;
+			timer = nullptr;
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -136,6 +151,53 @@ namespace
 	{
 		Damage();
 	}
+
+	//	死亡
+	void	Player::ModeDeath( void )
+	{
+		//	情報保存
+		int motion = gameParam->GetPlayerParam( index ).motion;
+		int frame = gameParam->GetPlayerParam( index ).frame;
+
+		//	倒れるモーション時
+		if ( motion == PLAYER_MOTION::FALL )
+		{
+			if ( frame >= MOTION_FRAME::FALL_END )
+			{ 
+				SetMotion( PLAYER_MOTION::DEAD );
+				timer->Start( DEATH_TIME );
+			}
+		}
+		else if ( motion == PLAYER_MOTION::DEAD )
+		{
+			if ( timer->Update() )
+			{
+				gameParam->InitializePlayer( index );
+				SetMode( MODE::MOVE );
+			}
+		}
+	}
+
+	//	ステップ
+	void	Player::ModeStep( void )
+	{
+		//	非アクティブにする
+		gameParam->GetLifeInfo( index ).active = false;
+
+		//	移動値加算
+		Vector3	move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * stepSpeed;
+		AddMove( move );
+
+		//	徐々に減速
+		stepSpeed *= STEP_DRAG;
+
+		//	モーションが終了すれば移動に戻る
+		if ( pParam.frame >= 260 )
+		{
+			SetMode( MODE::MOVE );
+			gameParam->GetLifeInfo( index ).active = true;
+		}
+	}
 	
 //----------------------------------------------------------------------------------------------
 //	動作関数
@@ -157,8 +219,8 @@ namespace
 				ANGLE_ADJUST_MOVE_SPEED );
 
 			//	移動
-			pParam.pos += 
-				Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
+			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
+			AddMove( move );
 
 			SetMotion( PLAYER_MOTION::RUN );
 		}
@@ -196,8 +258,8 @@ namespace
 		if ( pParam.frame == MOTION_FRAME::MAGICACTIVATION )
 		{
 			magicManager->Append( index, 
-				gameParam->GetAttackInfo( index ).collisionShape.sphere.center,
-				Vector3( 0.0f, 0.0f, 0.0f ) );
+				gameParam->GetAttackInfo( index ).vec1,
+				gameParam->GetAttackInfo( index ).vec2 );
 		}
 
 		if ( pParam.frame >= MOTION_FRAME::MAGICATTACK_END )
@@ -211,7 +273,7 @@ namespace
 	void	Player::MagicChant( void )
 	{
 		//	離したとき発動可能状態なら発動、発動不可なら移動に戻る
-		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::UP ) )
+		if ( inputManager->GetInputState( index, KEY_TYPE::X, KEY_STATE::UP ) )
 		{
 			//	タイマー更新
 			bool	chantState = gameParam->GetAttackInfo( index ).timer.Update();
@@ -228,13 +290,33 @@ namespace
 				gameParam->GetAttackInfo( index ).Reset();
 			}
 		}
+
+		//	詠唱中回転
+		MagicChantRoll();
+	}
+
+	//	詠唱中回転
+	void	Player::MagicChantRoll( void )
+	{
+		float axisX = inputManager->GetInput( index ).axisX;
+		float axisZ = inputManager->GetInput( index ).axisY;
+		float length = sqrtf( axisX * axisX + axisZ * axisZ );
+
+		//	入力があれば移動処理
+		if ( length < MIN_INPUT_STICK )		return;
+		{
+			//	向き調整
+			AngleAdjust(
+				Vector3( axisX, 0.0f, axisZ ),
+				ANGLE_ADJUST_MOVE_SPEED );
+		}
 	}
 
 	//	魔法詠唱開始
 	void	Player::MagicChantStart( void )
 	{
 		//	押している間詠唱、一定時間経過で発動可能
-		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::STAY ) )
+		if ( inputManager->GetInputState( index, KEY_TYPE::X, KEY_STATE::STAY ) )
 		{
 			if ( pParam.frame >= MOTION_FRAME::MAGICCHANT_END )
 			{
@@ -278,7 +360,7 @@ namespace
 		}
 
 		//	魔法攻撃入力受付
-		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
+		if ( inputManager->GetInputState( index, KEY_TYPE::X, KEY_STATE::ENTER ) )
 		{
 			if ( SetMode( MODE::MAGICATTACK ) )
 			{
@@ -286,6 +368,23 @@ namespace
 				return;
 			}
 		}
+
+		//	回避入力受付
+		if ( inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
+		{
+			if ( SetMode( MODE::STEP ) )
+			{
+				SetMotion( PLAYER_MOTION::STEP );
+				stepSpeed = STEP_SPEED;
+				return;
+			}
+		}
+	}
+
+	//	移動値加算
+	void	Player::AddMove( const Vector3& move )
+	{
+		pParam.pos += move;
 	}
 
 	//	向き調整
@@ -345,3 +444,16 @@ namespace
 		}
 	}
 
+	//	座標設定
+	void	Player::SetPos( const Vector3& pos )
+	{
+		pParam.pos = pos;
+	}
+
+	//	死亡設定
+	void	Player::SetDeath( void )
+	{
+		SetMode( MODE::DEATH );
+		gameParam->GetPlayerParam( index ).motion = PLAYER_MOTION::FALL;
+		gameParam->GetLifeInfo( index ).active = false;
+	}

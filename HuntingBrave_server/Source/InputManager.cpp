@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<map>
 #include	"InputManager.h"
 
 //*****************************************************************************************************************************
@@ -30,16 +31,16 @@ InputManager*	inputManager = nullptr;
 			inputInfo[p].axisY = 0.0f;
 			
 			//	ƒL[î•ñ‰Šú‰»
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::A, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::B, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::X, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::Y, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::L1, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::L3, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::R1, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::R3, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::SELECT, 0 ) );
-			inputInfo[p].keyState.insert( std::map<int, int>::value_type( KEY_TYPE::START, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::A, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::B, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::X, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::Y, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::L1, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::L3, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::R1, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::R3, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::SELECT, 0 ) );
+			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::START, 0 ) );
 		}
 	}
 
@@ -58,7 +59,7 @@ InputManager*	inputManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	“ü—Íî•ñİ’è
-	void	InputManager::SetInput( int id, int keyType, int keyState )
+	void	InputManager::SetInput( int id, char keyType, char keyState )
 	{
 		//	î•ñİ’è
 		inputInfo[id].keyState[keyType] = keyState;
@@ -82,7 +83,7 @@ InputManager*	inputManager = nullptr;
 	}
 
 	//	“ü—Íó‘Ôæ“¾
-	bool	InputManager::GetInputState( int id, int keyType, int keyState )
+	bool	InputManager::GetInputState( int id, char keyType, char keyState )
 	{
 		if ( inputInfo[id].keyState[keyType] == keyState )	return	true;
 		return	false;
