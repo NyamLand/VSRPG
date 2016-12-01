@@ -18,6 +18,7 @@
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	"Collision.h"
+#include	"Sound.h"
 
 //
 #include	"BaseEquipment.h"
@@ -75,6 +76,9 @@ bool	sceneMain::Initialize( void )
 	//	ui‚ÌÝ’è
 	uiManager->Initialize();
 
+	//	í“¬BGM
+	sound->PlayBGM( BGM::MAIN );
+
 	return true;
 }
 
@@ -86,6 +90,7 @@ sceneMain::~sceneMain( void )
 	enemyManager->Release();
 	uiManager->Release();
 	magicManager->Release();
+	sound->StopBGM();
 }
 
 //*****************************************************************************************************************************

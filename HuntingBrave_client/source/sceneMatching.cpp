@@ -5,6 +5,7 @@
 #include	<fstream>
 #include	<iostream>
 #include	<thread>
+#include	"Random.h"
 #include	"GlobalFunction.h"
 #include	"Image.h"
 #include	"DrawShape.h"
@@ -16,6 +17,7 @@
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
 #include	"Collision.h"
+#include	"Sound.h"
 
 //
 #include	"BaseEquipment.h"
@@ -78,6 +80,10 @@ bool	sceneMatching::Initialize(void)
 	//	画像読み込み
 	back = new iex2DObj( "DATA/UI/BackGround/matching_gamen.png" );
 
+	//	BGM再生( ランダムで言い訳のテーマ )
+	if ( random->PercentageRandom( 0.2f ) )	sound->PlayBGM( BGM::IIWAKE );
+	else	sound->PlayBGM( BGM::MENU );
+
 	step = 0;
 	return true;
 }
@@ -86,6 +92,7 @@ sceneMatching::~sceneMatching( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( back );
+	sound->StopBGM();
 }
 
 //*****************************************************************************************************************************
