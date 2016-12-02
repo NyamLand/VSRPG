@@ -39,20 +39,6 @@
 		this->x = x;		this->y = y;		this->w = w;		this->h = h;
 		this->sx = sx;		this->sy = sy;		this->sw = sw;		this->sh = sh;
 		this->p = GetPoint(this->x, this->y);
-		//this->alpha = 1.0f;
-		//this->angle = 0.0f;
-		//this->color = Vector3(1.0f, 1.0f, 1.0f);
-		//this->renderflag = true;
-
-		//this->waveSpeed = 0.0f;
-		//this->waveState = false;
-
-		//this->flashSpeed = 0.0f;
-		//this->flashParam = 0.0f;
-
-		//this->scalingFlag = false;
-		//this->scalingState = 0;
-		//this->scalingSpeed = 0.0f;
 	}
 
 //---------------------------------------------------------------------------------------
@@ -205,7 +191,7 @@
 	}
 
 	//	ägëÂèkè¨çXêV
-	void	Image::ScallBigUpdate( int max_scale)
+	void	Image::ScalingUpdate( int max_scale)
 	{
 		if (!scalingFlag) return;
 
@@ -228,6 +214,8 @@
 			Interpolation::LinearInterpolation(plusScaleX, 0, max_scale, t);
 			Interpolation::LinearInterpolation(plusScaleY, 0, max_scale, t);
 
+			break;
+
 		//-------------------------
 		//	èkè¨
 		//-------------------------
@@ -242,6 +230,7 @@
 			Interpolation::LinearInterpolation(plusScaleX, max_scale, 0, t);
 			Interpolation::LinearInterpolation(plusScaleY, max_scale, 0, t);
 
+			break;
 		}
 
 		if (t >= 1.0f)		t = 0.0f;
@@ -275,9 +264,9 @@
 		plusScaleY = 0;
 		t = 0.0f;
 		alpha = 1.0f;
-		scalingFlag = false;
+		scalingFlag = true;
 		scalingState = IMAGE_SCALING::BIG;
-		scalingSpeed = 0.0f;
+		scalingSpeed = speed;
 	}
 //---------------------------------------------------------------------------------------
 //	èÓïÒéÊìæ

@@ -2,7 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"UIManager.h"
-
+#include	"Random.h"
 //***************************************************************
 //
 //	UIManagerƒNƒ‰ƒX
@@ -80,6 +80,11 @@ bool	UIManager::Initialize( void )
 
 	boardUI = new ScoreBoardUI(posx, posy, width, height);
 
+	//	neta
+	yaju = new Image();
+	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
+	yaju->SetScaling(0.01f);
+	check = false;
 	return	true;
 }
 
@@ -109,6 +114,18 @@ void	UIManager::Update(void)
 	mapUI->Update();
 	scoreUI->Update();
 	boardUI->Update();
+	if (KEY_Get(KEY_SPACE) == 1 && random->GetInt(0, 20) == 1)	check = true;
+	if (check){
+		//	neta
+		if (yaju->scalingState != IMAGE_SCALING::SMALL)
+		{
+			yaju->ScalingUpdate(iexSystem::ScreenHeight);
+		}
+		else
+		{
+			yaju->renderflag = false;
+		}
+	}
 }
 
 //	•`‰æ
@@ -121,6 +138,7 @@ void	UIManager::Render(void)
 	mapUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
+	yaju->Render(IMAGE_MODE::SCALING);
 }
 
 //---------------------------------------------------------------------------------------

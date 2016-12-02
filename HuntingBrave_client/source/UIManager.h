@@ -41,6 +41,10 @@ private:
 	ScoreUI*		scoreUI;
 	ScoreBoardUI*	boardUI;
 
+	//	neta
+	Image*			yaju;
+	bool			check;
+
 public:
 	//	‰Šú‰»E‰ğ•ú
 	bool	Initialize(void)override;
