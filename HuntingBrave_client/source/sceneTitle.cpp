@@ -78,15 +78,15 @@
 		}
 		else
 		{
-			//Interpolation::PercentageUpdate( percentage, 0.01f );
-			//
-			//bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.5f, percentage );
+			Interpolation::PercentageUpdate( percentage, 0.01f );
+			
+			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.5f, percentage );
 
-			//if ( state )
-			//{
+			if ( state )
+			{
 				MainFrame->ChangeScene( new sceneMatching() );
 				return;
-			//}
+			}
 		}
 	}
 

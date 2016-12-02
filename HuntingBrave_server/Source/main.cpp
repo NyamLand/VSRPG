@@ -26,7 +26,6 @@ void main( void )
 	gameParam = new GameParam();
 	inputManager = new InputManager();
 	gameParam->InitializeServer();
-
 	mainFrame->ChangeScene( new sceneMatching() );
 
 	//	–³ŒÀƒ‹[ƒv
