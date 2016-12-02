@@ -372,7 +372,7 @@ GameParam*	gameParam = nullptr;
 	{
 		SignUpResponse*	signUpResponse = ( SignUpResponse* )data;
 
-		//	返答が帰ってきたのでアクティブにする
+		//	返答が返ってきたのでアクティブにする
 		SetPlayer( client, playerInfo[client].name );
 
 		//	初期情報送信

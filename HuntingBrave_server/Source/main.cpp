@@ -41,4 +41,6 @@ void main( void )
 	//	‰ð•ú
 	delete	gameParam; gameParam = nullptr;
 	delete	mainFrame;	mainFrame = nullptr;
+	delete	gameManager;	gameManager = nullptr;
+	delete	inputManager;	inputManager = nullptr;
 }
