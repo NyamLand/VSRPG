@@ -1,9 +1,6 @@
 
 #pragma once
 
-
-#pragma once
-
 //************************************************************************
 //
 //	sceneMainクラス
@@ -23,5 +20,5 @@ public:
 	~sceneMain( void )override;
 
 	//	更新
-	void	Update( void )override;
+	void	Update( int client )override;
 };

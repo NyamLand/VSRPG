@@ -4,15 +4,11 @@
 #include	<vector>
 #include	<map>
 #include	"iextreme.h"
-#include	"GameData.h"
-#include	"GameManager.h"
+#include	"FrameWork.h"
 #include	"GameParam.h"
-#include	"PlayerManager.h"
-#include	"PointManager.h"
+#include	"GameManager.h"
+#include	"sceneMatching.h"
 #include	"InputManager.h"
-#include	"MagicManager.h"
-#include	"LevelManager.h"
-#include	"Collision.h"
 #include	"sceneMain.h"
 
 //*****************************************************************************************************************************
@@ -22,49 +18,27 @@
 //*****************************************************************************************************************************
 
 //	main
-void main(void)
+void main( void )
 {
 	//	初期化
+	mainFrame = new FrameWork();
 	gameManager = new GameManager();
 	gameParam = new GameParam();
 	inputManager = new InputManager();
-	magicManager = new MagicManager();
-	levelManager = new LevelManager();
-	pointManager = new PointManager();
-	collision = new Collision(gameParam);
-	playerManager = new PlayerManager(gameParam);
 	gameParam->InitializeServer();
+
+	mainFrame->ChangeScene( new sceneMatching() );
 
 	//	無限ループ
 	for (;;)
 	{
-		//	マネージャー更新
-		gameManager->Update();
+		//	情報受信
+		int client = gameParam->Receive( mainFrame->GetScene() );
 
-		//	クライアントから受信
-		int client = gameParam->Receive( 0 );
-
-		//	魔法更新
-		magicManager->Update();
-
-		if (client != -1)
-		{
-			//	全体更新
-			playerManager->Update(client);
-
-			//	当たり判定
-			collision->AllCollision();
-
-			//	クライアントへ送信
-			gameParam->Send(client);
-		}
+		mainFrame->Update( client );
 	}
 
 	//	解放
-	delete	gameParam;		gameParam = nullptr;
-	delete	gameManager;		gameManager = nullptr;
-	delete	playerManager;	playerManager = nullptr;
-	delete	inputManager;		inputManager = nullptr;
-	delete	magicManager;	magicManager = nullptr;
-	delete	pointManager;		pointManager = nullptr;
+	delete	gameParam; gameParam = nullptr;
+	delete	mainFrame;	mainFrame = nullptr;
 }

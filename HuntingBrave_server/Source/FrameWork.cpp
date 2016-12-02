@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"GameParam.h"
 #include	"FrameWork.h"
 
 //*****************************************************************************************************************************
@@ -12,12 +13,15 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
+FrameWork*	mainFrame = nullptr;
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	FrameWork::FrameWork( void ) : scene( nullptr )
+	FrameWork::FrameWork( void ) : scene( nullptr ),
+		curScene( SCENE::MATCHING )
 	{
 	
 	}
@@ -37,9 +41,9 @@
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	void	FrameWork::Update( void )
+	void	FrameWork::Update( int client )
 	{
-		if ( scene != nullptr )	scene->Update();
+		if ( scene != nullptr )	scene->Update( client );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -59,6 +63,22 @@
 		//	シーンの切り替え＆初期化
 		scene = newScene;
 		scene->Initialize();
+		curScene = scene->GetScene();
+
+		SendChangeScene( curScene );
+	}
+
+	//	シーン情報送信
+	void	FrameWork::SendChangeScene( char nextScene )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( !gameParam->GetPlayerActive( p ) )	continue;
+			SendSceneData	sendSceneData( nextScene );
+
+			//	送信
+			gameParam->send( p, ( LPSTR )&sendSceneData, sizeof( sendSceneData ) );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -69,4 +89,8 @@
 //	情報取得
 //----------------------------------------------------------------------------------------------
 
-
+	//	シーン取得
+	char	FrameWork::GetScene( void )const
+	{
+		return	curScene;
+	}

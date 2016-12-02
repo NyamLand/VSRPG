@@ -21,7 +21,6 @@ private:
 	PlayerParam	playerParam[PLAYER_MAX];
 	AttackInfo	attackInfo[PLAYER_MAX];
 	LifeInfo			lifeInfo[PLAYER_MAX];
-	MatchingInfo	matchingInfo[PLAYER_MAX];
 
 	//	ä÷êîÉ|ÉCÉìÉ^
 	int ( GameParam::*ReceiveFunction[RECEIVE_COMMAND::COMMAND_MAX] )( int client, const LPSTR& data );
@@ -57,6 +56,7 @@ public:
 	int	ReceiveSignUp( int client, const LPSTR& data );
 	int	ReceiveSignOut( int client, const LPSTR& data );
 	int	ReceiveMatching( int client, const LPSTR& data );
+	int	ReceiveSignUpResponse( int client, const LPSTR& data );
 
 	//	èÓïÒê›íË
 	void SetPlayerParam( int id, const PlayerParam& param );

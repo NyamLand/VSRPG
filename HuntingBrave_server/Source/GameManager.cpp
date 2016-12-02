@@ -1,6 +1,9 @@
 
 #include	"iextreme.h"
+#include	"FrameWork.h"
 #include	"GameParam.h"
+#include	"sceneMain.h"
+#include	"sceneMatching.h"
 #include	"GameManager.h"
 
 //*****************************************************************************************************************************
@@ -33,6 +36,12 @@ GameManager*	gameManager = nullptr;
 		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -15.0f ), 0.0f, initMotion, 0 );
 		initPlayerParam[3].Set( Vector3( -15.0f, 0.0f, 0.0f ), D3DX_PI * 0.5f, initMotion, 0 );
 
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			matchingInfo[i].isComplete = false;
+		}
+
+		//	タイマー初期化
 		timer = new Timer();
 		timer->Start( TIME_MAX );
 	}
@@ -61,6 +70,18 @@ GameManager*	gameManager = nullptr;
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
+	//	プレイヤーチェック
+	bool	GameManager::PlayerCheck( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if( !gameParam->GetPlayerActive( p ) ) continue;
+			if( !matchingInfo[p].isComplete )	return false;
+		}
+
+		return	true;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
@@ -79,6 +100,13 @@ GameManager*	gameManager = nullptr;
 	Timer*	GameManager::GetTimer( void )const
 	{
 		return	timer;
+	}
+
+
+	//	マッチング情報取得
+	MatchingInfo&	GameManager::GetMatchingInfo( int id )
+	{
+		return	matchingInfo[id];
 	}
 
 //----------------------------------------------------------------------------------------------

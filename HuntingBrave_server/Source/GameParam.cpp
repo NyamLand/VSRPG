@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	<thread>
 #include	<map>
+#include	"Scene.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
@@ -34,7 +35,6 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
-			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 			lifeInfo[id].Initialize( INIT_LIFE );
 		}
 
@@ -102,23 +102,19 @@ GameParam*	gameParam = nullptr;
 		int	client = receive( data, &size );
 		if( client == -1 ) return -1;
 		
-		//	ネット関連
-		switch( data[COMMAND] )
+		switch ( scene )
 		{
-		case COMMANDS::MATCHING:	//	マッチング
-			client = ReceiveMatching( client, data );
+		case SCENE::MATCHING:
+			client = MatchingReceive( client, data );
 			break;
 
-		case COMMANDS::SIGN_UP:	//	新規参入
-			client = ReceiveSignUp( client, data );
+		case SCENE::MAIN:
+			client = MainReceive( client, data );
 			break;
 
-		case COMMANDS::SIGN_OUT:	//	脱退
-			client = ReceiveSignOut( client, data );
+		case SCENE::RESULT:
+			client = ResultReceive( client, data );
 			break;
-
-		default:	//	ゲーム情報処理
-			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
 		}
 
 		return client;
@@ -146,6 +142,10 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveSignOut( client, data );
 			break;
 
+		case COMMANDS::SIGN_UP_RESPONSE:
+			client = ReceiveSignUpResponse( client, data );
+			break;
+
 		default:
 			break;
 		}
@@ -159,8 +159,20 @@ GameParam*	gameParam = nullptr;
 		//	ネット関連
 		switch ( data[COMMAND] )
 		{
+		case COMMANDS::MATCHING:	//	マッチング
+			client = ReceiveMatching( client, data );
+			break;
+
+		case COMMANDS::SIGN_UP:
+			client = ReceiveSignUp( client, data );
+			break;
+
 		case COMMANDS::SIGN_OUT:	//	脱退
 			client = ReceiveSignOut( client, data );
+			break;
+
+		case COMMANDS::SIGN_UP_RESPONSE:	//	サインアップ応答
+			client = ReceiveSignUpResponse( client, data );
 			break;
 
 		default:	//	ゲーム情報処理
@@ -220,7 +232,7 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendMatchingInfo( int client, int player )
 	{
 		//	情報設定
-		Matching	matching( player, matchingInfo[player].isComplete );
+		Matching	matching( player, gameManager->GetMatchingInfo( player ).isComplete );
 
 		//	送信
 		send( client, ( char* )&matching, sizeof( matching ) );
@@ -308,38 +320,13 @@ GameParam*	gameParam = nullptr;
 	{
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
-		SetPlayer( client, signUp->name );
+		strcpy( playerInfo[client].name, signUp->name );
 
 		//	IDを返信
 		signUp->id = client;
 		send( client, ( char* )signUp, sizeof( SignUp ) );
 
-		//	初期座標を送信
-		PlayerParam	initParam = gameManager->GetInitInfo( client );
-		SendCharaData	sendCharaData( client, 
-			AttackInfo::NO_ATTACK,
-			initParam.pos, initParam.angle, initParam.motion, 
-			lifeInfo[client].life );
-		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
-
-		//	全員にデータ送信
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			if ( playerInfo[p].active == false ) continue;
-			send( p, ( char* )signUp, sizeof( SignUp ) );
-		}
-
-		//	全データ送信
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			if ( playerInfo[p].active == false ) continue;
-			signUp->id = p;
-			strcpy( signUp->name, playerInfo[p].name );
-			send( client, ( char* )signUp, sizeof( SignUp ) );
-		}
-		printf( "%dP %sさんが参加しました。\n", client + 1, signUp->name );
-
-		return	client;
+		return	-1;
 	}
 
 	//	サインアウト情報受信
@@ -368,7 +355,7 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveMatching( int client, const LPSTR& data )
 	{
 		Matching*	matching = ( Matching* )data;
-		matchingInfo[client].isComplete = matching->isComplete;
+		gameManager->GetMatchingInfo( client ).isComplete = matching->isComplete;
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -378,6 +365,45 @@ GameParam*	gameParam = nullptr;
 		}
 
 		return	-1;
+	}
+
+	//	サインアップ応答情報受信
+	int	GameParam::ReceiveSignUpResponse( int client, const LPSTR& data )
+	{
+		SignUpResponse*	signUpResponse = ( SignUpResponse* )data;
+
+		//	返答が帰ってきたのでアクティブにする
+		SetPlayer( client, playerInfo[client].name );
+
+		//	初期情報送信
+		PlayerParam	initParam = gameManager->GetInitInfo( client );
+		SendCharaData	sendCharaData( client,
+			AttackInfo::NO_ATTACK,
+			initParam.pos, initParam.angle, initParam.motion,
+			lifeInfo[client].life );
+		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+
+		//	サインアップ情報を設定
+		SignUp		signUp( client, playerInfo[client].name );
+
+		//	全員にデータ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			send( p, ( char* )&signUp, sizeof( signUp ) );
+		}
+
+		//	全データ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			signUp.id = p;
+			strcpy( signUp.name, playerInfo[p].name );
+			send( client, ( char* )&signUp, sizeof( signUp ) );
+		}
+		printf( "%dP %sさんが参加しました。\n", client + 1, signUp.name );
+
+		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------

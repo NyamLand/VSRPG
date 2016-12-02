@@ -8,18 +8,35 @@
 //*****************************************************************************************************************************
 
 //	include
+namespace
+{
+	namespace SCENE
+	{
+		enum
+		{
+			MATCHING,
+			MAIN,
+			RESULT
+		};
+	}
+}
 
 //	class
 class Scene
 {
 protected:
+	char	scene;
+
 public:
 	//	‰Šú‰»E‰ğ•ú
-	Scene( void );
+	Scene( void ){};
 	virtual	~Scene( void ){};
 	virtual	bool	Initialize( void ) = 0;
 
 	//	XV
-	virtual	void	Update( void ) = 0;
+	virtual	void	Update( int client ) = 0;
+
+	//	î•ñæ“¾
+	char	GetScene( void )const{ return	scene; }
 };
 
