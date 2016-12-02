@@ -23,7 +23,8 @@
 			MAGIC_APPEND,
 			MAGIC_ERASE,
 			LEVEL_INFO,
-			EXP_INFO
+			EXP_INFO,
+			SCENE_INFO
 		};
 	}
 }
@@ -112,3 +113,12 @@
 
 		SendExpData( int exp ) :	exp( exp ){}
 	};
+
+	//	ÉVÅ[ÉìêÿÇËë÷Ç¶èÓïÒ
+	struct SendSceneData
+	{
+		char com = SEND_COMMAND::SCENE_INFO;
+		char	nextScene;
+		SendSceneData( char nextScene ) : nextScene( nextScene ){}
+	};
+	

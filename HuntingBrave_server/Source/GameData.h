@@ -81,7 +81,8 @@
 		{
 			MATCHING = 10,
 			SIGN_UP,
-			SIGN_OUT
+			SIGN_OUT,
+			SIGN_UP_RESPONSE
 		};
 	}
 
@@ -103,6 +104,15 @@
 		int	  id;
 		SignOut( void ){}
 		SignOut( int id ){ this->id = id; }
+	};
+
+	//	サインアップ応答
+	struct SignUpResponse
+	{
+		char com = COMMANDS::SIGN_UP_RESPONSE;
+		bool	receiveOK;
+		SignUpResponse( void ){}
+		SignUpResponse( bool receiveOK ) : receiveOK( receiveOK ){}
 	};
 
 	//	マッチング情報

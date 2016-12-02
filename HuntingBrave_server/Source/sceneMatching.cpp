@@ -1,7 +1,9 @@
 
 #include	"iextreme.h"
-#include	"GameParam.h"
+#include	"FrameWork.h"
 #include	"GameManager.h"
+#include	"GameParam.h"
+#include	"sceneMain.h"
 #include	"sceneMatching.h"
 
 //************************************************************************
@@ -22,13 +24,14 @@
 	//	‰Šú‰»
 	bool	sceneMatching::Initialize( void )
 	{
+		scene = SCENE::MATCHING;
 		return	true;
 	}
 
 	//	‰ğ•ú
 	sceneMatching::~sceneMatching( void )
 	{
-
+		delete	gameManager;		gameManager = nullptr;
 	}
 
 //--------------------------------------------------------------------------------------------
@@ -36,7 +39,13 @@
 //--------------------------------------------------------------------------------------------
 
 	//	XV
-	void	sceneMatching::Update( void )
+	void	sceneMatching::Update( int client )
 	{
-
+		bool changeSceneFrag = gameManager->PlayerCheck();
+		
+		if ( changeSceneFrag )
+		{
+			mainFrame->ChangeScene( new sceneMain() );
+			return;
+		}
 	}

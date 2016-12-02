@@ -15,6 +15,7 @@ class FrameWork
 {
 private:
 	Scene*	scene;
+	char		curScene;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -22,8 +23,14 @@ public:
 	~FrameWork( void );
 
 	//	XV
-	void	Update( void );
+	void	Update( int client );
 
 	//	“®ìŠÖ”
 	void	ChangeScene( Scene* newScene );
+	void	SendChangeScene( char nextScene );
+
+	//	î•ñæ“¾
+	char	GetScene( void )const;
 };
+
+extern	FrameWork*	mainFrame;
