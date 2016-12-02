@@ -126,11 +126,13 @@
     <ClCompile Include="Source\LevelManager.cpp" />
     <ClCompile Include="Source\Magic.cpp" />
     <ClCompile Include="Source\MagicManager.cpp" />
+    <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerManager.cpp" />
     <ClCompile Include="Source\PointManager.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\sceneMatching.cpp" />
     <ClCompile Include="Source\ShapeInfo.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\UDPServer.cpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="Source\LevelManager.h" />
     <ClInclude Include="Source\Magic.h" />
     <ClInclude Include="Source\MagicManager.h" />
+    <ClInclude Include="Source\main.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerManager.h" />
     <ClInclude Include="Source\PointManager.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\sceneMatching.h" />
     <ClInclude Include="Source\SendData.h" />
     <ClInclude Include="Source\ShapeInfo.h" />
     <ClInclude Include="Source\Timer.h" />

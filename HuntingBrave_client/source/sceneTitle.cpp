@@ -10,6 +10,7 @@
 #include	"Camera.h"
 #include	"InputManager.h"
 #include	"sceneMatching.h"
+#include	"Sound.h"
 #include	"sceneTitle.h"
 
 //***************************************************************
@@ -44,6 +45,9 @@
 		bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
 		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
+		//	‚‚‚‡‚Ä¶
+		sound->PlayBGM( BGM::TITLE );
+
 		pushState = false;
 		percentage = 0.0f;
 		alpha = 1.0f;
@@ -55,6 +59,7 @@
 	{
 		SafeDelete( mainView );
 		SafeDelete( bg );
+		sound->StopBGM();
 	}
 
 //-----------------------------------------------------------------------------------
