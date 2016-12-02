@@ -44,16 +44,13 @@
 		//	‰æ‘œ‰Šú‰»
 		bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
 		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
-		chanolive = new iex2DObj( "DATA/UI/BackGround/lovelive_chano.png" );
 
 		//	‚‚‚‡‚Ä¶
 		sound->PlayBGM( BGM::TITLE );
 
 		pushState = false;
 		percentage = 0.0f;
-		percentage2 = 0.0f;
 		alpha = 1.0f;
-		alpha2 = 1.0f;
 		return	true;
 	}
 
@@ -62,6 +59,7 @@
 	{
 		SafeDelete( mainView );
 		SafeDelete( bg );
+		SafeDelete( lovelive );
 		sound->StopBGM();
 	}
 
@@ -82,19 +80,12 @@
 		else
 		{
 			Interpolation::PercentageUpdate( percentage, 0.01f );
-			
 			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.5f, percentage );
 
 			if ( state )
 			{
-				Interpolation::PercentageUpdate(percentage2, 0.01f);
-
-
-				bool state2 = Interpolation::LinearInterpolation(alpha2, 1.0f, 0.0f, percentage2);
-				if (state2){
-					MainFrame->ChangeScene(new sceneMatching());
-					return;
-				}
+				MainFrame->ChangeScene( new sceneMatching() );
+				return;
 			}
 		}
 	}
@@ -107,8 +98,7 @@
 		mainView->Clear();
 
 		//	bg•`‰æ
-		chanolive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
-		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor(1.0f, 1.0f, 1.0f, alpha2));
+		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
 		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
 	}
 

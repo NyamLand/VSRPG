@@ -15,7 +15,9 @@ namespace SCENE
 	enum
 	{
 		MATCHING,
-		MAIN
+		MAIN,
+		RESULT,
+		END
 	};
 }
 
@@ -26,9 +28,9 @@ class GameManager : public Singleton<GameManager>
 	friend Singleton<GameManager>;
 
 public:
-	float		timer;
+	float	timer;
 	bool	isComplete;		//Ú‘±‚É€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
-
+	char	scene;
 
 private:
 	//	‰Šú‰»E‰ğ•ú
@@ -46,10 +48,12 @@ public:
 
 	//	î•ñİ’è
 	void	SetTimer( float time ){ timer = time; }
+	void	SetScene( char scene ){ this->scene = scene; }
 
 	//	î•ñæ“¾
 	float		GetTime( void ){ return timer; }
-	bool		GetIsComplete(void){ return isComplete; }
+	bool		GetIsComplete( void ){ return isComplete; }
+	char		GetNextScene( void ){ return scene; }
 };
 
 #define	gameManager ( GameManager::GetInstance() )

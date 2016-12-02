@@ -2,7 +2,6 @@
 #include	"iextreme.h"
 #include	<thread>
 #include	<map>
-#include	"Scene.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
@@ -39,11 +38,10 @@ GameParam*	gameParam = nullptr;
 		}
 
 		//	関数ポインタ
-		ReceiveFunction[RECEIVE_COMMAND::PLAYER_INFO] = &GameParam::ReceiveChara;
-		ReceiveFunction[RECEIVE_COMMAND::ATTACK_INFO] = &GameParam::ReceiveAttackInfo;
-		ReceiveFunction[RECEIVE_COMMAND::INPUT_INFO] = &GameParam::ReceiveInput;
-		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
-		ReceiveFunction[RECEIVE_COMMAND::HUNT_INFO] = &GameParam::ReceiveHuntInfo;
+		ReceiveFunction[SCENE::MATCHING] = &GameParam::MatchingReceive;
+		ReceiveFunction[SCENE::MAIN] = &GameParam::MainReceive;
+		ReceiveFunction[SCENE::RESULT] = &GameParam::ResultReceive;
+
 	}
 
 	//	サーバー初期化
@@ -101,22 +99,49 @@ GameParam*	gameParam = nullptr;
 		int	size = sizeof( data );
 		int	client = receive( data, &size );
 		if( client == -1 ) return -1;
-		
-		switch ( scene )
+
+		//	ネット関連
+		switch ( data[COMMAND] )
 		{
-		case SCENE::MATCHING:
-			client = MatchingReceive( client, data );
+		case RECEIVE_COMMAND::PLAYER_INFO:
+			client = ReceiveChara( client, data );
 			break;
 
-		case SCENE::MAIN:
-			client = MainReceive( client, data );
+		case RECEIVE_COMMAND::ATTACK_INFO:
+			client = ReceiveAttackInfo( client, data );
 			break;
 
-		case SCENE::RESULT:
-			client = ResultReceive( client, data );
+		case RECEIVE_COMMAND::INPUT_INFO:
+			client = ReceiveInput( client, data );
 			break;
+
+		case RECEIVE_COMMAND::LEVEL_INFO:
+			client = ReceiveLevelInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::HUNT_INFO:
+			client = ReceiveHuntInfo( client, data );
+			break;
+
+		case COMMANDS::MATCHING:
+			client = ReceiveMatching( client, data );
+			break;
+
+		case COMMANDS::SIGN_UP:
+			client = ReceiveSignUp( client, data );
+			break;
+
+		case COMMANDS::SIGN_OUT:	//	脱退
+			client = ReceiveSignOut( client, data );
+			break;
+
+		case COMMANDS::SIGN_UP_RESPONSE:	//	サインアップ応答
+			client = ReceiveSignUpResponse( client, data );
+			break;
+
+		default:	//	ゲーム情報処理
+			client = -1;
 		}
-
 		return client;
 	}
 
@@ -147,7 +172,7 @@ GameParam*	gameParam = nullptr;
 			break;
 
 		default:
-			break;
+			client = -1;
 		}
 
 		return	client;
@@ -159,12 +184,24 @@ GameParam*	gameParam = nullptr;
 		//	ネット関連
 		switch ( data[COMMAND] )
 		{
-		case COMMANDS::MATCHING:	//	マッチング
-			client = ReceiveMatching( client, data );
+		case RECEIVE_COMMAND::PLAYER_INFO:
+			client = ReceiveChara( client, data );
 			break;
 
-		case COMMANDS::SIGN_UP:
-			client = ReceiveSignUp( client, data );
+		case RECEIVE_COMMAND::ATTACK_INFO:
+			client = ReceiveAttackInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::INPUT_INFO:
+			client = ReceiveInput( client, data );
+			break;
+
+		case RECEIVE_COMMAND::LEVEL_INFO:
+			client = ReceiveLevelInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::HUNT_INFO:
+			client = ReceiveHuntInfo( client, data );
 			break;
 
 		case COMMANDS::SIGN_OUT:	//	脱退
@@ -176,7 +213,7 @@ GameParam*	gameParam = nullptr;
 			break;
 
 		default:	//	ゲーム情報処理
-			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
+			client = -1;
 		}
 
 		return	client;
@@ -192,8 +229,8 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveSignOut( client, data );
 			break;
 
-		default:	//	ゲーム情報処理
-			client = ( this->*ReceiveFunction[data[COMMAND]])( client, data );
+		default:
+			client = -1;
 		}
 
 		return	client;
@@ -419,7 +456,6 @@ GameParam*	gameParam = nullptr;
 
 		//	パラメータ初期化
 		playerParam[id] = gameManager->GetInitInfo( id );
-		playerManager->SetPlayer( id );
 	}
 
 	//	プレイヤー解放

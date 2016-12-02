@@ -8,17 +8,10 @@
 //************************************************************************
 
 //	include
-#include	"Scene.h"
 
 //	class
-class sceneMatching : public Scene
+class sceneMatching
 {
 private:
 public:
-	//	‰Šú‰»E‰ğ•ú
-	bool	Initialize( void )override;
-	~sceneMatching( void )override;
-
-	//	XV
-	void	Update( int client )override;
 };

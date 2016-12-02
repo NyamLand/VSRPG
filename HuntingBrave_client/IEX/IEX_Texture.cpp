@@ -85,6 +85,7 @@ void iexTexture::Release( Texture2D* lpTexture )
 		//	テクスチャ解除
 		iexSystem::GetDevice()->SetTexture( 0, NULL );
 		lpLastTexture = NULL;
+
 		//	テクスチャ解放
 		if( TexInfo[no].lpTexture->Release() != D3D_OK )
 		{

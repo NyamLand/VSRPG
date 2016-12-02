@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"system/Framework.h"
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
@@ -7,6 +8,9 @@
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	<thread>
+#include	"sceneTitle.h"
+#include	"sceneMatching.h"
+#include	"sceneMain.h"
 #include	"GameParam.h"
 
 //***************************************************************
@@ -49,6 +53,7 @@ GameParam*	gameParam = nullptr;
 		ReceiveFunction[RECEIVE_COMMAND::MAGIC_ERASE] = &GameParam::ReceiveMagicEraseInfo;
 		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
 		ReceiveFunction[RECEIVE_COMMAND::EXP_INFO] = &GameParam::ReceiveExpInfo;
+		ReceiveFunction[RECEIVE_COMMAND::SCENE_INFO] = &GameParam::ReceiveChangeScene;
 	}
 
 	//	デストラクタ
@@ -140,9 +145,6 @@ GameParam*	gameParam = nullptr;
 		//	キャラクター情報送信
 		SendPlayerInfo();
 
-		//	マッチング情報送信
-		SendMatching();
-
 		//	入力情報送信
 		SendInputInfo();
 	}
@@ -181,9 +183,7 @@ GameParam*	gameParam = nullptr;
 	//	マッチング状態送信
 	void	GameParam::SendMatching( void )
 	{
-		Matching	matching;
-		matching.id = myIndex;
-		matching.isComplete = gameManager->GetIsComplete();
+		Matching	matching( myIndex, true );
 		send( ( LPSTR )&matching, sizeof( matching ) );
 	}
 
@@ -310,9 +310,26 @@ GameParam*	gameParam = nullptr;
 		RemovePlayerInfo( signOut->id ); 
 	}
 
-//----------------------------------------------------------------------------------------------
-//	動作関数
-//----------------------------------------------------------------------------------------------
+	//	シーン切り換え情報受信
+	void	GameParam::ReceiveChangeScene( const LPSTR& data )
+	{
+		ReceiveSceneData*	receiveSceneData = ( ReceiveSceneData* )data;
+		
+		switch ( receiveSceneData->nextScene )
+		{
+		case SCENE::MATCHING:
+			MainFrame->ChangeScene( new sceneMatching() );
+			break;
+
+		case SCENE::MAIN:
+			MainFrame->ChangeScene( new sceneMain() );
+			break;
+
+		case SCENE::RESULT:
+			break;
+		}
+	}
+
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------

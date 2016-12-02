@@ -131,8 +131,7 @@
 		int	id;
 		bool	isComplete;
 		Matching( void );
-		Matching( int id, int mode );
-		void	Set( int id, int mode );
+		Matching( int id, bool isComplete );
 	};
 
 //*****************************************************************************************************************************

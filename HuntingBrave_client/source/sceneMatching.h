@@ -12,7 +12,7 @@ using namespace std;
 class	sceneMatching : public Scene
 {
 private:
-	unique_ptr<iex3DObj>	obj[PLAYER_MAX];
+	iex3DObj*	obj[PLAYER_MAX];
 	int step;
 	char name[17];
 	char	addr[64];

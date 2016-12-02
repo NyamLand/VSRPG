@@ -157,7 +157,6 @@
     <ClInclude Include="Source\PlayerManager.h" />
     <ClInclude Include="Source\PointManager.h" />
     <ClInclude Include="Source\ReceiveData.h" />
-    <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\sceneMatching.h" />

@@ -73,18 +73,32 @@ GameManager*	gameManager = nullptr;
 	//	プレイヤーチェック
 	bool	GameManager::PlayerCheck( void )
 	{
+		bool	ret = false;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			if( !gameParam->GetPlayerActive( p ) ) continue;
-			if( !matchingInfo[p].isComplete )	return false;
+			if ( !gameParam->GetPlayerActive( p ) )	continue;
+			ret = matchingInfo[p].isComplete;
 		}
 
-		return	true;
+		return	ret;
+	}
+
+	//	シーン切り替え
+	void	GameManager::ChangeScene( char& out, char nextScene )
+	{
+		out = nextScene;
+		SendSceneData	sendSceneData( nextScene );
+
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( p, ( LPSTR )&sendSceneData, sizeof( sendSceneData ) );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
+
 
 //----------------------------------------------------------------------------------------------
 //	情報取得

@@ -23,8 +23,7 @@ private:
 	LifeInfo			lifeInfo[PLAYER_MAX];
 
 	//	関数ポインタ
-	int ( GameParam::*ReceiveFunction[RECEIVE_COMMAND::COMMAND_MAX] )( int client, const LPSTR& data );
-
+	int ( GameParam::*ReceiveFunction[SCENE::MAX] )( int client, const LPSTR& data );
 public:
 	//	初期化・解放
 	GameParam( void );

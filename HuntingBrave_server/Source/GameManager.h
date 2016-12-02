@@ -18,7 +18,6 @@ private:
 	MatchingInfo	matchingInfo[PLAYER_MAX];
 	PlayerParam	initPlayerParam[PLAYER_MAX];
 	Timer*	timer;
-	char	scene;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -30,11 +29,12 @@ public:
 
 	//	“®ìŠÖ”
 	bool	PlayerCheck( void );
+	void	ChangeScene( char& out, char nextScene );
 
 	//	î•ñæ“¾
 	Timer*	GetTimer( void )const;
 	PlayerParam	GetInitInfo( int id )const;
-	MatchingInfo&	GetMatchingInfo( int id );
+	MatchingInfo&	GetMatchingInfo( int id );	
 };
 
 extern	GameManager*	gameManager;

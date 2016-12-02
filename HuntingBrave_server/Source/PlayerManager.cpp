@@ -87,13 +87,6 @@ PlayerManager*	playerManager = nullptr;
 	//	プレイヤー設定
 	void	PlayerManager::SetPlayer( int id )
 	{
-		//	存在チェック
-		if ( player[id] != nullptr )
-		{
-			delete	player[id];
-			player[id] = nullptr;
-		}
-
 		//	プレイヤー生成
 		player[id] = new Player( id );
 	}

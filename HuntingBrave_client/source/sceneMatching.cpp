@@ -39,6 +39,11 @@
 //
 //*****************************************************************************************************************************
 
+void	Thread( void )
+{
+	gameParam->Receive();
+}
+
 bool	sceneMatching::Initialize(void)
 {
 	//	環境設定
@@ -61,7 +66,8 @@ bool	sceneMatching::Initialize(void)
 	//	モデル初期化
 	for ( int i = 0; i < PLAYER_MAX; i++ )
 	{
-		obj[i] = make_unique<iex3DObj>( LPSTR( "DATA/CHR/suppin/suppin.IEM" ) );		
+		obj[i] = nullptr;
+		obj[i] = new iex3DObj( "DATA/CHR/suppin/suppin.IEM" );		
 		char	fileName[256] = "DATA/CHR/suppin/s_body_";
 		char playerNum[8] = "";
 		sprintf_s( playerNum, "%d.png", i );
@@ -92,6 +98,10 @@ sceneMatching::~sceneMatching( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( back );
+	for ( int p = 0; p < PLAYER_MAX; p++ )
+	{
+		SafeDelete( obj[ p ] );
+	}
 	sound->StopBGM();
 }
 
@@ -119,12 +129,10 @@ void	sceneMatching::Update( void )
 	
 		//	モデル更新
 		ObjUpdate();
-	
-		CheckComplete();
-	
+
 		if ( KEY_Get( KEY_ENTER ) == 3 )
 		{
-			gameManager->isComplete = true;
+			gameParam->SendMatching();
 		}
 		break;
 	}
@@ -148,25 +156,6 @@ void	sceneMatching::ObjUpdate()
 			obj[i]->Animation();
 			obj[i]->Update();
 		}
-	}
-}
-
-void	sceneMatching::CheckComplete()
-{
-	bool check = true;
-	for ( int i = 0; i < PLAYER_MAX; i++ )
-	{
-		if ( gameParam->GetPlayerActive( i ) )
-		{
-			if ( gameParam->GetMatchingInfo( i ).isComplete == false ) check = false;
-		}
-	}
-
-	if ( check )
-	{
-		gameManager->isComplete = false;
-		MainFrame->ChangeScene( new sceneMain() );
-		return;
 	}
 }
 
