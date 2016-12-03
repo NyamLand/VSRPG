@@ -113,5 +113,5 @@ public:
 	void	SetScaling(float speed);
 
 	//	拡大縮小更新(最大サイズ)
-	void	ScallBigUpdate(int max_scale);
+	void	ScalingUpdate(int max_scale);
 };
