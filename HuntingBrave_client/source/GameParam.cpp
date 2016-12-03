@@ -76,8 +76,9 @@ GameParam*	gameParam = nullptr;
 		if( receive( ( char* )&signUp, sizeof( signUp ) ) <= 0 ) return false;
 		myIndex = signUp.id;
 
-		SignUpResponse	signUpResponse( true );
-		send( ( char* )&signUpResponse, sizeof( signUpResponse ) );
+		//	•Ô“š
+		Response	response( RESPONSE_COMMAND::SIGN_UP );
+		send( ( LPSTR )&response, sizeof( response ) );
 
 		//	‰ŠúÀ•WŽæ“¾
 		ReceiveCharaData	receiveCharaData;

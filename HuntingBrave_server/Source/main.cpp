@@ -90,6 +90,7 @@ void	MatchingUpdate( int client )
 	{
 		gameManager->ChangeScene( scene, SCENE::MAIN );
 		playerManager->Initialize();
+		gameManager->MatchingInfoInitialize();
 	}
 }
 

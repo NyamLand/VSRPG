@@ -37,11 +37,6 @@ GameParam*	gameParam = nullptr;
 			lifeInfo[id].Initialize( INIT_LIFE );
 		}
 
-		//	関数ポインタ
-		ReceiveFunction[SCENE::MATCHING] = &GameParam::MatchingReceive;
-		ReceiveFunction[SCENE::MAIN] = &GameParam::MainReceive;
-		ReceiveFunction[SCENE::RESULT] = &GameParam::ResultReceive;
-
 	}
 
 	//	サーバー初期化
@@ -135,105 +130,14 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveSignOut( client, data );
 			break;
 
-		case COMMANDS::SIGN_UP_RESPONSE:	//	サインアップ応答
-			client = ReceiveSignUpResponse( client, data );
+		case COMMANDS::RESPONSE:	//	サインアップ応答
+			client = ReceiveResponse( client, data );
 			break;
 
 		default:	//	ゲーム情報処理
 			client = -1;
 		}
 		return client;
-	}
-
-//----------------------------------------------------------------------------------------------
-//	シーン毎の受信処理
-//----------------------------------------------------------------------------------------------
-
-	//	マッチング受信処理
-	int	GameParam::MatchingReceive( int client, const LPSTR& data )
-	{
-		//	ネット関連
-		switch ( data[COMMAND] )
-		{
-		case COMMANDS::MATCHING:	//	マッチング
-			client = ReceiveMatching( client, data );
-			break;
-
-		case COMMANDS::SIGN_UP:		//	新規参入
-			client = ReceiveSignUp( client, data );
-			break;
-
-		case COMMANDS::SIGN_OUT:		//	脱退
-			client = ReceiveSignOut( client, data );
-			break;
-
-		case COMMANDS::SIGN_UP_RESPONSE:
-			client = ReceiveSignUpResponse( client, data );
-			break;
-
-		default:
-			client = -1;
-		}
-
-		return	client;
-	}
-
-	//	メイン受信処理
-	int	GameParam::MainReceive( int client, const LPSTR& data )
-	{
-		//	ネット関連
-		switch ( data[COMMAND] )
-		{
-		case RECEIVE_COMMAND::PLAYER_INFO:
-			client = ReceiveChara( client, data );
-			break;
-
-		case RECEIVE_COMMAND::ATTACK_INFO:
-			client = ReceiveAttackInfo( client, data );
-			break;
-
-		case RECEIVE_COMMAND::INPUT_INFO:
-			client = ReceiveInput( client, data );
-			break;
-
-		case RECEIVE_COMMAND::LEVEL_INFO:
-			client = ReceiveLevelInfo( client, data );
-			break;
-
-		case RECEIVE_COMMAND::HUNT_INFO:
-			client = ReceiveHuntInfo( client, data );
-			break;
-
-		case COMMANDS::SIGN_OUT:	//	脱退
-			client = ReceiveSignOut( client, data );
-			break;
-
-		case COMMANDS::SIGN_UP_RESPONSE:	//	サインアップ応答
-			client = ReceiveSignUpResponse( client, data );
-			break;
-
-		default:	//	ゲーム情報処理
-			client = -1;
-		}
-
-		return	client;
-	}
-
-	//	リザルト受信処理
-	int	GameParam::ResultReceive( int client, const LPSTR& data )
-	{
-		//	ネット関連
-		switch ( data[COMMAND] )
-		{
-		case COMMANDS::SIGN_OUT:	//	脱退
-			client = ReceiveSignOut( client, data );
-			break;
-
-		default:
-			client = -1;
-		}
-
-		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -370,12 +274,13 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveSignOut( int client, const LPSTR& data )
 	{
 		//	プレイヤー解放
-		ReleasePlayer( client );
-
-		SignOut	signOut( client );
-
+		ZeroMemory( &playerInfo[client], sizeof( PlayerInfo ) );
+		
 		//	ソケットを閉じる
 		CloseClient( client );
+
+		//	情報設定
+		SignOut	signOut( client );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -404,11 +309,27 @@ GameParam*	gameParam = nullptr;
 		return	-1;
 	}
 
-	//	サインアップ応答情報受信
-	int	GameParam::ReceiveSignUpResponse( int client, const LPSTR& data )
+	//	返答情報受診
+	int	GameParam::ReceiveResponse( int client, const LPSTR& data )
 	{
-		SignUpResponse*	signUpResponse = ( SignUpResponse* )data;
+		Response*	response = ( Response* )data;
 
+		switch ( response->responseCom )
+		{
+		case RESPONSE_COMMAND::SIGN_UP:
+			client = ReceiveSignUpResponse( client );
+			break;
+
+		case RESPONSE_COMMAND::GAME_START:
+			break;
+		}
+
+		return	client;
+	}
+
+	//	サインアップ応答情報受信
+	int	GameParam::ReceiveSignUpResponse( int client )
+	{
 		//	返答が返ってきたのでアクティブにする
 		SetPlayer( client, playerInfo[client].name );
 
@@ -458,24 +379,10 @@ GameParam*	gameParam = nullptr;
 		playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
-	//	プレイヤー解放
-	void	GameParam::ReleasePlayer( int id )
-	{
-		ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
-		//playerManager->ReleasePlayer( id );
-	}
-
 	//	プレイヤーパラメータ設定
 	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
 	{
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
 		playerParam[id].motion = motion;
-	}
-
-	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
-	{
-		playerParam[id].pos    = param.pos;
-		playerParam[id].angle  = param.angle;
 	}

@@ -88,15 +88,29 @@ namespace SCENE
 //	ネットデータ
 //*****************************************************************************************************************************
 	//	コマンド
-	namespace COMMANDS
+	namespace
 	{
-		enum
+		//	サインコマンド
+		namespace COMMANDS
 		{
-			MATCHING = 10,
-			SIGN_UP,
-			SIGN_OUT,
-			SIGN_UP_RESPONSE
-		};
+			enum
+			{
+				MATCHING = 10,
+				SIGN_UP,
+				SIGN_OUT,
+				RESPONSE
+			};
+		}
+
+		//	返答コマンド
+		namespace RESPONSE_COMMAND
+		{
+			enum
+			{
+				SIGN_UP,
+				GAME_START,
+			};
+		}
 	}
 
 	//	新規参加情報
@@ -119,13 +133,12 @@ namespace SCENE
 		SignOut( int id ){ this->id = id; }
 	};
 
-	//	サインアップ応答
-	struct SignUpResponse
+	//	応答
+	struct Response
 	{
-		char com = COMMANDS::SIGN_UP_RESPONSE;
-		bool	receiveOK;
-		SignUpResponse( void ){}
-		SignUpResponse( bool receiveOK ) : receiveOK( receiveOK ){}
+		char com = COMMANDS::RESPONSE;
+		char	responseCom;
+		Response( char responseCom ) : responseCom( responseCom ){}
 	};
 
 	//	マッチング情報

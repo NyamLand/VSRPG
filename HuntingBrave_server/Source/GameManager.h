@@ -23,6 +23,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	GameManager( void );
 	~GameManager( void );
+	void	MatchingInfoInitialize( void );
 
 	//	XV
 	void	Update( void );
@@ -32,7 +33,7 @@ public:
 	void	ChangeScene( char& out, char nextScene );
 
 	//	î•ñæ“¾
-	Timer*	GetTimer( void )const;
+	Timer*&	GetTimer( void );
 	PlayerParam	GetInitInfo( int id )const;
 	MatchingInfo&	GetMatchingInfo( int id );	
 };

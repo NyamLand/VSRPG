@@ -56,6 +56,15 @@ GameManager*	gameManager = nullptr;
 		}
 	}
 
+	//	マッチング情報初期化
+	void	GameManager::MatchingInfoInitialize( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			matchingInfo[p].isComplete = false;
+		}
+	}
+
 //----------------------------------------------------------------------------------------------
 //	更新
 //----------------------------------------------------------------------------------------------
@@ -111,11 +120,10 @@ GameManager*	gameManager = nullptr;
 	}
 
 	//	タイマー取得
-	Timer*	GameManager::GetTimer( void )const
+	Timer*&	GameManager::GetTimer( void )
 	{
 		return	timer;
 	}
-
 
 	//	マッチング情報取得
 	MatchingInfo&	GameManager::GetMatchingInfo( int id )
