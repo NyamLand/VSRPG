@@ -16,8 +16,10 @@ class GameManager
 {
 private:
 	MatchingInfo	matchingInfo[PLAYER_MAX];
-	PlayerParam	initPlayerParam[PLAYER_MAX];
+	PlayerParam		initPlayerParam[PLAYER_MAX];
 	Timer*	timer;
+	bool		timeUp;
+	bool		gameState;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -35,7 +37,9 @@ public:
 	//	î•ñæ“¾
 	Timer*&	GetTimer( void );
 	PlayerParam	GetInitInfo( int id )const;
-	MatchingInfo&	GetMatchingInfo( int id );	
+	MatchingInfo&	GetMatchingInfo( int id );
+	bool	GetTimeUp( void );
+	bool	GetGameState( void );
 };
 
 extern	GameManager*	gameManager;

@@ -26,8 +26,8 @@ private:
 
 public:
 	//	初期化・解放
-	//bool	Initialize( void )override;
-	void	Release( void )override;
+	bool	Initialize( void );
+	void	Release( void );
 
 	//	更新・描画
 	void	Update( void );
@@ -37,7 +37,7 @@ public:
 	void	SetPlayer( int id );
 
 	//	情報取得
-	Player*	GetPlayer( int id );
+	Player*&	GetPlayer( int id );
 };
 
 #define	playerManager ( PlayerManager::GetInstance() )

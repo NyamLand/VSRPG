@@ -8,15 +8,12 @@
 #include	"Random.h"
 #include	"GlobalFunction.h"
 #include	"Image.h"
-#include	"DrawShape.h"
 #include	"GameData.h"
 #include	"GameParam.h"
 #include	"GameManager.h"
 #include	"UIManager.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
-#include	"EnemyManager.h"
-#include	"Collision.h"
 #include	"Sound.h"
 
 //
@@ -38,11 +35,6 @@
 //	初期化
 //
 //*****************************************************************************************************************************
-
-void	Thread( void )
-{
-	gameParam->Receive();
-}
 
 bool	sceneMatching::Initialize(void)
 {
@@ -103,6 +95,8 @@ sceneMatching::~sceneMatching( void )
 		SafeDelete( obj[ p ] );
 	}
 	sound->StopBGM();
+
+	playerManager->Release();
 }
 
 //*****************************************************************************************************************************
@@ -112,9 +106,6 @@ sceneMatching::~sceneMatching( void )
 //*****************************************************************************************************************************
 void	sceneMatching::Update( void )
 {
-	//	サーバーから情報受信
-	gameParam->Update();
-
 	//	テスト
 	switch ( step )
 	{
@@ -124,6 +115,9 @@ void	sceneMatching::Update( void )
 		break;
 
 	case 1:
+		//	サーバーから情報受信
+		gameParam->Update();
+
 		//	GameManager更新
 		gameManager->Update();
 	
@@ -137,6 +131,8 @@ void	sceneMatching::Update( void )
 		break;
 	}
 
+	//	シーン切り替え
+	gameManager->ChangeScene( SCENE::MAIN );
 }
 
 void	sceneMatching::ObjUpdate()

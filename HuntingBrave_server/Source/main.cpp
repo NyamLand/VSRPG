@@ -100,6 +100,14 @@ void	MainUpdate( int client )
 	
 	playerManager->Update( client );
 	collision->AllCollision();
+	if ( gameManager->GetTimeUp() )
+	{
+		gameManager->ChangeScene( scene, SCENE::RESULT );
+		playerManager->Release();
+	}
 }
 
-void	ResultUpdate( int client ){}
+void	ResultUpdate( int client )
+{
+	if ( client == -1 )	return;
+}

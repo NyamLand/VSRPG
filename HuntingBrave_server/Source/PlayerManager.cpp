@@ -32,15 +32,8 @@ PlayerManager*	playerManager = nullptr;
 
 	//	デストラクタ
 	PlayerManager::~PlayerManager( void )
-	{
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			if ( player[p] != nullptr )
-			{
-				delete	player[p];
-				player[p] = nullptr;
-			}
-		}
+	{	
+		Release();
 	}
 
 	//	初期化
@@ -52,6 +45,15 @@ PlayerManager*	playerManager = nullptr;
 			if ( gameParam->GetPlayerActive( p ) )	SetPlayer( p );
 		}
 		return	true;
+	}
+
+	//	解放
+	void	PlayerManager::Release( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			ReleasePlayer( p );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

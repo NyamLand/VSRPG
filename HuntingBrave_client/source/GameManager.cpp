@@ -2,6 +2,10 @@
 #include	"iextreme.h"
 
 #include	"GlobalFunction.h"
+#include	"system/Framework.h"
+#include	"sceneMatching.h"
+#include	"sceneMain.h"
+#include	"sceneResult.h"
 #include	"GameManager.h"
 
 //***************************************************************
@@ -19,7 +23,7 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameManager::GameManager( void ) : timer( 0 ), isComplete( false )
+	GameManager::GameManager( void ) : timer(0), isComplete( false ), changeSceneFrag( false )
 	{
 		scene = SCENE::MATCHING;
 	}
@@ -63,6 +67,30 @@
 //---------------------------------------------------------------------------------------
 //	動作関数
 //---------------------------------------------------------------------------------------
+
+	//	シーン切り替え
+	void	GameManager::ChangeScene( char nextScene )
+	{
+		if ( !changeSceneFrag )	return;
+
+		//	シーン切り替え
+		switch ( nextScene )
+		{
+		case SCENE::MATCHING:
+			MainFrame->ChangeScene( new sceneMatching() );
+			break;
+
+		case SCENE::MAIN:
+			MainFrame->ChangeScene( new sceneMain() );
+			break;
+
+		case SCENE::RESULT:
+			MainFrame->ChangeScene( new sceneResult() );
+			break;
+		}
+
+		changeSceneFrag = false;
+	}
 
 //---------------------------------------------------------------------------------------
 //	情報設定

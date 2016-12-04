@@ -58,10 +58,6 @@ namespace
 	}
 
 	//	デストラクタ
-	Player::~Player( void )
-	{
-		
-	}
 
 	//	初期化
 	bool	Player::Initialize( int id )

@@ -11,6 +11,7 @@
 #include	"InputManager.h"
 #include	"sceneMatching.h"
 #include	"Sound.h"
+#include	"Screen.h"
 #include	"sceneTitle.h"
 
 //***************************************************************
@@ -48,6 +49,9 @@
 		//	ÇÇÇáÇççƒê∂
 		sound->PlayBGM( BGM::TITLE );
 
+		//	screenê›íË
+		screen->SetScreenMode( SCREEN_MODE::FADE_IN, 0.01f );
+
 		pushState = false;
 		percentage = 0.0f;
 		alpha = 1.0f;
@@ -70,6 +74,7 @@
 	//	çXêV
 	void	sceneTitle::Update( void )
 	{
+		
 		if ( !pushState )
 		{
 			if ( KEY( KEY_B ) == 3 || 
@@ -80,7 +85,7 @@
 		else
 		{
 			Interpolation::PercentageUpdate( percentage, 0.01f );
-			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.5f, percentage );
+			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
 
 			if ( state )
 			{

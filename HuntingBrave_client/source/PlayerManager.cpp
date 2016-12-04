@@ -31,7 +31,23 @@
 	//	デストラクタ
 	PlayerManager::~PlayerManager( void )
 	{
-		Release();
+		//Release();
+	}
+
+	//	初期化
+	bool	PlayerManager::Initialize( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			player[p] = nullptr;
+
+			if ( gameParam->GetPlayerActive( p ) )
+			{
+				PlayerParam		playerParam = gameParam->GetPlayerParam( p );
+				SetPlayer( p );
+			}
+		}
+		return	true;
 	}
 
 	//	解放
@@ -98,7 +114,7 @@
 //-------------------------------------------------------------------------------------
 
 	//	Player情報取得
-	Player*	PlayerManager::GetPlayer( int id )
+	Player*&	PlayerManager::GetPlayer( int id )
 	{
 		return	player[id];
 	}

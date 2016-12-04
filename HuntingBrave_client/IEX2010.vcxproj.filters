@@ -190,6 +190,12 @@
     <ClCompile Include="source\Sound.cpp">
       <Filter>Source\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="source\sceneResult.cpp">
+      <Filter>Source\Scene\sceneResult</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Screen.cpp">
+      <Filter>Source\Screen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -344,6 +350,12 @@
     </ClInclude>
     <ClInclude Include="source\Sound.h">
       <Filter>Source\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneResult.h">
+      <Filter>Source\Scene\sceneResult</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Screen.h">
+      <Filter>Source\Screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -532,6 +544,9 @@
     </Filter>
     <Filter Include="Source\Sound">
       <UniqueIdentifier>{584a0445-fac9-44f3-9f39-ee54648ae9c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Screen">
+      <UniqueIdentifier>{03569b67-4bd3-419f-8176-04b149a3ae96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

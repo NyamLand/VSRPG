@@ -17,7 +17,7 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Timer::Timer( void )
+	Timer::Timer( void ) : remaining( 0.0f ), end( 0.0f )
 	{
 		
 	}
@@ -59,7 +59,11 @@
 		remaining = end - difference / 1000.0f;
 
 		//	指定した時間より差が大きければtrueをかえす
-		if ( remaining <= 0.0f )		return	true;
+		if ( remaining <= 0.0f )
+		{
+			remaining = 0.0f;
+			return	true;
+		}
 		return	false;
 	}
 

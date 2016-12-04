@@ -11,6 +11,7 @@
 #include	"sceneTitle.h"
 #include	"sceneMatching.h"
 #include	"sceneMain.h"
+#include	"sceneResult.h"
 #include	"GameParam.h"
 
 //***************************************************************
@@ -53,7 +54,6 @@ GameParam*	gameParam = nullptr;
 		ReceiveFunction[RECEIVE_COMMAND::MAGIC_ERASE] = &GameParam::ReceiveMagicEraseInfo;
 		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
 		ReceiveFunction[RECEIVE_COMMAND::EXP_INFO] = &GameParam::ReceiveExpInfo;
-		ReceiveFunction[RECEIVE_COMMAND::SCENE_INFO] = &GameParam::ReceiveChangeScene;
 	}
 
 	//	デストラクタ
@@ -118,6 +118,38 @@ GameParam*	gameParam = nullptr;
 			//	先頭バイト（コマンド）による処理分岐
 			switch( data[COMMAND] )
 			{
+			case RECEIVE_COMMAND::GAME_INFO:
+				ReceiveGameInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::POINT_INFO:
+				ReceivePointInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::CHARA_INFO:
+				ReceiveCharaInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::MAGIC_INFO:
+				ReceiveMagicInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::MAGIC_APPEND:
+				ReceiveMagicAppendInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::MAGIC_ERASE:
+				ReceiveMagicEraseInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::LEVEL_INFO:
+				ReceiveLevelInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::EXP_INFO:
+				ReceiveExpInfo( data );
+				break;
+
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;
@@ -130,9 +162,12 @@ GameParam*	gameParam = nullptr;
 				ReceiveSignOutInfo( data );
 				break;
 
+			case COMMANDS::RESPONSE:
+				ReceiveResponse( data );
+				break;
+
 			default:
-				//	ゲーム情報処理
-				( this->*ReceiveFunction[data[COMMAND]] )( data );
+				break;
 			}
 		}
 	}
@@ -162,7 +197,11 @@ GameParam*	gameParam = nullptr;
 		inputManager->GetStickInputLeft( axisX, axisY );
 
 		//	フレーム情報取得
-		int	frame = playerManager->GetPlayer( myIndex )->GetFrame();
+		int	frame = 0;
+		if ( playerManager->GetPlayer( myIndex ) != nullptr )
+		{
+			frame = playerManager->GetPlayer( myIndex )->GetFrame();
+		}
 
 		//	送信情報設定
 		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
@@ -213,6 +252,12 @@ GameParam*	gameParam = nullptr;
 	{
 		SendHuntData	sendHuntData( enemyType );
 		send( ( LPSTR )&sendHuntData, sizeof( sendHuntData ) );
+	}
+
+	//	サインアウト送信
+	void	GameParam::SendSignOut( void )
+	{
+
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -289,6 +334,10 @@ GameParam*	gameParam = nullptr;
 		levelManager->SetExp( receiveExpdata->exp );
 	}
 
+//----------------------------------------------------------------------------------------------
+//	ログイン関連受信
+//----------------------------------------------------------------------------------------------
+
 	//	マッチング情報
 	void	GameParam::ReceiveMatching( const LPSTR& data )
 	{
@@ -311,22 +360,21 @@ GameParam*	gameParam = nullptr;
 		RemovePlayerInfo( signOut->id ); 
 	}
 
-	//	シーン切り換え情報受信
-	void	GameParam::ReceiveChangeScene( const LPSTR& data )
+	//	返答情報受信
+	void	GameParam::ReceiveResponse( const LPSTR& data )
 	{
-		ReceiveSceneData*	receiveSceneData = ( ReceiveSceneData* )data;
-		
-		switch ( receiveSceneData->nextScene )
+		Response*	response = ( Response* )data;
+
+		switch ( response->responseCom )
 		{
-		case SCENE::MATCHING:
-			MainFrame->ChangeScene( new sceneMatching() );
+		case	RESPONSE_COMMAND::SIGN_UP:
 			break;
 
-		case SCENE::MAIN:
-			MainFrame->ChangeScene( new sceneMain() );
+		case RESPONSE_COMMAND::CHANGE_SCENE:
+			gameManager->SetChangeSceneFrag( true );
 			break;
 
-		case SCENE::RESULT:
+		case RESPONSE_COMMAND::GAME_START:
 			break;
 		}
 	}
@@ -340,8 +388,6 @@ GameParam*	gameParam = nullptr;
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
-
-		playerManager->SetPlayer( id );
 	}
 
 	//	点数情報設定

@@ -46,6 +46,7 @@ public:
 	void	SendMatching( void );
 	void	SendInputInfo( void );
 	void	SendHuntInfo( char enemyType );
+	void	SendSignOut( void );
 
 	//	受信処理
 	void	ReceiveCharaInfo( const LPSTR& data );
@@ -56,12 +57,12 @@ public:
 	void	ReceiveMagicEraseInfo( const LPSTR& data );
 	void	ReceiveLevelInfo( const LPSTR& data );
 	void	ReceiveExpInfo( const LPSTR& data );
-	void	ReceiveChangeScene( const LPSTR& data );
 
 	//	ログイン情報受信
 	void	ReceiveSignUpInfo( const LPSTR& data );
 	void	ReceiveSignOutInfo( const LPSTR& data );
 	void	ReceiveMatching( const LPSTR& data );
+	void	ReceiveResponse( const LPSTR& data );
 	
 	//	動作関数
 	void CheckInputData( int keyType );

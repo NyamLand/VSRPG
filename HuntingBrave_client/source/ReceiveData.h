@@ -25,7 +25,6 @@
 			MAGIC_ERASE,
 			LEVEL_INFO,
 			EXP_INFO,
-			SCENE_INFO,
 			COMMAND_MAX
 		};
 	}
@@ -95,11 +94,4 @@
 	{
 		char com = RECEIVE_COMMAND::EXP_INFO;
 		int exp;
-	};
-
-	//	ÉVÅ[ÉìêÿÇËë÷Ç¶èÓïÒ
-	struct ReceiveSceneData
-	{
-		char com = RECEIVE_COMMAND::SCENE_INFO;
-		char nextScene;
 	};
