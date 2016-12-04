@@ -34,6 +34,9 @@
 	Sound::Sound( void )
 	{
 		isPlay = false;
+
+		//	SEセット
+		IEX_SetWAV( SE::JOIN, "DATA/Sound/SE/join_game.wav" );
 	}
 
 	//	デストラクタ

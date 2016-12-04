@@ -6,6 +6,7 @@
 #include	"sceneMatching.h"
 #include	"sceneMain.h"
 #include	"sceneResult.h"
+#include	"sceneTitle.h"
 #include	"GameManager.h"
 
 //***************************************************************
@@ -76,6 +77,10 @@
 		//	ƒV[ƒ“Ø‚è‘Ö‚¦
 		switch ( nextScene )
 		{
+		case SCENE::TITLE:
+			MainFrame->ChangeScene( new sceneTitle() );
+			break;
+
 		case SCENE::MATCHING:
 			MainFrame->ChangeScene( new sceneMatching() );
 			break;

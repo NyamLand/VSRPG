@@ -109,5 +109,5 @@ void	MainUpdate( int client )
 
 void	ResultUpdate( int client )
 {
-	if ( client == -1 )	return;
+	gameManager->ChangeScene( scene, SCENE::MATCHING );
 }

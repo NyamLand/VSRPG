@@ -133,6 +133,7 @@
     <ClCompile Include="source\Magic.cpp" />
     <ClCompile Include="source\MagicManager.cpp" />
     <ClCompile Include="source\MapUI.cpp" />
+    <ClCompile Include="source\NameInput.cpp" />
     <ClCompile Include="source\NetState.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="source\Magic.h" />
     <ClInclude Include="source\MagicManager.h" />
     <ClInclude Include="source\MapUI.h" />
+    <ClInclude Include="source\NameInput.h" />
     <ClInclude Include="source\NetState.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />

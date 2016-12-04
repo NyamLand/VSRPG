@@ -19,6 +19,7 @@ private:
 	bool		pushState;
 	float		percentage;
 	float		alpha;
+	int		step;
 public:
 	//	‰Šú‰»E‰ğ•ú
 	bool	Initialize( void )override;

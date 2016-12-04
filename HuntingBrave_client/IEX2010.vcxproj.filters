@@ -62,10 +62,10 @@
       <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneTitle.cpp">
-      <Filter>Source\Scene\SceneTitle</Filter>
+      <Filter>Source\Scene\sceneTitle</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneMain.cpp">
-      <Filter>Source\Scene\SceneMain</Filter>
+      <Filter>Source\Scene\sceneMain</Filter>
     </ClCompile>
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>Source\Manager\PlayerManager</Filter>
@@ -160,9 +160,6 @@
     <ClCompile Include="source\SharedData.cpp">
       <Filter>Source\GameData\SharedData</Filter>
     </ClCompile>
-    <ClCompile Include="source\sceneMatching.cpp">
-      <Filter>Source\Scene\sceneMatching</Filter>
-    </ClCompile>
     <ClCompile Include="source\MagicManager.cpp">
       <Filter>Source\Manager\MagicManager</Filter>
     </ClCompile>
@@ -196,6 +193,12 @@
     <ClCompile Include="source\Screen.cpp">
       <Filter>Source\Screen</Filter>
     </ClCompile>
+    <ClCompile Include="source\sceneMatching.cpp">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameInput.cpp">
+      <Filter>Source\Scene\sceneMatching\NameInput</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -211,7 +214,7 @@
       <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
-      <Filter>Source\Scene\SceneTitle</Filter>
+      <Filter>Source\Scene\sceneTitle</Filter>
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
       <Filter>Source\Manager\PlayerManager</Filter>
@@ -235,7 +238,7 @@
       <Filter>Source\SYSTEM\Scene</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneMain.h">
-      <Filter>Source\Scene\SceneMain</Filter>
+      <Filter>Source\Scene\sceneMain</Filter>
     </ClInclude>
     <ClInclude Include="source\BaseEquipment.h">
       <Filter>Source\Equipment\BaseEquipment</Filter>
@@ -321,9 +324,6 @@
     <ClInclude Include="source\SharedData.h">
       <Filter>Source\GameData\SharedData</Filter>
     </ClInclude>
-    <ClInclude Include="source\sceneMatching.h">
-      <Filter>Source\Scene\sceneMatching</Filter>
-    </ClInclude>
     <ClInclude Include="source\MagicManager.h">
       <Filter>Source\Manager\MagicManager</Filter>
     </ClInclude>
@@ -357,6 +357,12 @@
     <ClInclude Include="source\Screen.h">
       <Filter>Source\Screen</Filter>
     </ClInclude>
+    <ClInclude Include="source\sceneMatching.h">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NameInput.h">
+      <Filter>Source\Scene\sceneMatching\NameInput</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IEX">
@@ -382,12 +388,6 @@
     </Filter>
     <Filter Include="Source\Scene">
       <UniqueIdentifier>{2014966c-8727-4575-91a7-c0c308c00a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SceneMain">
-      <UniqueIdentifier>{c63170af-b294-435a-b426-9b7f1fba7f42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SceneTitle">
-      <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Status">
       <UniqueIdentifier>{2f7613e1-2b5b-43e7-9d33-fa4b6aa9fc4b}</UniqueIdentifier>
@@ -547,6 +547,15 @@
     </Filter>
     <Filter Include="Source\Screen">
       <UniqueIdentifier>{03569b67-4bd3-419f-8176-04b149a3ae96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\NameInput">
+      <UniqueIdentifier>{f43d575a-26d7-4579-83c6-00e79707fc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMain">
+      <UniqueIdentifier>{c63170af-b294-435a-b426-9b7f1fba7f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneTitle">
+      <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

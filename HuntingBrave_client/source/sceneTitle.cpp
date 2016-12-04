@@ -24,6 +24,19 @@
 //	グローバル
 //-----------------------------------------------------------------------------------
 
+namespace
+{
+	namespace TITLE_STEP
+	{
+		enum
+		{
+			FADE_IN,
+			WAIT,
+			FADE_OUT,
+		};
+	}
+}
+
 //-----------------------------------------------------------------------------------
 //	初期化・解放
 //-----------------------------------------------------------------------------------
@@ -50,11 +63,13 @@
 		sound->PlayBGM( BGM::TITLE );
 
 		//	screen設定
-		screen->SetScreenMode( SCREEN_MODE::FADE_IN, 0.01f );
+		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
 
 		pushState = false;
 		percentage = 0.0f;
 		alpha = 1.0f;
+		step = TITLE_STEP::FADE_IN;
+
 		return	true;
 	}
 
@@ -74,24 +89,36 @@
 	//	更新
 	void	sceneTitle::Update( void )
 	{
-		
-		if ( !pushState )
+		switch ( step )
 		{
+		case TITLE_STEP::FADE_IN:
+			if ( !screen->Update() )	break;
 			if ( KEY( KEY_B ) == 3 || 
 				KEY( KEY_SPACE ) == 3 || 
 				KEY( KEY_ENTER ) == 3 || 
-				KEY( KEY_A ) == 3 )	pushState = true; 
-		}
-		else
-		{
-			Interpolation::PercentageUpdate( percentage, 0.01f );
-			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
-
-			if ( state )
+				KEY( KEY_A ) == 3 )
 			{
-				MainFrame->ChangeScene( new sceneMatching() );
-				return;
+				step++;
 			}
+			break;
+
+		case TITLE_STEP::WAIT:
+			{
+				Interpolation::PercentageUpdate( percentage, 0.01f );
+				bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
+				if ( state )
+				{
+					screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
+					step++;
+				}
+			}
+			break;
+
+		case TITLE_STEP::FADE_OUT:
+			if ( !screen->Update() )	break;
+			MainFrame->ChangeScene( new sceneMatching() );
+			return;
+			break;
 		}
 	}
 
@@ -105,6 +132,9 @@
 		//	bg描画
 		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
 		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+
+		//	スクリーン制御
+		screen->Render();
 	}
 
 //-----------------------------------------------------------------------------------

@@ -1,13 +1,14 @@
 
 #include	"iextreme.h"
 #include	"system/Framework.h"
+#include	<thread>
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
-#include	<thread>
+#include	"Sound.h"
 #include	"sceneTitle.h"
 #include	"sceneMatching.h"
 #include	"sceneMain.h"
@@ -350,6 +351,7 @@ GameParam*	gameParam = nullptr;
 	{
 		SignUp*	signUp = ( SignUp* )data;
 		SetPlayerInfo( signUp->id, signUp->name );
+		sound->PlaySE( SE::JOIN );
 	}
 
 	//	サインアウト情報受信

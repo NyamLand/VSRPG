@@ -14,6 +14,7 @@ namespace SCENE
 {
 	enum
 	{
+		TITLE,
 		MATCHING,
 		MAIN,
 		RESULT,

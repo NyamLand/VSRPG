@@ -15,6 +15,7 @@
 #include	"Camera.h"
 #include	"PlayerManager.h"
 #include	"Sound.h"
+#include	"Screen.h"
 
 //
 #include	"BaseEquipment.h"
@@ -29,6 +30,18 @@
 //
 //*****************************************************************************************************************************
 
+namespace
+{
+	namespace MATCHING_MODE
+	{
+		enum
+		{
+			NAME_INPUT,
+			SIGN_UP,
+			WAIT
+		};
+	}
+}
 
 //*****************************************************************************************************************************
 //
@@ -36,156 +49,197 @@
 //
 //*****************************************************************************************************************************
 
-bool	sceneMatching::Initialize(void)
-{
-	//	環境設定
-	iexLight::SetAmbient( 0x404040 );
-	iexLight::SetFog( 800, 1000, 0 );
-
-	Vector3 dir( 1.0f, -1.0f, -0.5f );
-	dir.Normalize();
-	iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
-
-	//	カメラ設定
-	mainView = new Camera();
-	mainView->Initialize(
-		Camera::VIEW_MODE::TRACKING_VIEW,
-		Vector3( 0.0f, 5.0f, -20.0f ),
-		Vector3( 0.0f, 3.0f, 0.0f ) );
-
-	//	ファイル設定
-
-	//	モデル初期化
-	for ( int i = 0; i < PLAYER_MAX; i++ )
+	//	初期化
+	bool	sceneMatching::Initialize( void )
 	{
-		obj[i] = nullptr;
-		obj[i] = new iex3DObj( "DATA/CHR/suppin/suppin.IEM" );		
-		char	fileName[256] = "DATA/CHR/suppin/s_body_";
-		char playerNum[8] = "";
-		sprintf_s( playerNum, "%d.png", i );
-		strcat_s( fileName, playerNum );
-		obj[i]->SetTexture( 0, fileName );
-	}
+		//	環境設定
+		iexLight::SetAmbient( 0x404040 );
+		iexLight::SetFog( 800, 1000, 0 );
 
-	//	GameParam初期化
-	gameParam = new GameParam();
+		Vector3 dir( 1.0f, -1.0f, -0.5f );
+		dir.Normalize();
+		iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
+
+		//	カメラ設定
+		mainView = new Camera();
+		mainView->Initialize(
+			Camera::VIEW_MODE::TRACKING_VIEW,
+			Vector3( 0.0f, 5.0f, -20.0f ),
+			Vector3( 0.0f, 3.0f, 0.0f ) );
+
+		//	NameInput画面初期化
+		nameInput = new NameInput();
+
+		//	モデル初期化
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			obj[i] = nullptr;
+			obj[i] = new iex3DObj( "DATA/CHR/suppin/suppin.IEM" );		
+			char	fileName[256] = "DATA/CHR/suppin/s_body_";
+			char playerNum[8] = "";
+			sprintf_s( playerNum, "%d.png", i );
+			strcat_s( fileName, playerNum );
+			obj[i]->SetTexture( 0, fileName );
+		}
+
+		//	GameParam初期化
+		gameParam = new GameParam();
 	
-	//	テキスト読み込み
-	std::ifstream	ifs( "onlineInfo.txt" );
-	ifs >> addr;
-	ifs >> name;
+		//	テキスト読み込み
+		std::ifstream	ifs( "onlineInfo.txt" );
+		ifs >> addr;
+		ifs >> name;
 
-	//	画像読み込み
-	back = new iex2DObj( "DATA/UI/BackGround/matching_gamen.png" );
+		//	画像読み込み
+		back = new iex2DObj( "DATA/UI/BackGround/matching_gamen.png" );
 
-	//	BGM再生( ランダムで言い訳のテーマ )
-	if ( random->PercentageRandom( 0.2f ) )	sound->PlayBGM( BGM::IIWAKE );
-	else	sound->PlayBGM( BGM::MENU );
+		//	BGM再生( ランダムで言い訳のテーマ )
+		if ( random->PercentageRandom( 0.2f ) )	sound->PlayBGM( BGM::IIWAKE );
+		else	sound->PlayBGM( BGM::MENU );
 
-	step = 0;
-	return true;
-}
+		step = MATCHING_MODE::NAME_INPUT;
+		nextScene = SCENE::MAIN;
 
-sceneMatching::~sceneMatching( void )
-{
-	SafeDelete( mainView );
-	SafeDelete( back );
-	for ( int p = 0; p < PLAYER_MAX; p++ )
-	{
-		SafeDelete( obj[ p ] );
+		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
+		return true;
 	}
-	sound->StopBGM();
 
-	playerManager->Release();
-}
+	//	解放
+	sceneMatching::~sceneMatching( void )
+	{
+		SafeDelete( mainView );
+		SafeDelete( back );
+		SafeDelete( nameInput );
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			SafeDelete( obj[ p ] );
+		}
+		sound->StopBGM();
+
+		playerManager->Release();
+	}
 
 //*****************************************************************************************************************************
 //
 //		更新
 //
 //*****************************************************************************************************************************
-void	sceneMatching::Update( void )
-{
-	//	テスト
-	switch ( step )
-	{
-	case 0:
-		//	クライアント初期化( serverと接続 )
-		if( gameParam->InitializeClient( addr, 7000, name ) )	step++;
-		break;
-
-	case 1:
-		//	サーバーから情報受信
-		gameParam->Update();
-
-		//	GameManager更新
-		gameManager->Update();
 	
-		//	モデル更新
-		ObjUpdate();
-
-		if ( KEY_Get( KEY_ENTER ) == 3 )
-		{
-			gameParam->SendMatching();
-		}
-		break;
-	}
-
-	//	シーン切り替え
-	gameManager->ChangeScene( SCENE::MAIN );
-}
-
-void	sceneMatching::ObjUpdate()
-{
-	//接続してるかどうかだけの確認のため、座標決定や描画はクライアントでもいい・・・よくない？
-	Vector3 temppos;
-	for ( int i = 0; i < PLAYER_MAX; i++ )
+	//	全体更新
+	void	sceneMatching::Update( void )
 	{
-		temppos = Vector3( -10.0f + i * 5.0f, 0, 0 );
-		int active = gameParam->GetPlayerActive( i );
-
-		if ( active )
+		//	テスト
+		switch ( step )
 		{
-			obj[i]->SetPos( temppos );
-			obj[i]->SetAngle( 180 * PI / 180 );
-			obj[i]->SetScale( 0.2f );
-			obj[i]->Animation();
-			obj[i]->Update();
+		case MATCHING_MODE::NAME_INPUT:
+			//	スクリーン処理完了まで待機
+			if ( !screen->GetScreenState() )	break;
+			
+			//	名前入力
+			if( nameInput->Update() )	step = MATCHING_MODE::SIGN_UP;
+			if ( nameInput->GetCancelState() )
+			{
+				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
+				nextScene = SCENE::TITLE;
+			}
+			break;
+
+		case MATCHING_MODE::SIGN_UP:
+			//	クライアント初期化( serverと接続 )
+			if( gameParam->InitializeClient( addr, 7000, name ) )	step = MATCHING_MODE::WAIT;
+			break;
+
+		case MATCHING_MODE::WAIT:
+			//	サーバーから情報受信
+			gameParam->Update();
+
+			//	GameManager更新
+			gameManager->Update();
+	
+			//	モデル更新
+			ObjUpdate();
+
+			if ( KEY_Get( KEY_ENTER ) == 3 )
+			{
+				gameParam->SendMatching();
+			}
+			break;
+		}
+
+		//	シーン切り替え
+		if ( screen->Update() )		gameManager->ChangeScene( nextScene );
+	}
+
+	//	オブジェクト更新
+	void	sceneMatching::ObjUpdate( void )
+	{
+		//接続してるかどうかだけの確認のため、座標決定や描画はクライアントでもいい・・・よくない？
+		Vector3 temppos;
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			temppos = Vector3( -10.0f + i * 5.0f, 0, 0 );
+			int active = gameParam->GetPlayerActive( i );
+
+			if ( active )
+			{
+				obj[i]->SetPos( temppos );
+				obj[i]->SetAngle( 180 * PI / 180 );
+				obj[i]->SetScale( 0.2f );
+				obj[i]->Animation();
+				obj[i]->Update();
+			}
 		}
 	}
-}
 
 //*****************************************************************************************************************************
 //
 //		描画関連
 //
 //*****************************************************************************************************************************
-void	sceneMatching::Render(void)
-{
-	//	画面クリア
-	mainView->Activate();
-	mainView->Clear();
-
-	//	back
-	iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
-	back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
-	iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
-
-	for ( int i = 0; i < PLAYER_MAX; i++ )
+	
+	//	描画
+	void	sceneMatching::Render( void )
 	{
-		int active = gameParam->GetPlayerActive( i );
+		//	画面クリア
+		mainView->Activate();
+		mainView->Clear();
 
-		if ( active )
+		//	back
+		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
+		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
+
+		switch ( step )
 		{
-			obj[i]->Render();
+		case MATCHING_MODE::NAME_INPUT:
+			nameInput->Render();
+			break;
+
+		case MATCHING_MODE::SIGN_UP:
+			break;
+
+		case MATCHING_MODE::WAIT:
+			break;
 		}
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			int active = gameParam->GetPlayerActive( i );
+
+			if ( active )	obj[i]->Render();
+		}
+
+		screen->Render();
+
+		//	debug描画
+		DebugRender();
 	}
 
-	//	各プレイヤー座標表示
-	DebugRender();
-
-	//MyInfoRender();
-}
+//*****************************************************************************************************************************
+//
+//		描画関連
+//
+//*****************************************************************************************************************************
 
 //	debug用描画
 void	sceneMatching::DebugRender( void )
