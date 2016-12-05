@@ -33,6 +33,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	GameParam( void );
 	~GameParam( void );
+	bool	Initialize( void );
 	bool InitializeClient( char* addr, int nPort, char* name );
 	void CloseClient( void );
 

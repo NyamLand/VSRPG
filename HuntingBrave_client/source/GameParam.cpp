@@ -62,10 +62,28 @@ GameParam*	gameParam = nullptr;
 	{
 		CloseClient();
 	}
+
+	//	初期化
+	bool	GameParam::Initialize( void )
+	{
+		//	プレイヤーデータ初期化
+		for ( int id = 0; id < PLAYER_MAX; id++ )
+		{
+			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
+			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
+		}
+
+		return	true;
+	}
 	
 	//	クライアント初期化
 	bool	GameParam::InitializeClient( char* addr, int nPort, char* name )
 	{
+		//	初期化
+		Initialize();
+
 		//	クライアント初期化
 		InitializeUDP( nPort, addr );
 
@@ -364,6 +382,7 @@ GameParam*	gameParam = nullptr;
 
 	//	返答情報受信
 	void	GameParam::ReceiveResponse( const LPSTR& data )
+
 	{
 		Response*	response = ( Response* )data;
 

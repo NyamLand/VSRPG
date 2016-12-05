@@ -29,14 +29,7 @@ GameParam*	gameParam = nullptr;
 	//	コンストラクタ
 	GameParam::GameParam( void )
 	{
-		for( int id = 0 ; id < PLAYER_MAX ; id++ )
-		{
-			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
-			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
-			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
-			lifeInfo[id].Initialize( INIT_LIFE );
-		}
-
+		InitializeGame();
 	}
 
 	//	サーバー初期化
@@ -56,6 +49,18 @@ GameParam*	gameParam = nullptr;
 	{
 		lifeInfo[id].Initialize( INIT_LIFE );
 		playerParam[id] = gameManager->GetInitInfo( id );
+	}
+
+	//	ゲーム初期化
+	void	GameParam::InitializeGame( void )
+	{
+		for ( int id = 0; id < PLAYER_MAX; id++ )
+		{
+			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
+			lifeInfo[id].Initialize( INIT_LIFE );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

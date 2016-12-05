@@ -33,6 +33,7 @@ public:
 	bool	isComplete;		//Ú‘±‚É€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 	char	scene;
 	bool	changeSceneFrag;
+	bool	gameState;
 
 private:
 	//	‰Šú‰»E‰ğ•ú
@@ -61,6 +62,7 @@ public:
 	bool		GetIsComplete( void ){ return isComplete; }
 	bool		GetChangeSceneFrag( void ){ return	changeSceneFrag; }
 	char		GetNextScene( void ){ return scene; }
+	bool		GetGameState( void ){ return	gameState; }
 };
 
 #define	gameManager ( GameManager::GetInstance() )

@@ -27,6 +27,7 @@ public:
 	GameParam( void );
 	bool InitializeServer( void );
 	void	InitializePlayer( int id );
+	void	InitializeGame( void );
 
 	//	データ送受信
 	int Receive( char scene );

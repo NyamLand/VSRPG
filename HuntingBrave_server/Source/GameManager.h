@@ -25,6 +25,8 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	GameManager( void );
 	~GameManager( void );
+	bool	Initialize( void );
+	void	Release( void );
 	void	MatchingInfoInitialize( void );
 
 	//	XV

@@ -44,7 +44,6 @@ GameManager*	gameManager = nullptr;
 
 		//	タイマー初期化
 		timer = new Timer();
-		timer->Start( TIME_MAX );
 	}
 
 	//	デストラクタ
@@ -63,6 +62,30 @@ GameManager*	gameManager = nullptr;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			matchingInfo[p].isComplete = false;
+		}
+	}
+
+	//	初期化
+	bool	GameManager::Initialize( void )
+	{
+		//	マッチング情報初期化
+		MatchingInfoInitialize();
+
+		//	タイマースタート
+		timer->Start( TIME_MAX );
+
+		//	変数初期化
+		gameState = true;
+		return	true;
+	}
+
+	//	解放
+	void	GameManager::Release( void )
+	{
+		if ( timer != nullptr )
+		{
+			delete	timer;
+			timer = nullptr;
 		}
 	}
 

@@ -24,7 +24,9 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameManager::GameManager( void ) : timer(0), isComplete( false ), changeSceneFrag( false )
+	GameManager::GameManager( void ) : 
+		timer( 0 ),
+		isComplete( false ), changeSceneFrag( false ), gameState( false )
 	{
 		scene = SCENE::MATCHING;
 	}
@@ -105,3 +107,4 @@
 //	情報取得
 //---------------------------------------------------------------------------------------
 
+	//	

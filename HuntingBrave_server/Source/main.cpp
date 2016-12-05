@@ -90,7 +90,7 @@ void	MatchingUpdate( int client )
 	{
 		gameManager->ChangeScene( scene, SCENE::MAIN );
 		playerManager->Initialize();
-		gameManager->MatchingInfoInitialize();
+		gameManager->Initialize();	
 	}
 }
 
@@ -110,4 +110,5 @@ void	MainUpdate( int client )
 void	ResultUpdate( int client )
 {
 	gameManager->ChangeScene( scene, SCENE::MATCHING );
+	gameParam->InitializeGame();
 }
