@@ -24,7 +24,7 @@
 EnemyHpUI::EnemyHpUI()
 {
 	//	座標、サイズ情報格納
-	width = 100;	height = 25;
+	width = 100.0f;	height = 25.0f;
 
 }
 
@@ -36,7 +36,7 @@ EnemyHpUI::~EnemyHpUI(void)
 }
 
 
-void	EnemyHpUI::Initilaize(int type, int maxhp)
+void	EnemyHpUI::Initilaize(int type, float maxhp)
 {
 	
 	hp = 0;
@@ -62,7 +62,7 @@ void	EnemyHpUI::Update( void )
 }
 
 //	描画
-void	EnemyHpUI::Render(int hp,Vector3 pos,Vector3 up)
+void	EnemyHpUI::Render(float hp,Vector3 pos,Vector3 up)
 {
 	
 	Vector3	BarPos;
@@ -70,6 +70,8 @@ void	EnemyHpUI::Render(int hp,Vector3 pos,Vector3 up)
 	BarPos = pos + up * 5.0f;
 	WorldToClient(BarPos, out, matView * matProjection);
 	out.x -= 60;
+
+	float	parsent = (float)hp / (float)maxHp;
 	//----------------------
 	//	HPバー
 	//----------------------
@@ -77,14 +79,14 @@ void	EnemyHpUI::Render(int hp,Vector3 pos,Vector3 up)
 	{
 	case HPUI_TYPE::ENEMY:
 
-		hpFrame_obj->Render((int)out.x, (int)out.y, width, height, 0, 0, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
-		hp_obj->Render((int)out.x, (int)out.y, width*(hp / maxHp), height, 0, HP_MAX::HEIGHT * 1, HP_MAX::WIDTH, HP_MAX::HEIGHT);		//	HP残量
+		hpFrame_obj->Render(out.x, out.y, width, height, 0, 0, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
+		hp_obj->Render(out.x, out.y, width*(hp / maxHp), height, 0, HP_MAX::HEIGHT * 1, HP_MAX::WIDTH, HP_MAX::HEIGHT);		//	HP残量
 		break;
 
 	case HPUI_TYPE::PLAYER:
 
-		hpFrame_obj->Render((int)out.x, (int)out.y, width, height, 0, HP_MAX::HEIGHT * 2, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
-		hp_obj->Render((int)out.x, (int)out.y, width*(hp / maxHp), height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);		//	HP残量
+		hpFrame_obj->Render(out.x, out.y, width, height, 0, HP_MAX::HEIGHT * 2, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
+		hp_obj->Render(out.x, out.y, (int)(width*parsent), height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);		//	HP残量
 		break;
 
 	default:

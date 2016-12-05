@@ -36,19 +36,19 @@ class EnemyHpUI
 private:
 	iex2DObj* hpFrame_obj;
 	iex2DObj* hp_obj;
-	int	width, height;
-	int hp;
 	int mode_type;
-	int maxHp;
+	float	width, height;
+	float	hp;
+	float maxHp;
 
 public:
 	//	初期化・解放
 	EnemyHpUI( void );
 	~EnemyHpUI(void);
-	void Initilaize(int type, int maxhp);
+	void Initilaize(int type, float maxhp);
 
 	//	更新・描画
 	void	Update( void );
-	void	Render(int hp, Vector3 pos, Vector3 up);
+	void	Render(float hp, Vector3 pos, Vector3 up);
 };
 

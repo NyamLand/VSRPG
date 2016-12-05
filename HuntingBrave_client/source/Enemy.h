@@ -56,6 +56,7 @@ public:
 	void	Advance( float speed );
 	bool	DistCheck( float& length );
 	void	LifeCheck( void );
+	void	StageCheck( void );
 	//virtual bool	DamageFlgCheck( void )=0;
 
 	//ÉÇÅ[Éhä÷êî

@@ -34,7 +34,7 @@
 #define	MIN_INPUT_STICK		0.3f
 
 //	ƒ‰ƒCƒtİ’è
-#define MAX_LIFE	20
+#define MAX_LIFE	5
 
 //	’è”ŠÖ˜A
 namespace
