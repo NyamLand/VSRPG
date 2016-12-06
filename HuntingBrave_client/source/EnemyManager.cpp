@@ -82,7 +82,7 @@ namespace
 	void	EnemyManager::Load( void )
 	{
 		org[ENEMY_TYPE::BIG_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
-		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
+		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/mofumofu/moffu.IEM" );
 	}
 
 //-------------------------------------------------------------------------------------

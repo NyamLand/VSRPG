@@ -18,7 +18,7 @@
 //------------------------------------------------------------------------------------
 
 //	ミノタウロス
-#define	MINOTAURUS_SCALE	0.01f
+#define	MOFFU_SCALE	0.1f
 #define	MINOTAURUS_HEIGHT	0.125f
 #define	MINOTAURUS_RADIUS	1.0f
 
@@ -101,7 +101,7 @@
 	{
 		//	補間
 		bool	expantion = Interpolation::LinearInterpolation(
-			scale, 0.0f, MINOTAURUS_SCALE, interpolationParam );
+			scale, 0.0f, MOFFU_SCALE, interpolationParam );
 
 		//	補間パラメータ更新
 		Interpolation::PercentageUpdate( interpolationParam, 0.01f );
