@@ -84,9 +84,13 @@
 			//	当たっていればライフ計算
 			if ( isHit == true )
 			{
-				//	ライフ計算
-				( *it )->GetLifeInfo().CulcLife( -1 );
-				gameParam->SendHuntInfo( ( *it )->GetEnemyType() );
+				if ((*it)->GetLifeInfo().active)
+				{
+					//	ライフ計算
+					(*it)->SetMode((*it)->DAMAGE);
+					//	ライフ計算
+					(*it)->GetLifeInfo().CulcLife(-1);
+				}
 			}
 		}
 	}

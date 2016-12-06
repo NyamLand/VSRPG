@@ -34,6 +34,7 @@
 		{
 			life = 0;
 			isAlive = false;
+			active = false;
 		}
 	}
 
