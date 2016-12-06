@@ -11,6 +11,7 @@
 #include	"InputManager.h"
 #include	"sceneMatching.h"
 #include	"Sound.h"
+#include	"Screen.h"
 #include	"sceneTitle.h"
 
 //***************************************************************
@@ -22,6 +23,19 @@
 //-----------------------------------------------------------------------------------
 //	グローバル
 //-----------------------------------------------------------------------------------
+
+namespace
+{
+	namespace TITLE_STEP
+	{
+		enum
+		{
+			FADE_IN,
+			WAIT,
+			FADE_OUT,
+		};
+	}
+}
 
 //-----------------------------------------------------------------------------------
 //	初期化・解放
@@ -42,18 +56,22 @@
 		mainView = new Camera();
 
 		//	画像初期化
-		bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
-		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
-		chanolive = new iex2DObj( "DATA/UI/BackGround/lovelive_chano.png" );
+		bg = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
+		//bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
+		lovelive = new iex2DObj( "DATA/UI/BackGround/title.png" );
+		//lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
 		//	ｂｇｍ再生
 		sound->PlayBGM( BGM::TITLE );
 
+		//	screen設定
+		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
+
 		pushState = false;
 		percentage = 0.0f;
-		percentage2 = 0.0f;
 		alpha = 1.0f;
-		alpha2 = 1.0f;
+		step = TITLE_STEP::FADE_IN;
+
 		return	true;
 	}
 
@@ -62,6 +80,7 @@
 	{
 		SafeDelete( mainView );
 		SafeDelete( bg );
+		SafeDelete( lovelive );
 		sound->StopBGM();
 	}
 
@@ -72,30 +91,36 @@
 	//	更新
 	void	sceneTitle::Update( void )
 	{
-		if ( !pushState )
+		switch ( step )
 		{
+		case TITLE_STEP::FADE_IN:
+			if ( !screen->Update() )	break;
 			if ( KEY( KEY_B ) == 3 || 
 				KEY( KEY_SPACE ) == 3 || 
 				KEY( KEY_ENTER ) == 3 || 
-				KEY( KEY_A ) == 3 )	pushState = true; 
-		}
-		else
-		{
-			Interpolation::PercentageUpdate( percentage, 0.01f );
-			
-			bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.5f, percentage );
-
-			if ( state )
+				KEY( KEY_A ) == 3 )
 			{
-				Interpolation::PercentageUpdate(percentage2, 0.01f);
+				step++;
+			}
+			break;
 
-
-				bool state2 = Interpolation::LinearInterpolation(alpha2, 1.0f, 0.0f, percentage2);
-				if (state2){
-					MainFrame->ChangeScene(new sceneMatching());
-					return;
+		case TITLE_STEP::WAIT:
+			{
+				Interpolation::PercentageUpdate( percentage, 0.01f );
+				bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
+				if ( state )
+				{
+					screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
+					step++;
 				}
 			}
+			break;
+
+		case TITLE_STEP::FADE_OUT:
+			if ( !screen->Update() )	break;
+			MainFrame->ChangeScene( new sceneMatching() );
+			return;
+			break;
 		}
 	}
 
@@ -107,9 +132,13 @@
 		mainView->Clear();
 
 		//	bg描画
-		chanolive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
-		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor(1.0f, 1.0f, 1.0f, alpha2));
-		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		//lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
+		lovelive->Render(0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		//bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+
+		//	スクリーン制御
+		screen->Render();
 	}
 
 //-----------------------------------------------------------------------------------

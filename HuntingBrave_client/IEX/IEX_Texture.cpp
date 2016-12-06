@@ -70,21 +70,18 @@ void iexTexture::Release( Texture2D* lpTexture )
 	//	テクスチャの検索 
 	for( i=0 ; i<MAX_TEXTURE ; i++ ){
 		if( !TexInfo[i].lpTexture ) continue;
-		int a = 0;
-		if( TexInfo[i].lpTexture != lpTexture )
-		{
-			int b = 0;
-			continue;
-		}
+		if( TexInfo[i].lpTexture != lpTexture )	continue;
 		no = i;
 		break;
 	}
 	if( no != -1 ){
 		TexInfo[no].UseCount--;
 		if( TexInfo[no].UseCount > 0 ) return;
+		
 		//	テクスチャ解除
 		iexSystem::GetDevice()->SetTexture( 0, NULL );
 		lpLastTexture = NULL;
+
 		//	テクスチャ解放
 		if( TexInfo[no].lpTexture->Release() != D3D_OK )
 		{

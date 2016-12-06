@@ -4,6 +4,7 @@
 #include	"GameParam.h"
 #include	"sceneTitle.h"
 #include	"sceneMain.h"
+#include	"sceneResult.h"
 #include	"sceneMatching.h"
 
 //*****************************************************************************************************************************
@@ -64,6 +65,7 @@ BOOL	InitApp( HWND hWnd )
 	//MainFrame->ChangeScene( new sceneMatching() );
 	//MainFrame->ChangeScene( new sceneMain() );
 	MainFrame->ChangeScene( new sceneTitle() );
+	//MainFrame->ChangeScene( new sceneResult() );
 
 	//	ネットワーク初期化
 	//BOOL initNet = InitNetWork();

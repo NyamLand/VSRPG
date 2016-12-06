@@ -21,6 +21,20 @@
 #define	MINUTE		60
 #define	HOUR		MINUTE * 60
 
+//	シーン
+namespace SCENE
+{
+	enum
+	{
+		TITLE,
+		MATCHING,
+		MAIN,
+		RESULT,
+		MAX
+	};
+
+}
+
 //-------------------------------------------------------------------------------------
 //	プレイヤー情報
 //-------------------------------------------------------------------------------------
@@ -75,14 +89,30 @@
 //	ネットデータ
 //*****************************************************************************************************************************
 	//	コマンド
-	namespace COMMANDS
+	namespace
 	{
-		enum
+		//	サインコマンド
+		namespace COMMANDS
 		{
-			MATCHING = 10,
-			SIGN_UP,
-			SIGN_OUT
-		};
+			enum
+			{
+				MATCHING = 10,
+				SIGN_UP,
+				SIGN_OUT,
+				RESPONSE
+			};
+		}
+
+		//	返答コマンド
+		namespace RESPONSE_COMMAND
+		{
+			enum
+			{
+				SIGN_UP,
+				GAME_START,
+				CHANGE_SCENE
+			};
+		}
 	}
 
 	//	新規参加情報
@@ -103,6 +133,14 @@
 		int	  id;
 		SignOut( void ){}
 		SignOut( int id ){ this->id = id; }
+	};
+
+	//	応答
+	struct Response
+	{
+		char com = COMMANDS::RESPONSE;
+		char	responseCom;
+		Response( char responseCom ) : responseCom( responseCom ){}
 	};
 
 	//	マッチング情報

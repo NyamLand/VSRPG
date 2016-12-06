@@ -33,6 +33,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	GameParam( void );
 	~GameParam( void );
+	bool	Initialize( void );
 	bool InitializeClient( char* addr, int nPort, char* name );
 	void CloseClient( void );
 
@@ -46,6 +47,7 @@ public:
 	void	SendMatching( void );
 	void	SendInputInfo( void );
 	void	SendHuntInfo( char enemyType );
+	void	SendSignOut( void );
 
 	//	óMˆ—
 	void	ReceiveCharaInfo( const LPSTR& data );
@@ -61,6 +63,7 @@ public:
 	void	ReceiveSignUpInfo( const LPSTR& data );
 	void	ReceiveSignOutInfo( const LPSTR& data );
 	void	ReceiveMatching( const LPSTR& data );
+	void	ReceiveResponse( const LPSTR& data );
 	
 	//	“®ìŠÖ”
 	void CheckInputData( int keyType );

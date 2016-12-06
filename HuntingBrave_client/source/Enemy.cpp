@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
 #include	"PlayerManager.h"
+#include	"Collision.h"
 
 #include	"Enemy.h"
 
@@ -114,6 +115,11 @@
 //	“®ìŠÖ”
 //------------------------------------------------------------------------------------
 	void	Enemy::Update()
+	{
+
+	}
+
+	void	Enemy::StageCheck()
 	{
 
 	}

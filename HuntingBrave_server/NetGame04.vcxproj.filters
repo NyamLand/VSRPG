@@ -296,9 +296,6 @@
     <ClInclude Include="Source\SceneManager.h">
       <Filter>ソース ファイル\Manager\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>ソース ファイル\SYSTEM\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FrameWork.h">
       <Filter>ソース ファイル\SYSTEM\FrameWork</Filter>
     </ClInclude>

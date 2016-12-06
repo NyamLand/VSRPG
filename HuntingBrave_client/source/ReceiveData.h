@@ -95,4 +95,3 @@
 		char com = RECEIVE_COMMAND::EXP_INFO;
 		int exp;
 	};
-

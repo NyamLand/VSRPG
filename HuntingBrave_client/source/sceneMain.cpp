@@ -59,6 +59,9 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	player‰Šú‰»
+	playerManager->Initialize();
+
 	//	enemy‰Šú‰»
 	enemyManager->Initialize();
 
@@ -86,10 +89,10 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	playerManager->Release();
 	enemyManager->Release();
 	uiManager->Release();
 	magicManager->Release();
+	playerManager->Release();
 	sound->StopBGM();
 }
 
@@ -128,6 +131,9 @@ void	sceneMain::Update( void )
 
 	//	collision
 	collision->AllCollision();
+
+	//	ƒV[ƒ“Ø‚è‘Ö‚¦
+	gameManager->ChangeScene( SCENE::RESULT );
 }
 
 //*****************************************************************************************************************************

@@ -19,6 +19,7 @@
 //-------------------------------------------------------------------------------------
 
 #define	PLAYER_MAX		4
+#define	NAME_MAX			4
 
 	//	プレイヤー基本情報
 	struct PlayerInfo
@@ -84,14 +85,29 @@
 //-------------------------------------------------------------------------------------
 
 	//	コマンド
-	namespace COMMANDS
+	namespace
 	{
-		enum
+		namespace COMMANDS
 		{
-			MATCHING = 10,
-			SIGN_UP,
-			SIGN_OUT
-		};
+			enum
+			{
+				MATCHING = 10,
+				SIGN_UP,
+				SIGN_OUT,
+				RESPONSE
+			};
+		}
+
+		//	返答コマンド
+		namespace RESPONSE_COMMAND
+		{
+			enum
+			{
+				SIGN_UP,
+				GAME_START,
+				CHANGE_SCENE
+			};
+		}
 	}
 
 	//	新規参加情報
@@ -114,6 +130,14 @@
 		SignOut( int id ){ this->id; }
 	};
 
+	//	応答
+	struct Response
+	{
+		char com = COMMANDS::RESPONSE;
+		char	responseCom;
+		Response( char responseCom ) : responseCom( responseCom ){}
+	};
+
 	//マッチング情報
 	struct Matching
 	{
@@ -121,8 +145,7 @@
 		int	id;
 		bool	isComplete;
 		Matching( void );
-		Matching( int id, int mode );
-		void	Set( int id, int mode );
+		Matching( int id, bool isComplete );
 	};
 
 //*****************************************************************************************************************************

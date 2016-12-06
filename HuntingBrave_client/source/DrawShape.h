@@ -25,8 +25,8 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
-	bool	Initialize( void )override;
-	void	Release( void )override;
+	bool	Initialize( void );
+	void	Release( void );
 
 	//---------------}Œ`•`‰æ---------------//
 

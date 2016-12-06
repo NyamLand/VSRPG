@@ -29,21 +29,7 @@ GameParam*	gameParam = nullptr;
 	//	コンストラクタ
 	GameParam::GameParam( void )
 	{
-		for( int id = 0 ; id < PLAYER_MAX ; id++ )
-		{
-			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
-			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
-			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
-			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
-			lifeInfo[id].Initialize( INIT_LIFE );
-		}
-
-		//	関数ポインタ
-		ReceiveFunction[RECEIVE_COMMAND::PLAYER_INFO] = &GameParam::ReceiveChara;
-		ReceiveFunction[RECEIVE_COMMAND::ATTACK_INFO] = &GameParam::ReceiveAttackInfo;
-		ReceiveFunction[RECEIVE_COMMAND::INPUT_INFO] = &GameParam::ReceiveInput;
-		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
-		ReceiveFunction[RECEIVE_COMMAND::HUNT_INFO] = &GameParam::ReceiveHuntInfo;
+		InitializeGame();
 	}
 
 	//	サーバー初期化
@@ -63,6 +49,18 @@ GameParam*	gameParam = nullptr;
 	{
 		lifeInfo[id].Initialize( INIT_LIFE );
 		playerParam[id] = gameManager->GetInitInfo( id );
+	}
+
+	//	ゲーム初期化
+	void	GameParam::InitializeGame( void )
+	{
+		for ( int id = 0; id < PLAYER_MAX; id++ )
+		{
+			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
+			lifeInfo[id].Initialize( INIT_LIFE );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -101,15 +99,35 @@ GameParam*	gameParam = nullptr;
 		int	size = sizeof( data );
 		int	client = receive( data, &size );
 		if( client == -1 ) return -1;
-		
+
 		//	ネット関連
-		switch( data[COMMAND] )
+		switch ( data[COMMAND] )
 		{
-		case COMMANDS::MATCHING:	//	マッチング
+		case RECEIVE_COMMAND::PLAYER_INFO:
+			client = ReceiveChara( client, data );
+			break;
+
+		case RECEIVE_COMMAND::ATTACK_INFO:
+			client = ReceiveAttackInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::INPUT_INFO:
+			client = ReceiveInput( client, data );
+			break;
+
+		case RECEIVE_COMMAND::LEVEL_INFO:
+			client = ReceiveLevelInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::HUNT_INFO:
+			client = ReceiveHuntInfo( client, data );
+			break;
+
+		case COMMANDS::MATCHING:
 			client = ReceiveMatching( client, data );
 			break;
 
-		case COMMANDS::SIGN_UP:	//	新規参入
+		case COMMANDS::SIGN_UP:
 			client = ReceiveSignUp( client, data );
 			break;
 
@@ -117,74 +135,14 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveSignOut( client, data );
 			break;
 
-		default:	//	ゲーム情報処理
-			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
-		}
+		case COMMANDS::RESPONSE:	//	サインアップ応答
+			client = ReceiveResponse( client, data );
+			break;
 
+		default:	//	ゲーム情報処理
+			client = -1;
+		}
 		return client;
-	}
-
-//----------------------------------------------------------------------------------------------
-//	シーン毎の受信処理
-//----------------------------------------------------------------------------------------------
-
-	//	マッチング受信処理
-	int	GameParam::MatchingReceive( int client, const LPSTR& data )
-	{
-		//	ネット関連
-		switch ( data[COMMAND] )
-		{
-		case COMMANDS::MATCHING:	//	マッチング
-			client = ReceiveMatching( client, data );
-			break;
-
-		case COMMANDS::SIGN_UP:		//	新規参入
-			client = ReceiveSignUp( client, data );
-			break;
-
-		case COMMANDS::SIGN_OUT:		//	脱退
-			client = ReceiveSignOut( client, data );
-			break;
-
-		default:
-			break;
-		}
-
-		return	client;
-	}
-
-	//	メイン受信処理
-	int	GameParam::MainReceive( int client, const LPSTR& data )
-	{
-		//	ネット関連
-		switch ( data[COMMAND] )
-		{
-		case COMMANDS::SIGN_OUT:	//	脱退
-			client = ReceiveSignOut( client, data );
-			break;
-
-		default:	//	ゲーム情報処理
-			client = ( this->*ReceiveFunction[data[COMMAND]] )( client, data );
-		}
-
-		return	client;
-	}
-
-	//	リザルト受信処理
-	int	GameParam::ResultReceive( int client, const LPSTR& data )
-	{
-		//	ネット関連
-		switch ( data[COMMAND] )
-		{
-		case COMMANDS::SIGN_OUT:	//	脱退
-			client = ReceiveSignOut( client, data );
-			break;
-
-		default:	//	ゲーム情報処理
-			client = ( this->*ReceiveFunction[data[COMMAND]])( client, data );
-		}
-
-		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -220,7 +178,7 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendMatchingInfo( int client, int player )
 	{
 		//	情報設定
-		Matching	matching( player, matchingInfo[player].isComplete );
+		Matching	matching( player, gameManager->GetMatchingInfo( player ).isComplete );
 
 		//	送信
 		send( client, ( char* )&matching, sizeof( matching ) );
@@ -308,50 +266,26 @@ GameParam*	gameParam = nullptr;
 	{
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
-		SetPlayer( client, signUp->name );
+		strcpy( playerInfo[client].name, signUp->name );
 
 		//	IDを返信
 		signUp->id = client;
 		send( client, ( char* )signUp, sizeof( SignUp ) );
 
-		//	初期座標を送信
-		PlayerParam	initParam = gameManager->GetInitInfo( client );
-		SendCharaData	sendCharaData( client, 
-			AttackInfo::NO_ATTACK,
-			initParam.pos, initParam.angle, initParam.motion, 
-			lifeInfo[client].life );
-		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
-
-		//	全員にデータ送信
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			if ( playerInfo[p].active == false ) continue;
-			send( p, ( char* )signUp, sizeof( SignUp ) );
-		}
-
-		//	全データ送信
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			if ( playerInfo[p].active == false ) continue;
-			signUp->id = p;
-			strcpy( signUp->name, playerInfo[p].name );
-			send( client, ( char* )signUp, sizeof( SignUp ) );
-		}
-		printf( "%dP %sさんが参加しました。\n", client + 1, signUp->name );
-
-		return	client;
+		return	-1;
 	}
 
 	//	サインアウト情報受信
 	int	GameParam::ReceiveSignOut( int client, const LPSTR& data )
 	{
 		//	プレイヤー解放
-		ReleasePlayer( client );
-
-		SignOut	signOut( client );
-
+		ZeroMemory( &playerInfo[client], sizeof( PlayerInfo ) );
+		
 		//	ソケットを閉じる
 		CloseClient( client );
+
+		//	情報設定
+		SignOut	signOut( client );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -368,7 +302,7 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveMatching( int client, const LPSTR& data )
 	{
 		Matching*	matching = ( Matching* )data;
-		matchingInfo[client].isComplete = matching->isComplete;
+		gameManager->GetMatchingInfo( client ).isComplete = matching->isComplete;
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
@@ -378,6 +312,61 @@ GameParam*	gameParam = nullptr;
 		}
 
 		return	-1;
+	}
+
+	//	返答情報受診
+	int	GameParam::ReceiveResponse( int client, const LPSTR& data )
+	{
+		Response*	response = ( Response* )data;
+
+		switch ( response->responseCom )
+		{
+		case RESPONSE_COMMAND::SIGN_UP:
+			client = ReceiveSignUpResponse( client );
+			break;
+
+		case RESPONSE_COMMAND::GAME_START:
+			break;
+		}
+
+		return	client;
+	}
+
+	//	サインアップ応答情報受信
+	int	GameParam::ReceiveSignUpResponse( int client )
+	{
+		//	返答が返ってきたのでアクティブにする
+		SetPlayer( client, playerInfo[client].name );
+
+		//	初期情報送信
+		PlayerParam	initParam = gameManager->GetInitInfo( client );
+		SendCharaData	sendCharaData( client,
+			AttackInfo::NO_ATTACK,
+			initParam.pos, initParam.angle, initParam.motion,
+			lifeInfo[client].life );
+		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+
+		//	サインアップ情報を設定
+		SignUp		signUp( client, playerInfo[client].name );
+
+		//	全員にデータ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			send( p, ( char* )&signUp, sizeof( signUp ) );
+		}
+
+		//	全データ送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( playerInfo[p].active == false ) continue;
+			signUp.id = p;
+			strcpy( signUp.name, playerInfo[p].name );
+			send( client, ( char* )&signUp, sizeof( signUp ) );
+		}
+		printf( "%dP %sさんが参加しました。\n", client + 1, signUp.name );
+
+		return	client;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -393,14 +382,6 @@ GameParam*	gameParam = nullptr;
 
 		//	パラメータ初期化
 		playerParam[id] = gameManager->GetInitInfo( id );
-		playerManager->SetPlayer( id );
-	}
-
-	//	プレイヤー解放
-	void	GameParam::ReleasePlayer( int id )
-	{
-		ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
-		//playerManager->ReleasePlayer( id );
 	}
 
 	//	プレイヤーパラメータ設定
@@ -409,11 +390,4 @@ GameParam*	gameParam = nullptr;
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
 		playerParam[id].motion = motion;
-	}
-
-	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, const PlayerParam& param )
-	{
-		playerParam[id].pos    = param.pos;
-		playerParam[id].angle  = param.angle;
 	}

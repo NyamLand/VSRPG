@@ -23,6 +23,7 @@ public:
 	PlayerManager( GameParam* gameParam );
 	~PlayerManager( void );
 	bool	Initialize( void );
+	void	Release( void );
 
 	//	XVE•`‰æ
 	void	Update( int id );

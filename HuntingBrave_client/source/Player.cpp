@@ -34,7 +34,7 @@
 #define	MIN_INPUT_STICK		0.3f
 
 //	ライフ設定
-#define MAX_LIFE	20
+#define MAX_LIFE	5
 
 //	定数関連
 namespace
@@ -58,10 +58,6 @@ namespace
 	}
 
 	//	デストラクタ
-	Player::~Player( void )
-	{
-		
-	}
 
 	//	初期化
 	bool	Player::Initialize( int id )
