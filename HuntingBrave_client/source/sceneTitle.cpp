@@ -56,8 +56,10 @@ namespace
 		mainView = new Camera();
 
 		//	‰æ‘œ‰Šú‰»
-		bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
-		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
+		bg = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
+		//bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
+		lovelive = new iex2DObj( "DATA/UI/BackGround/title.png" );
+		//lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
 		//	‚‚‚‡‚Ä¶
 		sound->PlayBGM( BGM::TITLE );
@@ -130,8 +132,10 @@ namespace
 		mainView->Clear();
 
 		//	bg•`‰æ
-		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
-		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		//lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
+		lovelive->Render(0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		//bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
 
 		//	ƒXƒNƒŠ[ƒ“§Œä
 		screen->Render();
