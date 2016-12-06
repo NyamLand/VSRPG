@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
+#include	"GameParam.h"
 #include	"PlayerManager.h"
 #include	"Collision.h"
 
@@ -70,7 +71,8 @@
 	void	Enemy::FacingPlayer( void )
 	{
 		//	プレイヤーへのベクトルを求める
-		Vector3	targetVec = playerManager->GetPlayer( 0 )->GetPos() - pos;
+		int id = gameParam->GetMyIndex();
+		Vector3	targetVec = playerManager->GetPlayer( id )->GetPos() - pos;
 		targetVec.Normalize();
 
 		AngleAdjust( targetVec, ANGLEADJUST_SPEED );

@@ -21,6 +21,7 @@
 //	定数
 #define	APPEND_INTERVAL		3
 #define	ENEMY_MAX			5
+#define APPEND_RADIUS		15.0f	
 
 namespace
 {
@@ -225,6 +226,9 @@ namespace
 	//	一定時間ごとに敵を生成
 	void	EnemyManager::AddRegularTimeIntervals( void )
 	{
+
+		int id = gameParam->GetMyIndex();
+
 		if ( ( int )gameManager->GetTime() % APPEND_INTERVAL != 0 )
 		{
 			//	生成フラグをtrueにする
@@ -235,11 +239,10 @@ namespace
 		if ( !appendOK )	return;
 
 		//	出現座標の設定
-		Vector3	appendPos = Vector3(
-			random->GetFloat( -20.0f, 20.0f ),
-			0.0f,
-			random->GetFloat( -20.0f, 20.0f ) );
-		
+		float randX = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
+		float randZ = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
+		Vector3	appendPos = gameParam->GetPlayerParam(id).pos + Vector3( randX, 0.0f, randZ );
+			
 		//	リストに追加
 		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
 		
