@@ -19,10 +19,10 @@
 
 //	ミノタウロス
 #define	MOFFU_SCALE	0.1f
-#define	MINOTAURUS_HEIGHT	0.125f
-#define	MINOTAURUS_RADIUS	1.0f
+#define	MOFFU_HEIGHT	0.125f
+#define	MOFFU_RADIUS	1.0f
 
-#define	INIT_LIFE	 1
+#define	INIT_LIFE	 3
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -67,7 +67,7 @@
 		SetMotion( 1 );	//	数値仮
 
 		lifeInfo.Initialize( INIT_LIFE );
-		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
+		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MOFFU_HEIGHT, MOFFU_RADIUS );
 
 		bar = new EnemyHpUI();
 		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);

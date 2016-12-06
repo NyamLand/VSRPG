@@ -2,7 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
-
+#include	"GameParam.h"
 
 #include	"EnemyHp.h"
 
@@ -25,6 +25,7 @@ EnemyHpUI::EnemyHpUI()
 {
 	//	座標、サイズ情報格納
 	width = 100.0f;	height = 25.0f;
+	id = -1;
 
 }
 
@@ -85,6 +86,7 @@ void	EnemyHpUI::Render(float hp,Vector3 pos,Vector3 up)
 
 	case HPUI_TYPE::PLAYER:
 
+		if (gameParam->GetMyIndex() == id)break;
 		hpFrame_obj->Render(out.x, out.y, width, height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
 		hp_obj->Render(out.x, out.y, (int)(width*parsent), height, 0, HP_MAX::HEIGHT * 4, HP_MAX::WIDTH, HP_MAX::HEIGHT);		//	HP残量
 		break;
@@ -103,7 +105,10 @@ void	EnemyHpUI::Render(float hp,Vector3 pos,Vector3 up)
 //---------------------------------------------------------------------------------------
 //	情報設定
 //---------------------------------------------------------------------------------------
-
+void	EnemyHpUI::SetId(int id)
+{
+	this->id = id;
+}
 //---------------------------------------------------------------------------------------
 //	情報取得
 //---------------------------------------------------------------------------------------

@@ -109,6 +109,7 @@ namespace
 			//	€–S‚µ‚Ä‚¢‚½‚çƒŠƒXƒg‚©‚çíœ
 			if ( !isAlive )
 			{
+				gameParam->SendHuntInfo((*it)->GetEnemyType());
 				it = enemylist.erase( it );
 				continue;
 			}
