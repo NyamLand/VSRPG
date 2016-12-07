@@ -72,8 +72,6 @@
 	//	•`‰æ
 	void	BaseChara::Render( iexShader* shader, LPSTR technique )
 	{
-		
-
 		if ( shader == nullptr || technique == nullptr )
 		{
 			obj->Render();
@@ -83,7 +81,7 @@
 			obj->Render( shader, technique );
 		}
 
-		bar->Render((float)GetLifeInfo().life, GetPos(), GetUp());
+		bar->Render( ( float )GetLifeInfo().life, GetPos(), GetUp() );
 		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
 	}
 
