@@ -50,7 +50,7 @@ public:
 
 	//	XVE•`‰æ
 	void	Update( void );
-	void	Render(float hp, Vector3 pos, Vector3 up);
+	void	Render(float hp, const Vector3& pos, const Vector3& up);
 
 	void	SetId(int id);
 };
