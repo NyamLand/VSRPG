@@ -10,16 +10,6 @@
 
 namespace
 {
-	namespace HP_MAX
-	{
-		enum
-		{
-			WIDTH = 768,				//	‰æ‘œ‰¡•
-			HEIGHT =128,				//	‰æ‘œc•
-		};
-
-	}
-
 	namespace HPUI_TYPE
 	{
 		enum

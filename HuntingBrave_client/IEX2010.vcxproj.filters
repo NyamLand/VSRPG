@@ -70,9 +70,6 @@
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>Source\Manager\PlayerManager</Filter>
     </ClCompile>
-    <ClCompile Include="source\EnemyManager.cpp">
-      <Filter>Source\Manager\EnemyManager</Filter>
-    </ClCompile>
     <ClCompile Include="source\Player.cpp">
       <Filter>Source\Player</Filter>
     </ClCompile>
@@ -202,6 +199,9 @@
     <ClCompile Include="source\ItemSelect.cpp">
       <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
     </ClCompile>
+    <ClCompile Include="source\EnemyManager.cpp">
+      <Filter>Source\Manager\EnemyManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -221,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
       <Filter>Source\Manager\PlayerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="source\EnemyManager.h">
-      <Filter>Source\Manager\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
       <Filter>Source\Player</Filter>
@@ -368,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="source\ItemSelect.h">
       <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyManager.h">
+      <Filter>Source\Manager\EnemyManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

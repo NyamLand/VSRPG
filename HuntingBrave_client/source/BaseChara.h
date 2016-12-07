@@ -38,6 +38,7 @@ public:
 	//	çXêVÅEï`âÊ
 	virtual void	Update( void );
 	virtual void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr );
+	void	BarRender( void );
 	void	UpdateInfo( void );
 	void	AddMove( void );
 
