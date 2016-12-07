@@ -82,6 +82,9 @@ bool	sceneMain::Initialize( void )
 	//	í“¬BGM
 	sound->PlayBGM( BGM::MAIN );
 
+	//	‘—M
+	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
+
 	return true;
 }
 

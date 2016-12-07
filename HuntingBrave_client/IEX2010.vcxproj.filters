@@ -199,6 +199,9 @@
     <ClCompile Include="source\NameInput.cpp">
       <Filter>Source\Scene\sceneMatching\NameInput</Filter>
     </ClCompile>
+    <ClCompile Include="source\ItemSelect.cpp">
+      <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -362,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="source\NameInput.h">
       <Filter>Source\Scene\sceneMatching\NameInput</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ItemSelect.h">
+      <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -556,6 +562,12 @@
     </Filter>
     <Filter Include="Source\Scene\sceneTitle">
       <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\ItemSelect">
+      <UniqueIdentifier>{bd7361ad-943d-4618-849c-5ab45f7f064c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Plane">
+      <UniqueIdentifier>{a8a19064-6851-484a-bf4d-b66788542c78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

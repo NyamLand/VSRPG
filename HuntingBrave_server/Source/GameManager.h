@@ -36,6 +36,9 @@ public:
 	bool	PlayerCheck( void );
 	void	ChangeScene( char& out, char nextScene );
 
+	//	î•ñİ’è
+	void	SetGameState( bool state );
+
 	//	î•ñæ“¾
 	Timer*&	GetTimer( void );
 	PlayerParam	GetInitInfo( int id )const;

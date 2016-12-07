@@ -128,6 +128,7 @@
     <ClCompile Include="source\HpUI.cpp" />
     <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
+    <ClCompile Include="source\ItemSelect.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
     <ClCompile Include="source\LevelManager.cpp" />
     <ClCompile Include="source\Magic.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="source\HpUI.h" />
     <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\InputManager.h" />
+    <ClInclude Include="source\ItemSelect.h" />
     <ClInclude Include="source\ItemUI.h" />
     <ClInclude Include="source\LevelManager.h" />
     <ClInclude Include="source\Magic.h" />

@@ -208,7 +208,7 @@ GameParam*	gameParam = nullptr;
 //	データ送信
 //----------------------------------------------------------------------------------------------
 
-	//	情報送信
+	//	プレイヤー情報送信
 	void	GameParam::SendPlayerInfo( void )
 	{
 		//	スティック入力情報取得
@@ -222,9 +222,8 @@ GameParam*	gameParam = nullptr;
 			frame = playerManager->GetPlayer( myIndex )->GetFrame();
 		}
 
-		//	送信情報設定
+		//	送信
 		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
-
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 
@@ -277,6 +276,13 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendSignOut( void )
 	{
 
+	}
+
+	//	応答コマンド送信
+	void	GameParam::SendResponseInfo( char com )
+	{
+		Response		response( com );
+		send( ( LPSTR )&response, sizeof( response ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -382,7 +388,6 @@ GameParam*	gameParam = nullptr;
 
 	//	返答情報受信
 	void	GameParam::ReceiveResponse( const LPSTR& data )
-
 	{
 		Response*	response = ( Response* )data;
 
@@ -450,7 +455,3 @@ GameParam*	gameParam = nullptr;
 		playerParam[id].pos = param.pos;
 		playerParam[id].angle  = param.angle;
 	}
-
-//----------------------------------------------------------------------------------------------
-//	情報設定
-//----------------------------------------------------------------------------------------------

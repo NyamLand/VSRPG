@@ -70,6 +70,9 @@ namespace
 		//	NameInput画面初期化
 		nameInput = new NameInput();
 
+		//	ItemSelect初期化
+		itemSelect = new ItemSelect();
+
 		//	モデル初期化
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
@@ -110,6 +113,7 @@ namespace
 		SafeDelete( mainView );
 		SafeDelete( back );
 		SafeDelete( nameInput );
+		SafeDelete( itemSelect );
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			SafeDelete( obj[ p ] );
@@ -146,7 +150,11 @@ namespace
 
 		case MATCHING_MODE::SIGN_UP:
 			//	クライアント初期化( serverと接続 )
-			if( gameParam->InitializeClient( addr, 7000, name ) )	step = MATCHING_MODE::WAIT;
+			if ( gameParam->InitializeClient( addr, 7000, name ) )
+			{
+				itemSelect->Initialize( gameParam->GetMyIndex() );
+				step = MATCHING_MODE::WAIT;
+			}
 			break;
 
 		case MATCHING_MODE::WAIT:
@@ -155,6 +163,9 @@ namespace
 
 			//	GameManager更新
 			gameManager->Update();
+
+			//	アイテム選択更新
+			itemSelect->Update();
 	
 			//	モデル更新
 			ObjUpdate();
@@ -209,6 +220,14 @@ namespace
 		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
 		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
 
+		//	プレイヤーモデル描画
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			int active = gameParam->GetPlayerActive( i );
+
+			if ( active )	obj[i]->Render();
+		}
+
 		switch ( step )
 		{
 		case MATCHING_MODE::NAME_INPUT:
@@ -219,14 +238,8 @@ namespace
 			break;
 
 		case MATCHING_MODE::WAIT:
+			itemSelect->Render();
 			break;
-		}
-
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			int active = gameParam->GetPlayerActive( i );
-
-			if ( active )	obj[i]->Render();
 		}
 
 		screen->Render();

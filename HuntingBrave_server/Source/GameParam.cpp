@@ -20,6 +20,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	INIT_LIFE		5
+#define	TIME_MAX	( 1.0f * MINUTE )
 GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -264,6 +265,8 @@ GameParam*	gameParam = nullptr;
 	//	サインアップ情報受信
 	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
 	{
+		if ( gameManager->GetGameState() )	return	-1;
+
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
 		strcpy( playerInfo[client].name, signUp->name );
@@ -322,18 +325,23 @@ GameParam*	gameParam = nullptr;
 		switch ( response->responseCom )
 		{
 		case RESPONSE_COMMAND::SIGN_UP:
-			client = ReceiveSignUpResponse( client );
+			client = SignUpResponse( client );
 			break;
 
 		case RESPONSE_COMMAND::GAME_START:
+			client = GameStartResponse( client );
 			break;
 		}
 
 		return	client;
 	}
 
+//----------------------------------------------------------------------------------------------
+//	応答コマンド毎の処理
+//----------------------------------------------------------------------------------------------
+
 	//	サインアップ応答情報受信
-	int	GameParam::ReceiveSignUpResponse( int client )
+	int	GameParam::SignUpResponse( int client )
 	{
 		//	返答が返ってきたのでアクティブにする
 		SetPlayer( client, playerInfo[client].name );
@@ -367,6 +375,22 @@ GameParam*	gameParam = nullptr;
 		printf( "%dP %sさんが参加しました。\n", client + 1, signUp.name );
 
 		return	client;
+	}
+
+	//	ゲーム開始応答情報受信
+	int	GameParam::GameStartResponse( int client )
+	{
+		gameManager->GetMatchingInfo( client ).isComplete = true;
+
+		//	全員準備完了でスタート
+		if ( gameManager->PlayerCheck() )
+		{
+			gameManager->MatchingInfoInitialize();
+			gameManager->SetGameState( true );
+			gameManager->GetTimer()->Start( TIME_MAX );
+		}
+
+		return	-1;
 	}
 
 //----------------------------------------------------------------------------------------------

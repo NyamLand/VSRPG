@@ -7,6 +7,7 @@
 
 #include	"GameData.h"
 #include	"NameInput.h"
+#include	"ItemSelect.h"
 #include	<memory>
 using namespace std;
 
@@ -20,6 +21,7 @@ private:
 	char	addr[64];
 	iex2DObj*	back;
 	NameInput*	nameInput;
+	ItemSelect*	itemSelect;
 
 public:
 	~sceneMatching( void );
