@@ -56,16 +56,15 @@ namespace
 		iexLight::SetAmbient( 0x404040 );
 		iexLight::SetFog( 800, 1000, 0 );
 
+		//	ライト設定
 		Vector3 dir( 1.0f, -1.0f, -0.5f );
 		dir.Normalize();
 		iexLight::DirLight( shader, 0, &dir, 0.8f, 0.8f, 0.8f );
 
 		//	カメラ設定
 		mainView = new Camera();
-		mainView->Initialize(
-			Camera::VIEW_MODE::TRACKING_VIEW,
-			Vector3( 0.0f, 5.0f, -20.0f ),
-			Vector3( 0.0f, 3.0f, 0.0f ) );
+		mainView->Initialize( Camera::VIEW_MODE::TRACKING_VIEW,
+			Vector3( 0.0f, 5.0f, -20.0f ), Vector3( 0.0f, 3.0f, 0.0f ) );
 
 		//	NameInput画面初期化
 		nameInput = new NameInput();
@@ -75,18 +74,6 @@ namespace
 
 		//	GameWait初期化
 		gameWait = new GameWait();
-
-		//	モデル初期化
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			obj[i] = nullptr;
-			obj[i] = new iex3DObj( "DATA/CHR/suppin/suppin.IEM" );		
-			char	fileName[256] = "DATA/CHR/suppin/s_body_";
-			char playerNum[8] = "";
-			sprintf_s( playerNum, "%d.png", i );
-			strcat_s( fileName, playerNum );
-			obj[i]->SetTexture( 0, fileName );
-		}
 
 		//	GameParam初期化
 		gameParam = new GameParam();
@@ -103,9 +90,11 @@ namespace
 		if ( random->PercentageRandom( 0.2f ) )	sound->PlayBGM( BGM::IIWAKE );
 		else	sound->PlayBGM( BGM::MENU );
 
+		//	変数初期化
 		step = MATCHING_MODE::NAME_INPUT;
 		nextScene = SCENE::MAIN;
 
+		//	画面演出初期化
 		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
 		return true;
 	}
@@ -118,12 +107,7 @@ namespace
 		SafeDelete( nameInput );
 		SafeDelete( itemSelect );
 		SafeDelete( gameWait );
-		for ( int p = 0; p < PLAYER_MAX; p++ )
-		{
-			SafeDelete( obj[ p ] );
-		}
 		sound->StopBGM();
-
 		playerManager->Release();
 	}
 
@@ -157,8 +141,9 @@ namespace
 			//	クライアント初期化( serverと接続 )
 			if ( gameParam->InitializeClient( addr, 7000, name ) )
 			{
-				itemSelect->Initialize( gameParam->GetMyIndex() );
-				gameWait->Initialize( gameParam->GetMyIndex(), nameInput->GetName() );
+				int id = gameParam->GetMyIndex();
+				itemSelect->Initialize( id );
+				gameWait->Initialize( id, nameInput->GetName() );
 				step = MATCHING_MODE::WAIT;
 			}
 			break;
@@ -170,13 +155,11 @@ namespace
 			//	GameManager更新
 			gameManager->Update();
 
+			//	待機画面更新
 			gameWait->Update();
 
 			//	アイテム選択更新
 			itemSelect->Update();
-	
-			//	モデル更新
-			ObjUpdate();
 
 			if ( KEY_Get( KEY_ENTER ) == 3 )
 			{
@@ -187,27 +170,6 @@ namespace
 
 		//	シーン切り替え
 		if ( screen->Update() )		gameManager->ChangeScene( nextScene );
-	}
-
-	//	オブジェクト更新
-	void	sceneMatching::ObjUpdate( void )
-	{
-		//接続してるかどうかだけの確認のため、座標決定や描画はクライアントでもいい・・・よくない？
-		Vector3 temppos;
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			temppos = Vector3( -10.0f + i * 5.0f, 0, 0 );
-			int active = gameParam->GetPlayerActive( i );
-
-			if ( active )
-			{
-				obj[i]->SetPos( temppos );
-				obj[i]->SetAngle( 180 * PI / 180 );
-				obj[i]->SetScale( 0.2f );
-				obj[i]->Animation();
-				obj[i]->Update();
-			}
-		}
 	}
 
 //*****************************************************************************************************************************
@@ -227,14 +189,6 @@ namespace
 		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
 		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
 		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
-
-		//	プレイヤーモデル描画
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			int active = gameParam->GetPlayerActive( i );
-
-			if ( active )	obj[i]->Render();
-		}
 
 		switch ( step )
 		{

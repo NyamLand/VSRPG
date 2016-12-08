@@ -16,7 +16,7 @@
 //	ƒOƒ[ƒoƒ‹
 //----------------------------------------------------------------------------------
 
-#define	SRC_X_MAX		9
+#define	SRC_X_MAX		10
 #define	SRC_Y_MAX		5
 #define	SRC_SIZE			64
 
@@ -63,10 +63,18 @@
 			}
 			else
 			{
-				nameImage[i]->sy = SRC_SIZE * ( name[i] / SRC_X_MAX );
-
-				if ( nameImage[i]->sy == 0 )	nameImage[i]->sx = name[i];
-				else nameImage[i]->sx = SRC_SIZE * ( name[i] % ( nameImage[i]->sy * SRC_X_MAX ) );
+				int sx, sy;
+				if ( name[i] != 0 )
+				{
+					sy = name[i] / SRC_X_MAX;
+					sx = name[i] % SRC_X_MAX;
+				}
+				else
+				{
+					sx = 0; sy = 0;
+				}
+				nameImage[i]->sy = sy * SRC_SIZE;
+				nameImage[i]->sx = sx * SRC_SIZE;
 			}
 		}
 		return	true;

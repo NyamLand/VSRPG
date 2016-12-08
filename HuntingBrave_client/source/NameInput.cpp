@@ -31,7 +31,7 @@ namespace
 	#define	CURSOR_SPACE_Y	70
 	#define	CURSOR_SCALE	70
 	#define	CURSOR_SPEED	0.1f
-	#define	CURSOR_MAX_X	9
+	#define	CURSOR_MAX_X	10
 	#define	CURSOR_MAX_Y	5
 	#define	INPUT_MIN		0.3f
 
@@ -144,7 +144,7 @@ namespace
 			saveX = cursorX;
 			if ( axisX > 0.0f )
 			{
-				if ( cursorX != CURSOR_MAX_X )	cursorX++;
+				if ( cursorX != CURSOR_MAX_X - 1 )	cursorX++;
 			}
 			else
 			{
@@ -192,9 +192,12 @@ namespace
 	{
 		if ( KEY( KEY_B ) == 3 )
 		{
-			name[nameCursor] = cursorX + cursorY * CURSOR_MAX_X;
-			nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
-			nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
+			if ( !inputState )
+			{
+				name[nameCursor] = cursorX + cursorY * CURSOR_MAX_X;
+				nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
+				nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
+			}
 
 			if ( nameCursor != NAME_MAX - 1 )
 			{
@@ -203,9 +206,13 @@ namespace
 			}
 			else
 			{
-				if ( inputState )		doneState = true;
+				if ( inputState )
+				{
+					if ( cursorX == CURSOR_MAX_X - 1 && cursorY == CURSOR_MAX_Y )
+						doneState = true;
+				}
 
-				cursorX = CURSOR_MAX_X;
+				cursorX = CURSOR_MAX_X - 1;
 				cursorY = CURSOR_MAX_Y;
 				inputState = true;
 			}

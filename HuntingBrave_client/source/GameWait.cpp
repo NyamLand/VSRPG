@@ -60,7 +60,7 @@
 		//	nameUIİ’è
 		nameUI = new NameUI();
 		nameUI->Initialize( 
-			iexSystem::ScreenWidth / 4, ( int )( iexSystem::ScreenHeight * 0.8f ), 
+			iexSystem::ScreenWidth / 4, ( int )( iexSystem::ScreenHeight * 0.89f ), 
 			50, 50, name );
 
 		//	‡”Ôİ’è
