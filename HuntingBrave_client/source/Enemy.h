@@ -10,19 +10,20 @@
 //	include
 #include	"BaseChara.h"
 #include	"EnemyHp.h"
+#include	"CharaInfo.h"
 
 //	class
 class Enemy : public BaseChara
 {
 protected:
 	//	パラメータ
-	Vector3	targetPos;
+	Vector3		targetPos;
 	float		interpolationParam;
 	float		searchDist;
 	float		attackDist;
 	char		enemyType;
+	AttackInfo	attackInfo;
 
-	//float		elife;			//敵の体力
 	int	count;		//仮多段ヒット用
 
 public:
@@ -57,7 +58,6 @@ public:
 	bool	DistCheck( float& length );
 	void	LifeCheck( void );
 	void	StageCheck( void );
-	//virtual bool	DamageFlgCheck( void )=0;
 
 	//モード関数
 
@@ -70,4 +70,5 @@ public:
 	
 	//	情報取得
 	char	GetEnemyType( void )const;
+	AttackInfo&	GetAttackInfo( void ){ return attackInfo; }
 };

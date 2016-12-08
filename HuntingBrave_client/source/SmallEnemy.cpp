@@ -18,7 +18,7 @@
 //------------------------------------------------------------------------------------
 
 //	ミノタウロス
-#define	MOFFU_SCALE	0.1f
+#define	MOFFU_SCALE		0.1f
 #define	MOFFU_HEIGHT	0.125f
 #define	MOFFU_RADIUS	1.0f
 
@@ -67,6 +67,7 @@
 		SetMotion( 1 );	//	数値仮
 
 		lifeInfo.Initialize( INIT_LIFE );
+		ZeroMemory(&attackInfo, sizeof(AttackInfo));
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MOFFU_HEIGHT, MOFFU_RADIUS );
 
 		bar = new EnemyHpUI();
@@ -133,12 +134,13 @@
 		if ( frame >= 138 && frame <= 150 )
 		{
 			//	攻撃状態を有効にする
-			//attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+			attackInfo.Set(SHAPE_TYPE::SPHERE, MOFFU_RADIUS, pos + (GetFront() * MOFFU_RADIUS), Vector3(0, 0, 0));
+			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}
 		else
 		{
 			//	攻撃状態を無効にする
-			//attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
+			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
 			if ( frame >= 170 )

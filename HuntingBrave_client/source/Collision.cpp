@@ -8,6 +8,7 @@
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"DrawShape.h"
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -57,6 +58,11 @@
 
 		//	魔法攻撃当たり判定
 		MagicCollision();
+
+
+		EnemyAttackCollision();
+		
+
 	}
 
 	//	プレイヤー攻撃当たり判定
@@ -98,35 +104,46 @@
 	//	敵攻撃当たり判定
 	void	Collision::EnemyAttackCollision( void )
 	{
-		////	変数準備
-		//list<Enemy*>	 enemyList = enemyManager->GetList();
-		//bool	isHit = false;
+		//	変数準備
+		list<Enemy*>	 enemyList = enemyManager->GetList();
+		bool	isHit = false;
 
-		////	全敵回す
-		//for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
-		//{
-		//	//	攻撃情報取得、攻撃中でなければスキップ
-		//	AttackInfo	attackInfo = ( *it )->GetAttackInfo();
-		//	if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
+		//	全敵回す
+		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		{
+			//	攻撃情報取得、攻撃中でなければスキップ
+			AttackInfo	attackInfo = ( *it )->GetAttackInfo();
+			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
 
-		//	//	全プレイヤー当たり判定
-		//	for ( int p = 0; p < PLAYER_MAX; p++ )
-		//	{
-		//		//	条件が合わないものはスキップ
-		//		if ( gameParam->GetPlayerActive( p ) == false )		continue;
+			CollisionShape attackcollsion;
+			attackcollsion.shapeType = attackInfo.shape;
+			attackcollsion.sphere = Sphere(attackInfo.vec1,attackInfo.radius);
+			
+			CollisionShape playerattack= playerManager->GetPlayer(0)->GetCollisionInfo().collisionShape;;
+			
+			//	全プレイヤー当たり判定
+			for ( int p = 0; p < PLAYER_MAX; p++ )
+			{
+				
+				drawShape->DrawSphere(attackInfo.vec1, attackInfo.radius, 0xFFFFFFFF);
+				//	条件が合わないものはスキップ
+				if ( gameParam->GetPlayerActive( p ) == false )		continue;
 
-		//		//	当たり判定チェック
-		//		isHit = CheckCollision(
-		//			attackInfo.collisionShape,
-		//			playerManager->GetPlayer( p )->GetCollisionInfo().collisionShape );
+				//	当たり判定チェック
+				isHit = CheckCollision(
+					attackcollsion,
+					playerattack );
 
-		//		//	当たっていればライフ計算
-		//		if ( isHit == true )
-		//		{
-
-		//		}
-		//	}
-		//}
+				//	当たっていればライフ計算
+				if ( isHit == true )
+				{
+					if (playerManager->GetPlayer(p)->GetLifeInfo().active)
+					{
+						printf("当たりました\n");
+					}
+				}
+			}
+		}
 	}
 
 	//	魔法当たり判定
