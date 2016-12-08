@@ -64,6 +64,7 @@ namespace
 
 		for ( int i = 0; i < NAME_MAX; i++ )
 		{
+			name[i] = 0;
 			nameImage[i] = new Image();
 			nameImage[i]->Initialize( "DATA/UI/main_UI/ward.png",
 				NAME_INIT_POS_X + NAME_SPACE * i, NAME_INIT_POS_Y,
@@ -73,7 +74,6 @@ namespace
 			
 			if( i != 0 ) nameImage[i]->renderflag = false;
 		}
-		strcpy( name, "" );
 	}
 	
 	//	デストラクタ
@@ -247,4 +247,10 @@ namespace
 	bool	NameInput::GetCancelState( void )
 	{
 		return	cancelState;
+	}
+
+	//	文字列取得
+	int*	NameInput::GetName( void )
+	{
+		return name;
 	}

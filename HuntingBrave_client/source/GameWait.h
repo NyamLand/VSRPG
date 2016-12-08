@@ -33,7 +33,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	GameWait( void );
 	~GameWait( void );
-	void	Initialize( int index, const LPSTR& name );
+	void	Initialize( int index, int* name );
 	void	ObjInitialize( int index );
 	void	ViewInitialize( int index );
 	void	TextureInitialize( int index );

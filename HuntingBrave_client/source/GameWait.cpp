@@ -36,6 +36,7 @@
 	GameWait::~GameWait( void )
 	{
 		SafeDelete( back );
+		SafeDelete( nameUI );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
@@ -46,7 +47,7 @@
 	}
 
 	//	‰Šú‰»
-	void	GameWait::Initialize( int index, const LPSTR& name )
+	void	GameWait::Initialize( int index, int* name )
 	{
 		this->index = index;
 
@@ -57,10 +58,10 @@
 		iexSystem::GetDevice()->GetRenderTarget( 0, &backBuffer );
 
 		//	nameUIÝ’è
-		//nameUI = new NameUI();
-		//nameUI->Initialize( 
-		//	iexSystem::ScreenWidth / 4, ( int )( iexSystem::ScreenHeight * 0.8f ), 
-		//	50, 50, name );
+		nameUI = new NameUI();
+		nameUI->Initialize( 
+			iexSystem::ScreenWidth / 4, ( int )( iexSystem::ScreenHeight * 0.8f ), 
+			50, 50, name );
 
 		//	‡”ÔÝ’è
 		order[0] = index;
@@ -137,7 +138,7 @@
 	//	XV
 	void	GameWait::Update( void )
 	{
-		//nameUI->Update();
+		nameUI->Update();
 		UpdateInfo();
 	}
 
@@ -151,7 +152,7 @@
 			OtherPlayerRender( i );
 		}
 
-		//nameUI->Render();
+		nameUI->Render();
 	}
 
 	//	Ž©ƒLƒƒƒ‰•`‰æ

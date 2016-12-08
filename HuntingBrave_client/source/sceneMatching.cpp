@@ -145,6 +145,7 @@ namespace
 			
 			//	–¼‘O“ü—Í
 			if( nameInput->Update() )	step = MATCHING_MODE::SIGN_UP;
+
 			if ( nameInput->GetCancelState() )
 			{
 				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
@@ -157,7 +158,7 @@ namespace
 			if ( gameParam->InitializeClient( addr, 7000, name ) )
 			{
 				itemSelect->Initialize( gameParam->GetMyIndex() );
-				gameWait->Initialize( gameParam->GetMyIndex(), nullptr );
+				gameWait->Initialize( gameParam->GetMyIndex(), nameInput->GetName() );
 				step = MATCHING_MODE::WAIT;
 			}
 			break;

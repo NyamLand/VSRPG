@@ -18,7 +18,7 @@
 
 #define	SRC_X_MAX		9
 #define	SRC_Y_MAX		5
-#define	SRC_SIZE		128
+#define	SRC_SIZE			64
 
 //----------------------------------------------------------------------------------
 //	‰Šú‰»E‰ð•ú
@@ -43,7 +43,7 @@
 	}
 
 	//	‰Šú‰»
-	bool	NameUI::Initialize( int x, int y, int w, int h, const LPSTR& name )
+	bool	NameUI::Initialize( int x, int y, int w, int h, int* name )
 	{
 		scale = w;
 		space = w + 10;
@@ -58,13 +58,15 @@
 			//	“Ç‚Ýž‚ÝˆÊ’uÝ’è
 			if ( name[i] == 0 )
 			{
-				nameImage[i]->sy = SRC_SIZE * ( name[i] / SRC_X_MAX);
-				nameImage[i]->sx = SRC_SIZE * ( name[i] % ( nameImage[i]->sy * SRC_X_MAX ) );
+				nameImage[i]->sy = 0;
+				nameImage[i]->sx = 0;
 			}
 			else
 			{
 				nameImage[i]->sy = SRC_SIZE * ( name[i] / SRC_X_MAX );
-				nameImage[i]->sx = SRC_SIZE * ( name[i] % ( nameImage[i]->sy * SRC_X_MAX ) );
+
+				if ( nameImage[i]->sy == 0 )	nameImage[i]->sx = name[i];
+				else nameImage[i]->sx = SRC_SIZE * ( name[i] % ( nameImage[i]->sy * SRC_X_MAX ) );
 			}
 		}
 		return	true;

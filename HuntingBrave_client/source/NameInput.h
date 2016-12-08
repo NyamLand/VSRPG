@@ -24,7 +24,7 @@ private:
 	int cursorX, cursorY;
 	int nameCursor;
 	int saveX, saveY;
-	char	name[NAME_MAX];
+	int	name[NAME_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -43,5 +43,6 @@ public:
 
 	//	î•ñæ“¾
 	bool	GetCancelState( void );
+	int*	GetName( void );
 };
  
