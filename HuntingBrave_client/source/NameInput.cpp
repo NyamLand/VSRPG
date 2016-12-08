@@ -17,6 +17,8 @@
 //	ƒOƒ[ƒoƒ‹
 //------------------------------------------------------------------------------------
 
+#define SIZE_OF_ARRAY( ary )  ( sizeof( ary )/sizeof( ( ary )[0]) )
+
 //	‰æ‘œî•ñ
 namespace
 {
@@ -190,7 +192,7 @@ namespace
 	{
 		if ( KEY( KEY_B ) == 3 )
 		{
-			name[nameCursor] = cursorX * cursorY;
+			name[nameCursor] = cursorX + cursorY * CURSOR_MAX_X;
 			nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
 			nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
 

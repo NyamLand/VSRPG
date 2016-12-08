@@ -73,6 +73,9 @@ namespace
 		//	ItemSelect初期化
 		itemSelect = new ItemSelect();
 
+		//	GameWait初期化
+		gameWait = new GameWait();
+
 		//	モデル初期化
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
@@ -114,6 +117,7 @@ namespace
 		SafeDelete( back );
 		SafeDelete( nameInput );
 		SafeDelete( itemSelect );
+		SafeDelete( gameWait );
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			SafeDelete( obj[ p ] );
@@ -153,6 +157,7 @@ namespace
 			if ( gameParam->InitializeClient( addr, 7000, name ) )
 			{
 				itemSelect->Initialize( gameParam->GetMyIndex() );
+				gameWait->Initialize( gameParam->GetMyIndex(), nullptr );
 				step = MATCHING_MODE::WAIT;
 			}
 			break;
@@ -163,6 +168,8 @@ namespace
 
 			//	GameManager更新
 			gameManager->Update();
+
+			gameWait->Update();
 
 			//	アイテム選択更新
 			itemSelect->Update();
@@ -238,6 +245,7 @@ namespace
 			break;
 
 		case MATCHING_MODE::WAIT:
+			gameWait->Render();
 			itemSelect->Render();
 			break;
 		}

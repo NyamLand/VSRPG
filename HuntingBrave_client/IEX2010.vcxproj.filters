@@ -202,6 +202,12 @@
     <ClCompile Include="source\EnemyManager.cpp">
       <Filter>Source\Manager\EnemyManager</Filter>
     </ClCompile>
+    <ClCompile Include="source\GameWait.cpp">
+      <Filter>Source\Scene\sceneMatching\GameWait</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameUI.cpp">
+      <Filter>Source\UI\NameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -368,6 +374,12 @@
     </ClInclude>
     <ClInclude Include="source\EnemyManager.h">
       <Filter>Source\Manager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameWait.h">
+      <Filter>Source\Scene\sceneMatching\GameWait</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NameUI.h">
+      <Filter>Source\UI\NameUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +580,12 @@
     </Filter>
     <Filter Include="Source\Plane">
       <UniqueIdentifier>{a8a19064-6851-484a-bf4d-b66788542c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\GameWait">
+      <UniqueIdentifier>{f2bc45c5-9d51-4abd-aed6-8772a24e0461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\NameUI">
+      <UniqueIdentifier>{30d48374-4fad-4fc4-9443-f91efc913992}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

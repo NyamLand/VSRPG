@@ -44,3 +44,4 @@ public:
 	//	î•ñæ“¾
 	bool	GetCancelState( void );
 };
+ 

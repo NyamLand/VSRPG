@@ -31,9 +31,9 @@ namespace
 	}
 	
 	//	画像サイズ
-	#define	IMAGE_SIZE		50
-	#define	IMAGE_SPACE		60
-	#define	IMAGE_BIG_SIZE		60
+	#define	IMAGE_SIZE		90
+	#define	IMAGE_SPACE		100
+	#define	IMAGE_BIG_SIZE		110
 
 	//	読み込みサイズ
 	#define	SRC_SIZE		128
@@ -67,8 +67,8 @@ namespace
 	//	初期化
 	bool	ItemSelect::Initialize( int id )
 	{
-		posX = ( int )( iexSystem::ScreenWidth / 8 + ( iexSystem::ScreenWidth / 4 ) * id );
-		posY = ( int )( iexSystem::ScreenHeight * 0.6f );
+		posX = ( int )( iexSystem::ScreenWidth / 4 );
+		posY = ( int )( iexSystem::ScreenHeight * 0.7f );
 		for ( int i = 0; i < 4; i++ )
 		{
 			itemImage[i]->Initialize( filename[i],
