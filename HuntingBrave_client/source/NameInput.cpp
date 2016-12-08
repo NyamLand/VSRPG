@@ -211,7 +211,6 @@ namespace
 					if ( cursorX == CURSOR_MAX_X - 1 && cursorY == CURSOR_MAX_Y )
 						doneState = true;
 				}
-
 				cursorX = CURSOR_MAX_X - 1;
 				cursorY = CURSOR_MAX_Y;
 				inputState = true;

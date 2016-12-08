@@ -16,19 +16,20 @@
 //	グローバル
 //----------------------------------------------------------------------------------
 
+#define	VS_SIZE	100
+
 //----------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameWait::GameWait( void ) : back( nullptr ), nameUI( nullptr ),
+	GameWait::GameWait( void ) : back( nullptr ), nameUI( nullptr ), view( nullptr ),
 		index( -1 )
 	{
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			obj[i] = nullptr;
 			targetTex[i] = nullptr;
-			view[i] = nullptr;
 		}
 	}
 
@@ -37,11 +38,11 @@
 	{
 		SafeDelete( back );
 		SafeDelete( nameUI );
+		SafeDelete( view );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			SafeDelete( targetTex[i] );
-			SafeDelete( view[i] );
 			SafeDelete( obj[i] );
 		}
 	}
@@ -119,9 +120,9 @@
 	void	GameWait::ViewInitialize( int index )
 	{
 			//	カメラ初期化
-			view[index] = nullptr;
-			view[index] = new iexView();
-			view[index]->Set( Vector3( 0.0f, 2.0f, 5.0f ), Vector3( 0.0f, 1.5f, 0.0f ) );
+			view = nullptr;
+			view = new iexView();
+			view->Set( Vector3( 0.0f, 2.0f, 5.0f ), Vector3( 0.0f, 1.5f, 0.0f ) );
 	}
 
 	//	テクスチャ初期化
@@ -132,27 +133,49 @@
 	}
 
 //----------------------------------------------------------------------------------
-//	更新・描画
+//	更新
 //----------------------------------------------------------------------------------
 
 	//	更新
 	void	GameWait::Update( void )
 	{
+		//	名前位置更新
 		nameUI->Update();
+
+		//	モデル情報更新
 		UpdateInfo();
 	}
+
+	//	情報更新
+	void	GameWait::UpdateInfo( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			obj[i]->Update();
+			obj[i]->Animation();
+		}
+	}
+
+//----------------------------------------------------------------------------------
+//	更新
+//----------------------------------------------------------------------------------
 
 	//	描画
 	void	GameWait::Render( void )
 	{
-		//	画面クリア
+		//	自キャラ描画
 		MyCharacterRender();
+
+		//	他プレイヤー描画
 		for ( int i = 1; i < PLAYER_MAX; i++ )
 		{
 			OtherPlayerRender( i );
 		}
 
+		//	名前描画
 		nameUI->Render();
+
+		VSRender();
 	}
 
 	//	自キャラ描画
@@ -162,12 +185,12 @@
 		targetTex[index]->RenderTarget( 0 );
 
 		//	画面クリア
-		view[index]->Activate();
-		view[index]->Clear();
+		view->Activate();
+		view->Clear();
 
 		//	背景描画
 		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
-		back->Render( iexSystem::ScreenWidth / 5, 0, iexSystem::ScreenWidth / 5 * 3, iexSystem::ScreenHeight, 0, 0, 650, 720 );
+		back->Render( 320, 0, 640, iexSystem::ScreenHeight, 0, 0, 650, 720 );
 		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 
 		//	キャラクター描画
@@ -179,8 +202,8 @@
 		//	テクスチャ描画
 		targetTex[index]->Render( 
 			0, 0, iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight,
-			iexSystem::ScreenWidth / 5, 0,
-			iexSystem::ScreenWidth / 5 * 3, iexSystem::ScreenHeight );
+			iexSystem::ScreenWidth / 4, 0,
+			iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight );
 	}
 
 	//	他キャラ描画
@@ -190,19 +213,19 @@
 		targetTex[order[index]]->RenderTarget( 0 );
 
 		//	画面クリア
-		view[order[index]]->Activate();
-		view[order[index]]->Clear();
+		view->Activate();
+		view->Clear();
 
 		//	背景描画
 		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
-		back->Render( 0, iexSystem::ScreenHeight / 4, 
-			iexSystem::ScreenWidth / 5 * 4, iexSystem::ScreenHeight / 3, 650, 0, 650, 240 );
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE );
+		back->Render( iexSystem::ScreenWidth / 4, iexSystem::ScreenHeight / 4, 
+			iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight / 3, 650, 0, 630, 240 );
+			iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
 
 		//	キャラクター描画
 		bool active = gameParam->GetPlayerActive( order[index] );
 		if( active )obj[order[index]]->Render();
-
+		//obj[order[index]]->Render();
 		//	フレームバッファへ切り替え
 		iexSystem::GetDevice()->SetRenderTarget( 0, backBuffer );
 		
@@ -210,18 +233,18 @@
 		targetTex[order[index]]->Render( 
 			iexSystem::ScreenWidth / 2, ( iexSystem::ScreenHeight / 3 ) * ( index - 1 ), 
 			iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight / 3,
-			0, iexSystem::ScreenHeight / 4,
-			iexSystem::ScreenWidth / 5 * 4, iexSystem::ScreenHeight / 3 );
+			iexSystem::ScreenWidth / 4, iexSystem::ScreenHeight / 4,
+			iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight / 3 );
 	}
 
-	//	情報更新
-	void	GameWait::UpdateInfo( void )
+	//	VS描画
+	void	GameWait::VSRender( void )
 	{
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			obj[i]->Update();
-			obj[i]->Animation();
-		}
+		back->Render( 
+			iexSystem::ScreenWidth / 2 - ( VS_SIZE / 2 ), 
+			iexSystem::ScreenHeight / 2 - ( VS_SIZE / 2 ),
+			VS_SIZE, VS_SIZE,
+			650, 480, 325, 240 );
 	}
 
 //----------------------------------------------------------------------------------

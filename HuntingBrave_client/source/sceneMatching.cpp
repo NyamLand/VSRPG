@@ -83,9 +83,6 @@ namespace
 		ifs >> addr;
 		ifs >> name;
 
-		//	画像読み込み
-		back = new iex2DObj( "DATA/UI/BackGround/matching_gamen.png" );
-
 		//	BGM再生( ランダムで言い訳のテーマ )
 		if ( random->PercentageRandom( 0.2f ) )	sound->PlayBGM( BGM::IIWAKE );
 		else	sound->PlayBGM( BGM::MENU );
@@ -103,7 +100,6 @@ namespace
 	sceneMatching::~sceneMatching( void )
 	{
 		SafeDelete( mainView );
-		SafeDelete( back );
 		SafeDelete( nameInput );
 		SafeDelete( itemSelect );
 		SafeDelete( gameWait );
@@ -185,11 +181,6 @@ namespace
 		mainView->Activate();
 		mainView->Clear();
 
-		//	back
-		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
-		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
-		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
-
 		switch ( step )
 		{
 		case MATCHING_MODE::NAME_INPUT:
@@ -205,6 +196,7 @@ namespace
 			break;
 		}
 
+		//	画面制御
 		screen->Render();
 
 		//	debug描画
