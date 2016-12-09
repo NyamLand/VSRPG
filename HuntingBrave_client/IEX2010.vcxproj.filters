@@ -557,6 +557,9 @@
     <Filter Include="Source\Scene\sceneTitle">
       <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\UI\UpGradeUI">
+      <UniqueIdentifier>{cd7628f8-a31e-41a3-b957-1625d2b87fb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">

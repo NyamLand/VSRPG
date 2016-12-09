@@ -138,7 +138,7 @@ void	UIManager::Render(void)
 	mapUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
-	yaju->Render(IMAGE_MODE::SCALING);
+	//yaju->Render(IMAGE_MODE::SCALING);
 }
 
 //---------------------------------------------------------------------------------------
