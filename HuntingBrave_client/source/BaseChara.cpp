@@ -23,7 +23,7 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	BaseChara::BaseChara( void ) : obj( nullptr ),
+	BaseChara::BaseChara(void) : obj(nullptr), bar(nullptr),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
 		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ),
 		mode( 0 )
@@ -72,8 +72,6 @@
 	//	描画
 	void	BaseChara::Render( iexShader* shader, LPSTR technique )
 	{
-		
-
 		if ( shader == nullptr || technique == nullptr )
 		{
 			obj->Render();
@@ -83,8 +81,13 @@
 			obj->Render( shader, technique );
 		}
 
-		bar->Render((float)GetLifeInfo().life, GetPos(), GetUp());
-		//drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
+		drawShape->DrawCapsule( collisionInfo.collisionShape.capsule.p1, collisionInfo.collisionShape.capsule.p2, collisionInfo.radius, 0xFFFFFFFF );
+	}
+
+	//	HPバー描画
+	void	BaseChara::BarRender( void )
+	{
+		bar->Render( ( float )GetLifeInfo().life, GetPos(), GetUp() );
 	}
 
 	//	情報更新

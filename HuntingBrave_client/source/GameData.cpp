@@ -81,7 +81,6 @@
 	//	î•ñÝ’è
 	void	SignUp::Set( int id, const LPSTR& name )
 	{
-		this->com = com;
 		this->id = id;
 		strcpy( this->name, name );
 	}

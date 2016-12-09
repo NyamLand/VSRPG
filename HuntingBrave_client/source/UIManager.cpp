@@ -1,8 +1,9 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
-#include	"UIManager.h"
 #include	"Random.h"
+#include	"EnemyManager.h"
+#include	"UIManager.h"
 //***************************************************************
 //
 //	UIManagerƒNƒ‰ƒX
@@ -131,6 +132,7 @@ void	UIManager::Update(void)
 //	•`‰æ
 void	UIManager::Render(void)
 {
+	enemyManager->RenderHp();
 	timerUI->Render();
 	hpUI->Render();
 	expUI->Render();

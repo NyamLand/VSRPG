@@ -17,6 +17,8 @@
 //	グローバル
 //------------------------------------------------------------------------------------
 
+#define SIZE_OF_ARRAY( ary )  ( sizeof( ary )/sizeof( ( ary )[0]) )
+
 //	画像情報
 namespace
 {
@@ -29,7 +31,7 @@ namespace
 	#define	CURSOR_SPACE_Y	70
 	#define	CURSOR_SCALE	70
 	#define	CURSOR_SPEED	0.1f
-	#define	CURSOR_MAX_X	9
+	#define	CURSOR_MAX_X	10
 	#define	CURSOR_MAX_Y	5
 	#define	INPUT_MIN		0.3f
 
@@ -62,6 +64,7 @@ namespace
 
 		for ( int i = 0; i < NAME_MAX; i++ )
 		{
+			name[i] = 0;
 			nameImage[i] = new Image();
 			nameImage[i]->Initialize( "DATA/UI/main_UI/ward.png",
 				NAME_INIT_POS_X + NAME_SPACE * i, NAME_INIT_POS_Y,
@@ -71,7 +74,6 @@ namespace
 			
 			if( i != 0 ) nameImage[i]->renderflag = false;
 		}
-		strcpy( name, "" );
 	}
 	
 	//	デストラクタ
@@ -142,7 +144,7 @@ namespace
 			saveX = cursorX;
 			if ( axisX > 0.0f )
 			{
-				if ( cursorX != CURSOR_MAX_X )	cursorX++;
+				if ( cursorX != CURSOR_MAX_X - 1 )	cursorX++;
 			}
 			else
 			{
@@ -190,9 +192,12 @@ namespace
 	{
 		if ( KEY( KEY_B ) == 3 )
 		{
-			name[nameCursor] = cursorX * cursorY;
-			nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
-			nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
+			if ( !inputState )
+			{
+				name[nameCursor] = cursorX + cursorY * CURSOR_MAX_X;
+				nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
+				nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
+			}
 
 			if ( nameCursor != NAME_MAX - 1 )
 			{
@@ -201,9 +206,12 @@ namespace
 			}
 			else
 			{
-				if ( inputState )		doneState = true;
-
-				cursorX = CURSOR_MAX_X;
+				if ( inputState )
+				{
+					if ( cursorX == CURSOR_MAX_X - 1 && cursorY == CURSOR_MAX_Y )
+						doneState = true;
+				}
+				cursorX = CURSOR_MAX_X - 1;
 				cursorY = CURSOR_MAX_Y;
 				inputState = true;
 			}
@@ -245,4 +253,10 @@ namespace
 	bool	NameInput::GetCancelState( void )
 	{
 		return	cancelState;
+	}
+
+	//	文字列取得
+	int*	NameInput::GetName( void )
+	{
+		return name;
 	}

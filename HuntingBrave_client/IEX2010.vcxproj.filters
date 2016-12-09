@@ -70,9 +70,6 @@
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>Source\Manager\PlayerManager</Filter>
     </ClCompile>
-    <ClCompile Include="source\EnemyManager.cpp">
-      <Filter>Source\Manager\EnemyManager</Filter>
-    </ClCompile>
     <ClCompile Include="source\Player.cpp">
       <Filter>Source\Player</Filter>
     </ClCompile>
@@ -199,6 +196,18 @@
     <ClCompile Include="source\NameInput.cpp">
       <Filter>Source\Scene\sceneMatching\NameInput</Filter>
     </ClCompile>
+    <ClCompile Include="source\ItemSelect.cpp">
+      <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EnemyManager.cpp">
+      <Filter>Source\Manager\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameWait.cpp">
+      <Filter>Source\Scene\sceneMatching\GameWait</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameUI.cpp">
+      <Filter>Source\UI\NameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -218,9 +227,6 @@
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
       <Filter>Source\Manager\PlayerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="source\EnemyManager.h">
-      <Filter>Source\Manager\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
       <Filter>Source\Player</Filter>
@@ -362,6 +368,18 @@
     </ClInclude>
     <ClInclude Include="source\NameInput.h">
       <Filter>Source\Scene\sceneMatching\NameInput</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ItemSelect.h">
+      <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyManager.h">
+      <Filter>Source\Manager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameWait.h">
+      <Filter>Source\Scene\sceneMatching\GameWait</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NameUI.h">
+      <Filter>Source\UI\NameUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -557,8 +575,17 @@
     <Filter Include="Source\Scene\sceneTitle">
       <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\UI\UpGradeUI">
-      <UniqueIdentifier>{cd7628f8-a31e-41a3-b957-1625d2b87fb3}</UniqueIdentifier>
+    <Filter Include="Source\Scene\sceneMatching\ItemSelect">
+      <UniqueIdentifier>{bd7361ad-943d-4618-849c-5ab45f7f064c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Plane">
+      <UniqueIdentifier>{a8a19064-6851-484a-bf4d-b66788542c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\GameWait">
+      <UniqueIdentifier>{f2bc45c5-9d51-4abd-aed6-8772a24e0461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\NameUI">
+      <UniqueIdentifier>{30d48374-4fad-4fc4-9443-f91efc913992}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

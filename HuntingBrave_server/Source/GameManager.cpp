@@ -17,7 +17,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	TIME_MAX	( 1.0f * MINUTE )
-#define	INIT_LIFE		7
+#define	INIT_LIFE		5
 
 //	実体
 GameManager*	gameManager = nullptr;
@@ -28,7 +28,7 @@ GameManager*	gameManager = nullptr;
 
 	//	コンストラクタ
 	GameManager::GameManager( void ) : timer( nullptr ),
-		timeUp( false ), gameState( true )
+		timeUp( false ), gameState( false )
 	{
 		//	初期座標設定
 		int initMotion = 0;
@@ -71,11 +71,8 @@ GameManager*	gameManager = nullptr;
 		//	マッチング情報初期化
 		MatchingInfoInitialize();
 
-		//	タイマースタート
-		timer->Start( TIME_MAX );
-
 		//	変数初期化
-		gameState = true;
+		gameState = false;
 		return	true;
 	}
 
@@ -97,8 +94,7 @@ GameManager*	gameManager = nullptr;
 	void	GameManager::Update( void )
 	{
 		//	タイマー更新
-		if ( gameState )
-			timeUp = timer->Update();
+		if ( gameState )		timeUp = timer->Update();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -136,6 +132,11 @@ GameManager*	gameManager = nullptr;
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
+	//	ゲーム状態設定
+	void	GameManager::SetGameState( bool state )
+	{
+		gameState = state;
+	}
 
 //----------------------------------------------------------------------------------------------
 //	情報取得

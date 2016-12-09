@@ -18,11 +18,11 @@
 //------------------------------------------------------------------------------------
 
 //	ミノタウロス
-#define	MINOTAURUS_SCALE	0.01f
-#define	MINOTAURUS_HEIGHT	0.125f
-#define	MINOTAURUS_RADIUS	1.0f
+#define	MOFFU_SCALE		0.1f
+#define	MOFFU_HEIGHT	0.125f
+#define	MOFFU_RADIUS	1.0f
 
-#define	INIT_LIFE	 1
+#define	INIT_LIFE	 3
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -67,7 +67,8 @@
 		SetMotion( 1 );	//	数値仮
 
 		lifeInfo.Initialize( INIT_LIFE );
-		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
+		ZeroMemory(&attackInfo, sizeof(AttackInfo));
+		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MOFFU_HEIGHT, MOFFU_RADIUS );
 
 		bar = new EnemyHpUI();
 		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
@@ -101,7 +102,7 @@
 	{
 		//	補間
 		bool	expantion = Interpolation::LinearInterpolation(
-			scale, 0.0f, MINOTAURUS_SCALE, interpolationParam );
+			scale, 0.0f, MOFFU_SCALE, interpolationParam );
 
 		//	補間パラメータ更新
 		Interpolation::PercentageUpdate( interpolationParam, 0.01f );
@@ -133,12 +134,13 @@
 		if ( frame >= 138 && frame <= 150 )
 		{
 			//	攻撃状態を有効にする
-			//attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+			attackInfo.Set(SHAPE_TYPE::SPHERE, MOFFU_RADIUS, pos + (GetFront() * MOFFU_RADIUS), Vector3(0, 0, 0));
+			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}
 		else
 		{
 			//	攻撃状態を無効にする
-			//attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
+			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
 			if ( frame >= 170 )

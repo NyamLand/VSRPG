@@ -48,6 +48,7 @@ public:
 	void	SendInputInfo( void );
 	void	SendHuntInfo( char enemyType );
 	void	SendSignOut( void );
+	void	SendResponseInfo( char com );
 
 	//	óMˆ—
 	void	ReceiveCharaInfo( const LPSTR& data );

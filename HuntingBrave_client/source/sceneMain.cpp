@@ -69,7 +69,7 @@ bool	sceneMain::Initialize( void )
 	magicManager->Initialize();
 	
 	//	stage‰Šú‰»
-	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
+	stage = new iexMesh( "DATA/BG/stage.imo" );
 	stage->SetPos( 0.0f, -5.0f, 0.0f );
 	stage->SetScale( 0.1f );
 	stage->Update();
@@ -81,6 +81,9 @@ bool	sceneMain::Initialize( void )
 
 	//	í“¬BGM
 	sound->PlayBGM( BGM::MAIN );
+
+	//	‘—M
+	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
 	return true;
 }

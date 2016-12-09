@@ -7,19 +7,21 @@
 
 #include	"GameData.h"
 #include	"NameInput.h"
+#include	"ItemSelect.h"
+#include	"GameWait.h"
 #include	<memory>
 using namespace std;
 
 class	sceneMatching : public Scene
 {
 private:
-	iex3DObj*	obj[PLAYER_MAX];
 	int step;
 	char	nextScene;
 	char name[17];
 	char	addr[64];
-	iex2DObj*	back;
 	NameInput*	nameInput;
+	ItemSelect*	itemSelect;
+	GameWait*	gameWait;
 
 public:
 	~sceneMatching( void );

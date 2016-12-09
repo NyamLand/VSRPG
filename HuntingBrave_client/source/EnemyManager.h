@@ -45,6 +45,7 @@ public:
 	//	XVE•`‰æ
 	void	Update( void );
 	void	Render( void );
+	void	RenderHp( void );
 
 	//	“®ìŠÖ”
 	void	Append( const Vector3& pos, char type );

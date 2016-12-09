@@ -21,6 +21,7 @@
 //	定数
 #define	APPEND_INTERVAL		3
 #define	ENEMY_MAX			5
+#define APPEND_RADIUS		15.0f	
 
 namespace
 {
@@ -82,7 +83,7 @@ namespace
 	void	EnemyManager::Load( void )
 	{
 		org[ENEMY_TYPE::BIG_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
-		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
+		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/mofumofu/moffu.IEM" );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -109,6 +110,7 @@ namespace
 			//	死亡していたらリストから削除
 			if ( !isAlive )
 			{
+				gameParam->SendHuntInfo((*it)->GetEnemyType());
 				it = enemylist.erase( it );
 				continue;
 			}
@@ -130,6 +132,15 @@ namespace
 		for ( auto it = enemylist.begin(); it != enemylist.end(); it++ )
 		{
 			( *it )->Render();
+		}
+	}
+
+	//	HP描画
+	void	EnemyManager::RenderHp( void )
+	{
+		for ( auto it = enemylist.begin(); it != enemylist.end(); it++ )
+		{
+			( *it )->BarRender();
 		}
 	}
 
@@ -224,6 +235,9 @@ namespace
 	//	一定時間ごとに敵を生成
 	void	EnemyManager::AddRegularTimeIntervals( void )
 	{
+
+		int id = gameParam->GetMyIndex();
+
 		if ( ( int )gameManager->GetTime() % APPEND_INTERVAL != 0 )
 		{
 			//	生成フラグをtrueにする
@@ -234,11 +248,10 @@ namespace
 		if ( !appendOK )	return;
 
 		//	出現座標の設定
-		Vector3	appendPos = Vector3(
-			random->GetFloat( -20.0f, 20.0f ),
-			0.0f,
-			random->GetFloat( -20.0f, 20.0f ) );
-		
+		float randX = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
+		float randZ = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
+		Vector3	appendPos = gameParam->GetPlayerParam(id).pos + Vector3( randX, 0.0f, randZ );
+			
 		//	リストに追加
 		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
 		

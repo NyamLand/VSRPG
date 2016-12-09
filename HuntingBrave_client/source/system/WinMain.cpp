@@ -35,12 +35,12 @@ BOOL	InitNetWork( void )
 	ifs >> name;
 
 	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, 7000, name ) )
-	{
-		MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
-		exit( 0 );
-		return	FALSE;
-	}
+	//if ( !gameParam->InitializeClient( addr, 7000, name ) )
+	//{
+	//	MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
+	//	exit( 0 );
+	//	return	FALSE;
+	//}
 
 	return	TRUE;
 }

@@ -50,7 +50,10 @@ public:
 	int	ReceiveSignOut( int client, const LPSTR& data );
 	int	ReceiveMatching( int client, const LPSTR& data );
 	int	ReceiveResponse( int client, const LPSTR& data );
-	int	ReceiveSignUpResponse( int client );
+
+	//	‰“šƒRƒ}ƒ“ƒh
+	int	SignUpResponse( int client );
+	int	GameStartResponse( int client );
 
 	//	î•ñİ’è
 	void SetPlayer( int id, char* name );

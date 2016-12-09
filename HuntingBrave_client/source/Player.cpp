@@ -107,6 +107,7 @@ namespace
 		//---------------------------------
 		bar = new EnemyHpUI();
 		bar->Initilaize(HPUI_TYPE::PLAYER, GetLifeInfo().maxLife);
+		bar->SetId(id);
 
 		if ( obj == nullptr )	return	false;
 		return	true;
@@ -127,6 +128,11 @@ namespace
 
 		//	UŒ‚î•ñİ’è
 		SetAttackShape();
+
+		 collisionInfo.collisionShape.capsule = Capsule(
+			 Vector3(this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.radius, this->playerParam.pos.z),
+			 Vector3(this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.height + collisionInfo.radius, this->playerParam.pos.z),
+			collisionInfo.radius);
 
 		//	XV
 		BaseChara::Update();
