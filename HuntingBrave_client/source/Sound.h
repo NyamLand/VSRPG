@@ -28,7 +28,7 @@ namespace
 			MENU,
 			MAIN,
 			IIWAKE,
-			//RESULT
+			RESULT
 		};
 	}
 }

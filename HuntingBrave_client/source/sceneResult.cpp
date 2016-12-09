@@ -55,6 +55,9 @@
 		percentage = 0.0f;
 		pushState = false;
 
+		//	BGMÄ¶
+		sound->PlayBGM( BGM::RESULT );
+
 		return	true;
 	}
 
@@ -65,6 +68,7 @@
 		SafeDelete( back );
 		SafeDelete( lovelive );
 		gameManager->Release();
+		sound->StopBGM();
 	}
 
 //----------------------------------------------------------------------------------------------
