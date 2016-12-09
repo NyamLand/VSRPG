@@ -31,7 +31,7 @@ ScoreUI::ScoreUI(int x, int y, int w, int h)
 
 	//	SCORE文字アイコン
 	icon = new Image();
-	icon->Initialize("DATA/UI/main_UI/ExpIcon.png", posx, posy, size, size, 0, 0, SCORE_MAX::ICON_SIZE, SCORE_MAX::ICON_SIZE);
+	icon->Initialize("DATA/UI/main_UI/BigHuntIcon.png", posx, posy, size, size, 0, 0, SCORE_MAX::ICON_SIZE, SCORE_MAX::ICON_SIZE);
 
 	//	経験値の値
 	for (int i = 0; i < DIGIT_MAX; i++)
