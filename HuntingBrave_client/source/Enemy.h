@@ -71,5 +71,6 @@ public:
 	
 	//	î•ñæ“¾
 	char	GetEnemyType( void )const;
+	int		GetMode( void )const;
 	AttackInfo&	GetAttackInfo( void ){ return attackInfo; }
 };

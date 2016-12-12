@@ -167,3 +167,8 @@
 	{
 		return	enemyType;
 	}
+
+	int		Enemy::GetMode( void )const
+	{
+		return mode;
+	}

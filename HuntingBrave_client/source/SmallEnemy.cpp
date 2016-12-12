@@ -38,7 +38,7 @@ namespace
 	{
 		const int ATTACK_HIT_START = 138;
 		const int ATTACK_HIT_END = 150;
-		const int DEAD_START = 215;
+		const int DEAD_START = 225;
 		const int FALL_END = 493;
 	}
 }

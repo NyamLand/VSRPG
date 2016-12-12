@@ -126,7 +126,7 @@
 			for ( int p = 0; p < PLAYER_MAX; p++ )
 			{
 				
-				drawShape->DrawSphere(attackInfo.vec1, attackInfo.radius, 0xFFFFFFFF);
+				
 				//	条件が合わないものはスキップ
 				if ( gameParam->GetPlayerActive( p ) == false )		continue;
 
