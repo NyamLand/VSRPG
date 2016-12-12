@@ -35,7 +35,7 @@ namespace
 EnemyHpUI::EnemyHpUI()
 {
 	//	座標、サイズ情報格納
-	width = 100.0f;	height = 25.0f;
+	width = 100;	height = 25;
 	id = -1;
 
 }
@@ -48,7 +48,7 @@ EnemyHpUI::~EnemyHpUI(void)
 }
 
 
-void	EnemyHpUI::Initilaize(int type, float maxhp)
+void	EnemyHpUI::Initilaize(int type, int maxhp)
 {
 	
 	hp = 0;
@@ -84,6 +84,9 @@ void	EnemyHpUI::Render(float hp,const Vector3& pos,const Vector3& up)
 	out.x -= 60;
 
 	float	parsent = (float)hp / (float)maxHp;
+	int w = (int)((float)width * parsent);
+	int	sx = (int)((float)HP_MAX::WIDTH * parsent);
+
 	//----------------------
 	//	HPバー
 	//----------------------
@@ -91,15 +94,17 @@ void	EnemyHpUI::Render(float hp,const Vector3& pos,const Vector3& up)
 	{
 	case HPUI_TYPE::ENEMY:
 
-		hpFrame_obj->Render(out.x, out.y, (int)width, (int)height, 0, 0, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
-		hp_obj->Render(out.x, out.y, (int)(width*parsent), (int)height, 0, HP_MAX::HEIGHT * 1,(int)( (float)HP_MAX::WIDTH*parsent), HP_MAX::HEIGHT);		//	HP残量
+		hpFrame_obj->Render((int)out.x, (int)out.y, width, height, 0, 0, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
+		hp_obj->Render((int)out.x, (int)out.y, w, height, 0, HP_MAX::HEIGHT * 1, sx, HP_MAX::HEIGHT);		//	HP残量
+		hpFrame_obj->Render((int)out.x-2, (int)out.y+2, 20, 20, 128, HP_MAX::HEIGHT * 6, 128, 128);	//	フレーム
 		break;
 
 	case HPUI_TYPE::PLAYER:
 
 		if (gameParam->GetMyIndex() == id)break;
-		hpFrame_obj->Render(out.x, out.y, (int)width, (int)height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
-		hp_obj->Render(out.x, out.y, (int)(width*parsent), (int)height, 0, HP_MAX::HEIGHT * 4, (int)((float)HP_MAX::WIDTH*parsent), HP_MAX::HEIGHT);		//	HP残量
+		hpFrame_obj->Render((int)out.x, (int)out.y, width, height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
+		hp_obj->Render((int)out.x, (int)out.y, w, height, 0, HP_MAX::HEIGHT * 4, sx, HP_MAX::HEIGHT);		//	HP残量
+		hpFrame_obj->Render((int)out.x, (int)out.y, 20, 20, 0, HP_MAX::HEIGHT * 6, 128, 128);	//	フレーム
 		break;
 
 	default:

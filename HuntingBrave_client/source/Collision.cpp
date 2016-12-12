@@ -96,6 +96,7 @@
 					(*it)->SetMode((*it)->DAMAGE);
 					//	ƒ‰ƒCƒtŒvŽZ
 					(*it)->GetLifeInfo().CulcLife(-1);
+					(*it)->LifeCheck();
 				}
 			}
 		}
