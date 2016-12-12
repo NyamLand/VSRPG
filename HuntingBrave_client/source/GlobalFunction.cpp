@@ -13,6 +13,21 @@
 //----------------------------------------------------------------------------
 
 	//	•Ï”•ÏŠ·
+	bool	SubString( char* out, const char* str, int pos, int len )
+	{
+		if ( pos < 0 || len < 0 || len > strlen( str ) )	return	false;
+
+		for ( str += pos; *str != '\0' && len > 0; len -= 2 )
+		{
+			*out++ = *str++;
+			*out++;	*str++;
+		}
+
+		*out = L'\0';
+
+		return	true;
+	}
+
 	POINT	GetPoint( int x, int y )
 	{
 		POINT	p;

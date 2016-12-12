@@ -12,6 +12,7 @@
 #include	"sceneMatching.h"
 #include	"Sound.h"
 #include	"Screen.h"
+#include	"Font.h"
 #include	"sceneTitle.h"
 
 //***************************************************************
@@ -36,6 +37,9 @@ namespace
 		};
 	}
 }
+
+Font*	font = nullptr;
+Font*	font2 = nullptr;
 
 //-----------------------------------------------------------------------------------
 //	初期化・解放
@@ -62,7 +66,7 @@ namespace
 		//lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
 		//	ｂｇｍ再生
-		sound->PlayBGM( BGM::TITLE );
+		//sound->PlayBGM( BGM::TITLE );
 
 		//	screen設定
 		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
@@ -71,6 +75,9 @@ namespace
 		percentage = 0.0f;
 		alpha = 1.0f;
 		step = TITLE_STEP::FADE_IN;
+
+		font = new Font( "メイリオ" );
+		font2 = new Font( "HG行書体" );
 
 		return	true;
 	}
@@ -81,7 +88,9 @@ namespace
 		SafeDelete( mainView );
 		SafeDelete( bg );
 		SafeDelete( lovelive );
-		sound->StopBGM();
+		SafeDelete( font );
+		SafeDelete( font2 );
+		//sound->StopBGM();
 	}
 
 //-----------------------------------------------------------------------------------
@@ -133,12 +142,17 @@ namespace
 
 		//	bg描画
 		//lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
-		lovelive->Render(0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
-		bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		//lovelive->Render(0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+		//bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
 		//bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
 
 		//	スクリーン制御
 		screen->Render();
+
+		LPSTR str = "大阪王将";
+		LPSTR str2 = "ぎょうざ";
+		font->DrawFont( str2, 640, 100, 500, 500, 0xFFFFFFFF );
+		font2->DrawFont( str, 640, 360, 500, 500, 0xFFFFFFFF );
 	}
 
 //-----------------------------------------------------------------------------------

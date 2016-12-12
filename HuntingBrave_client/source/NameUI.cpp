@@ -1,9 +1,11 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	<map>
 #include	"Interpolation.h"
 #include	"GameParam.h"
 #include	"InputManager.h"
+#include	"NameManager.h"
 #include	"NameUI.h"
 
 //***************************************************************
@@ -19,6 +21,7 @@
 #define	SRC_X_MAX		10
 #define	SRC_Y_MAX		5
 #define	SRC_SIZE			64
+#define	DAKUTEN			60
 
 //----------------------------------------------------------------------------------
 //	‰Šú‰»E‰ğ•ú
