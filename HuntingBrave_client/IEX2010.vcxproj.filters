@@ -214,6 +214,9 @@
     <ClCompile Include="source\Font.cpp">
       <Filter>Source\Font</Filter>
     </ClCompile>
+    <ClCompile Include="source\UpGradeUI.cpp">
+      <Filter>Source\UI\UpGradeUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -392,6 +395,9 @@
     </ClInclude>
     <ClInclude Include="source\Font.h">
       <Filter>Source\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UpGradeUI.h">
+      <Filter>Source\UI\UpGradeUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -601,6 +607,9 @@
     </Filter>
     <Filter Include="Source\Font">
       <UniqueIdentifier>{17f11c64-ab66-469a-863e-033fc04e1472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\UpGradeUI">
+      <UniqueIdentifier>{8911ce1e-a39f-4b93-a093-ffa15b77c27e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

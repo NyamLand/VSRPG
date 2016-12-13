@@ -19,7 +19,7 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-UIManager::UIManager(void)
+UIManager::UIManager( void ) : upGradeUI( nullptr )
 {
 
 }
@@ -81,6 +81,8 @@ bool	UIManager::Initialize( void )
 
 	boardUI = new ScoreBoardUI(posx, posy, width, height);
 
+	upGradeUI = new UpGradeUI();
+
 	//	neta
 	yaju = new Image();
 	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
@@ -99,6 +101,7 @@ void	UIManager::Release(void)
 	SafeDelete( mapUI );
 	SafeDelete( scoreUI );
 	SafeDelete( boardUI );
+	SafeDelete( upGradeUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -140,6 +143,7 @@ void	UIManager::Render(void)
 	mapUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
+	upGradeUI->Render();
 	//yaju->Render(IMAGE_MODE::SCALING);
 }
 

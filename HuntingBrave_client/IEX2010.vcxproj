@@ -182,6 +182,7 @@
     <ClCompile Include="IEX\IEX_View.cpp" />
     <ClCompile Include="source\TImerUI.cpp" />
     <ClCompile Include="source\UIManager.cpp" />
+    <ClCompile Include="source\UpGradeUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
@@ -243,6 +244,7 @@
     <ClInclude Include="IEX\iextreme.h" />
     <ClInclude Include="source\TimerUI.h" />
     <ClInclude Include="source\UIManager.h" />
+    <ClInclude Include="source\UpGradeUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx" />

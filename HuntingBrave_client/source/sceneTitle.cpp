@@ -66,7 +66,7 @@ Font*	font2 = nullptr;
 		//lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
 		//	‚‚‚‡‚Ä¶
-		//sound->PlayBGM( BGM::TITLE );
+		sound->PlayBGM( BGM::TITLE );
 
 		//	screenÝ’è
 		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
@@ -90,7 +90,7 @@ Font*	font2 = nullptr;
 		SafeDelete( lovelive );
 		SafeDelete( font );
 		SafeDelete( font2 );
-		//sound->StopBGM();
+		sound->StopBGM();
 	}
 
 //-----------------------------------------------------------------------------------

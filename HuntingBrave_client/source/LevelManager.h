@@ -22,7 +22,6 @@ namespace
 			DEFENSE,
 			MAGIC_DEFENSE,
 			SPEED,
-			GET_BOOST,
 			TYPE_MAX
 		};
 	}
@@ -35,6 +34,8 @@ namespace
 			BIG_ENEMY
 		};
 	}
+
+
 }
 
 //	struct
@@ -48,6 +49,9 @@ struct LevelInfo
 class LevelManager : public Singleton<LevelManager>
 {
 	friend	Singleton<LevelManager>;
+public:
+	static	const int LEVEL_MAX = 6;
+
 private:
 	LevelInfo	levelInfo;
 

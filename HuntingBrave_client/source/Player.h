@@ -87,10 +87,12 @@ private:
 	//	パラメータ
 	int	id;
 	PlayerParam		playerParam;
+	iex3DObj* org;
 
 public:
 	//	初期化・解放
 	Player( void );
+	~Player( void );
 	bool	Initialize( int id );
 	
 	//	更新・描画
@@ -104,4 +106,5 @@ public:
 
 	//	情報設定
 	void	SetPlayerParam( const PlayerParam& playerParam );
+	void	SetModel( void );
 };

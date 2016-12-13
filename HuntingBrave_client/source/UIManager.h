@@ -19,6 +19,7 @@
 #include	"ItemUI.h"
 #include	"MapUI.h"
 #include	"ScoreUI.h"
+#include	"UpGradeUI.h"
 #include	"ScoreBoardUI.h"
 
 //	class
@@ -40,6 +41,7 @@ private:
 	MapUI*			mapUI;
 	ScoreUI*		scoreUI;
 	ScoreBoardUI*	boardUI;
+	UpGradeUI*	upGradeUI;
 
 	//	neta
 	Image*			yaju;

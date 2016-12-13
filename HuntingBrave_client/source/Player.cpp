@@ -36,6 +36,7 @@
 //	ライフ設定
 #define MAX_LIFE	5
 
+
 //	定数関連
 namespace
 {
@@ -55,9 +56,14 @@ namespace
 	//	コンストラクタ
 	Player::Player( void ) : id( -1 )
 	{
+		org = new iex3DObj( "DATA/CHR/Fighter/fighter.IEM" );	
 	}
 
 	//	デストラクタ
+	Player::~Player( void )
+	{
+		SafeDelete( org );
+	}
 
 	//	初期化
 	bool	Player::Initialize( int id )
@@ -130,9 +136,9 @@ namespace
 		SetAttackShape();
 
 		 collisionInfo.collisionShape.capsule = Capsule(
-			 Vector3(this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.radius, this->playerParam.pos.z),
-			 Vector3(this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.height + collisionInfo.radius, this->playerParam.pos.z),
-			collisionInfo.radius);
+			 Vector3( this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.radius, this->playerParam.pos.z ),
+			 Vector3( this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.height + collisionInfo.radius, this->playerParam.pos.z ),
+			collisionInfo.radius );
 
 		//	更新
 		BaseChara::Update();
@@ -208,6 +214,12 @@ namespace
 		angle = playerParam.angle;
 		SetMotion( playerParam.motion );
 		lifeInfo.life = ( playerParam.life );
+	}
+
+	//	プレイヤー設定
+	void	Player::SetModel( void )
+	{
+
 	}
 
 //------------------------------------------------------------------------------------
