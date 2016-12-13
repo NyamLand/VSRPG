@@ -118,6 +118,7 @@ void	UIManager::Update(void)
 	mapUI->Update();
 	scoreUI->Update();
 	boardUI->Update();
+	upGradeUI->Update();
 	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 20) == 1)	check = true;
 	if (check){
 		//	neta

@@ -15,6 +15,8 @@ namespace EXP_MAX
 	};
 }
 
+#include	"NumberUI.h"
+
 
 //	class
 class ExpUI

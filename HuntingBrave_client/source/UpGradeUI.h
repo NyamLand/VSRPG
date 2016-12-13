@@ -9,6 +9,7 @@
 
 //	include
 #include	"Image.h"
+#include	"ExpUI.h"
 
 //	class
 class UpGradeUI
@@ -17,6 +18,14 @@ private:
 	Image*	 back;
 	Image*	*	typeIcon;
 	Image**	levelIcon;
+	Image*		curLevelIcon;
+	ExpUI*		expUI;
+
+	float		percentage;
+	float		percentage2;
+
+	char		select;
+	char		beforeSelect;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
