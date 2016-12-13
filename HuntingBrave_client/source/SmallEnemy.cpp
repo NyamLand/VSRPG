@@ -32,6 +32,17 @@
 #define	ATTACK_DIST		5.0f
 #define	SEARCH_DIST	10.0f
 
+namespace
+{
+	namespace MOTION_FRAME
+	{
+		const int ATTACK_HIT_START = 138;
+		const int ATTACK_HIT_END = 150;
+		const int DEAD_START = 225;
+		const int FALL_END = 493;
+	}
+}
+
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
@@ -43,6 +54,7 @@
 		ModeFunction[MODE::MOVE] = &SmallEnemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &SmallEnemy::AttackMode;
 		ModeFunction[MODE::DAMAGE] = &SmallEnemy::DamageMode;
+		ModeFunction[MODE::DEAD] = &SmallEnemy::DeadMode;
 
 		//	変数初期化
 		speed = MOVE_SPEED;
@@ -131,7 +143,8 @@
 		int frame = obj->GetFrame();
 
 		//	フレーム制御
-		if ( frame >= 138 && frame <= 150 )
+		if ( frame >= MOTION_FRAME::ATTACK_HIT_START 
+			&& frame <= MOTION_FRAME::ATTACK_HIT_END )
 		{
 			//	攻撃状態を有効にする
 			attackInfo.Set(SHAPE_TYPE::SPHERE, MOFFU_RADIUS, pos + (GetFront() * MOFFU_RADIUS), Vector3(0, 0, 0));
@@ -148,6 +161,26 @@
 		}
 	}
 
+	void	SmallEnemy::DeadMode( void )
+	{
+		SetMotion(3);
+		static float alpha = 1.0f;
+
+		//	フレーム取得
+		int frame = obj->GetFrame();
+
+		//	フレーム制御
+		if ( frame >= MOTION_FRAME::DEAD_START )
+		{
+			//	透過開始
+			alpha -= 0.1f;
+			if ( alpha <= 0.0f )
+			{
+				lifeInfo.isAlive = false;
+			}
+		}
+		
+	}
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------

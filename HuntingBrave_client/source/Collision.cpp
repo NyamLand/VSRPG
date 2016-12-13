@@ -96,6 +96,7 @@
 					(*it)->SetMode((*it)->DAMAGE);
 					//	ライフ計算
 					(*it)->GetLifeInfo().CulcLife(-1);
+					(*it)->LifeCheck();
 				}
 			}
 		}
@@ -125,7 +126,7 @@
 			for ( int p = 0; p < PLAYER_MAX; p++ )
 			{
 				
-				drawShape->DrawSphere(attackInfo.vec1, attackInfo.radius, 0xFFFFFFFF);
+				
 				//	条件が合わないものはスキップ
 				if ( gameParam->GetPlayerActive( p ) == false )		continue;
 

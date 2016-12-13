@@ -28,15 +28,15 @@ private:
 	iex2DObj* hp_obj;
 	int mode_type;
 	int	id;
-	float	width, height;
-	float	hp;
-	float maxHp;
+	int	width, height;
+	int	hp;
+	int maxHp;
 
 public:
 	//	初期化・解放
 	EnemyHpUI( void );
 	~EnemyHpUI(void);
-	void Initilaize(int type, float maxhp);
+	void Initilaize(int type, int maxhp);
 
 	//	更新・描画
 	void	Update( void );

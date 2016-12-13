@@ -47,6 +47,7 @@ public:
 	virtual void	EntryMode( void ) = 0;
 	virtual void	MoveMode( void ) = 0;
 	virtual void	AttackMode( void ) = 0;
+	virtual	void	DeadMode( void ) = 0;
 	void	DamageMode( void );
 	
 
@@ -70,5 +71,6 @@ public:
 	
 	//	î•ñæ“¾
 	char	GetEnemyType( void )const;
+	int		GetMode( void )const;
 	AttackInfo&	GetAttackInfo( void ){ return attackInfo; }
 };

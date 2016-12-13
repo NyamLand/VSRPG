@@ -5,6 +5,7 @@
 #include	<iostream>
 #include	<vector>
 #include	<thread>
+#include	<map>
 #include	"GlobalFunction.h"
 #include	"Image.h"
 #include	"DrawShape.h"
@@ -17,6 +18,7 @@
 #include	"EnemyManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"NameManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
 
@@ -195,7 +197,8 @@ void	sceneMain::MyInfoRender( void )
 	
 	//	Ž©•ª‚Ì–¼‘O
 	LPSTR name = gameParam->GetPlayerName( id );
-	
+	nameManager->SetNameIndex( id, name );
+
 	//	Ž©•ª‚ÌÀ•W
 	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
 

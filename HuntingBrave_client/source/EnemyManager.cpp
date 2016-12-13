@@ -187,22 +187,24 @@ namespace
 		{
 			//	自分VS自分は除外
 			if ( ( *it ) == enemy )	continue;
+			
 
-			//	自分→相手へのベクトル
-			Vector3	vec = enemy->GetPos() - ( *it )->GetPos();
-			float		length = vec.Length();
+				//	自分→相手へのベクトル
+				Vector3	vec = enemy->GetPos() - (*it)->GetPos();
+				float		length = vec.Length();
 
-			float collisionDist = enemy->GetCollisionInfo().radius + ( *it )->GetCollisionInfo().radius;
-			//	近い場合は離す
-			if ( length < collisionDist )
-			{
-				//	ベクトル正規化
-				vec.Normalize();
+				float collisionDist = enemy->GetCollisionInfo().radius + (*it)->GetCollisionInfo().radius;
+				//	近い場合は離す
+				if (length < collisionDist)
+				{
+					//	ベクトル正規化
+					vec.Normalize();
 
-				//	離す
-				( *it )->SetPos( enemy->GetPos() - vec * collisionDist );
+					//	離す
+					(*it)->SetPos(enemy->GetPos() - vec * collisionDist);
+				}
 			}
-		}
+		
 	}
 
 	//	プレイヤーとの座標チェック
@@ -213,7 +215,7 @@ namespace
 		{
 			//	存在チェック
 			if( !gameParam->GetPlayerActive( p ) )	continue;
-			
+			if (enemy->GetMode() == 4)continue;
 			//	プレイヤーへのベクトルを求める
 			Vector3	pPos = playerManager->GetPlayer( p )->GetPos();
 			Vector3	vec = pPos - enemy->GetPos();

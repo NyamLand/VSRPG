@@ -29,6 +29,17 @@
 #define	ATTACK_DIST		5.0f
 #define	SEARCH_DIST	10.0f
 
+//モーションフレーム
+namespace
+{
+	namespace MOTION_FRAME
+	{
+		const int ATTACK_HIT_START = 138;
+		const int ATTACK_HIT_END = 150;
+		const int DEAD_START = 725;
+		const int FALL_END = 1000;
+	}
+}
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
@@ -40,6 +51,7 @@
 		ModeFunction[MODE::MOVE] = &BigEnemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &BigEnemy::AttackMode;
 		ModeFunction[MODE::DAMAGE] = &BigEnemy::DamageMode;
+		ModeFunction[MODE::DEAD] = &BigEnemy::DeadMode;
 		
 		//	変数初期化
 		speed = MOVE_SPEED;
@@ -151,7 +163,25 @@
 	}
 
 
-	
+	void	BigEnemy::DeadMode(void)
+	{
+		SetMotion(12);
+		static float alpha = 1.0f;
+
+		//	フレーム取得
+		int frame = obj->GetFrame();
+
+		//	フレーム制御
+		if (frame >= MOTION_FRAME::DEAD_START)
+		{
+			//	透過開始
+			alpha -= 0.1f;
+			if (alpha <= 0.0f)
+			{
+				lifeInfo.isAlive = false;
+			}
+		}
+	}
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
