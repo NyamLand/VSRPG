@@ -17,16 +17,16 @@
 //	グローバル
 //------------------------------------------------------------------------------------
 
-//	ミノタウロス
+//	モッフ
 #define	MOFFU_SCALE		0.1f
 #define	MOFFU_HEIGHT	0.125f
 #define	MOFFU_RADIUS	1.0f
 
-#define	INIT_LIFE	 3
+#define	INIT_LIFE	 2
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
-#define	MOVE_SPEED		0.1f
+#define	MOVE_SPEED		0.18f
 
 //	その他パラメータ
 #define	ATTACK_DIST		5.0f

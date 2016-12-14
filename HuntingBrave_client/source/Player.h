@@ -33,20 +33,6 @@ struct Status
 
 namespace
 {
-	//	モード管理
-	namespace MODE
-	{
-		enum	//	仮
-		{
-			MOVE,
-			//POSTURE,
-			SWOADATTACK,
-			MAGICATTACK,
-			AVOID,
-			MODE_MAX
-		};
-	}
-
 	//	モーション管理
 	namespace MOTION_NUM
 	{
@@ -87,6 +73,16 @@ private:
 	//	パラメータ
 	int	id;
 	PlayerParam		playerParam;
+
+	enum	MODE//	仮
+	{
+		MOVE,
+		//POSTURE,
+		SWOADATTACK,
+		MAGICATTACK,
+		AVOID,
+		MODE_MAX
+	};
 
 public:
 	//	初期化・解放

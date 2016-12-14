@@ -104,7 +104,7 @@ void	EnemyHpUI::Render(float hp,const Vector3& pos,const Vector3& up)
 		if (gameParam->GetMyIndex() == id)break;
 		hpFrame_obj->Render((int)out.x, (int)out.y, width, height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	フレーム
 		hp_obj->Render((int)out.x, (int)out.y, w, height, 0, HP_MAX::HEIGHT * 4, sx, HP_MAX::HEIGHT);		//	HP残量
-		hpFrame_obj->Render((int)out.x, (int)out.y, 20, 20, 0, HP_MAX::HEIGHT * 6, 128, 128);	//	フレーム
+		hpFrame_obj->Render((int)out.x - 2, (int)out.y + 2, 20, 20, 0, HP_MAX::HEIGHT * 6, 128, 128);	//	フレーム
 		break;
 
 	default:

@@ -32,7 +32,7 @@ public:
 	//	XVE•`‰æ
 	void	Update( void );
 	void	Render( void );
-
+	void	RenderHp( void );
 	//	î•ñİ’è
 	void	SetPlayer( int id );
 
