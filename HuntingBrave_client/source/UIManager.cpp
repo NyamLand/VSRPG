@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"Random.h"
 #include	"EnemyManager.h"
+#include	"PlayerManager.h"
 #include	"UIManager.h"
 //***************************************************************
 //
@@ -136,6 +137,7 @@ void	UIManager::Update(void)
 //	•`‰æ
 void	UIManager::Render(void)
 {
+	playerManager->RenderHp();
 	enemyManager->RenderHp();
 	timerUI->Render();
 	hpUI->Render();

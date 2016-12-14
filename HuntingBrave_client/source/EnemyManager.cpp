@@ -215,7 +215,8 @@ namespace
 		{
 			//	存在チェック
 			if( !gameParam->GetPlayerActive( p ) )	continue;
-			if (enemy->GetMode() == 4)continue;
+			if (enemy->GetMode() == enemy->MODE::DEAD)continue;
+
 			//	プレイヤーへのベクトルを求める
 			Vector3	pPos = playerManager->GetPlayer( p )->GetPos();
 			Vector3	vec = pPos - enemy->GetPos();

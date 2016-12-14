@@ -28,7 +28,7 @@
 	//	コンストラクタ
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
-		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), count(50)
+		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), count(40)
 	{
 	}
 
@@ -135,7 +135,7 @@
 		lifeInfo.active = false;
 		count--;
 		if (count <= 0){
-			count = 50;
+			count = 40;
 			lifeInfo.active = true;
 			SetMode(MODE::MOVE);
 		}
