@@ -27,6 +27,8 @@ private:
 	char		select;
 	char		beforeSelect;
 
+	int id;
+
 public:
 	//	初期化・解放
 	UpGradeUI( void );
@@ -35,4 +37,10 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
+
+	//	動作関数
+	void	Dicision( void );
+
+	//	情報設定
+	void	SetBigIconSrcPos( void );
 };

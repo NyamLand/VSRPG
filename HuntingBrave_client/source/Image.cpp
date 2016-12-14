@@ -50,7 +50,7 @@
 	}
 
 	//	ˆø”ƒ‚[ƒh‚Ì‚Ý
-	void	Image::Render(int mode)
+	void	Image::Render(int mode, iexShader* shader, LPSTR technique )
 	{
 		int width = this->w;
 		int height = this->h;
@@ -61,15 +61,17 @@
 			switch (mode)
 			{
 			case IMAGE_MODE::NORMAL:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh);
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh );
+				if ( shader != nullptr && technique != nullptr )
+					obj->Render( posx, posy, width, height, sx, sy, sw, sh, shader, technique );
 				break;
 
 			case IMAGE_MODE::ADOPTPARAM:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::ADD:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_ADD, GetColor(color, alpha));
+				obj->Render( posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_ADD, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::WAVE:
@@ -77,11 +79,11 @@
 				height = this->h + this->plusScaleY;
 				posx = x - width / 2;
 				posy = y - height / 2;
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render( posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::FLASH:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::SCALING:
@@ -90,7 +92,7 @@
 				posx = x - width / 2;
 				posy = y - height / 2;
 
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render( posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 			}
 		}

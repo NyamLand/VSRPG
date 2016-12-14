@@ -28,9 +28,9 @@ sampler DecaleSamp = sampler_state
 //------------------------------------------------------
 struct VS_OUTPUT
 {
-    float4 Pos		: POSITION;
-    float4 Color	: COLOR0;
-    float2 Tex		: TEXCOORD0;
+    float4 Pos		: POSITION;			//	頂点の座標
+    float4 Color	: COLOR0;			//	頂点カラー
+    float2 Tex		: TEXCOORD0;		//	テクセル座標
 };
 
 struct VS_INPUT
@@ -70,6 +70,8 @@ float4 PS_Basic( VS_OUTPUT In) : COLOR
 
 	return OUT;
 }
+
+//	ランバート拡散照明
 
 //------------------------------------------------------
 //		通常描画テクニック

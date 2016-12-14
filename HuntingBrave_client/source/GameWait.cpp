@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"system/System.h"
 #include	"GlobalFunction.h"
 #include	"Interpolation.h"
 #include	"GameParam.h"
@@ -190,7 +191,7 @@
 
 		//	背景描画
 		iexSystem::GetDevice()->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
-		back->Render(320, 0, 640, iexSystem::ScreenHeight, 0, 0, 650, 720, RS_COPY, GetColor( 0.7f, 0.7f, 0.9f, 1.0f ) );
+		back->Render( 320, 0, 640, iexSystem::ScreenHeight, 0, 0, 650, 720, RS_COPY, GetColor( 0.7f, 0.7f, 0.9f, 1.0f ) );
 		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 
 		//	キャラクター描画

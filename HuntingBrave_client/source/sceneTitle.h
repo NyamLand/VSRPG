@@ -14,12 +14,8 @@ class sceneTitle : public Scene
 {
 private:
 	iex2DObj*	bg;
-	iex2DObj*	lovelive;
-
-	bool		pushState;
-	float		percentage;
-	float		alpha;
 	int		step;
+
 public:
 	//	‰Šú‰»E‰ğ•ú
 	bool	Initialize( void )override;

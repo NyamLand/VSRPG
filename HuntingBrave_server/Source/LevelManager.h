@@ -19,7 +19,6 @@ namespace
 			DEFENSE,
 			MAGIC_DEFENSE,
 			SPEED,
-			GET_BOOST,
 			TYPE_MAX
 		};
 	}

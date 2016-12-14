@@ -7,6 +7,7 @@
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"GameParam.h"
+#include	"Random.h"
 #include	"Camera.h"
 #include	"InputManager.h"
 #include	"sceneMatching.h"
@@ -32,14 +33,10 @@ namespace
 		enum
 		{
 			FADE_IN,
-			WAIT,
 			FADE_OUT,
 		};
 	}
 }
-
-Font*	font = nullptr;
-Font*	font2 = nullptr;
 
 //-----------------------------------------------------------------------------------
 //	初期化・解放
@@ -60,10 +57,7 @@ Font*	font2 = nullptr;
 		mainView = new Camera();
 
 		//	画像初期化
-		bg = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
-		//bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
-		lovelive = new iex2DObj( "DATA/UI/BackGround/title.png" );
-		//lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
+		bg = new iex2DObj( "DATA/UI/BackGround/title.png" );
 
 		//	ｂｇｍ再生
 		sound->PlayBGM( BGM::TITLE );
@@ -71,14 +65,9 @@ Font*	font2 = nullptr;
 		//	screen設定
 		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
 
-		pushState = false;
-		percentage = 0.0f;
-		alpha = 1.0f;
 		step = TITLE_STEP::FADE_IN;
 
-		font = new Font( "メイリオ" );
-		font2 = new Font( "HG行書体" );
-
+		
 		return	true;
 	}
 
@@ -87,9 +76,6 @@ Font*	font2 = nullptr;
 	{
 		SafeDelete( mainView );
 		SafeDelete( bg );
-		SafeDelete( lovelive );
-		SafeDelete( font );
-		SafeDelete( font2 );
 		sound->StopBGM();
 	}
 
@@ -109,19 +95,8 @@ Font*	font2 = nullptr;
 				KEY( KEY_ENTER ) == 3 || 
 				KEY( KEY_A ) == 3 )
 			{
+				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
 				step++;
-			}
-			break;
-
-		case TITLE_STEP::WAIT:
-			{
-				Interpolation::PercentageUpdate( percentage, 0.01f );
-				bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
-				if ( state )
-				{
-					screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
-					step++;
-				}
 			}
 			break;
 
@@ -141,18 +116,20 @@ Font*	font2 = nullptr;
 		mainView->Clear();
 
 		//	bg描画
-		//lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024 );
-		//lovelive->Render(0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
-		//bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
-		//bg->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		static	const LPSTR	technique[] =
+		{
+			"copy",
+			"blackWhite",
+			"negaPosi"
+		};
+
+		static int tec = random->GetInt( 0, 2 );
+		bg->Render( 0, 0, 
+			iexSystem::ScreenWidth, iexSystem::ScreenHeight, 
+			0, 0, 1280, 720, shader2D, technique[tec] );
 
 		//	スクリーン制御
 		screen->Render();
-
-		LPSTR str = "大阪王将";
-		LPSTR str2 = "ぎょうざ";
-		font->DrawFont( str2, 640, 100, 500, 500, 0xFFFFFFFF );
-		font2->DrawFont( str, 640, 360, 500, 500, 0xFFFFFFFF );
 	}
 
 //-----------------------------------------------------------------------------------
