@@ -142,6 +142,9 @@ namespace
 		{
 			percentageX = 0.0f;
 			saveX = cursorX;
+
+			sound->PlaySE( SE::MOVE_SELECT );
+
 			if ( axisX > 0.0f )
 			{
 				if ( cursorX != CURSOR_MAX_X - 1 )	cursorX++;
@@ -192,6 +195,7 @@ namespace
 	{
 		if ( KEY( KEY_B ) == 3 )
 		{
+			sound->PlaySE( SE::OK );
 			if ( !inputState )
 			{
 				name[nameCursor] = cursorX + cursorY * CURSOR_MAX_X;

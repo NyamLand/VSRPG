@@ -1,5 +1,5 @@
-#ifndef _CSVREADER_H__
-#define _CSVREADER_H__
+
+#pragma once
 
 #include <string>
 #include <vector>
@@ -78,4 +78,3 @@ private:
 	char QUOTE;
 };
 
-#endif

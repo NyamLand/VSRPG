@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<vector>
 #include	"system/Scene.h"
 #include	"system/Framework.h"
 #include	"GlobalFunction.h"
@@ -14,6 +15,7 @@
 #include	"Sound.h"
 #include	"Screen.h"
 #include	"Font.h"
+#include	"CSVReader.h"
 #include	"sceneTitle.h"
 
 //***************************************************************
@@ -21,6 +23,8 @@
 //	sceneTitleクラス
 //
 //***************************************************************
+
+CSVReader*	reader = nullptr;
 
 //-----------------------------------------------------------------------------------
 //	グローバル
@@ -37,6 +41,8 @@ namespace
 		};
 	}
 }
+
+std::vector<std::vector<string>>		vec;
 
 //-----------------------------------------------------------------------------------
 //	初期化・解放
@@ -67,7 +73,18 @@ namespace
 
 		step = TITLE_STEP::FADE_IN;
 
-		
+		fstream		fstr( "DATA/player_data.csv" );
+		reader = new CSVReader( fstr, DEFAULT_SEPARATOR, DEFAULT_QUOTE_CHARACTER );
+
+		int index = 0;
+		while ( 1 ) 
+		{
+			vec.resize( index + 1 );
+			reader->Read( vec[index] );
+			if( vec[index].size() == 0	)	break;
+			index++;
+		}
+		int a = 0;
 		return	true;
 	}
 
@@ -76,6 +93,7 @@ namespace
 	{
 		SafeDelete( mainView );
 		SafeDelete( bg );
+		SafeDelete( reader );
 		sound->StopBGM();
 	}
 
