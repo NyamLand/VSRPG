@@ -45,7 +45,7 @@
 
 		//	画像読み込み
 		back = new iex2DObj( "DATA/UI/BackGround/result_UI.png" );
-		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive4.png" );
+		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
 
 		//	サインアウト
 		gameParam->CloseClient();
