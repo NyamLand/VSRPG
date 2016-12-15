@@ -8,6 +8,7 @@
 #include	"LevelManager.h"
 #include	"InputManager.h"
 
+
 #include	"UpGradeUI.h"
 
 //***************************************************************
@@ -77,8 +78,8 @@ namespace
 	IconSrcPos	srcPos[] =
 	{
 		{ 384, 128 },	//	attack
-		{ 384, 256 },	//	difense
 		{ 384, 384 },	//	magicAttack
+		{ 384, 256 },	//	difense
 		{ 256, 384 },	//	magicDifense
 		{ 128, 384 }	//	speed
 	};
@@ -91,7 +92,7 @@ namespace
 	//	コンストラクタ
 	UpGradeUI::UpGradeUI( void ) : back( nullptr ), 
 		typeIcon( nullptr ), levelIcon( nullptr ),
-		expUI( nullptr ),
+		expUI( nullptr ), flavorText( nullptr ),
 		select( 0 ), beforeSelect( 1 ),
 		percentage( 0.0f ), percentage2( 1.0f )
 	{
@@ -143,6 +144,11 @@ namespace
 		//	経験値UI初期化
 		expUI = new ExpUI( x + EXP_UI_DIST, y + EXP_UI_CENTER_DIST, 
 			EXP_UI_WIDTH, EXP_UI_HEIGHT );
+
+		//	フォント初期化
+		flavorText = new Font( "ＤＦ麗雅宋W5", 25 );
+
+		text = "";
 	}
 
 	//	デストラクタ
@@ -153,6 +159,7 @@ namespace
 		SafeDeleteArray( levelIcon );
 		SafeDelete( expUI );
 		SafeDelete( curLevelIcon );
+		SafeDelete( flavorText );
 	}
 	
 //---------------------------------------------------------------------------------------
@@ -228,6 +235,10 @@ namespace
 
 		//	現在レベル描画
 		curLevelIcon->Render( IMAGE_MODE::NORMAL );
+
+		flavorText->DrawFont( text, 
+			iexSystem::ScreenWidth / 2 - 450, 
+			iexSystem::ScreenHeight / 2 + 220, 1000, 720, 0xFFFFFFFF );
 	}
 
 //---------------------------------------------------------------------------------------
@@ -255,10 +266,16 @@ namespace
 
 		//	画像X座標読み込み位置設定
 		if ( level != levelManager->LEVEL_MAX - 1 )
+		{
 			curLevelIcon->sx = ( level + 1 ) * SRC_SIZE;
+		}
 		else
+		{
 			curLevelIcon->sx = level * SRC_SIZE;
+			//text = gameManager->GetFlavorText( select, level + 1 );
+		}
 
+		text = gameManager->GetFlavorText( select, level + 1 );
 		//	画像Y座標読み込み位置設定
 		curLevelIcon->sy = select * SRC_SIZE;
 	}

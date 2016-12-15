@@ -18,8 +18,8 @@ namespace
 		enum
 		{
 			ATTACK,
-			DEFENSE,
 			MAGIC_ATTACK,
+			DEFENSE,
 			MAGIC_DEFENSE,
 			SPEED,
 			TYPE_MAX

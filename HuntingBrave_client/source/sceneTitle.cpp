@@ -42,8 +42,6 @@ namespace
 	}
 }
 
-std::vector<std::vector<string>>		vec;
-
 //-----------------------------------------------------------------------------------
 //	‰Šú‰»E‰ğ•ú
 //-----------------------------------------------------------------------------------
@@ -76,15 +74,7 @@ std::vector<std::vector<string>>		vec;
 		fstream		fstr( "DATA/player_data.csv" );
 		reader = new CSVReader( fstr, DEFAULT_SEPARATOR, DEFAULT_QUOTE_CHARACTER );
 
-		int index = 0;
-		while ( 1 ) 
-		{
-			vec.resize( index + 1 );
-			reader->Read( vec[index] );
-			if( vec[index].size() == 0	)	break;
-			index++;
-		}
-		int a = 0;
+
 		return	true;
 	}
 

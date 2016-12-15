@@ -17,7 +17,7 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
-	Font( char* fontName );
+	Font( char* fontName, UINT fontSize );
 	~Font( void );
 
 	//	•`‰æ
