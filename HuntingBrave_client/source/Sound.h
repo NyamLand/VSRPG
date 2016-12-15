@@ -16,6 +16,8 @@ namespace
 		enum SE_TYPE
 		{
 			JOIN,
+			MOVE_SELECT,
+			OK,
 			END		//	èIí[
 		};
 	}

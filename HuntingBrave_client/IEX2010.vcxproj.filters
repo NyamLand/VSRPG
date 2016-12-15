@@ -217,6 +217,9 @@
     <ClCompile Include="source\UpGradeUI.cpp">
       <Filter>Source\UI\UpGradeUI</Filter>
     </ClCompile>
+    <ClCompile Include="source\sceneLoad.cpp">
+      <Filter>Source\Scene\sceneLoad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -398,6 +401,9 @@
     </ClInclude>
     <ClInclude Include="source\UpGradeUI.h">
       <Filter>Source\UI\UpGradeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneLoad.h">
+      <Filter>Source\Scene\sceneLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

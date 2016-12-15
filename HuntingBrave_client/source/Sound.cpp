@@ -38,6 +38,8 @@
 
 		//	SEセット
 		IEX_SetWAV( SE::JOIN, "DATA/Sound/SE/join_game.wav" );
+		IEX_SetWAV( SE::MOVE_SELECT, "DATA/Sound/SE/move_select.wav" );
+		IEX_SetWAV( SE::OK, "DATA/Sound/SE/OK.wav" );
 	}
 
 	//	デストラクタ
