@@ -8,7 +8,8 @@
 //***************************************************************
 
 //	include
-
+#include	"NameUI.h"
+#include	"GameData.h"
 //	class
 class sceneResult : public Scene
 {
@@ -17,7 +18,7 @@ private:
 	iex2DObj*	lovelive;
 
 	float	percentage;
-	float alpha;
+	float	alpha;
 	bool	pushState;
 
 public:
