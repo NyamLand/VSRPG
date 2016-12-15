@@ -82,7 +82,7 @@ public:
 	void	Initialize(char* image, int x, int y, int w, int h, int sx, int sy, int sw, int sh);
 	//	XVE•`‰æ
 	void	Update();		//	XV
-	void	Render(int mode);		//	•`‰æ
+	void	Render(int mode, iexShader* shader = nullptr, LPSTR techique = nullptr );		//	•`‰æ
 	void	Render(int mode, int x, int y, int w, int h, int sx, int sy, int sw, int sh);
 
 	//--------------------------------

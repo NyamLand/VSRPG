@@ -16,6 +16,8 @@
 //	実体
 LevelManager*	levelManager = nullptr;
 
+#define	LEVEL_MAX	6
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -57,7 +59,12 @@ LevelManager*	levelManager = nullptr;
 	//	レベル加算
 	void	LevelManager::AddLevel( int id, char levelType )
 	{
+		//	レベル加算
 		levelInfo[id].level[levelType]++;
+
+		//	レベル上限設定
+		if ( levelInfo[id].level[levelType] >= LEVEL_MAX )	
+			levelInfo[id].level[levelType] = LEVEL_MAX;
 	}
 
 	//	経験値計算

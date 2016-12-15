@@ -611,6 +611,20 @@
     <Filter Include="Source\UI\UpGradeUI">
       <UniqueIdentifier>{8911ce1e-a39f-4b93-a093-ffa15b77c27e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\2DShader">
+      <UniqueIdentifier>{3002b0f1-e6a7-4df2-ae5d-41b842585aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\3DShader">
+      <UniqueIdentifier>{2ab630bf-f7a3-4104-af82-41d7aa3f790a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DATA\Shader\NegaPosi.fx">
+      <Filter>Shader\2DShader</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\BlackWhite.fx">
+      <Filter>Shader\2DShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">
