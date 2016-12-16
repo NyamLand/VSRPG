@@ -3,8 +3,9 @@
 #include	"GlobalFunction.h"
 #include	"Random.h"
 #include	"EnemyManager.h"
-#include	"PlayerManager.h"
 #include	"UIManager.h"
+#include	"GameParam.h"
+#include	"LevelManager.h"
 //***************************************************************
 //
 //	UIManagerクラス
@@ -20,7 +21,7 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-UIManager::UIManager( void ) : upGradeUI( nullptr )
+UIManager::UIManager(void)
 {
 
 }
@@ -81,9 +82,9 @@ bool	UIManager::Initialize( void )
 	posy = iexSystem::ScreenHeight / 2;				//	画面の中心
 
 	boardUI = new ScoreBoardUI(posx, posy, width, height);
-
-	upGradeUI = new UpGradeUI();
-
+	
+	//	プレイヤー自身のナンバーセット
+	p_num = gameParam->GetMyIndex();
 	//	neta
 	yaju = new Image();
 	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
@@ -102,7 +103,6 @@ void	UIManager::Release(void)
 	SafeDelete( mapUI );
 	SafeDelete( scoreUI );
 	SafeDelete( boardUI );
-	SafeDelete( upGradeUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -119,7 +119,12 @@ void	UIManager::Update(void)
 	mapUI->Update();
 	scoreUI->Update();
 	boardUI->Update();
-	upGradeUI->Update();
+	
+
+	//	値セット
+	scoreUI->SetScore(gameParam->GetPointInfo(p_num).point);
+	expUI->SetExp(levelManager->GetExp());
+
 	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 20) == 1)	check = true;
 	if (check){
 		//	neta
@@ -133,11 +138,9 @@ void	UIManager::Update(void)
 		}
 	}
 }
-
 //	描画
 void	UIManager::Render(void)
 {
-	playerManager->RenderHp();
 	enemyManager->RenderHp();
 	timerUI->Render();
 	hpUI->Render();
@@ -146,7 +149,6 @@ void	UIManager::Render(void)
 	mapUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
-	upGradeUI->Render();
 	//yaju->Render(IMAGE_MODE::SCALING);
 }
 
