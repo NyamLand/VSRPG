@@ -8,7 +8,6 @@
 #include	"LevelManager.h"
 #include	"InputManager.h"
 
-
 #include	"UpGradeUI.h"
 
 //***************************************************************
@@ -266,16 +265,13 @@ namespace
 
 		//	画像X座標読み込み位置設定
 		if ( level != levelManager->LEVEL_MAX - 1 )
-		{
 			curLevelIcon->sx = ( level + 1 ) * SRC_SIZE;
-		}
 		else
-		{
 			curLevelIcon->sx = level * SRC_SIZE;
-			//text = gameManager->GetFlavorText( select, level + 1 );
-		}
 
+		//	フレーバーテキスト読み込み、設定
 		text = gameManager->GetFlavorText( select, level + 1 );
+		
 		//	画像Y座標読み込み位置設定
 		curLevelIcon->sy = select * SRC_SIZE;
 	}
