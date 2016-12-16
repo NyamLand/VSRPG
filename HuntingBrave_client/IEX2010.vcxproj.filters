@@ -214,6 +214,9 @@
     <ClCompile Include="source\Font.cpp">
       <Filter>Source\Font</Filter>
     </ClCompile>
+    <ClCompile Include="source\NumberUI.cpp">
+      <Filter>Source\UI\NumberUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -392,6 +395,9 @@
     </ClInclude>
     <ClInclude Include="source\Font.h">
       <Filter>Source\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NumberUI.h">
+      <Filter>Source\UI\NumberUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -601,6 +607,9 @@
     </Filter>
     <Filter Include="Source\Font">
       <UniqueIdentifier>{17f11c64-ab66-469a-863e-033fc04e1472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\NumberUI">
+      <UniqueIdentifier>{a4f17874-75fc-406c-8529-1285a7eb19e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

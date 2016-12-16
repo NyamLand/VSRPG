@@ -4,6 +4,8 @@
 #include	"Random.h"
 #include	"EnemyManager.h"
 #include	"UIManager.h"
+#include	"GameParam.h"
+#include	"LevelManager.h"
 //***************************************************************
 //
 //	UIManagerクラス
@@ -80,7 +82,9 @@ bool	UIManager::Initialize( void )
 	posy = iexSystem::ScreenHeight / 2;				//	画面の中心
 
 	boardUI = new ScoreBoardUI(posx, posy, width, height);
-
+	
+	//	プレイヤー自身のナンバーセット
+	p_num = gameParam->GetMyIndex();
 	//	neta
 	yaju = new Image();
 	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
@@ -115,6 +119,12 @@ void	UIManager::Update(void)
 	mapUI->Update();
 	scoreUI->Update();
 	boardUI->Update();
+	
+
+	//	値セット
+	scoreUI->SetScore(gameParam->GetPointInfo(p_num).point);
+	expUI->SetExp(levelManager->GetExp());
+
 	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 20) == 1)	check = true;
 	if (check){
 		//	neta
@@ -128,7 +138,6 @@ void	UIManager::Update(void)
 		}
 	}
 }
-
 //	描画
 void	UIManager::Render(void)
 {

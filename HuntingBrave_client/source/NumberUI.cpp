@@ -28,10 +28,6 @@ NumberUI::NumberUI(int x, int y, int w, int h)
 	posx = x;
 	posy = y;	//	height / 6 = アイコンサイズの1/6分余白を空ける
 
-	//	SCORE文字アイコン
-	icon = new Image();
-//	icon->Initialize("DATA/UI/main_UI/ExpIcon.png", posx, posy, size, size, 0, 0, SCORE_MAX::ICON_SIZE, SCORE_MAX::ICON_SIZE);
-
 	//	経験値の値
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
@@ -40,14 +36,14 @@ NumberUI::NumberUI(int x, int y, int w, int h)
 
 		numbox[i] = -1;
 	}
-	score = 120;
-	score_digit = 0;
+	num = 0;
+	digit = 0;
+	color = NUM_COLOR::WHITE;
 }
 
 //	デストラクタ
 NumberUI::~NumberUI(void)
 {
-	SafeDelete(icon);
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		SafeDelete(number[i]);
@@ -61,16 +57,15 @@ NumberUI::~NumberUI(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	NumberUI::Update(void)
+void	NumberUI::Update(const Image* icon)
 {
 	//	経験値を1桁ずつに分ける
 	NumberManager();
 
 	//	各値に合わせたパラメータを入れる
 	for (int i = 0; i < DIGIT_MAX; i++){
-		NumberSet(number[i], numbox[i], i);
+		NumberSet(number[i], numbox[i], i, icon, color);
 	}
-
 
 }
 
@@ -83,7 +78,8 @@ void	NumberUI::NumberManager(void)
 {
 
 	//	桁数分の入れ物を用意(初期化)
-	score_digit = (int)log10((float)score) + 1;				//	桁数
+	digit = (int)log10((float)num) + 1;				//	桁数
+	if (num == 0) digit = 1;
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		numbox[i] = -1;
@@ -91,7 +87,7 @@ void	NumberUI::NumberManager(void)
 	//-------------------------------------------------------
 	//	もし、最大桁数を超えた値の場合最大桁数の最大数を表示
 	//-------------------------------------------------------
-	if (DIGIT_MAX < score_digit)
+	if (DIGIT_MAX < digit)
 	{
 		for (int i = 0; i < DIGIT_MAX; i++)
 		{
@@ -102,31 +98,31 @@ void	NumberUI::NumberManager(void)
 	//-------------------------------------------------------
 
 
-	for (int i = 0; i < score_digit; i++)
+	for (int i = 0; i < digit; i++)
 	{
 		int n = 10;	//	べき乗計算用
-		for (int j = score_digit - 2; j > i; j--){		//	-2はべき乗計算のために減らしている
+		for (int j = digit - 2; j > i; j--){		//	-2はべき乗計算のために減らしている
 			n *= 10;
 		}
 
 		//-------------------------
 		//	1の位の時のみ
 		//-------------------------
-		if (i == score_digit - 1)
+		if (i == digit - 1)
 		{
-			numbox[i] = score % 10;
+			numbox[i] = num % 10;
 			continue;
 		}
 
 		//-------------------------
 		//	その他の位
 		//-------------------------
-		numbox[i] = score / n % 10;
+		numbox[i] = num / n % 10;
 	}
 
 }
 
-void	NumberUI::NumberSet(Image* img, const int num, const int digit)
+void	NumberUI::NumberSet(Image* img, const int num, const int digit, const Image* icon, int color)
 {
 	//	0～9以外の値の場合飛ばす。
 	if (num < 0 || num > 9)
@@ -137,13 +133,14 @@ void	NumberUI::NumberSet(Image* img, const int num, const int digit)
 
 	//	桁数に対応した配置
 	img->w = size / 2;	img->h = size / 2;
-
-	img->x = icon->x + icon->w / 2 + img->w / 2 + (img->w * digit);	//	アイコンの右の位置からサイズの半分*桁で場所をとる
+	img->x = icon->x + icon->w / 2 + img->w / 2 + (img->w * digit); // アイコンの右の位置からサイズの半分*桁で場所をとる
 	img->y = icon->y;
 
 	//	数値に対応した切り取り範囲指定
-	img->sx = num * 64;	img->sy = 64 * 1;
+	img->sx = num * 64;	img->sy = 64 * color;
 	img->sw = 64;		img->sh = 64;
+	
+	img->renderflag = true;
 }
 
 //---------------------------------------------------------------------------------------
@@ -152,7 +149,6 @@ void	NumberUI::NumberSet(Image* img, const int num, const int digit)
 
 void	NumberUI::Render(void)
 {
-	icon->Render(IMAGE_MODE::ADOPTPARAM);
 
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
@@ -170,19 +166,34 @@ void	NumberUI::SetParam(int x, int y, int w, int h)
 	posx = x;
 	posy = y;	//	height / 6 = アイコンサイズの1/6分余白を空ける
 
-	//	SCORE文字アイコン
-	icon->x = x;	icon->y = y;	icon->w = w;	icon->h = h;
-
 }
 
 void	NumberUI::SetRenderFlag(bool c)
 {
-	icon->renderflag = c;
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		number[i]->renderflag = c;
 	}
 }
+
+void	NumberUI::SetNum(int n)
+{
+	num = n;
+}
+
+void	NumberUI::SetColor(int c)
+{
+	color = c;
+}
+
+void	NumberUI::SetColor(float r, float g, float b)
+{
+	for (int i = 0; i < DIGIT_MAX; i++)
+	{
+		number[i]->color = Vector3(r, g, b);
+	}
+}
+
 //---------------------------------------------------------------------------------------
 //	情報取得
 //---------------------------------------------------------------------------------------

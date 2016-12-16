@@ -140,6 +140,7 @@
     <ClCompile Include="source\NameManager.cpp" />
     <ClCompile Include="source\NameUI.cpp" />
     <ClCompile Include="source\NetState.cpp" />
+    <ClCompile Include="source\NumberUI.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
     <ClCompile Include="source\Random.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="source\NameManager.h" />
     <ClInclude Include="source\NameUI.h" />
     <ClInclude Include="source\NetState.h" />
+    <ClInclude Include="source\NumberUI.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
     <ClInclude Include="source\Random.h" />

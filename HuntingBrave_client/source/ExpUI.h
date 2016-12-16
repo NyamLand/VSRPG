@@ -21,9 +21,7 @@ class ExpUI
 {
 private:
 	Image* icon;
-	Image* number[DIGIT_MAX];
-	int numbox[DIGIT_MAX];
-	int	exp, exp_digit;
+	NumberUI*	number;
 	int	posx, posy, size;
 
 public:
@@ -36,6 +34,7 @@ public:
 	void	ExpManager(void);
 	void	SetParam(int x, int y, int w, int h);
 	void	SetRenderFlag(bool c);
+	void	SetExp(int e);
 	void	NumberSet(Image* img, const int num, const int digit);
 	Image*	GetImageExp(){ return icon; }
 	void	Render(void);

@@ -2,6 +2,8 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
+#include	"GameParam.h"
+#include	"LevelManager.h"
 #include	"Image.h"
 #include	"NumberUI.h"
 #include	"ExpUI.h"
@@ -44,6 +46,7 @@ ScoreBoardUI::ScoreBoardUI(int x, int y, int w, int h)
 		exp[i] = new ExpUI(0, 0, 0, 0);
 
 		//p_icon[i]->alpha = 0.6f;
+		
 	}
 }
 
@@ -67,29 +70,11 @@ ScoreBoardUI::~ScoreBoardUI(void)
 //	XV
 void	ScoreBoardUI::Update(void)
 {
-	if (KEY_Get(KEY_SPACE) == 1)
-	{
-		board->renderflag = true;
-		for (int i = 0; i < PLAYER_MAX; i++)
-		{
-			p_icon[i]->renderflag = true;
-			score[i]->SetRenderFlag(true);
-			exp[i]->SetRenderFlag(true);
-		}
-	}
-	else
-	{
-		board->renderflag = false;
-		for (int i = 0; i < PLAYER_MAX; i++)
-		{
-			p_icon[i]->renderflag = false;
-			score[i]->SetRenderFlag(false);
-			exp[i]->SetRenderFlag(false);
-		}
-	}
-
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
+		score[i]->SetScore(gameParam->GetPointInfo(i).point);
+		exp[i]->SetExp(levelManager->GetExp());
+		
 		p_icon[i]->w = BOARD_MAX::ICON_SIZE;
 		p_icon[i]->h = BOARD_MAX::ICON_SIZE;
 		p_icon[i]->x = board->x - (board->w / 2) + p_icon[i]->w;	//	¶’[
@@ -109,6 +94,29 @@ void	ScoreBoardUI::Update(void)
 		x = x + w;
 		exp[i]->SetParam(x, p_icon[i]->y, p_icon[i]->w, p_icon[i]->h);
 		exp[i]->Update();
+
+		//	
+		if (KEY_Get(KEY_SPACE) == 1)
+		{
+			board->renderflag = true;
+			for (int i = 0; i < PLAYER_MAX; i++)
+			{
+				p_icon[i]->renderflag = true;
+				score[i]->SetRenderFlag(true);
+				exp[i]->SetRenderFlag(true);
+			}
+		}
+		else
+		{
+			board->renderflag = false;
+			for (int i = 0; i < PLAYER_MAX; i++)
+			{
+				p_icon[i]->renderflag = false;
+				score[i]->SetRenderFlag(false);
+				exp[i]->SetRenderFlag(false);
+			}
+		}
+
 	}
 }
 

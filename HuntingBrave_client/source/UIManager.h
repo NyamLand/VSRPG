@@ -41,6 +41,9 @@ private:
 	ScoreUI*		scoreUI;
 	ScoreBoardUI*	boardUI;
 
+	//	ƒvƒŒƒCƒ„[”Ô†
+	int				p_num;
+
 	//	neta
 	Image*			yaju;
 	bool			check;
