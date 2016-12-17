@@ -225,7 +225,7 @@ namespace
 				if ( j > level )
 					levelIcon[i * levelManager->LEVEL_MAX + j]->Render( IMAGE_MODE::NORMAL, shader2D, "blackWhite" );
 				else
-					levelIcon[i * levelManager->LEVEL_MAX + j]->Render(IMAGE_MODE::NORMAL );
+					levelIcon[i * levelManager->LEVEL_MAX + j]->Render( IMAGE_MODE::NORMAL );
 			}
 		}
 
@@ -261,16 +261,17 @@ namespace
 	void	UpGradeUI::SetBigIconSrcPos( void )
 	{
 		//	レベル取得
-		char level = levelManager->GetLevel( select );
+		char level = levelManager->GetLevel( select ) + 1;
 
 		//	画像X座標読み込み位置設定
-		if ( level != levelManager->LEVEL_MAX - 1 )
-			curLevelIcon->sx = ( level + 1 ) * SRC_SIZE;
+		if ( level == levelManager->LEVEL_MAX ) 
+			curLevelIcon->sx = ( level - 1 ) * SRC_SIZE;
 		else
 			curLevelIcon->sx = level * SRC_SIZE;
 
 		//	フレーバーテキスト読み込み、設定
-		text = gameManager->GetFlavorText( select, level + 1 );
+		if ( level == 0 )		text = "なし";
+		else text = gameManager->GetFlavorText( select, level );
 		
 		//	画像Y座標読み込み位置設定
 		curLevelIcon->sy = select * SRC_SIZE;

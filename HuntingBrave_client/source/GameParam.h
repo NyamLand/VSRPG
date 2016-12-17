@@ -67,7 +67,7 @@ public:
 	void	ReceiveResponse( const LPSTR& data );
 	
 	//	“®ìŠÖ”
-	void CheckInputData( int keyType );
+	void CheckInputData( char keyType );
 
 	//	î•ñİ’è
 	void	SetPlayerParam( int id, const PlayerParam& param );

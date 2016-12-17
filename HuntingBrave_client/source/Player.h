@@ -74,6 +74,8 @@ private:
 	int	id;
 	PlayerParam		playerParam;
 	iex3DObj* org;
+	iex3DObj* nextObj;
+	char	curClass;
 
 	enum	MODE//	‰¼
 	{
@@ -102,5 +104,5 @@ public:
 
 	//	î•ñİ’è
 	void	SetPlayerParam( const PlayerParam& playerParam );
-	void	SetModel( void );
+	void	SetClassChange( iex3DObj*	nextObj, char nextClass );
 };

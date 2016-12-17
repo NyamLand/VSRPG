@@ -34,7 +34,7 @@ LevelManager*	levelManager = nullptr;
 			//	ŠeƒŒƒxƒ‹‰Šú‰»
 			for ( int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++ )
 			{
-				levelInfo[p].level[i] = 0;
+				levelInfo[p].level[i] = -1;
 			}
 		}
 

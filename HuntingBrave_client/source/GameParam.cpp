@@ -249,20 +249,16 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendInputInfo( void )
 	{
 		//	回避ボタン入力
-		char	keyA = ( char )KEY( KEY_TYPE::A );
+		CheckInputData( KEY_TYPE::A );
 
 		//	剣攻撃ボタン入力
-		char	keyB = ( char )KEY( KEY_TYPE::B );
+		CheckInputData( KEY_TYPE::B );
 		
 		//	魔法攻撃ボタン入力
-		char	keyX = ( char )KEY( KEY_TYPE::X );
+		CheckInputData( KEY_TYPE::X );
 
 		//	Yボタン入力
-		char	keyY = ( char )KEY( KEY_TYPE::Y );
-
-		//	送信
-		SendInputData		sendInputData( keyA, keyB, keyX, keyY );
-		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
+		CheckInputData( KEY_TYPE::Y );
 	}
 
 	//	討伐情報送信
@@ -403,6 +399,22 @@ GameParam*	gameParam = nullptr;
 		case RESPONSE_COMMAND::GAME_START:
 			break;
 		}
+	}
+
+//----------------------------------------------------------------------------------------------
+//	動作関数
+//----------------------------------------------------------------------------------------------
+
+	//	キー情報チェック
+	void	GameParam::CheckInputData( char keyType )
+	{
+		char keyState = ( char )KEY( keyType );
+		if ( keyState == KEY_STATE::STAY || 
+			keyState == KEY_STATE::NO_INPUT )	return;
+
+		//	送信
+		SendInputData	sendInputData( keyType, keyState );
+		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
 	}
 
 //----------------------------------------------------------------------------------------------

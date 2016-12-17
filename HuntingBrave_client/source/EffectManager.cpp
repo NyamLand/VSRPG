@@ -1,7 +1,9 @@
 
+
 #include	"iextreme.h"
+#include	<list>
 #include	"GlobalFunction.h"
-#include	"Effect.h"
+#include	"EffectManager.h"
 
 //***************************************************************
 //
@@ -19,18 +21,68 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
+	EffectManager::EffectManager( void )
+	{
+		effectList.clear();
+	}
 
 	//	デストラクタ
+	EffectManager::~EffectManager( void )
+	{
+		Release();
+	}
 
+	//	初期化
+	bool	EffectManager::Initialize( void )
+	{
+		effectList.clear();
+		return	true;
+	}
+
+	//	解放
+	void	EffectManager::Release( void )
+	{
+		for ( auto it = effectList.begin(); it != effectList.end(); )
+		{
+			it = effectList.erase( it );
+		}
+	}
+	
 //------------------------------------------------------------------------------------
 //	更新・描画
 //------------------------------------------------------------------------------------
+
+	//	更新
+	void	EffectManager::Update( void )
+	{
+		for ( auto it = effectList.begin(); it != effectList.end(); )
+		{
+			( *it )->Update();
+
+			if ( ( *it )->GetEraseFlag() )
+			{
+				it = effectList.erase( it );
+				continue;
+			}
+
+			it++;
+		}
+	}
+
+	//	描画
+	void	EffectManager::Render( void )
+	{
+		for ( auto it = effectList.begin(); it != effectList.end(); it++ )
+		{
+			( *it )->Render();
+		}
+	}
 
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
 
-	//	
+//	
 
 //------------------------------------------------------------------------------------
 //	情報設定

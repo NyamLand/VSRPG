@@ -15,6 +15,26 @@
 //	グローバル
 //-------------------------------------------------------------------------------------
 
+namespace
+{
+	//	定数
+	#define	PLAYER_SCALE	0.2f
+
+	//	ファイル名
+	namespace
+	{
+		const LPSTR ModelFileName[] =
+		{
+			"DATA/CHR/suppin/suppin.IEM",			//	すっぴん
+			"DATA/CHR/Magician/magician.IEM",	//	マジシャン
+			"DATA/CHR/suppin/suppin.IEM",			//	プリースト
+			"DATA/CHR/Fighter/fighter.IEM",			//	ファイター
+			"DATA/CHR/suppin/suppin.IEM",			//	ナイト
+			"DATA/CHR/suppin/suppin.IEM"			//	アサシン
+		};
+	}
+}
+
 //-------------------------------------------------------------------------------------
 //	初期化・解放
 //-------------------------------------------------------------------------------------
@@ -37,6 +57,9 @@
 	//	初期化
 	bool	PlayerManager::Initialize( void )
 	{
+		//	モデル読み込み
+		LoadModel();
+
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			player[p] = nullptr;
@@ -56,6 +79,28 @@
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			SafeDelete( player[p] );
+		}
+
+		for ( int i = 0; i < PLAYER_MODEL_TYPE::MODEL_MAX; i++ )
+		{
+			SafeDelete( obj[i] );
+		}
+	}
+
+	//	モデル読み込み
+	void	PlayerManager::LoadModel( void )
+	{
+		for ( int i = 0; i < PLAYER_MODEL_TYPE::MODEL_MAX; i++ )
+		{
+			obj[i] = nullptr;
+			obj[i] = 	new iex3DObj( ModelFileName[i] );
+			
+			//	情報設定
+			obj[i]->SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
+			obj[i]->SetAngle( 0.0f );
+			obj[i]->SetScale( PLAYER_SCALE );
+			obj[i]->SetMotion( MOTION_NUM::POSUTURE );
+			obj[i]->Update();
 		}
 	}
 
@@ -100,6 +145,7 @@
 
 		}
 	}
+
 //-------------------------------------------------------------------------------------
 //	動作関数
 //-------------------------------------------------------------------------------------
@@ -116,6 +162,10 @@
 
 		//	プレイヤー生成
 		player[id] = new Player();
+		player[id]->SetObj( obj[PLAYER_MODEL_TYPE::NORMAL]->Clone() );
+		player[id]->SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
+		player[id]->SetAngle( 0.0f );
+		player[id]->SetScale( PLAYER_SCALE );
 		player[id]->Initialize( id );
 	}
 

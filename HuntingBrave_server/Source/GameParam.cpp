@@ -89,6 +89,10 @@ GameParam*	gameParam = nullptr;
 		//	終端通知
 		char end = -1;
 		send( client, &end, 1 );
+
+		//	キー情報リセット
+		inputManager->ResetInput( client );
+
 		return client;
 	}
 
@@ -223,10 +227,7 @@ GameParam*	gameParam = nullptr;
 		ReceiveInputData*	receiveInputData = ( ReceiveInputData* )data;
 
 		//	ボタンの入力情報設定
-		inputManager->SetInput( client, KEY_TYPE::A, receiveInputData->keyA );
-		inputManager->SetInput( client, KEY_TYPE::B, receiveInputData->keyB );
-		inputManager->SetInput( client, KEY_TYPE::X, receiveInputData->keyX );
-		inputManager->SetInput( client, KEY_TYPE::Y, receiveInputData->keyY );
+		inputManager->SetInput( client, receiveInputData->key, receiveInputData->keyState );
 		return	-1;
 	}
 

@@ -72,6 +72,24 @@ InputManager*	inputManager = nullptr;
 		inputInfo[id].axisY = axisY;
 	}
 
+	//	ì¸óÕèÓïÒÉäÉZÉbÉg
+	void	InputManager::ResetInput( int client )
+	{
+		for( auto it = inputInfo[client].keyState.begin(); it != inputInfo[client].keyState.end(); it++ )
+		{
+			switch ( it->second )
+			{
+			case KEY_STATE::UP:
+				it->second = KEY_STATE::NO_INPUT;
+				break;
+
+			case KEY_STATE::ENTER:
+				it->second = KEY_STATE::STAY;
+				break;
+			}
+		}
+	}
+
 //----------------------------------------------------------------------------------------------
 //	èÓïÒéÊìæ
 //----------------------------------------------------------------------------------------------

@@ -172,9 +172,6 @@
     <ClCompile Include="source\NetState.cpp">
       <Filter>Source\NetState</Filter>
     </ClCompile>
-    <ClCompile Include="source\Effect.cpp">
-      <Filter>Source\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="source\ScoreBoardUI.cpp">
       <Filter>Source\UI\ScoreBoard</Filter>
     </ClCompile>
@@ -216,6 +213,21 @@
     </ClCompile>
     <ClCompile Include="source\NumberUI.cpp">
       <Filter>Source\UI\NumberUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UpGradeUI.cpp">
+      <Filter>Source\UI\UpGradeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sceneLoad.cpp">
+      <Filter>Source\Scene\sceneLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EffectManager.cpp">
+      <Filter>Source\Manager\EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Effect.cpp">
+      <Filter>Source\Effect\BaseEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LightSphereEffect.cpp">
+      <Filter>Source\Effect\LightSphereEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -354,9 +366,6 @@
     <ClInclude Include="source\NetState.h">
       <Filter>Source\NetState</Filter>
     </ClInclude>
-    <ClInclude Include="source\Effect.h">
-      <Filter>Source\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="source\ScoreBoardUI.h">
       <Filter>Source\UI\ScoreBoard</Filter>
     </ClInclude>
@@ -398,6 +407,21 @@
     </ClInclude>
     <ClInclude Include="source\NumberUI.h">
       <Filter>Source\UI\NumberUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UpGradeUI.h">
+      <Filter>Source\UI\UpGradeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneLoad.h">
+      <Filter>Source\Scene\sceneLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EffectManager.h">
+      <Filter>Source\Manager\EffectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effect.h">
+      <Filter>Source\Effect\BaseEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LightSphereEffect.h">
+      <Filter>Source\Effect\LightSphereEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -611,6 +635,24 @@
     <Filter Include="Source\UI\NumberUI">
       <UniqueIdentifier>{a4f17874-75fc-406c-8529-1285a7eb19e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\shader2D">
+      <UniqueIdentifier>{d58c73c9-9693-43a9-ad06-9dee79bcb3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\shader3D">
+      <UniqueIdentifier>{bbb1566f-7c2a-4058-bb7a-d799b96dc850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\UpGradeUI">
+      <UniqueIdentifier>{983e0813-75cc-4b61-bc2e-26622f568049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\EffectManager">
+      <UniqueIdentifier>{4190cef5-3752-4c1c-8567-d4cd04231207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Effect\BaseEffect">
+      <UniqueIdentifier>{cf958fd1-9fef-413c-8d93-17330bf2db98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Effect\LightSphereEffect">
+      <UniqueIdentifier>{7a56858e-23e6-4a94-a950-cd18a53405d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">
@@ -621,5 +663,16 @@
     <CustomBuild Include="DATA\Shader\3DEx.fx">
       <Filter>Shader</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DATA\Shader\BlackWhite.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\NegaPosi.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\colorChange.fx">
+      <Filter>Shader\shader3D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

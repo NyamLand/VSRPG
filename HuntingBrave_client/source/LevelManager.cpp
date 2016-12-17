@@ -26,7 +26,7 @@
 		//	ŠeƒŒƒxƒ‹‰Šú‰»
 		for ( int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++ )
 		{
-			levelInfo.level[i] = 0;
+			levelInfo.level[i] = -1;
 		}
 	}
 

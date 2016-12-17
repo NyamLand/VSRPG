@@ -21,7 +21,7 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-UIManager::UIManager(void)
+UIManager::UIManager(void) : upGradeUI( nullptr )
 {
 
 }
@@ -81,14 +81,18 @@ bool	UIManager::Initialize( void )
 	posx = iexSystem::ScreenWidth / 2;				//	画面の中心
 	posy = iexSystem::ScreenHeight / 2;				//	画面の中心
 
-	boardUI = new ScoreBoardUI(posx, posy, width, height);
+	boardUI = new ScoreBoardUI( posx, posy, width, height );
+
+	//	UpGradeUI初期化
+	upGradeUI = new UpGradeUI();
 	
 	//	プレイヤー自身のナンバーセット
 	p_num = gameParam->GetMyIndex();
+	
 	//	neta
 	yaju = new Image();
-	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
-	yaju->SetScaling(0.01f);
+	yaju->Initialize( "DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540 );
+	yaju->SetScaling( 0.01f );
 	check = false;
 	return	true;
 }
@@ -103,6 +107,7 @@ void	UIManager::Release(void)
 	SafeDelete( mapUI );
 	SafeDelete( scoreUI );
 	SafeDelete( boardUI );
+	SafeDelete( upGradeUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -119,11 +124,11 @@ void	UIManager::Update(void)
 	mapUI->Update();
 	scoreUI->Update();
 	boardUI->Update();
+	upGradeUI->Update();
 	
-
 	//	値セット
-	scoreUI->SetScore(gameParam->GetPointInfo(p_num).point);
-	expUI->SetExp(levelManager->GetExp());
+	scoreUI->SetScore( gameParam->GetPointInfo( p_num ).point );
+	expUI->SetExp( levelManager->GetExp() );
 
 	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 20) == 1)	check = true;
 	if (check){
@@ -149,6 +154,7 @@ void	UIManager::Render(void)
 	mapUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
+	upGradeUI->Render();
 	//yaju->Render(IMAGE_MODE::SCALING);
 }
 

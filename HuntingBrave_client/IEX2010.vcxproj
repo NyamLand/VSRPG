@@ -117,6 +117,7 @@
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\CSVReader.cpp" />
     <ClCompile Include="source\Effect.cpp" />
+    <ClCompile Include="source\EffectManager.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyHp.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="source\ItemSelect.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
     <ClCompile Include="source\LevelManager.cpp" />
+    <ClCompile Include="source\LightSphereEffect.cpp" />
     <ClCompile Include="source\Magic.cpp" />
     <ClCompile Include="source\MagicManager.cpp" />
     <ClCompile Include="source\MapUI.cpp" />
@@ -193,6 +195,7 @@
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\CSVReader.h" />
     <ClInclude Include="source\Effect.h" />
+    <ClInclude Include="source\EffectManager.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\EnemyHp.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="source\ItemSelect.h" />
     <ClInclude Include="source\ItemUI.h" />
     <ClInclude Include="source\LevelManager.h" />
+    <ClInclude Include="source\LightSphereEffect.h" />
     <ClInclude Include="source\Magic.h" />
     <ClInclude Include="source\MagicManager.h" />
     <ClInclude Include="source\MapUI.h" />
@@ -260,6 +264,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="DATA\Shader\BlackWhite.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\colorChange.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="DATA\Shader\NegaPosi.fx">

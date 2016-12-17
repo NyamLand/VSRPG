@@ -54,30 +54,28 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void ) : id( -1 )
+	Player::Player( void ) : nextObj( nullptr ),
+		id( -1 )
 	{
-		org = new iex3DObj( "DATA/CHR/Fighter/fighter.IEM" );	
+		
 	}
 
 	//	デストラクタ
 	Player::~Player( void )
 	{
-		SafeDelete( org );
+		SafeDelete( nextObj );
 	}
 
 	//	初期化
 	bool	Player::Initialize( int id )
 	{
-		//	読み込み
-		Load( "DATA/CHR/suppin/suppin.IEM" );
+		if ( obj == nullptr )	return	false;
 
 		//	情報設定
-		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
-		SetAngle( 0.0f );
-		SetScale( PLAYER_SCALE );
 		SetMotion( MOTION_NUM::POSUTURE );
 		SetMode( MODE::MOVE );
-		lifeInfo.Initialize(MAX_LIFE);
+		lifeInfo.Initialize( MAX_LIFE );
+
 		//	当たり判定形状設定
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
@@ -216,10 +214,11 @@ namespace
 		lifeInfo.life = ( playerParam.life );
 	}
 
-	//	プレイヤー設定
-	void	Player::SetModel( void )
+	//	クラスチェンジ設定
+	void	Player::SetClassChange( iex3DObj*	nextObj, char nextClass )
 	{
-
+		this->nextObj = nextObj;
+		curClass = nextClass;
 	}
 
 //------------------------------------------------------------------------------------

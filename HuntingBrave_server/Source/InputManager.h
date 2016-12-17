@@ -67,6 +67,7 @@ public:
 	//	î•ñİ’è
 	void	SetInput( int id, char keyType, char keyState );
 	void	SetAxis( int id, float axisX, float axisY );
+	void	ResetInput( int client );
 
 	//	î•ñæ“¾
 	InputInfo&	GetInput( int id );
