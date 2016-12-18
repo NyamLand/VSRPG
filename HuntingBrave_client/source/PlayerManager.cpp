@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	<vector>
 #include	"UIManager.h"
 #include	"GameParam.h"
 #include	"PlayerManager.h"
@@ -15,26 +16,6 @@
 //	グローバル
 //-------------------------------------------------------------------------------------
 
-namespace
-{
-	//	定数
-	#define	PLAYER_SCALE	0.2f
-
-	//	ファイル名
-	namespace
-	{
-		const LPSTR ModelFileName[] =
-		{
-			"DATA/CHR/suppin/suppin.IEM",			//	すっぴん
-			"DATA/CHR/Magician/magician.IEM",	//	マジシャン
-			"DATA/CHR/suppin/suppin.IEM",			//	プリースト
-			"DATA/CHR/Fighter/fighter.IEM",			//	ファイター
-			"DATA/CHR/suppin/suppin.IEM",			//	ナイト
-			"DATA/CHR/suppin/suppin.IEM"			//	アサシン
-		};
-	}
-}
-
 //-------------------------------------------------------------------------------------
 //	初期化・解放
 //-------------------------------------------------------------------------------------
@@ -42,10 +23,12 @@ namespace
 	//	コンストラクタ
 	PlayerManager::PlayerManager( void )
 	{
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for ( int i = 0; i < PLAYER_TYPE::MODEL_MAX; i++ )
 		{
-			player[p] = nullptr;
+			obj[i] = nullptr;
 		}
+
+		playerList.clear();
 	}
 		
 	//	デストラクタ
@@ -57,18 +40,12 @@ namespace
 	//	初期化
 	bool	PlayerManager::Initialize( void )
 	{
-		//	モデル読み込み
-		LoadModel();
+		//	リスト初期化
+		playerList.clear();
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			player[p] = nullptr;
-
-			if ( gameParam->GetPlayerActive( p ) )
-			{
-				PlayerParam		playerParam = gameParam->GetPlayerParam( p );
-				SetPlayer( p );
-			}
+			SetPlayer( p );
 		}
 		return	true;
 	}
@@ -76,31 +53,9 @@ namespace
 	//	解放
 	void	PlayerManager::Release( void )
 	{
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for ( auto it = playerList.begin(); it != playerList.end(); )
 		{
-			SafeDelete( player[p] );
-		}
-
-		for ( int i = 0; i < PLAYER_MODEL_TYPE::MODEL_MAX; i++ )
-		{
-			SafeDelete( obj[i] );
-		}
-	}
-
-	//	モデル読み込み
-	void	PlayerManager::LoadModel( void )
-	{
-		for ( int i = 0; i < PLAYER_MODEL_TYPE::MODEL_MAX; i++ )
-		{
-			obj[i] = nullptr;
-			obj[i] = 	new iex3DObj( ModelFileName[i] );
-			
-			//	情報設定
-			obj[i]->SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
-			obj[i]->SetAngle( 0.0f );
-			obj[i]->SetScale( PLAYER_SCALE );
-			obj[i]->SetMotion( MOTION_NUM::POSUTURE );
-			obj[i]->Update();
+			it = playerList.erase( it );
 		}
 	}
 
@@ -114,11 +69,8 @@ namespace
 		//	全プレイヤー更新
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			//	存在チェック
-			if ( player[p] == nullptr )	continue;
-			
-			//	プレイヤー更新
-			player[p]->Update( gameParam->GetPlayerParam( p ) );
+			if ( gameParam->GetPlayerActive( p ) )
+				playerList[p]->Update();
 		}
 	}
 
@@ -127,28 +79,54 @@ namespace
 	{
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			//	存在チェック
-			if ( player[p] == nullptr )	continue;
-
-			//	描画
-			player[p]->Render();
+			if ( gameParam->GetPlayerActive( p ) )
+				playerList[p]->Render();
 		}
 	}
 
-
-	void	PlayerManager::RenderHp(void)
+	//	HPバー描画
+	void	PlayerManager::RenderHp( void )
 	{
-		for (int p = 0; p < PLAYER_MAX; p++)
+		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			if (player[p] == nullptr)	continue;
-			player[p]->BarRender();
-
+			if ( gameParam->GetPlayerActive( p ) )
+				playerList[p]->BarRender();
 		}
 	}
 
 //-------------------------------------------------------------------------------------
 //	動作関数
 //-------------------------------------------------------------------------------------
+
+	//	クラスチェンジ
+	void	PlayerManager::ClassChange( int id, char nextClass )
+	{
+		Player*	 player = nullptr;
+
+		switch ( nextClass )
+		{
+		case PLAYER_TYPE::NORMAL:
+			player = new Suppin();
+			break;
+
+		case PLAYER_TYPE::FIGHTER:
+			player = new Fighter();
+			break;
+
+		case PLAYER_TYPE::MAGICIAN:
+			player = new Magician();
+			break;
+
+		default:
+			player = new Suppin();
+		}
+
+		//	モデルセット、初期化
+		player->Initialize( id );
+
+		//	リストに追加
+		playerList.insert( playerList.begin() + id, player );
+	}
 
 //-------------------------------------------------------------------------------------
 //	情報設定
@@ -157,16 +135,8 @@ namespace
 	//	プレイヤー生成
 	void	PlayerManager::SetPlayer( int id )
 	{
-		//	存在チェック
-		if ( player[id] != nullptr )	return;
-
 		//	プレイヤー生成
-		player[id] = new Player();
-		player[id]->SetObj( obj[PLAYER_MODEL_TYPE::NORMAL]->Clone() );
-		player[id]->SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
-		player[id]->SetAngle( 0.0f );
-		player[id]->SetScale( PLAYER_SCALE );
-		player[id]->Initialize( id );
+		ClassChange( id, PLAYER_TYPE::NORMAL );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -176,5 +146,5 @@ namespace
 	//	Player情報取得
 	Player*&	PlayerManager::GetPlayer( int id )
 	{
-		return	player[id];
+		return	playerList[id];
 	}

@@ -67,6 +67,7 @@
 		SafeDelete( mainView );
 		SafeDelete( back );
 		SafeDelete( lovelive );
+		SafeDelete( gameParam );
 		gameManager->Release();
 		sound->StopBGM();
 	}

@@ -124,6 +124,7 @@
     <ClCompile Include="source\EnemyManager.cpp" />
     <ClCompile Include="source\Equipments.cpp" />
     <ClCompile Include="source\ExpUI.cpp" />
+    <ClCompile Include="source\Fighter.cpp" />
     <ClCompile Include="source\Font.cpp" />
     <ClCompile Include="source\GameData.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="source\LevelManager.cpp" />
     <ClCompile Include="source\LightSphereEffect.cpp" />
     <ClCompile Include="source\Magic.cpp" />
+    <ClCompile Include="source\Magician.cpp" />
     <ClCompile Include="source\MagicManager.cpp" />
     <ClCompile Include="source\MapUI.cpp" />
     <ClCompile Include="source\NameInput.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="source\SocketClient.cpp" />
     <ClCompile Include="source\Sound.cpp" />
     <ClCompile Include="source\Status.cpp" />
+    <ClCompile Include="source\Suppin.cpp" />
     <ClCompile Include="source\system\Framework.cpp" />
     <ClCompile Include="source\system\System.cpp" />
     <ClCompile Include="source\system\WinMain.cpp" />
@@ -202,6 +205,7 @@
     <ClInclude Include="source\EnemyManager.h" />
     <ClInclude Include="source\Equipments.h" />
     <ClInclude Include="source\ExpUI.h" />
+    <ClInclude Include="source\Fighter.h" />
     <ClInclude Include="source\Font.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
@@ -214,6 +218,7 @@
     <ClInclude Include="source\LevelManager.h" />
     <ClInclude Include="source\LightSphereEffect.h" />
     <ClInclude Include="source\Magic.h" />
+    <ClInclude Include="source\Magician.h" />
     <ClInclude Include="source\MagicManager.h" />
     <ClInclude Include="source\MapUI.h" />
     <ClInclude Include="source\NameInput.h" />
@@ -245,6 +250,7 @@
     <ClInclude Include="source\SocketClient.h" />
     <ClInclude Include="source\Sound.h" />
     <ClInclude Include="source\Status.h" />
+    <ClInclude Include="source\Suppin.h" />
     <ClInclude Include="source\system\Framework.h" />
     <ClInclude Include="source\system\Scene.h" />
     <ClInclude Include="source\sceneMain.h" />

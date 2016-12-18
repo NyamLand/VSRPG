@@ -59,6 +59,7 @@ public:
 	void	ReceiveMagicEraseInfo( const LPSTR& data );
 	void	ReceiveLevelInfo( const LPSTR& data );
 	void	ReceiveExpInfo( const LPSTR& data );
+	void	ReceiveClassChangeInfo( const LPSTR& data );
 
 	//	ƒƒOƒCƒ“î•ñóM
 	void	ReceiveSignUpInfo( const LPSTR& data );

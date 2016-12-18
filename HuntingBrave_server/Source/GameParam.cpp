@@ -266,7 +266,10 @@ GameParam*	gameParam = nullptr;
 	//	サインアップ情報受信
 	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
 	{
-		if ( gameManager->GetGameState() )	return	-1;
+		if ( gameManager->GetGameState() )
+		{
+			return	-1;
+		}
 
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;

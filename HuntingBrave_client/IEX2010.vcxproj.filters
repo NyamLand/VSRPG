@@ -70,9 +70,6 @@
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>Source\Manager\PlayerManager</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player.cpp">
-      <Filter>Source\Player</Filter>
-    </ClCompile>
     <ClCompile Include="source\Status.cpp">
       <Filter>Source\Status</Filter>
     </ClCompile>
@@ -229,6 +226,18 @@
     <ClCompile Include="source\LightSphereEffect.cpp">
       <Filter>Source\Effect\LightSphereEffect</Filter>
     </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>Source\Player\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Suppin.cpp">
+      <Filter>Source\Player\Suppin</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fighter.cpp">
+      <Filter>Source\Player\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Magician.cpp">
+      <Filter>Source\Player\Magician</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -248,9 +257,6 @@
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
       <Filter>Source\Manager\PlayerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Player.h">
-      <Filter>Source\Player</Filter>
     </ClInclude>
     <ClInclude Include="source\Status.h">
       <Filter>Source\Status</Filter>
@@ -422,6 +428,18 @@
     </ClInclude>
     <ClInclude Include="source\LightSphereEffect.h">
       <Filter>Source\Effect\LightSphereEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>Source\Player\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Suppin.h">
+      <Filter>Source\Player\Suppin</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fighter.h">
+      <Filter>Source\Player\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Magician.h">
+      <Filter>Source\Player\Magician</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -652,6 +670,18 @@
     </Filter>
     <Filter Include="Source\Effect\LightSphereEffect">
       <UniqueIdentifier>{7a56858e-23e6-4a94-a950-cd18a53405d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Suppin">
+      <UniqueIdentifier>{d0a3e358-844f-4bd4-8e49-17944714b8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Player">
+      <UniqueIdentifier>{d702ce97-0fba-4944-a6e2-d94e58f2d584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Fighter">
+      <UniqueIdentifier>{f40cc6ae-c7da-4619-a610-b659684d1a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Magician">
+      <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

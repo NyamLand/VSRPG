@@ -24,7 +24,7 @@
 			MAGIC_ERASE,
 			LEVEL_INFO,
 			EXP_INFO,
-			SCENE_INFO
+			CLASS_CHANGE_INFO,
 		};
 	}
 }
@@ -114,11 +114,12 @@
 		SendExpData( int exp ) :	exp( exp ){}
 	};
 
-	//	シーン切り替え情報
-	struct SendSceneData
+	//	クラスチェンジ情報
+	struct SendClassChangeData
 	{
-		char com = SEND_COMMAND::SCENE_INFO;
-		char	nextScene;
-		SendSceneData( char nextScene ) : nextScene( nextScene ){}
+		char com = SEND_COMMAND::CLASS_CHANGE_INFO;
+		int		id;
+		char		nextClass;
+		SendClassChangeData( int id, char nextClass ) : 
+			id( id ), nextClass( nextClass ){}
 	};
-	

@@ -169,6 +169,10 @@ GameParam*	gameParam = nullptr;
 				ReceiveExpInfo( data );
 				break;
 
+			case RECEIVE_COMMAND::CLASS_CHANGE_INFO:
+				ReceiveClassChangeInfo( data );
+				break;
+
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;
@@ -216,11 +220,7 @@ GameParam*	gameParam = nullptr;
 		inputManager->GetStickInputLeft( axisX, axisY );
 
 		//	フレーム情報取得
-		int	frame = 0;
-		if ( playerManager->GetPlayer( myIndex ) != nullptr )
-		{
-			frame = playerManager->GetPlayer( myIndex )->GetFrame();
-		}
+		int frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
 		//	送信
 		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
@@ -355,6 +355,13 @@ GameParam*	gameParam = nullptr;
 		levelManager->SetExp( receiveExpdata->exp );
 	}
 
+	//	クラスチェンジ情報受信
+	void	GameParam::ReceiveClassChangeInfo( const LPSTR& data )
+	{
+		ReceiveClassChangeData* receiveData = ( ReceiveClassChangeData* )data;
+		playerManager->ClassChange( receiveData->id, receiveData->nextClass );
+	}
+
 //----------------------------------------------------------------------------------------------
 //	ログイン関連受信
 //----------------------------------------------------------------------------------------------
@@ -426,6 +433,7 @@ GameParam*	gameParam = nullptr;
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
+		//playerManager->ClassChange( id, PLAYER_TYPE::NORMAL );
 	}
 
 	//	点数情報設定

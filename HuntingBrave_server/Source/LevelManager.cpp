@@ -63,8 +63,14 @@ LevelManager*	levelManager = nullptr;
 		levelInfo[id].level[levelType]++;
 
 		//	レベル上限設定
-		if ( levelInfo[id].level[levelType] >= LEVEL_MAX )	
-			levelInfo[id].level[levelType] = LEVEL_MAX;
+		if ( levelInfo[id].level[levelType] >= LEVEL_MAX - 1 )
+		{
+			//	上限設定
+			levelInfo[id].level[levelType] = LEVEL_MAX - 1;
+
+			//	クラスチェンジ
+			SendClassChange( id, levelType + 1 );
+		}
 	}
 
 	//	経験値計算
@@ -92,6 +98,17 @@ LevelManager*	levelManager = nullptr;
 	{
 		SendExpData	sendExpData( levelInfo[id].exp );
 		gameParam->send( id, ( LPSTR )&sendExpData, sizeof( sendExpData ) );
+	}
+
+	//	クラスチェンジ情報送信
+	void	LevelManager::SendClassChange( int id, char nextClass )
+	{
+		SendClassChangeData	sendData( id, nextClass );
+
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( p, ( LPSTR )&sendData, sizeof( sendData ) );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

@@ -25,6 +25,7 @@
 			MAGIC_ERASE,
 			LEVEL_INFO,
 			EXP_INFO,
+			CLASS_CHANGE_INFO,
 			COMMAND_MAX
 		};
 	}
@@ -48,7 +49,7 @@
 	struct ReceiveCharaData
 	{
 		char	com = RECEIVE_COMMAND::CHARA_INFO;
-		char	attackParam;
+		char			attackParam;
 		int			id;
 		int			life;
 		int			motion;
@@ -94,4 +95,12 @@
 	{
 		char com = RECEIVE_COMMAND::EXP_INFO;
 		int exp;
+	};
+
+	//	クラスチェンジ情報
+	struct ReceiveClassChangeData
+	{
+		char com = RECEIVE_COMMAND::CLASS_CHANGE_INFO;
+		int id;
+		char nextClass;
 	};

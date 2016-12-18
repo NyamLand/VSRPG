@@ -60,6 +60,7 @@ public:
 	void	CalcExp( int id, char enemyType );
 	void	SendLevel( int id, char levelType );
 	void	SendExp( int id );
+	void	SendClassChange( int id, char nextClass );
 
 	//	î•ñæ“¾
 	LevelInfo&	GetLevelInfo( int id );

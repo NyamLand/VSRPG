@@ -43,6 +43,7 @@ void main( void )
 	playerManager = new PlayerManager( gameParam );
 	collision = new Collision( gameParam );
 	gameParam->InitializeServer();
+	gameManager->Initialize();
 
 	//	–³ŒÀƒ‹[ƒv
 	for (;;)
@@ -111,4 +112,5 @@ void	ResultUpdate( int client )
 {
 	gameManager->ChangeScene( scene, SCENE::MATCHING );
 	gameParam->InitializeGame();
+	gameManager->Initialize();
 }

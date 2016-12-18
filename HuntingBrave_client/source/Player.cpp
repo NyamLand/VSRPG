@@ -69,9 +69,10 @@ namespace
 	//	初期化
 	bool	Player::Initialize( int id )
 	{
-		if ( obj == nullptr )	return	false;
-
 		//	情報設定
+		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
+		SetAngle( 0.0f );
+		SetScale( PLAYER_SCALE );
 		SetMotion( MOTION_NUM::POSUTURE );
 		SetMode( MODE::MOVE );
 		lifeInfo.Initialize( MAX_LIFE );
@@ -91,27 +92,10 @@ namespace
 		//	情報更新
 		UpdateInfo();
 
-		//----------------仮-------------
-		//std::fstream r("DATA\\test.csv", std::ios::in);
-
-		//CSVReader csv(r);
-		//vector<string> tokens;
-		//while (!csv.Read(tokens))
-		//{
-		//	for (unsigned int i = 0; i<tokens.size(); i++)
-		//	{
-		//		if (tokens[0] == "HP")
-		//		{
-		//			hp = std::atoi(tokens[1].c_str());
-		//		}
-		//	}
-		//}
-		//csv.Close();
-		//return 0;
-		//---------------------------------
+		//	バー初期化
 		bar = new EnemyHpUI();
-		bar->Initilaize(HPUI_TYPE::PLAYER, GetLifeInfo().maxLife);
-		bar->SetId(id);
+		bar->Initilaize( HPUI_TYPE::PLAYER, GetLifeInfo().maxLife );
+		bar->SetId( id );
 
 		if ( obj == nullptr )	return	false;
 		return	true;
@@ -124,48 +108,38 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	更新
-	void	Player::Update( PlayerParam& playerParam )
+	void	Player::Update( void )
 	{
-		//	サーバーからの情報を反映
-		this->playerParam = playerParam;
-		SetPlayerParam( playerParam );
+		//	情報取得
+		playerParam = gameParam->GetPlayerParam( id );
 
 		//	攻撃情報設定
 		SetAttackShape();
 
-		 collisionInfo.collisionShape.capsule = Capsule(
-			 Vector3( this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.radius, this->playerParam.pos.z ),
-			 Vector3( this->playerParam.pos.x, this->playerParam.pos.y + collisionInfo.height + collisionInfo.radius, this->playerParam.pos.z ),
-			collisionInfo.radius );
+		//	当たり判定形状設定
+		SetCollisionShape( playerParam );
+
+		//	サーバーからの情報を反映
+		SetPlayerParam( playerParam );
 
 		//	更新
 		BaseChara::Update();
 	}
 
+	//	描画
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
 		BaseChara::Render();	
-
-		AttackInfo attackInfo= gameParam->GetAttackInfo( id );
-		//drawShape->DrawCapsule( attackInfo.pos1, attackInfo.pos2, attackInfo.radius, 0xFFFFFFFF );
 	}
 
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
 
-	//	移動
-	bool	Player::Move( void )
-	{
-		return false;
-	}
-
 	//	剣攻撃
 	void	Player::SetAttackShape( void )
 	{
 		//	仮、モーション番号でスキップ
-		Vector3	pos1, pos2;
-
 		switch ( playerParam.motion )
 		{
 		case MOTION_NUM::ATTACK1:
@@ -190,17 +164,6 @@ namespace
 		gameParam->SendAttackParam();
 	}
 
-	//	テクスチャ設定
-	void	Player::ChangeTexture( int colorNum )
-	{
-		//	ファイル設定
-		char	fileName[256] = "DATA/CHR/suppin/s_body_";
-		char playerNum[8] = "";
-		sprintf_s( playerNum, "%d.png", colorNum );
-		strcat_s( fileName, playerNum );
-		obj->SetTexture( 0, fileName );
-	}
-
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
@@ -214,11 +177,13 @@ namespace
 		lifeInfo.life = ( playerParam.life );
 	}
 
-	//	クラスチェンジ設定
-	void	Player::SetClassChange( iex3DObj*	nextObj, char nextClass )
+	//	コリジョン形状設定
+	void	Player::SetCollisionShape( const PlayerParam& playerParam )
 	{
-		this->nextObj = nextObj;
-		curClass = nextClass;
+		collisionInfo.collisionShape.capsule = Capsule(
+			Vector3( playerParam.pos.x, playerParam.pos.y + collisionInfo.radius, playerParam.pos.z ),
+			Vector3( playerParam.pos.x, playerParam.pos.y + collisionInfo.height + collisionInfo.radius, playerParam.pos.z ),
+			collisionInfo.radius );
 	}
 
 //------------------------------------------------------------------------------------

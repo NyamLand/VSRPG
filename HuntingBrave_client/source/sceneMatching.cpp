@@ -5,6 +5,8 @@
 #include	<fstream>
 #include	<iostream>
 #include	<thread>
+#include	<vector>
+#include	"PlayerManager.h"
 #include	"Random.h"
 #include	"GlobalFunction.h"
 #include	"Image.h"
@@ -13,7 +15,6 @@
 #include	"GameManager.h"
 #include	"UIManager.h"
 #include	"Camera.h"
-#include	"PlayerManager.h"
 #include	"Sound.h"
 #include	"Screen.h"
 
@@ -77,6 +78,9 @@ namespace
 
 		//	GameParam初期化
 		gameParam = new GameParam();
+
+		//	PlayerManager初期化
+		playerManager->Initialize();
 	
 		//	テキスト読み込み
 		std::ifstream	ifs( "onlineInfo.txt" );
@@ -104,7 +108,6 @@ namespace
 		SafeDelete( itemSelect );
 		SafeDelete( gameWait );
 		sound->StopBGM();
-		playerManager->Release();
 	}
 
 //*****************************************************************************************************************************

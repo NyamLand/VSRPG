@@ -16,7 +16,7 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	TIME_MAX	( 1.0f * MINUTE )
+#define	TIME_MAX	( 5 )
 #define	INIT_LIFE		5
 
 //	実体
@@ -41,9 +41,6 @@ GameManager*	gameManager = nullptr;
 		{
 			matchingInfo[i].isComplete = false;
 		}
-
-		//	タイマー初期化
-		timer = new Timer();
 	}
 
 	//	デストラクタ
@@ -68,11 +65,14 @@ GameManager*	gameManager = nullptr;
 	//	初期化
 	bool	GameManager::Initialize( void )
 	{
+		//	解放
+		Release();
+
 		//	マッチング情報初期化
 		MatchingInfoInitialize();
+		if ( timer == nullptr )	
+			timer = new Timer();
 
-		//	変数初期化
-		gameState = false;
 		return	true;
 	}
 
@@ -84,6 +84,9 @@ GameManager*	gameManager = nullptr;
 			delete	timer;
 			timer = nullptr;
 		}
+
+		gameState = false;
+		timeUp = false;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -94,7 +97,10 @@ GameManager*	gameManager = nullptr;
 	void	GameManager::Update( void )
 	{
 		//	タイマー更新
-		if ( gameState )		timeUp = timer->Update();
+		if ( gameState )
+		{
+			if ( timer != nullptr )		timeUp = timer->Update();
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -170,7 +176,6 @@ GameManager*	gameManager = nullptr;
 	bool	GameManager::GetGameState( void )
 	{
 		return	gameState;
-
 	}
 
 
