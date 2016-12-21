@@ -82,7 +82,7 @@ public:
 	void	Initialize(char* image, int x, int y, int w, int h, int sx, int sy, int sw, int sh);
 	//	更新・描画
 	void	Update();		//	更新
-	void	Render(int mode);		//	描画
+	void	Render(int mode, iexShader* shader = nullptr, LPSTR techique = nullptr );		//	描画
 	void	Render(int mode, int x, int y, int w, int h, int sx, int sy, int sw, int sh);
 
 	//--------------------------------
@@ -113,5 +113,5 @@ public:
 	void	SetScaling(float speed);
 
 	//	拡大縮小更新(最大サイズ)
-	void	ScallBigUpdate(int max_scale);
+	void	ScalingUpdate(int max_scale);
 };

@@ -51,8 +51,8 @@
 	struct ReceiveInputData
 	{
 		char		com = RECEIVE_COMMAND::INPUT_INFO;
-		int		keyType;
-		int		keyState;
+		char		key;
+		char		keyState;
 	};
 
 	//	ƒŒƒxƒ‹î•ñ

@@ -5,6 +5,7 @@
 #include	<iostream>
 #include	<vector>
 #include	<thread>
+#include	<map>
 #include	"GlobalFunction.h"
 #include	"Image.h"
 #include	"DrawShape.h"
@@ -17,7 +18,9 @@
 #include	"EnemyManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"NameManager.h"
 #include	"Collision.h"
+#include	"Sound.h"
 
 //
 #include	"BaseEquipment.h"
@@ -58,6 +61,9 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	player初期化
+	playerManager->Initialize();
+
 	//	enemy初期化
 	enemyManager->Initialize();
 
@@ -65,7 +71,7 @@ bool	sceneMain::Initialize( void )
 	magicManager->Initialize();
 	
 	//	stage初期化
-	stage = new iexMesh( "DATA/BG/stage/bg.imo" );
+	stage = new iexMesh( "DATA/BG/stage.imo" );
 	stage->SetPos( 0.0f, -5.0f, 0.0f );
 	stage->SetScale( 0.1f );
 	stage->Update();
@@ -75,6 +81,12 @@ bool	sceneMain::Initialize( void )
 	//	uiの設定
 	uiManager->Initialize();
 
+	//	戦闘BGM
+	sound->PlayBGM( BGM::MAIN );
+
+	//	送信
+	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
+
 	return true;
 }
 
@@ -82,10 +94,11 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
-	playerManager->Release();
 	enemyManager->Release();
 	uiManager->Release();
 	magicManager->Release();
+	playerManager->Release();
+	sound->StopBGM();
 }
 
 //*****************************************************************************************************************************
@@ -123,6 +136,9 @@ void	sceneMain::Update( void )
 
 	//	collision
 	collision->AllCollision();
+
+	//	シーン切り替え
+	gameManager->ChangeScene( SCENE::RESULT );
 }
 
 //*****************************************************************************************************************************
@@ -181,7 +197,8 @@ void	sceneMain::MyInfoRender( void )
 	
 	//	自分の名前
 	LPSTR name = gameParam->GetPlayerName( id );
-	
+	nameManager->SetNameIndex( id, name );
+
 	//	自分の座標
 	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
 

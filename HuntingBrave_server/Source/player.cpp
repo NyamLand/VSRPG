@@ -42,7 +42,7 @@ namespace
 		const int MAGICACTIVATION = 340;
 		const int MAGICATTACK_END = 370;
 		const int KNOCKBACK1_END = 405;
-		const int FALL_END = 555;
+		const int FALL_END = 493;
 	}
 
 	namespace ATTACK_STEP
@@ -74,6 +74,8 @@ namespace
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
 		ModeFunction[MODE::STEP] = &Player::ModeStep;
+
+		timer = new Timer();
 	}
 
 	//	デストラクタ
@@ -85,9 +87,6 @@ namespace
 			timer = nullptr;
 		}
 	}
-
-	//	初期化
-
 
 //----------------------------------------------------------------------------------------------
 //	更新

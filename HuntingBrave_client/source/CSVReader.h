@@ -1,5 +1,5 @@
-#ifndef _CSVREADER_H__
-#define _CSVREADER_H__
+
+#pragma once
 
 #include <string>
 #include <vector>
@@ -18,7 +18,7 @@ public:
 	 * @param stream ファイルストリーム
 	 * @comment セパレータ(,), エンクオート(")
 	 */
-	CSVReader(fstream& stream);
+	CSVReader( fstream& stream );
 
 	/**
 	 * コンストラクタ
@@ -26,7 +26,7 @@ public:
 	 * @param sep セパレータ
  	 * @comment エンクオート(")
 	 */
-	CSVReader(fstream& stream, const char sep);
+	CSVReader( fstream& stream, const char sep );
 
 	/**
 	 * コンストラクタ
@@ -34,25 +34,25 @@ public:
 	 * @param sep セパレータ
  	 * @param quo エンクオート
 	 */
-	CSVReader(fstream& stream, const char sep, const char quo);
+	CSVReader( fstream& stream, const char sep, const char quo );
 
 	/**
 	 * デストラクタ
 	 */
-	virtual ~CSVReader(void);
+	virtual ~CSVReader( void );
 
 	/**
 	 * CSVファイルを１行読み込んで、分割して配列で返します。
 	 * @param tokens トークン(OUT)
 	 * @return 0:正常 -1:EOF
 	 */
-	int Read(vector<string>& tokens);
+	int Read( vector<string>& tokens );
 
 	/**
 	 * ファイルストリームをクローズします。
 	 * @return 0:正常 -1:異常
 	 */
-	int Close(void);
+	int Close( void );
 
 private:
 
@@ -61,7 +61,7 @@ private:
 	 * @param line 行データ
 	 * @return >=0：読み込んだデータ長 -1：EOF
 	 */
-	int GetNextLine(string& line);
+	int GetNextLine( string& line );
 
 	/**
 	 * データをパースします。
@@ -69,14 +69,12 @@ private:
 	 * @param tokens パースしたデータの配列(OUT)
 	 * @return 0
 	 */
-	int Parse(string& nextLine, vector<string>& tokens);
+	int Parse( string& nextLine, vector<string>& tokens );
 
-	int GetParam(string& status);
+	int GetParam( string& status );
 
 	std::fstream* pstream;
 	char SEPARATOR;
 	char QUOTE;
-
 };
 
-#endif

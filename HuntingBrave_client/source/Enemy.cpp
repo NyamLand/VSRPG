@@ -2,7 +2,9 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
+#include	"GameParam.h"
 #include	"PlayerManager.h"
+#include	"Collision.h"
 
 #include	"Enemy.h"
 
@@ -26,7 +28,7 @@
 	//	コンストラクタ
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
-		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), count(50)
+		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), count(40)
 	{
 	}
 
@@ -69,7 +71,8 @@
 	void	Enemy::FacingPlayer( void )
 	{
 		//	プレイヤーへのベクトルを求める
-		Vector3	targetVec = playerManager->GetPlayer( 0 )->GetPos() - pos;
+		int id = gameParam->GetMyIndex();
+		Vector3	targetVec = playerManager->GetPlayer( id )->GetPos() - pos;
 		targetVec.Normalize();
 
 		AngleAdjust( targetVec, ANGLEADJUST_SPEED );
@@ -117,6 +120,11 @@
 	{
 
 	}
+
+	void	Enemy::StageCheck()
+	{
+
+	}
 //------------------------------------------------------------------------------------
 //	モード関数
 //------------------------------------------------------------------------------------
@@ -127,7 +135,7 @@
 		lifeInfo.active = false;
 		count--;
 		if (count <= 0){
-			count = 50;
+			count = 40;
 			lifeInfo.active = true;
 			SetMode(MODE::MOVE);
 		}
@@ -158,4 +166,9 @@
 	char	Enemy::GetEnemyType( void )const
 	{
 		return	enemyType;
+	}
+
+	int		Enemy::GetMode( void )const
+	{
+		return mode;
 	}

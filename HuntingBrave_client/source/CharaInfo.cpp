@@ -33,7 +33,8 @@
 		if ( life <= 0 )
 		{
 			life = 0;
-			isAlive = false;
+			//isAlive = false;
+			//active = false;
 		}
 	}
 

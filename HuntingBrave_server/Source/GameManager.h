@@ -15,25 +15,36 @@
 class GameManager
 {
 private:
-	PlayerParam	initPlayerParam[PLAYER_MAX];
+	MatchingInfo	matchingInfo[PLAYER_MAX];
+	PlayerParam		initPlayerParam[PLAYER_MAX];
 	Timer*	timer;
+	bool		timeUp;
+	bool		gameState;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
 	GameManager( void );
 	~GameManager( void );
+	bool	Initialize( void );
+	void	Release( void );
+	void	MatchingInfoInitialize( void );
 
 	//	XV
 	void	Update( void );
 
 	//	“®ìŠÖ”
-	void	TimerUpdate( void );
+	bool	PlayerCheck( void );
+	void	ChangeScene( char& out, char nextScene );
 
 	//	î•ñİ’è
+	void	SetGameState( bool state );
 
 	//	î•ñæ“¾
-	Timer*	GetTimer( void )const;
+	Timer*&	GetTimer( void );
 	PlayerParam	GetInitInfo( int id )const;
+	MatchingInfo&	GetMatchingInfo( int id );
+	bool	GetTimeUp( void );
+	bool	GetGameState( void );
 };
 
 extern	GameManager*	gameManager;

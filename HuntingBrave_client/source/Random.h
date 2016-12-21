@@ -24,8 +24,8 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
-	bool	Initialize()override;
-	void	Release()override;
+	bool	Initialize( void );
+	void	Release( void );
 
 	//	“®ìŠÖ”
 	int		GetInt( int min, int max );

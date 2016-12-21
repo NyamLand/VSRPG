@@ -23,7 +23,8 @@
 			MAGIC_APPEND,
 			MAGIC_ERASE,
 			LEVEL_INFO,
-			EXP_INFO
+			EXP_INFO,
+			CLASS_CHANGE_INFO,
 		};
 	}
 }
@@ -111,4 +112,14 @@
 		int	exp;
 
 		SendExpData( int exp ) :	exp( exp ){}
+	};
+
+	//	クラスチェンジ情報
+	struct SendClassChangeData
+	{
+		char com = SEND_COMMAND::CLASS_CHANGE_INFO;
+		int		id;
+		char		nextClass;
+		SendClassChangeData( int id, char nextClass ) : 
+			id( id ), nextClass( nextClass ){}
 	};

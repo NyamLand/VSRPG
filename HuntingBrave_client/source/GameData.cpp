@@ -55,22 +55,16 @@
 //----------------------------------------------------------------------------------------------
 
 	//	デフォルトコンストラクタ
-	Matching::Matching( void ) : id( 0 )
+	Matching::Matching( void ) : id( -1 ), isComplete( false )
 	{
 
 	}
 
 	//	コンストラクタ
-	Matching::Matching( int id, int mode )
-	{
-		Set( id, mode );
-	}
-
-	//	情報設定
-	void Matching::Set( int id, int mode )
+	Matching::Matching( int id, bool isComplete )
 	{
 		this->id = id;
-		this->isComplete = mode;
+		this->isComplete;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -87,7 +81,6 @@
 	//	情報設定
 	void	SignUp::Set( int id, const LPSTR& name )
 	{
-		this->com = com;
 		this->id = id;
 		strcpy( this->name, name );
 	}

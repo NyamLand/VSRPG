@@ -17,15 +17,6 @@ struct Status
 	float	speed;
 };
 
-//struct Equipments
-//{
-//	BaseEquipment*	atk;
-//	BaseEquipment*	mat;
-//	BaseEquipment*
-//
-//};
-
-
 //	include
 #include	"BaseChara.h"
 #include	"BaseEquipment.h"
@@ -33,20 +24,6 @@ struct Status
 
 namespace
 {
-	//	モード管理
-	namespace MODE
-	{
-		enum	//	仮
-		{
-			MOVE,
-			//POSTURE,
-			SWOADATTACK,
-			MAGICATTACK,
-			AVOID,
-			MODE_MAX
-		};
-	}
-
 	//	モーション管理
 	namespace MOTION_NUM
 	{
@@ -78,31 +55,39 @@ namespace
 	}
 }
 
-
-
 //	class
 class Player : public BaseChara
 {
-private:
+protected:
 	//	パラメータ
 	int	id;
 	PlayerParam		playerParam;
+	iex3DObj* org;
+	iex3DObj* nextObj;
+	enum	MODE//	仮
+	{
+		MOVE,
+		SWOADATTACK,
+		MAGICATTACK,
+		AVOID,
+		MODE_MAX
+	};
 
 public:
 	//	初期化・解放
 	Player( void );
-	~Player( void )override;
-	bool	Initialize( int id );
+	~Player( void );
+	virtual	bool	Initialize( int id );
 	
 	//	更新・描画
-	void	Update( PlayerParam& playerParam );
+	void	Update( void );
 	void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr )override;
 
 	//	動作関数
-	bool		Move( void );
-	void		SetAttackShape( void );
-	void		ChangeTexture( int colorNum );
+	void	SetAttackShape( void );
+	virtual	void	ChangeTexture( int colorNum ) = 0;
 
 	//	情報設定
 	void	SetPlayerParam( const PlayerParam& playerParam );
+	void	SetCollisionShape( const PlayerParam& playerParam );
 };

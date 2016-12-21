@@ -21,26 +21,17 @@ private:
 	PlayerParam	playerParam[PLAYER_MAX];
 	AttackInfo	attackInfo[PLAYER_MAX];
 	LifeInfo			lifeInfo[PLAYER_MAX];
-	MatchingInfo	matchingInfo[PLAYER_MAX];
-
-	//	関数ポインタ
-	int ( GameParam::*ReceiveFunction[RECEIVE_COMMAND::COMMAND_MAX] )( int client, const LPSTR& data );
 
 public:
 	//	初期化・解放
 	GameParam( void );
 	bool InitializeServer( void );
 	void	InitializePlayer( int id );
+	void	InitializeGame( void );
 
 	//	データ送受信
 	int Receive( char scene );
 	int Send( int client );
-
-	//	シーンごとの受信処理
-	void	MainReceive( int client, const LPSTR& data );
-	void	MatchingReceive( int client, const LPSTR& data );
-	void	TitleReceive( int client, const LPSTR& data );
-	void	ResultReceive( int client, const LPSTR& data );
 
 	//	送信処理
 	void	SendCharaInfo( int client, int player );
@@ -58,11 +49,14 @@ public:
 	int	ReceiveSignUp( int client, const LPSTR& data );
 	int	ReceiveSignOut( int client, const LPSTR& data );
 	int	ReceiveMatching( int client, const LPSTR& data );
+	int	ReceiveResponse( int client, const LPSTR& data );
+
+	//	応答コマンド
+	int	SignUpResponse( int client );
+	int	GameStartResponse( int client );
 
 	//	情報設定
-	void SetPlayerParam( int id, const PlayerParam& param );
 	void SetPlayer( int id, char* name );
-	void ReleasePlayer( int id );
 	void SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
 
 	//	情報取得

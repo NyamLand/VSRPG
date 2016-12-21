@@ -38,13 +38,14 @@ private:
 
 public:
 	//	初期化・解放
-	bool	Initialize( void )override;
-	void	Release( void )override;
+	bool	Initialize( void );
+	void	Release( void );
 	void	Load( void );
 
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
+	void	RenderHp( void );
 
 	//	動作関数
 	void	Append( const Vector3& pos, char type );

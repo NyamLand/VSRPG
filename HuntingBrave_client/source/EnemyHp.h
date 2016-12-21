@@ -10,16 +10,6 @@
 
 namespace
 {
-	namespace HP_MAX
-	{
-		enum
-		{
-			WIDTH = 768,				//	‰æ‘œ‰¡•
-			HEIGHT =128,				//	‰æ‘œc•
-		};
-
-	}
-
 	namespace HPUI_TYPE
 	{
 		enum
@@ -36,9 +26,10 @@ class EnemyHpUI
 private:
 	iex2DObj* hpFrame_obj;
 	iex2DObj* hp_obj;
-	int	width, height;
-	int hp;
 	int mode_type;
+	int	id;
+	int	width, height;
+	int	hp;
 	int maxHp;
 
 public:
@@ -49,6 +40,8 @@ public:
 
 	//	XVE•`‰æ
 	void	Update( void );
-	void	Render(int hp, Vector3 pos, Vector3 up);
+	void	Render(float hp, const Vector3& pos, const Vector3& up);
+
+	void	SetId(int id);
 };
 

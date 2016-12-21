@@ -8,6 +8,7 @@
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"DrawShape.h"
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -57,11 +58,17 @@
 
 		//	魔法攻撃当たり判定
 		MagicCollision();
+
+
+		EnemyAttackCollision();
+		
+
 	}
 
 	//	プレイヤー攻撃当たり判定
 	void	Collision::PlayerAttackCollision( int player )
 	{
+		if (gameParam->GetMyIndex() != player)return;
 		//	変数準備
 		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
@@ -75,8 +82,12 @@
 		{
 			//	当たり判定用情報設定
 			CollisionShape hitCollisionShape = ( *it )->GetCollisionInfo().collisionShape;
-			CollisionShape attackCollisionShape;
-			attackCollisionShape = SetCollisionShape( attackInfo.shape, attackInfo.vec1, attackInfo.vec2, attackInfo.radius );
+			CollisionShape attackCollisionShape =
+				SetCollisionShape( 
+				attackInfo.shape,
+				attackInfo.vec1, 
+				attackInfo.vec2, 
+				attackInfo.radius );
 
 			//	当たり判定チェック
 			isHit = CheckCollision( attackCollisionShape, hitCollisionShape );
@@ -84,9 +95,14 @@
 			//	当たっていればライフ計算
 			if ( isHit == true )
 			{
-				//	ライフ計算
-				( *it )->GetLifeInfo().CulcLife( -1 );
-				gameParam->SendHuntInfo( ( *it )->GetEnemyType() );
+				if ((*it)->GetLifeInfo().active)
+				{
+					//	ライフ計算
+					(*it)->SetMode((*it)->DAMAGE);
+					//	ライフ計算
+					(*it)->GetLifeInfo().CulcLife(-1);
+					(*it)->LifeCheck();
+				}
 			}
 		}
 	}
@@ -94,35 +110,44 @@
 	//	敵攻撃当たり判定
 	void	Collision::EnemyAttackCollision( void )
 	{
-		////	変数準備
-		//list<Enemy*>	 enemyList = enemyManager->GetList();
-		//bool	isHit = false;
+		//	変数準備
+		list<Enemy*>	 enemyList = enemyManager->GetList();
+		bool	isHit = false;
 
-		////	全敵回す
-		//for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
-		//{
-		//	//	攻撃情報取得、攻撃中でなければスキップ
-		//	AttackInfo	attackInfo = ( *it )->GetAttackInfo();
-		//	if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )		continue;
+		int		id = gameParam->GetMyIndex();
+		//	条件が合わないものはスキップ
+		if (gameParam->GetPlayerActive(id) == false)		return;
 
-		//	//	全プレイヤー当たり判定
-		//	for ( int p = 0; p < PLAYER_MAX; p++ )
-		//	{
-		//		//	条件が合わないものはスキップ
-		//		if ( gameParam->GetPlayerActive( p ) == false )		continue;
+		//	全敵回す
+		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		{
+			//	攻撃情報取得、攻撃中でなければスキップ
+			AttackInfo	attackInfo = ( *it )->GetAttackInfo();
+			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )	continue;
 
-		//		//	当たり判定チェック
-		//		isHit = CheckCollision(
-		//			attackInfo.collisionShape,
-		//			playerManager->GetPlayer( p )->GetCollisionInfo().collisionShape );
+			CollisionShape attackcollsion;
+			attackcollsion.shapeType = attackInfo.shape;
+			attackcollsion.sphere = Sphere(attackInfo.vec1,attackInfo.radius);
+			
+			CollisionShape playerCollision = 
+				playerManager->GetPlayer(id)->GetCollisionInfo().collisionShape;
 
-		//		//	当たっていればライフ計算
-		//		if ( isHit == true )
-		//		{
 
-		//		}
-		//	}
-		//}
+			//	当たり判定チェック
+			isHit = CheckCollision(
+				attackcollsion,
+				playerCollision);
+
+			//	当たっていればライフ計算
+			if ( isHit == true )
+			{
+				if (playerManager->GetPlayer(id)->GetLifeInfo().active)
+				{
+					printf("当たりました\n");
+				}
+			}
+			
+		}
 	}
 
 	//	魔法当たり判定

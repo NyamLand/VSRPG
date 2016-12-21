@@ -13,7 +13,8 @@
 class sceneTitle : public Scene
 {
 private:
-	bool	connectionOK;
+	iex2DObj*	bg;
+	int		step;
 
 public:
 	//	‰Šú‰»E‰ğ•ú

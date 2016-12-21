@@ -16,13 +16,9 @@ class Singleton
 protected:
 	//	‰Šú‰»E‰ğ•ú
 	Singleton( void ){}
-	virtual ~Singleton( void ){ Release(); }
+	virtual ~Singleton( void ){}
 
 public:
-	//	‰Šú‰»E‰ğ•ú
-	virtual bool	Initialize( void ){ return true; }
-	virtual void Release( void ){};
-
 	//	À‘Ìæ“¾
 	static T* GetInstance( void )
 	{

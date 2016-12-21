@@ -39,20 +39,6 @@
 		this->x = x;		this->y = y;		this->w = w;		this->h = h;
 		this->sx = sx;		this->sy = sy;		this->sw = sw;		this->sh = sh;
 		this->p = GetPoint(this->x, this->y);
-		//this->alpha = 1.0f;
-		//this->angle = 0.0f;
-		//this->color = Vector3(1.0f, 1.0f, 1.0f);
-		//this->renderflag = true;
-
-		//this->waveSpeed = 0.0f;
-		//this->waveState = false;
-
-		//this->flashSpeed = 0.0f;
-		//this->flashParam = 0.0f;
-
-		//this->scalingFlag = false;
-		//this->scalingState = 0;
-		//this->scalingSpeed = 0.0f;
 	}
 
 //---------------------------------------------------------------------------------------
@@ -64,7 +50,7 @@
 	}
 
 	//	引数モードのみ
-	void	Image::Render(int mode)
+	void	Image::Render(int mode, iexShader* shader, LPSTR technique )
 	{
 		int width = this->w;
 		int height = this->h;
@@ -75,15 +61,17 @@
 			switch (mode)
 			{
 			case IMAGE_MODE::NORMAL:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh);
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh );
+				if ( shader != nullptr && technique != nullptr )
+					obj->Render( posx, posy, width, height, sx, sy, sw, sh, shader, technique );
 				break;
 
 			case IMAGE_MODE::ADOPTPARAM:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::ADD:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_ADD, GetColor(color, alpha));
+				obj->Render( posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_ADD, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::WAVE:
@@ -91,11 +79,11 @@
 				height = this->h + this->plusScaleY;
 				posx = x - width / 2;
 				posy = y - height / 2;
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render( posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::FLASH:
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 
 			case IMAGE_MODE::SCALING:
@@ -104,7 +92,7 @@
 				posx = x - width / 2;
 				posy = y - height / 2;
 
-				obj->Render(posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor(color, alpha));
+				obj->Render( posx, posy, width, height, sx, sy, sw, sh, p, angle, RS_COPY, GetColor( color, alpha ) );
 				break;
 			}
 		}
@@ -205,7 +193,7 @@
 	}
 
 	//	拡大縮小更新
-	void	Image::ScallBigUpdate( int max_scale)
+	void	Image::ScalingUpdate( int max_scale)
 	{
 		if (!scalingFlag) return;
 
@@ -228,6 +216,8 @@
 			Interpolation::LinearInterpolation(plusScaleX, 0, max_scale, t);
 			Interpolation::LinearInterpolation(plusScaleY, 0, max_scale, t);
 
+			break;
+
 		//-------------------------
 		//	縮小
 		//-------------------------
@@ -242,6 +232,7 @@
 			Interpolation::LinearInterpolation(plusScaleX, max_scale, 0, t);
 			Interpolation::LinearInterpolation(plusScaleY, max_scale, 0, t);
 
+			break;
 		}
 
 		if (t >= 1.0f)		t = 0.0f;
@@ -275,9 +266,9 @@
 		plusScaleY = 0;
 		t = 0.0f;
 		alpha = 1.0f;
-		scalingFlag = false;
+		scalingFlag = true;
 		scalingState = IMAGE_SCALING::BIG;
-		scalingSpeed = 0.0f;
+		scalingSpeed = speed;
 	}
 //---------------------------------------------------------------------------------------
 //	情報取得

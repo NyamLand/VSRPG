@@ -62,19 +62,13 @@
       <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneTitle.cpp">
-      <Filter>Source\Scene\SceneTitle</Filter>
+      <Filter>Source\Scene\sceneTitle</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneMain.cpp">
-      <Filter>Source\Scene\SceneMain</Filter>
+      <Filter>Source\Scene\sceneMain</Filter>
     </ClCompile>
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>Source\Manager\PlayerManager</Filter>
-    </ClCompile>
-    <ClCompile Include="source\EnemyManager.cpp">
-      <Filter>Source\Manager\EnemyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Player.cpp">
-      <Filter>Source\Player</Filter>
     </ClCompile>
     <ClCompile Include="source\Status.cpp">
       <Filter>Source\Status</Filter>
@@ -160,9 +154,6 @@
     <ClCompile Include="source\SharedData.cpp">
       <Filter>Source\GameData\SharedData</Filter>
     </ClCompile>
-    <ClCompile Include="source\sceneMatching.cpp">
-      <Filter>Source\Scene\sceneMatching</Filter>
-    </ClCompile>
     <ClCompile Include="source\MagicManager.cpp">
       <Filter>Source\Manager\MagicManager</Filter>
     </ClCompile>
@@ -177,6 +168,75 @@
     </ClCompile>
     <ClCompile Include="source\NetState.cpp">
       <Filter>Source\NetState</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScoreBoardUI.cpp">
+      <Filter>Source\UI\ScoreBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScoreUI.cpp">
+      <Filter>Source\UI\ScoreUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sound.cpp">
+      <Filter>Source\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sceneResult.cpp">
+      <Filter>Source\Scene\sceneResult</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Screen.cpp">
+      <Filter>Source\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sceneMatching.cpp">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameInput.cpp">
+      <Filter>Source\Scene\sceneMatching\NameInput</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ItemSelect.cpp">
+      <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EnemyManager.cpp">
+      <Filter>Source\Manager\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameWait.cpp">
+      <Filter>Source\Scene\sceneMatching\GameWait</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameUI.cpp">
+      <Filter>Source\UI\NameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameManager.cpp">
+      <Filter>Source\Manager\NameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Font.cpp">
+      <Filter>Source\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NumberUI.cpp">
+      <Filter>Source\UI\NumberUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UpGradeUI.cpp">
+      <Filter>Source\UI\UpGradeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sceneLoad.cpp">
+      <Filter>Source\Scene\sceneLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EffectManager.cpp">
+      <Filter>Source\Manager\EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Effect.cpp">
+      <Filter>Source\Effect\BaseEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LightSphereEffect.cpp">
+      <Filter>Source\Effect\LightSphereEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>Source\Player\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Suppin.cpp">
+      <Filter>Source\Player\Suppin</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fighter.cpp">
+      <Filter>Source\Player\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Magician.cpp">
+      <Filter>Source\Player\Magician</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,16 +253,10 @@
       <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
-      <Filter>Source\Scene\SceneTitle</Filter>
+      <Filter>Source\Scene\sceneTitle</Filter>
     </ClInclude>
     <ClInclude Include="source\PlayerManager.h">
       <Filter>Source\Manager\PlayerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="source\EnemyManager.h">
-      <Filter>Source\Manager\EnemyManager</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Player.h">
-      <Filter>Source\Player</Filter>
     </ClInclude>
     <ClInclude Include="source\Status.h">
       <Filter>Source\Status</Filter>
@@ -217,7 +271,7 @@
       <Filter>Source\SYSTEM\Scene</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneMain.h">
-      <Filter>Source\Scene\SceneMain</Filter>
+      <Filter>Source\Scene\sceneMain</Filter>
     </ClInclude>
     <ClInclude Include="source\BaseEquipment.h">
       <Filter>Source\Equipment\BaseEquipment</Filter>
@@ -303,9 +357,6 @@
     <ClInclude Include="source\SharedData.h">
       <Filter>Source\GameData\SharedData</Filter>
     </ClInclude>
-    <ClInclude Include="source\sceneMatching.h">
-      <Filter>Source\Scene\sceneMatching</Filter>
-    </ClInclude>
     <ClInclude Include="source\MagicManager.h">
       <Filter>Source\Manager\MagicManager</Filter>
     </ClInclude>
@@ -320,6 +371,75 @@
     </ClInclude>
     <ClInclude Include="source\NetState.h">
       <Filter>Source\NetState</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScoreBoardUI.h">
+      <Filter>Source\UI\ScoreBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScoreUI.h">
+      <Filter>Source\UI\ScoreUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sound.h">
+      <Filter>Source\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneResult.h">
+      <Filter>Source\Scene\sceneResult</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Screen.h">
+      <Filter>Source\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneMatching.h">
+      <Filter>Source\Scene\sceneMatching</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NameInput.h">
+      <Filter>Source\Scene\sceneMatching\NameInput</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ItemSelect.h">
+      <Filter>Source\Scene\sceneMatching\ItemSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyManager.h">
+      <Filter>Source\Manager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameWait.h">
+      <Filter>Source\Scene\sceneMatching\GameWait</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NameUI.h">
+      <Filter>Source\UI\NameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NameManager.h">
+      <Filter>Source\Manager\NameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Font.h">
+      <Filter>Source\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NumberUI.h">
+      <Filter>Source\UI\NumberUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UpGradeUI.h">
+      <Filter>Source\UI\UpGradeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sceneLoad.h">
+      <Filter>Source\Scene\sceneLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EffectManager.h">
+      <Filter>Source\Manager\EffectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effect.h">
+      <Filter>Source\Effect\BaseEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LightSphereEffect.h">
+      <Filter>Source\Effect\LightSphereEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>Source\Player\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Suppin.h">
+      <Filter>Source\Player\Suppin</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fighter.h">
+      <Filter>Source\Player\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Magician.h">
+      <Filter>Source\Player\Magician</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,12 +466,6 @@
     </Filter>
     <Filter Include="Source\Scene">
       <UniqueIdentifier>{2014966c-8727-4575-91a7-c0c308c00a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SceneMain">
-      <UniqueIdentifier>{c63170af-b294-435a-b426-9b7f1fba7f42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\SceneTitle">
-      <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Status">
       <UniqueIdentifier>{2f7613e1-2b5b-43e7-9d33-fa4b6aa9fc4b}</UniqueIdentifier>
@@ -497,6 +611,78 @@
     <Filter Include="Source\Scene\sceneResult">
       <UniqueIdentifier>{12049d46-c22b-4c18-9ca3-bcfdb62e3319}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Effect">
+      <UniqueIdentifier>{5d14bf3d-8135-4237-ae3e-85b6ee928934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ScoreBoard">
+      <UniqueIdentifier>{16203dba-35d8-48f3-8c30-5ace129dcccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\ScoreUI">
+      <UniqueIdentifier>{a09cdc2f-0d58-4aaf-9cf9-42d5aeb6972e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Sound">
+      <UniqueIdentifier>{584a0445-fac9-44f3-9f39-ee54648ae9c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Screen">
+      <UniqueIdentifier>{03569b67-4bd3-419f-8176-04b149a3ae96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\NameInput">
+      <UniqueIdentifier>{f43d575a-26d7-4579-83c6-00e79707fc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMain">
+      <UniqueIdentifier>{c63170af-b294-435a-b426-9b7f1fba7f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneTitle">
+      <UniqueIdentifier>{976507bd-3f8f-47a5-9640-b07d4e6ebbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\ItemSelect">
+      <UniqueIdentifier>{bd7361ad-943d-4618-849c-5ab45f7f064c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneMatching\GameWait">
+      <UniqueIdentifier>{f2bc45c5-9d51-4abd-aed6-8772a24e0461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\NameUI">
+      <UniqueIdentifier>{30d48374-4fad-4fc4-9443-f91efc913992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\NameManager">
+      <UniqueIdentifier>{6e6a0f00-7af4-40d5-a818-eb197b5d0c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Font">
+      <UniqueIdentifier>{17f11c64-ab66-469a-863e-033fc04e1472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\NumberUI">
+      <UniqueIdentifier>{a4f17874-75fc-406c-8529-1285a7eb19e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\shader2D">
+      <UniqueIdentifier>{d58c73c9-9693-43a9-ad06-9dee79bcb3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\shader3D">
+      <UniqueIdentifier>{bbb1566f-7c2a-4058-bb7a-d799b96dc850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\UpGradeUI">
+      <UniqueIdentifier>{983e0813-75cc-4b61-bc2e-26622f568049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\EffectManager">
+      <UniqueIdentifier>{4190cef5-3752-4c1c-8567-d4cd04231207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Effect\BaseEffect">
+      <UniqueIdentifier>{cf958fd1-9fef-413c-8d93-17330bf2db98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Effect\LightSphereEffect">
+      <UniqueIdentifier>{7a56858e-23e6-4a94-a950-cd18a53405d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Suppin">
+      <UniqueIdentifier>{d0a3e358-844f-4bd4-8e49-17944714b8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Player">
+      <UniqueIdentifier>{d702ce97-0fba-4944-a6e2-d94e58f2d584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Fighter">
+      <UniqueIdentifier>{f40cc6ae-c7da-4619-a610-b659684d1a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Magician">
+      <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">
@@ -507,5 +693,16 @@
     <CustomBuild Include="DATA\Shader\3DEx.fx">
       <Filter>Shader</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DATA\Shader\BlackWhite.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\NegaPosi.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\colorChange.fx">
+      <Filter>Shader\shader3D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

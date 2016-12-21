@@ -88,6 +88,24 @@
     <Filter Include="ソース ファイル\Manager\PointManager">
       <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\SceneManager">
+      <UniqueIdentifier>{9b87f1e9-69c2-40a4-a5c2-781a0cee554d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SYSTEM">
+      <UniqueIdentifier>{e203447f-a8ae-4700-b3b7-3dd3fa368895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SYSTEM\Scene">
+      <UniqueIdentifier>{00ea94ae-0cf6-490b-8549-5a4835ae8920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SYSTEM\FrameWork">
+      <UniqueIdentifier>{a5ec5e97-042d-47d9-92bb-12d76d43375e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\main">
+      <UniqueIdentifier>{2ececea5-b935-43b7-a989-94a408ccb2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\sceneMatching">
+      <UniqueIdentifier>{a9530f24-d50e-496d-816d-d3c5c5e5d6fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -195,6 +213,18 @@
     <ClCompile Include="Source\PointManager.cpp">
       <Filter>ソース ファイル\Manager\PointManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>ソース ファイル\Manager\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FrameWork.cpp">
+      <Filter>ソース ファイル\SYSTEM\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\sceneMatching.cpp">
+      <Filter>ソース ファイル\Scene\sceneMatching</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>ソース ファイル\Scene\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -262,6 +292,18 @@
     </ClInclude>
     <ClInclude Include="Source\PointManager.h">
       <Filter>ソース ファイル\Manager\PointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>ソース ファイル\Manager\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FrameWork.h">
+      <Filter>ソース ファイル\SYSTEM\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\sceneMatching.h">
+      <Filter>ソース ファイル\Scene\sceneMatching</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\main.h">
+      <Filter>ソース ファイル\Scene\main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

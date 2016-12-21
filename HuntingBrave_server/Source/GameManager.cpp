@@ -1,6 +1,9 @@
 
 #include	"iextreme.h"
+#include	"FrameWork.h"
 #include	"GameParam.h"
+#include	"sceneMain.h"
+#include	"sceneMatching.h"
 #include	"GameManager.h"
 
 //*****************************************************************************************************************************
@@ -13,8 +16,8 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	TIME_MAX	( 7.0f * MINUTE )
-#define	INIT_LIFE		7
+#define	TIME_MAX	( 5 )
+#define	INIT_LIFE		5
 
 //	実体
 GameManager*	gameManager = nullptr;
@@ -24,7 +27,8 @@ GameManager*	gameManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameManager::GameManager( void ) : timer( nullptr )
+	GameManager::GameManager( void ) : timer( nullptr ),
+		timeUp( false ), gameState( false )
 	{
 		//	初期座標設定
 		int initMotion = 0;
@@ -33,8 +37,10 @@ GameManager*	gameManager = nullptr;
 		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -15.0f ), 0.0f, initMotion, 0 );
 		initPlayerParam[3].Set( Vector3( -15.0f, 0.0f, 0.0f ), D3DX_PI * 0.5f, initMotion, 0 );
 
-		timer = new Timer();
-		timer->Start( TIME_MAX );
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			matchingInfo[i].isComplete = false;
+		}
 	}
 
 	//	デストラクタ
@@ -47,6 +53,42 @@ GameManager*	gameManager = nullptr;
 		}
 	}
 
+	//	マッチング情報初期化
+	void	GameManager::MatchingInfoInitialize( void )
+	{
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			matchingInfo[p].isComplete = false;
+		}
+	}
+
+	//	初期化
+	bool	GameManager::Initialize( void )
+	{
+		//	解放
+		Release();
+
+		//	マッチング情報初期化
+		MatchingInfoInitialize();
+		if ( timer == nullptr )	
+			timer = new Timer();
+
+		return	true;
+	}
+
+	//	解放
+	void	GameManager::Release( void )
+	{
+		if ( timer != nullptr )
+		{
+			delete	timer;
+			timer = nullptr;
+		}
+
+		gameState = false;
+		timeUp = false;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	更新
 //----------------------------------------------------------------------------------------------
@@ -54,16 +96,53 @@ GameManager*	gameManager = nullptr;
 	//	更新
 	void	GameManager::Update( void )
 	{
-		timer->Update();
+		//	タイマー更新
+		if ( gameState )
+		{
+			if ( timer != nullptr )		timeUp = timer->Update();
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
+	//	プレイヤーチェック
+	bool	GameManager::PlayerCheck( void )
+	{
+		bool	ret = false;
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( !gameParam->GetPlayerActive( p ) )	continue;
+			ret = matchingInfo[p].isComplete;
+		}
+
+		return	ret;
+	}
+
+	//	シーン切り替え
+	void	GameManager::ChangeScene( char& out, char nextScene )
+	{
+		//	シーン設定
+		out = nextScene;
+		Response	response( RESPONSE_COMMAND::CHANGE_SCENE );
+		
+		//	送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( p, ( LPSTR )&response, sizeof( response ) );
+		}
+	}
+
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
+
+	//	ゲーム状態設定
+	void	GameManager::SetGameState( bool state )
+	{
+		gameState = state;
+	}
 
 //----------------------------------------------------------------------------------------------
 //	情報取得
@@ -76,29 +155,27 @@ GameManager*	gameManager = nullptr;
 	}
 
 	//	タイマー取得
-	Timer*	GameManager::GetTimer( void )const
+	Timer*&	GameManager::GetTimer( void )
 	{
 		return	timer;
 	}
 
-//----------------------------------------------------------------------------------------------
-//	グローバル
-//----------------------------------------------------------------------------------------------
+	//	マッチング情報取得
+	MatchingInfo&	GameManager::GetMatchingInfo( int id )
+	{
+		return	matchingInfo[id];
+	}
 
-//----------------------------------------------------------------------------------------------
-//	グローバル
-//----------------------------------------------------------------------------------------------
+	//	タイムアップ取得
+	bool	GameManager::GetTimeUp( void )
+	{
+		return	timeUp;
+	}
 
-//----------------------------------------------------------------------------------------------
-//	グローバル
-//----------------------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------------------
-//	グローバル
-//----------------------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------------------
-//	グローバル
-//----------------------------------------------------------------------------------------------
+	//	ゲーム状態取得
+	bool	GameManager::GetGameState( void )
+	{
+		return	gameState;
+	}
 
 

@@ -4,6 +4,7 @@
 #include	"GameParam.h"
 #include	"sceneTitle.h"
 #include	"sceneMain.h"
+#include	"sceneResult.h"
 #include	"sceneMatching.h"
 
 //*****************************************************************************************************************************
@@ -34,12 +35,12 @@ BOOL	InitNetWork( void )
 	ifs >> name;
 
 	//	クライアント初期化( serverと接続 )
-	if ( !gameParam->InitializeClient( addr, 7000, name ) )
-	{
-		MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
-		exit( 0 );
-		return	FALSE;
-	}
+	//if ( !gameParam->InitializeClient( addr, 7000, name ) )
+	//{
+	//	MessageBox( iexSystem::Window, "クライアント初期化失敗!", "ERROR!", MB_OK );
+	//	exit( 0 );
+	//	return	FALSE;
+	//}
 
 	return	TRUE;
 }
@@ -61,8 +62,10 @@ BOOL	InitApp( HWND hWnd )
 	MainFrame = new Framework( FPS_FLEX );
 
 	//	初期シーン登録
-	MainFrame->ChangeScene( new sceneMatching() );
+	//MainFrame->ChangeScene( new sceneMatching() );
 	//MainFrame->ChangeScene( new sceneMain() );
+	MainFrame->ChangeScene( new sceneTitle() );
+	//MainFrame->ChangeScene( new sceneResult() );
 
 	//	ネットワーク初期化
 	//BOOL initNet = InitNetWork();
@@ -150,7 +153,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		} else {
-			if( MainFrame->Update() ) MainFrame->Render();
+			if( MainFrame->Update() )
+			{
+				MainFrame->Render();
+			}
 		}
 	}
 

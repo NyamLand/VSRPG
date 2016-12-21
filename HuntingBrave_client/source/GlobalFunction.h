@@ -60,6 +60,8 @@
 //	•ÏŠ·
 //----------------------------------------------------------------------
 
+	bool	SubString( char* out, const char* str, int pos, int len );
+
 	//	intŒ^”’l‚ğPOINT‚É•ÏŠ·‚µ•ÏŠ·Œã‚ÌPOINT‚ğ‚©‚¦‚·
 	POINT	GetPoint( int x, int y );
 

@@ -6,29 +6,37 @@
 //*****************************************************************************************************************************
 
 #include	"GameData.h"
+#include	"NameInput.h"
+#include	"ItemSelect.h"
+#include	"GameWait.h"
 #include	<memory>
 using namespace std;
 
 class	sceneMatching : public Scene
 {
 private:
-	unique_ptr<iex3DObj>	obj[PLAYER_MAX];
 	int step;
+	char	nextScene;
 	char name[17];
 	char	addr[64];
+	NameInput*	nameInput;
+	ItemSelect*	itemSelect;
+	GameWait*	gameWait;
+
 public:
-	~sceneMatching(void);
+	~sceneMatching( void );
 	//	初期化
-	bool Initialize(void);
+	bool Initialize( void );
+	
 	//	更新・描画
-	void Update(void);	//	更新
-	void Render(void);	//	描画
+	void Update( void );	//	更新
+	void Render( void );	//	描画
 
 	//	動作関数
-	void	ObjUpdate(void);
-	void	CheckComplete(void);
-	void	DebugRender(void);
-	void	MyInfoRender(void);
+	void	ObjUpdate( void );
+	void	CheckComplete( void );
+	void	DebugRender( void );
+	void	MyInfoRender( void );
 };
 
 

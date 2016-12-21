@@ -16,6 +16,8 @@
 //	実体
 LevelManager*	levelManager = nullptr;
 
+#define	LEVEL_MAX	6
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -32,7 +34,7 @@ LevelManager*	levelManager = nullptr;
 			//	各レベル初期化
 			for ( int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++ )
 			{
-				levelInfo[p].level[i] = 0;
+				levelInfo[p].level[i] = -1;
 			}
 		}
 
@@ -57,7 +59,18 @@ LevelManager*	levelManager = nullptr;
 	//	レベル加算
 	void	LevelManager::AddLevel( int id, char levelType )
 	{
+		//	レベル加算
 		levelInfo[id].level[levelType]++;
+
+		//	レベル上限設定
+		if ( levelInfo[id].level[levelType] >= LEVEL_MAX - 1 )
+		{
+			//	上限設定
+			levelInfo[id].level[levelType] = LEVEL_MAX - 1;
+
+			//	クラスチェンジ
+			SendClassChange( id, levelType + 1 );
+		}
 	}
 
 	//	経験値計算
@@ -85,6 +98,17 @@ LevelManager*	levelManager = nullptr;
 	{
 		SendExpData	sendExpData( levelInfo[id].exp );
 		gameParam->send( id, ( LPSTR )&sendExpData, sizeof( sendExpData ) );
+	}
+
+	//	クラスチェンジ情報送信
+	void	LevelManager::SendClassChange( int id, char nextClass )
+	{
+		SendClassChangeData	sendData( id, nextClass );
+
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			gameParam->send( p, ( LPSTR )&sendData, sizeof( sendData ) );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

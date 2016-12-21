@@ -1,15 +1,18 @@
 
 #pragma once
 
-struct GameState
-{
-	enum scene
-	{
-		SCENE_TITLE,
-		SCENE_MATCHING,
-		SCENE_MAIN,
-		SCENE_RESULT
-	};
+//************************************************************************
+//
+//	sceneMainƒNƒ‰ƒX
+//
+//************************************************************************
 
-	char	scene = SCENE_TITLE;
+//	include
+
+//	class
+class sceneMain
+{
+private:
+public:
+
 };

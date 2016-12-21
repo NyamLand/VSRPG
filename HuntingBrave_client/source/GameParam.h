@@ -33,6 +33,7 @@ public:
 	//	初期化・解放
 	GameParam( void );
 	~GameParam( void );
+	bool	Initialize( void );
 	bool InitializeClient( char* addr, int nPort, char* name );
 	void CloseClient( void );
 
@@ -46,6 +47,8 @@ public:
 	void	SendMatching( void );
 	void	SendInputInfo( void );
 	void	SendHuntInfo( char enemyType );
+	void	SendSignOut( void );
+	void	SendResponseInfo( char com );
 
 	//	受信処理
 	void	ReceiveCharaInfo( const LPSTR& data );
@@ -56,14 +59,16 @@ public:
 	void	ReceiveMagicEraseInfo( const LPSTR& data );
 	void	ReceiveLevelInfo( const LPSTR& data );
 	void	ReceiveExpInfo( const LPSTR& data );
+	void	ReceiveClassChangeInfo( const LPSTR& data );
 
 	//	ログイン情報受信
 	void	ReceiveSignUpInfo( const LPSTR& data );
 	void	ReceiveSignOutInfo( const LPSTR& data );
 	void	ReceiveMatching( const LPSTR& data );
+	void	ReceiveResponse( const LPSTR& data );
 	
 	//	動作関数
-	void CheckInputData( int keyType );
+	void CheckInputData( char keyType );
 
 	//	情報設定
 	void	SetPlayerParam( int id, const PlayerParam& param );

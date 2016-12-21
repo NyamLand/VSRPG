@@ -19,16 +19,27 @@
 #define	MINOTAURUS_SCALE	0.02f
 #define	MINOTAURUS_HEIGHT	2.0f
 #define	MINOTAURUS_RADIUS	1.5f
-#define	INIT_LIFE	 1
+#define	INIT_LIFE	 4
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
-#define	MOVE_SPEED		0.1f
+#define	MOVE_SPEED		0.15f
 
 //	その他パラメータ
 #define	ATTACK_DIST		5.0f
 #define	SEARCH_DIST	10.0f
 
+//モーションフレーム
+namespace
+{
+	namespace MOTION_FRAME
+	{
+		const int ATTACK_HIT_START = 138;
+		const int ATTACK_HIT_END = 150;
+		const int DEAD_START = 725;
+		const int FALL_END = 1000;
+	}
+}
 //------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------
@@ -40,6 +51,7 @@
 		ModeFunction[MODE::MOVE] = &BigEnemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &BigEnemy::AttackMode;
 		ModeFunction[MODE::DAMAGE] = &BigEnemy::DamageMode;
+		ModeFunction[MODE::DEAD] = &BigEnemy::DeadMode;
 		
 		//	変数初期化
 		speed = MOVE_SPEED;
@@ -67,6 +79,7 @@
 		SetMotion( 1 );	//	数値仮
 		
 		lifeInfo.Initialize( INIT_LIFE );
+		ZeroMemory(&attackInfo, sizeof(AttackInfo));
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
 		bar = new EnemyHpUI();
@@ -135,12 +148,13 @@
 		if ( frame >= 138 && frame <= 150 )
 		{
 			//	攻撃状態を有効にする
-			//attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
+			attackInfo.Set(SHAPE_TYPE::SPHERE, MINOTAURUS_RADIUS, pos + (GetFront() * MINOTAURUS_RADIUS), Vector3(0, 0, 0));
+			attackInfo.attackParam = ATTACK_PARAM::ATTACK1;
 		}
 		else
 		{
 			//	攻撃状態を無効にする
-			//attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
+			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
 			if ( frame >= 170 )
@@ -149,7 +163,25 @@
 	}
 
 
-	
+	void	BigEnemy::DeadMode(void)
+	{
+		SetMotion(12);
+		static float alpha = 1.0f;
+
+		//	フレーム取得
+		int frame = obj->GetFrame();
+
+		//	フレーム制御
+		if (frame >= MOTION_FRAME::DEAD_START)
+		{
+			//	透過開始
+			alpha -= 0.1f;
+			if (alpha <= 0.0f)
+			{
+				lifeInfo.isAlive = false;
+			}
+		}
+	}
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
