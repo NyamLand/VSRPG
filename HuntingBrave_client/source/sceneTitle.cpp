@@ -74,7 +74,6 @@ namespace
 		fstream		fstr( "DATA/player_data.csv" );
 		reader = new CSVReader( fstr, DEFAULT_SEPARATOR, DEFAULT_QUOTE_CHARACTER );
 
-
 		return	true;
 	}
 
@@ -94,6 +93,9 @@ namespace
 	//	更新
 	void	sceneTitle::Update( void )
 	{
+		circleGage += 0.01f;
+		if ( circleGage >= PI )	circleGage = -PI;
+
 		switch ( step )
 		{
 		case TITLE_STEP::FADE_IN:
@@ -124,17 +126,9 @@ namespace
 		mainView->Clear();
 
 		//	bg描画
-		static	const LPSTR	technique[] =
-		{
-			"copy",
-			"blackWhite",
-			"negaPosi"
-		};
-
-		static int tec = random->GetInt( 0, 2 );
 		bg->Render( 0, 0, 
 			iexSystem::ScreenWidth, iexSystem::ScreenHeight, 
-			0, 0, 1280, 720, shader2D, technique[tec] );
+			0, 0, 1280, 720 );
 
 		//	スクリーン制御
 		screen->Render();

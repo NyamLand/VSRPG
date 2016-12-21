@@ -20,6 +20,7 @@ private:
 	float					stepSpeed;
 	Timer*				timer;
 	int					index;
+	char					charType;
 
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );

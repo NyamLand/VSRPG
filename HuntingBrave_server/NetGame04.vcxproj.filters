@@ -106,6 +106,12 @@
     <Filter Include="ソース ファイル\Scene\sceneMatching">
       <UniqueIdentifier>{a9530f24-d50e-496d-816d-d3c5c5e5d6fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\ItemManager">
+      <UniqueIdentifier>{769f227c-73ce-4b7d-afb6-550ec9081160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{df4da85a-7825-4c71-a6c4-291ccabf7340}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -225,6 +231,9 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>ソース ファイル\Scene\main</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ItemManager.cpp">
+      <Filter>ソース ファイル\Manager\ItemManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -304,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="Source\main.h">
       <Filter>ソース ファイル\Scene\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemManager.h">
+      <Filter>ソース ファイル\Manager\ItemManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

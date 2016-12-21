@@ -27,7 +27,6 @@
 		};
 
 		//	パラメータ
-		int	power;
 		int	step;
 		Timer	timer;
 
@@ -44,8 +43,8 @@
 	//	ライフ情報構造体
 	struct LifeInfo
 	{
-		bool	isAlive;
-		bool	active;
+		bool		isAlive;
+		bool		active;
 		int		maxLife;
 		int		life;
 

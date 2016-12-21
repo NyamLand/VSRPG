@@ -49,6 +49,39 @@
 	}
 
 //----------------------------------------------------------------------------------------------
+//	PlayerStatus構造体
+//----------------------------------------------------------------------------------------------
+
+	//	初期化
+	void	PlayerStatus::Initialize( int power, int defense, float speed )
+	{
+		this->power = power;
+		this->defense = defense;
+		this->speed = speed;
+	}
+
+	//	攻撃力設定
+	void	PlayerStatus::CulcPower( int id, int power )
+	{
+		this->power += power;
+		if ( this->power <= 0 )	this->power = 0;
+	}
+
+	//	防御力設定
+	void	PlayerStatus::CulcDefense( int id, int defense )
+	{
+		this->defense += defense;
+		if ( this->defense <= 0 )	this->defense = 0;
+	}
+
+	//	スピード設定
+	void	PlayerStatus::DoubleSpeed( int id, float param )
+	{
+		speed = param;
+		if ( speed <= 0.0f )		speed = 0.0f;
+	}
+	
+//----------------------------------------------------------------------------------------------
 //	SignUp構造体
 //----------------------------------------------------------------------------------------------
 

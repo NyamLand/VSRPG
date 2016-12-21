@@ -23,8 +23,10 @@ namespace ITEM_MAX
 class ItemUI
 {
 private:
-	Image*	obj;
+	Image*		obj;
+	Image*		icon[2];
 	int	posx, posy, width, height;
+	float	itemInterval[2];
 
 public:
 	//	‰Šú‰»E‰ğ•ú

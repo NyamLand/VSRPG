@@ -44,6 +44,14 @@
 		void Set( const Vector3& pos, float angle, int motion, int frame, int life );
 	};
 
+	//	プレイヤーステータス
+	struct PlayerStatus
+	{
+		int power;
+		int defense;
+		float speed;
+	};
+
 	//	点数、順位情報
 	struct PointInfo
 	{

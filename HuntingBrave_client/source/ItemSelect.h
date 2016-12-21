@@ -19,6 +19,7 @@ private:
 	float	percentage;
 	float	percentage1;
 	float	percentage2;
+	float	circleGage;
 	Image*		itemImage[4];
 
 public:

@@ -63,6 +63,22 @@ namespace SCENE
 		void Set( const Vector3& pos, float angle, int motion, int frame );
 	};
 
+	//	プレイヤーステータス
+	struct PlayerStatus
+	{
+		//	parameter
+		int	power;
+		int	defense;
+		float	speed;
+		float initSpeed;
+
+		//	計算
+		void	Initialize( int power, int defense, float speed );
+		void	CulcPower( int id, int power );
+		void	CulcDefense( int id, int defense );
+		void	DoubleSpeed( int id, float param );
+	};
+
 	//	点数、順位情報
 	struct PointInfo
 	{

@@ -34,9 +34,6 @@
 	//	初期化
 	bool	Fighter::Initialize( int id )
 	{
-		//	モデル読み込み
-		Load( "DATA/CHR/Fighter/Fighter.IEM" );
-
 		//	初期化
 		Player::Initialize( id );
 
@@ -55,7 +52,6 @@
 	void	Fighter::ChangeTexture( int colorNum )
 	{
 		//	ファイル設定
-		char	fileName[256] = "";
 		sprintf_s( fileName, "DATA/CHR/Fighter/%dpColor/body.png", colorNum + 1 );
 		obj->SetTexture( 0, fileName );
 		sprintf_s( fileName, "DATA/CHR/Fighter/%dpColor/toumeitachi.png", colorNum + 1 );

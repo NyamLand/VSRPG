@@ -6,6 +6,7 @@
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"LevelManager.h"
+#include	"ItemManager.h"
 #include	"PointManager.h"
 #include	"GameParam.h"
 
@@ -59,6 +60,7 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &playerStatus[id], sizeof( PlayerStatus ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
 			lifeInfo[id].Initialize( INIT_LIFE );
 		}
@@ -217,7 +219,6 @@ GameParam*	gameParam = nullptr;
 		attackInfo[client].vec1 = receiveAttackData->vec1;
 		attackInfo[client].vec2 = receiveAttackData->vec2;
 		attackInfo[client].radius = receiveAttackData->radius;
-		attackInfo[client].power = 1;
 		return	-1;
 	}
 

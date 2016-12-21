@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<vector>
 #include	"FrameWork.h"
 #include	"GameParam.h"
 #include	"sceneMain.h"

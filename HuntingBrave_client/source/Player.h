@@ -64,6 +64,7 @@ protected:
 	PlayerParam		playerParam;
 	iex3DObj* org;
 	iex3DObj* nextObj;
+	char	fileName[256];
 	enum	MODE//	‰¼
 	{
 		MOVE,

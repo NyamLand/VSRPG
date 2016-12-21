@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"system/System.h"
 #include	"GlobalFunction.h"
 #include	"Interpolation.h"
 #include	"GameParam.h"
@@ -45,7 +46,7 @@ namespace
 
 	//	コンストラクタ
 	ItemSelect::ItemSelect( void ) : posX( 0 ), posY( 0 ), select1( 0 ), select2( 0 ), before( 1 ),
-		percentage( 0.0f ), percentage1( 0.0f ), percentage2( 1.0f )
+		percentage( 0.0f ), percentage1( 0.0f ), percentage2( 1.0f ), circleGage( 0.0f )
 	{
 		//	画像
 		for ( int i = 0; i < 4; i++ )
@@ -88,6 +89,9 @@ namespace
 	//	更新
 	void	ItemSelect::Update( void )
 	{
+		circleGage += 0.02f;
+		if ( circleGage >= 1.0f	)	circleGage = 0.0f;
+
 		//	展開
 		for ( int i = 0; i < 4; i++ )
 		{
@@ -128,7 +132,6 @@ namespace
 	{
 		for ( int i = 0; i < 4; i++ )
 		{
-			// 透過処理を行う
 			itemImage[i]->Render( IMAGE_MODE::NORMAL );
 		}
 	}

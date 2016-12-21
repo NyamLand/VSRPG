@@ -19,6 +19,7 @@ class GameParam : public UDPServer
 private:
 	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	PlayerStatus	playerStatus[PLAYER_MAX];
 	AttackInfo	attackInfo[PLAYER_MAX];
 	LifeInfo			lifeInfo[PLAYER_MAX];
 
@@ -62,6 +63,7 @@ public:
 	//	èÓïÒéÊìæ
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }
 	PlayerParam&	GetPlayerParam( int id ){ return playerParam[id]; }
+	PlayerStatus&	GetPlayerStatus( int id ){ return playerStatus[id]; }
 	AttackInfo&		GetAttackInfo( int id ){ return attackInfo[id]; }
 	LifeInfo&			GetLifeInfo( int id ){ return	lifeInfo[id]; }
 };
