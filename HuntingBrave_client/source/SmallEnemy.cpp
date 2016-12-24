@@ -4,6 +4,7 @@
 #include	"DrawShape.h"
 #include	"Interpolation.h"
 #include	"PlayerManager.h"
+#include	"Random.h"
 
 #include	"SmallEnemy.h"
 
@@ -40,6 +41,34 @@ namespace
 		const int ATTACK_HIT_END = 150;
 		const int DEAD_START = 225;
 		const int FALL_END = 493;
+	}
+
+	namespace MOFUMOFU
+	{
+		const LPSTR mofooTex0[] =
+		{
+			"DATA/CHR/Enemy/mofumofu/mofoo.png",
+			"DATA/CHR/Enemy/mofumofu/ao_mofoo.png",
+			"DATA/CHR/Enemy/mofumofu/metaru_mofoo.png",
+			"DATA/CHR/Enemy/mofumofu/yuki_mofoo.png"
+		};
+
+		const LPSTR mofooTex1[] =
+		{
+			"DATA/CHR/Enemy/mofumofu/mofoo_trans.png",
+			"DATA/CHR/Enemy/mofumofu/ao_mofoo_trans.png",
+			"DATA/CHR/Enemy/mofumofu/metaru_mofoo_trans.png",
+			"DATA/CHR/Enemy/mofumofu/yuki_mofoo_trans.png"
+		};
+
+		enum MOFU_TYPE
+		{
+			NORMAL_MOFU,
+			AO_MOFU,
+			METARU_MOFU,
+			YUKI_MOFU,
+			MOFU_MAX
+		};
 	}
 }
 
@@ -78,12 +107,22 @@ namespace
 		SetScale( 0.0f );
 		SetMotion( 1 );	//	数値仮
 
+		//	ライフ初期化
 		lifeInfo.Initialize( INIT_LIFE );
-		ZeroMemory(&attackInfo, sizeof(AttackInfo));
+
+		//	攻撃情報初期化
+		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
+
+		//	当たり判定情報初期化
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MOFFU_HEIGHT, MOFFU_RADIUS );
 
+		//	HPバー初期化
 		bar = new EnemyHpUI();
-		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
+		bar->Initilaize( HPUI_TYPE::ENEMY, GetLifeInfo().maxLife );
+		
+		//	テクスチャ差し替え
+		texType = random->GetInt( 0, MOFUMOFU::MOFU_MAX - 1 );
+
 		//	情報更新
 		UpdateInfo();
 
@@ -101,8 +140,18 @@ namespace
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
 
-		//	情報更新
 		BaseChara::Update();
+	}
+
+	//	描画
+	void	SmallEnemy::Render( iexShader* shader, LPSTR technique )
+	{
+		//	情報更新
+		obj->SetTexture( 0, MOFUMOFU::mofooTex0[texType] );
+		obj->SetTexture( 1, MOFUMOFU::mofooTex1[texType] );
+
+		//	描画
+		BaseChara::Render( shader, technique );
 	}
 
 //------------------------------------------------------------------------------------
