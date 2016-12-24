@@ -132,6 +132,8 @@
     <ClCompile Include="source\HpUI.cpp" />
     <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
+    <ClCompile Include="source\Item.cpp" />
+    <ClCompile Include="source\ItemManager.cpp" />
     <ClCompile Include="source\ItemSelect.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
     <ClCompile Include="source\LevelManager.cpp" />
@@ -187,6 +189,7 @@
     <ClCompile Include="IEX\IEX_System.cpp" />
     <ClCompile Include="IEX\IEX_Texture.cpp" />
     <ClCompile Include="IEX\IEX_View.cpp" />
+    <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\TImerUI.cpp" />
     <ClCompile Include="source\UIManager.cpp" />
     <ClCompile Include="source\UpGradeUI.cpp" />
@@ -213,6 +216,8 @@
     <ClInclude Include="source\HpUI.h" />
     <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\InputManager.h" />
+    <ClInclude Include="source\Item.h" />
+    <ClInclude Include="source\ItemManager.h" />
     <ClInclude Include="source\ItemSelect.h" />
     <ClInclude Include="source\ItemUI.h" />
     <ClInclude Include="source\LevelManager.h" />
@@ -256,6 +261,7 @@
     <ClInclude Include="source\sceneMain.h" />
     <ClInclude Include="source\system\System.h" />
     <ClInclude Include="IEX\iextreme.h" />
+    <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\TimerUI.h" />
     <ClInclude Include="source\UIManager.h" />
     <ClInclude Include="source\UpGradeUI.h" />

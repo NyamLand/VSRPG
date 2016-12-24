@@ -47,9 +47,20 @@
 	//	プレイヤーステータス
 	struct PlayerStatus
 	{
+		//	parameter
 		int power;
 		int defense;
+		int magicPower;
+		int magicDefense;
 		float speed;
+
+		//	計算
+		void	Initialize( int power, int defense, int magicPower, int magicDefense, float speed );
+		void	CulcPower( int power );
+		void	CulcDefense( int defense );
+		void	CulcMagicPower( int power );
+		void	CulcMagicDefense( int defense );
+		void	DoubleSpeed( float param );
 	};
 
 	//	点数、順位情報

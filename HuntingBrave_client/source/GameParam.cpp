@@ -42,19 +42,10 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerStatus ) );
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
-
-		//	関数ポインタ
-		ReceiveFunction[RECEIVE_COMMAND::GAME_INFO] = &GameParam::ReceiveGameInfo;
-		ReceiveFunction[RECEIVE_COMMAND::POINT_INFO] = &GameParam::ReceivePointInfo;
-		ReceiveFunction[RECEIVE_COMMAND::CHARA_INFO] = &GameParam::ReceiveCharaInfo;
-		ReceiveFunction[RECEIVE_COMMAND::MAGIC_INFO] = &GameParam::ReceiveMagicInfo;
-		ReceiveFunction[RECEIVE_COMMAND::MAGIC_APPEND] = &GameParam::ReceiveMagicAppendInfo;
-		ReceiveFunction[RECEIVE_COMMAND::MAGIC_ERASE] = &GameParam::ReceiveMagicEraseInfo;
-		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
-		ReceiveFunction[RECEIVE_COMMAND::EXP_INFO] = &GameParam::ReceiveExpInfo;
 	}
 
 	//	デストラクタ
@@ -74,6 +65,8 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
+
+		ZeroMemory( &playerStatus, sizeof( PlayerStatus ) );
 
 		return	true;
 	}
@@ -105,6 +98,11 @@ GameParam*	gameParam = nullptr;
 		SetPlayerParam( myIndex, 
 			receiveCharaData.pos, receiveCharaData.angle, 
 			receiveCharaData.motion, receiveCharaData.life );
+
+		//	初期パラメータ受信
+		ReceiveAllStatusData	receiveAllStatus;
+		if ( receive( ( LPSTR )&receiveAllStatus, sizeof( receiveAllStatus ) ) <= 0 )	return	false;
+		levelManager->CulcAllStatus( receiveAllStatus );
 		return true;
 	}
 
@@ -171,6 +169,10 @@ GameParam*	gameParam = nullptr;
 
 			case RECEIVE_COMMAND::CLASS_CHANGE_INFO:
 				ReceiveClassChangeInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::STATUS_INFO:
+				ReceiveStatusInfo( data );
 				break;
 
 			case COMMANDS::MATCHING:
@@ -362,6 +364,12 @@ GameParam*	gameParam = nullptr;
 		playerManager->ClassChange( receiveData->id, receiveData->nextClass );
 	}
 
+	//	ステータス受信
+	void	GameParam::ReceiveStatusInfo( const LPSTR& data )
+	{
+		levelManager->CulcStatus( data );
+	}
+
 //----------------------------------------------------------------------------------------------
 //	ログイン関連受信
 //----------------------------------------------------------------------------------------------
@@ -433,7 +441,6 @@ GameParam*	gameParam = nullptr;
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
-		//playerManager->ClassChange( id, PLAYER_TYPE::NORMAL );
 	}
 
 	//	点数情報設定

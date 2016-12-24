@@ -53,6 +53,7 @@
 
 		//	“®ìŠÖ”
 		bool	CulcLife( int param );
+		void	AddMaxLife( int param );
 		void	Reset( void );
 
 		//	î•ñİ’è

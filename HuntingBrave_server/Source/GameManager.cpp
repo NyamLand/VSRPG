@@ -1,10 +1,12 @@
 
 #include	"iextreme.h"
 #include	<vector>
+#include	<memory>
 #include	"FrameWork.h"
 #include	"GameParam.h"
 #include	"sceneMain.h"
 #include	"sceneMatching.h"
+#include	"CSVReader.h"
 #include	"GameManager.h"
 
 //*****************************************************************************************************************************
@@ -42,6 +44,10 @@ GameManager*	gameManager = nullptr;
 		{
 			matchingInfo[i].isComplete = false;
 		}
+		playerData.clear();
+
+		//	csv読み込み
+		LoadData();
 	}
 
 	//	デストラクタ
@@ -52,6 +58,10 @@ GameManager*	gameManager = nullptr;
 			delete timer;
 			timer = nullptr;
 		}
+
+		playerData.clear();
+
+
 	}
 
 	//	マッチング情報初期化
@@ -60,6 +70,27 @@ GameManager*	gameManager = nullptr;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			matchingInfo[p].isComplete = false;
+		}
+	}
+
+	//	CSV読み込み
+	void	GameManager::LoadData( void )
+	{
+		//	CSVファイル
+		fstream playerStream( "DATA/player_data.csv" );
+
+		//	CSVリーダー初期化
+		std::unique_ptr<CSVReader>	reader =
+			std::make_unique<CSVReader>( playerStream );
+
+		//	ファイルから読み込み、vector配列に保存する
+		int index = 0;
+		while ( 1 )
+		{
+			playerData.resize( index + 1 );
+			reader->Read( playerData[index] );
+			if ( playerData[index].size() == 0 )	break;
+			index++;
 		}
 	}
 
@@ -88,6 +119,18 @@ GameManager*	gameManager = nullptr;
 
 		gameState = false;
 		timeUp = false;
+	}
+
+	//	プレイヤーステータス初期化
+	void	GameManager::InitializeStatus( PlayerStatus& playerStatus )
+	{
+		int power = GetUpGrade( 0, UPGRADE_DATA::ATTACK, 0 );
+		int defense = GetUpGrade( 0, UPGRADE_DATA::DEFENSE, 0 );
+		int magicAttack = GetUpGrade( 0, UPGRADE_DATA::MAGIC_ATTACK , 0 );
+		int magicDefense = GetUpGrade( 0, UPGRADE_DATA::MAGIC_DIFENSE, 0 );
+		float speed = GetUpGradeSpeed( 0, 0 );
+
+		playerStatus.Initialize( power, defense, magicAttack, magicDefense, speed );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -177,6 +220,18 @@ GameManager*	gameManager = nullptr;
 	bool	GameManager::GetGameState( void )
 	{
 		return	gameState;
+	}
+
+	//	アップグレードデータ取得
+	int	GameManager::GetUpGrade( char levelType, char upGradeData, char level )
+	{
+		return	std::stoi( playerData[1 + ( levelType * 5 ) + level][upGradeData] );
+	}
+
+	//	スピードアップグレードデータ取得
+	float	GameManager::GetUpGradeSpeed( char levelType, char level )
+	{
+		return	std::stof( playerData[1 + ( levelType * 5 ) + level][UPGRADE_DATA::SPEED] );
 	}
 
 

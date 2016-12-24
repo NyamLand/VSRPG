@@ -73,7 +73,7 @@ namespace
 		for ( int i = 0; i < 4; i++ )
 		{
 			itemImage[i]->Initialize( filename[i],
-				posX - ( IMAGE_SPACE * 1.5f ) + ( IMAGE_SPACE * i ), 
+				posX - ( int )( IMAGE_SPACE * 1.5f ) + ( IMAGE_SPACE * i ), 
 				posY, 
 				IMAGE_SIZE, IMAGE_SIZE, 0, 
 				0, SRC_SIZE, SRC_SIZE );

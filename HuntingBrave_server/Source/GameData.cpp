@@ -53,29 +53,45 @@
 //----------------------------------------------------------------------------------------------
 
 	//	‰Šú‰»
-	void	PlayerStatus::Initialize( int power, int defense, float speed )
+	void	PlayerStatus::Initialize( int power, int defense, int magicAttack, int magicDefense, float speed )
 	{
 		this->power = power;
 		this->defense = defense;
 		this->speed = speed;
+		this->magicAttack = magicAttack;
+		this->magicDefense = magicDefense;
 	}
 
 	//	UŒ‚—Íİ’è
-	void	PlayerStatus::CulcPower( int id, int power )
+	void	PlayerStatus::CulcPower( int power )
 	{
 		this->power += power;
 		if ( this->power <= 0 )	this->power = 0;
 	}
 
 	//	–hŒä—Íİ’è
-	void	PlayerStatus::CulcDefense( int id, int defense )
+	void	PlayerStatus::CulcDefense( int defense )
 	{
 		this->defense += defense;
 		if ( this->defense <= 0 )	this->defense = 0;
 	}
 
+	//	–‚–@UŒ‚—Íİ’è
+	void	PlayerStatus::CulcMagicAttack( int power )
+	{
+		this->magicAttack += power;
+		if ( this->magicAttack <= 0 )	this->magicAttack = 0;
+	}
+
+	//	–‚–@–hŒä—Íİ’è
+	void	PlayerStatus::CulcMagicDefense( int defense )
+	{
+		this->magicDefense += defense;
+		if ( this->magicDefense <= 0 )	this->magicDefense = 0;
+	}
+
 	//	ƒXƒs[ƒhİ’è
-	void	PlayerStatus::DoubleSpeed( int id, float param )
+	void	PlayerStatus::DoubleSpeed( float param )
 	{
 		speed = param;
 		if ( speed <= 0.0f )		speed = 0.0f;

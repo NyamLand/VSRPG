@@ -20,6 +20,7 @@
 				INPUT_INFO,
 				LEVEL_INFO,
 				HUNT_INFO,
+				ITEM_INFO,
 				COMMAND_MAX
 			};
 		}

@@ -69,14 +69,17 @@ namespace SCENE
 		//	parameter
 		int	power;
 		int	defense;
+		int	magicAttack;
+		int	magicDefense;
 		float	speed;
-		float initSpeed;
 
 		//	ŒvZ
-		void	Initialize( int power, int defense, float speed );
-		void	CulcPower( int id, int power );
-		void	CulcDefense( int id, int defense );
-		void	DoubleSpeed( int id, float param );
+		void	Initialize( int power, int defense, int magicAttack, int magicDefense, float speed );
+		void	CulcPower( int power );
+		void	CulcDefense( int defense );
+		void	CulcMagicAttack( int power );
+		void	CulcMagicDefense( int defense );
+		void	DoubleSpeed( float param );
 	};
 
 	//	“_”A‡ˆÊî•ñ

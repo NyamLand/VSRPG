@@ -67,6 +67,16 @@ public:
 	void	SetExp( int exp );
 	void	SetLevelInfo( char levelType, char level );
 
+	//	ステータス設定
+	void	CulcAllStatus( const LPSTR& data );
+	void	CulcAllStatus( const ReceiveAllStatusData& statusData );
+	void	CulcStatus( const LPSTR& data );
+	void	CulcPower( const LPSTR& data );
+	void	CulcDefense( const LPSTR& data );
+	void	CulcMagicAttack( const LPSTR& data );
+	void	CulcMagicDefense( const LPSTR& data );
+	void	CulcSpeed( const LPSTR& data );
+
 	//	情報取得
 	LevelInfo&	GetLevelInfo( void );
 	char	GetLevel( char levelType )const;

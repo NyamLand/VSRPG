@@ -1,12 +1,10 @@
 
 #include	"iextreme.h"
-#include	<map>
-#include	"GameParam.h"
-#include	"ItemManager.h"
+#include	"Timer.h"
 
 //*****************************************************************************************************************************
 //
-//	ItemManagerクラス
+//		ゲームデータ管理
 //
 //*****************************************************************************************************************************
 
@@ -14,98 +12,71 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-ItemManager*	itemManager = nullptr;
-
-#define	HEAL_LIFE	30
-
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	ItemManager::ItemManager( void )
+	Timer::Timer( void ) : remaining( 0.0f ), end( 0.0f )
 	{
-		Initialize();
+		
 	}
 
 	//	デストラクタ
-	ItemManager::~ItemManager( void )
+	Timer::~Timer( void )
 	{
-		Release();
+
 	}
 
-	//	初期化
-	bool	ItemManager::Initialize( void )
-	{
-		for ( int id = 0; id < PLAYER_MAX; id++ )
-		{	
-			itemMap[id].clear();
-		}
-
-		return	true;
-	}
-
-	//	解放
-	void	ItemManager::Release( void )
-	{
-		for ( int id = 0; id < PLAYER_MAX; id++ )
-		{
-			itemMap[id].clear();
-		}
-	}
+//----------------------------------------------------------------------------------------------
+//	更新
+//----------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
-	//	回復
-	void	ItemManager::Heal( int id )
+	//	タイマースタート
+	void	Timer::Start( float limit )
 	{
-		//	回復
-		gameParam->GetLifeInfo( id ).CulcLife( HEAL_LIFE );
+		//	スタート時の時間を格納
+		start = std::chrono::system_clock::now();
+
+		end = limit;
 	}
 
-	//	攻撃
-	void	ItemManager::Power( int id )
+	//	制限時間更新( 指定した時間をすぎるとtrueをかえす )
+	bool	Timer::Update( void )
 	{
-		if ( !itemMap[id][ITEM_TYPE::ATK] )	return;
+		//	現在の時間を取得
+		now = std::chrono::system_clock::now();
 
-		//	攻撃力増加
-	}
+		//	スタート時の時間との差分を求める
+		float difference = 
+			( float )std::chrono::duration_cast<std::chrono::milliseconds>( now - start ).count();
+		
+		//	桁調整にする
+		remaining = end - difference / 1000.0f;
 
-	//	防御
-	void	ItemManager::Defense( int id )
-	{
-		if ( !itemMap[id][ITEM_TYPE::DEF] )	return;
-
-		//	防御力増加
+		//	指定した時間より差が大きければtrueをかえす
+		if ( remaining <= 0.0f )
+		{
+			remaining = 0.0f;
+			return	true;
+		}
+		return	false;
 	}
 
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
-	//	アイテムステート切り換え
-	void	ItemManager::ChangeItemState( int id, char itemType )
-	{
-		//	ON/OFF
-		itemMap[id][itemType] = !itemMap[id][itemType];
-	}
-
-	//	アイテムステート追加
-	void	ItemManager::AddItemState( int id, char itemType )
-	{
-		//	見つからない
-		itemMap[id].insert(
-			std::map<char, bool>::value_type( itemType, false ) );
-	}
-
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------
 
-	//	アイテムステート取得
-	bool	ItemManager::GetItemState( int id, char itemType )
+	//	現在の残り時間を取得
+	float	Timer::GetRemainingTime( void )const
 	{
-		return	itemMap[id][itemType];
+		return	remaining;
 	}
