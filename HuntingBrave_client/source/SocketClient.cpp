@@ -73,8 +73,8 @@
 		sock = socket( AF_INET, SOCK_DGRAM, 0 );
 		if( sock == INVALID_SOCKET ) return false;
 
-		//	タイムアウト設定(2000ms)	
-		int timeout = 5000;
+		//	タイムアウト設定(1000ms)	
+		int timeout = 1000;
 		if( setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(timeout) ) == SOCKET_ERROR ) return false;
 
 		return true;

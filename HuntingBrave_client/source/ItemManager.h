@@ -18,29 +18,41 @@ struct ItemInfo
 	float percentage;
 };
 
+namespace
+{
+	namespace ITEM_POS
+	{
+		enum
+		{
+			LEFT_ITEM,
+			RIGHT_ITEM,
+			ITEM_MAX
+		};
+	}
+
+	namespace ITEM_TYPE
+	{
+		enum
+		{
+			HEAL,
+			ATK,
+			DEF,
+			LED,
+			TYPE_MAX
+		};
+	}
+}
+
 //	class
 class ItemManager : public Singleton<ItemManager>
 {
 	friend Singleton<ItemManager>;
 
+public:
+
 private:
-	enum ITEM_POS
-	{
-		LEFT_ITEM,
-		RIGHT_ITEM,
-		ITEM_MAX
-	};
 
-	enum ITEM_TYPE
-	{
-		HEAL,
-		ATK,
-		DEF,
-		LED,
-		TYPE_MAX
-	};
-
-	ItemInfo	item[ITEM_MAX];
+	ItemInfo	item[ITEM_POS::ITEM_MAX];
 
 	//	初期化・解放
 	ItemManager( void );
@@ -51,14 +63,16 @@ public:
 
 	//	更新・描画
 	void	Update( void );
-	void	Render( void );
 
 	//	動作関数
 	void	SendItemState( char item );
-	void	UseItem( ITEM_POS itemPos );
+	void	UseItem( char itemPos );
 
 	//	情報設定
 	
 	//	情報取得
-	float GetInterval( ITEM_POS itemPos )const{ return item[itemPos].percentage; }
+	char	GetItemType( char itemPos )const{ return item[itemPos].type; }
+	float GetInterval( char itemPos )const{ return item[itemPos].percentage; }
 };
+
+#define	itemManager ( ItemManager::GetInstance() )

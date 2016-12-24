@@ -39,6 +39,7 @@ namespace
 		{
 			NAME_INPUT,
 			SIGN_UP,
+			ITEM_SELECT,
 			WAIT
 		};
 	}
@@ -143,27 +144,22 @@ namespace
 				int id = gameParam->GetMyIndex();
 				itemSelect->Initialize( id );
 				gameWait->Initialize( id, nameInput->GetName() );
-				step = MATCHING_MODE::WAIT;
+				step = MATCHING_MODE::ITEM_SELECT;
 			}
 			break;
 
-		case MATCHING_MODE::WAIT:
-			//	サーバーから情報受信
-			gameParam->Update();
-
-			//	GameManager更新
-			gameManager->Update();
-
-			//	待機画面更新
-			gameWait->Update();
-
-			//	アイテム選択更新
-			itemSelect->Update();
-
-			if ( KEY_Get( KEY_ENTER ) == 3 )
+		case MATCHING_MODE::ITEM_SELECT:
 			{
-				gameParam->SendMatching();
+				//	アイテム選択更新
+				bool selectOK = itemSelect->Update();
+				if ( selectOK )	gameParam->SendMatching();
 			}
+		case MATCHING_MODE::WAIT:
+				//	サーバーから情報受信
+				gameParam->Update();
+
+				//	待機画面更新
+				gameWait->Update();
 			break;
 		}
 
@@ -193,6 +189,7 @@ namespace
 		case MATCHING_MODE::SIGN_UP:
 			break;
 
+		case MATCHING_MODE::ITEM_SELECT:
 		case MATCHING_MODE::WAIT:
 			gameWait->Render();
 			itemSelect->Render();

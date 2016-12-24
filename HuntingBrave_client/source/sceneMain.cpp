@@ -19,6 +19,7 @@
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	"NameManager.h"
+#include	"ItemManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
 
@@ -126,6 +127,9 @@ void	sceneMain::Update( void )
 
 	//	magic更新
 	magicManager->Update();
+
+	//	item更新
+	itemManager->Update();
 
 	//	ui更新
 	uiManager->Update();

@@ -238,9 +238,6 @@
     <ClCompile Include="source\Magician.cpp">
       <Filter>Source\Player\Magician</Filter>
     </ClCompile>
-    <ClCompile Include="source\Item.cpp">
-      <Filter>Source\Item</Filter>
-    </ClCompile>
     <ClCompile Include="source\Timer.cpp">
       <Filter>Source\Timer</Filter>
     </ClCompile>
@@ -449,9 +446,6 @@
     </ClInclude>
     <ClInclude Include="source\Magician.h">
       <Filter>Source\Player\Magician</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Item.h">
-      <Filter>Source\Item</Filter>
     </ClInclude>
     <ClInclude Include="source\Timer.h">
       <Filter>Source\Timer</Filter>
@@ -700,9 +694,6 @@
     </Filter>
     <Filter Include="Source\Player\Magician">
       <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Item">
-      <UniqueIdentifier>{fab8eda6-53ac-4685-8cfd-29f1cb09bd2a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Timer">
       <UniqueIdentifier>{98a372dc-ee41-4e49-827b-fc212fb975bc}</UniqueIdentifier>

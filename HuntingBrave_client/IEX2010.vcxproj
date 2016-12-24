@@ -132,7 +132,6 @@
     <ClCompile Include="source\HpUI.cpp" />
     <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
-    <ClCompile Include="source\Item.cpp" />
     <ClCompile Include="source\ItemManager.cpp" />
     <ClCompile Include="source\ItemSelect.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
@@ -216,7 +215,6 @@
     <ClInclude Include="source\HpUI.h" />
     <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\InputManager.h" />
-    <ClInclude Include="source\Item.h" />
     <ClInclude Include="source\ItemManager.h" />
     <ClInclude Include="source\ItemSelect.h" />
     <ClInclude Include="source\ItemUI.h" />
