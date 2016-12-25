@@ -48,7 +48,10 @@ class ItemManager : public Singleton<ItemManager>
 {
 	friend Singleton<ItemManager>;
 
+public:
+
 private:
+
 	ItemInfo	item[ITEM_POS::ITEM_MAX];
 
 	//	‰Šú‰»E‰ğ•ú
