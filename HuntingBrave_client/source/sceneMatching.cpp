@@ -152,7 +152,11 @@ namespace
 			{
 				//	アイテム選択更新
 				bool selectOK = itemSelect->Update();
-				if ( selectOK )	gameParam->SendMatching();
+				if ( selectOK )
+				{
+					gameParam->SendMatching();
+					step = MATCHING_MODE::WAIT;
+				}
 			}
 		case MATCHING_MODE::WAIT:
 				//	サーバーから情報受信
