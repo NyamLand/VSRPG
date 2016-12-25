@@ -115,6 +115,9 @@
     <Filter Include="ソース ファイル\GameData\GameParam">
       <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction">
+      <UniqueIdentifier>{4f3e0c4d-9219-4676-baf0-9bb960081051}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -240,6 +243,9 @@
     <ClCompile Include="Source\CSVReader.cpp">
       <Filter>ソース ファイル\CSVReader</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GlobalFunction.cpp">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -325,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="Source\CSVReader.h">
       <Filter>ソース ファイル\CSVReader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlobalFunction.h">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
