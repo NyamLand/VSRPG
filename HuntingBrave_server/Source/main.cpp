@@ -6,6 +6,7 @@
 #include	<map>
 #include	"iextreme.h"
 #include	"FrameWork.h"
+#include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"GameManager.h"
 #include	"MagicManager.h"
@@ -27,6 +28,8 @@
 char	scene = SCENE::MATCHING;
 
 //	プロトタイプ宣言
+void	ReceiveAndUpdate( void );
+void	AllInfoUpdate( void );
 void	MatchingUpdate( int client );
 void	MainUpdate( int client );
 void	ResultUpdate( int client );
@@ -50,10 +53,9 @@ void main( void )
 	//	無限ループ
 	for (;;)
 	{
-		gameManager->Update();
-		
 		//	情報受信
-		int client = gameParam->Receive( scene );
+		gameManager->Update();
+		int client = gameParam->Receive(scene);
 		magicManager->Update();
 
 		switch ( scene )
@@ -73,6 +75,12 @@ void main( void )
 
 		//	送信
 		gameParam->Send( client );
+
+		//std::thread	AllUpdate( AllInfoUpdate );
+		//std::thread	ReceiveUpdate( ReceiveAndUpdate );
+
+		//AllUpdate.join();
+		//ReceiveUpdate.join();
 	}
 
 	//	解放
@@ -84,6 +92,35 @@ void main( void )
 	delete pointManager;		pointManager = nullptr;
 	delete playerManager;		playerManager = nullptr;
 	delete collision;				collision = nullptr;
+}
+
+void	AllInfoUpdate( void )
+{
+}
+
+void	ReceiveAndUpdate( void )
+{
+	//	情報受信
+	int client = gameParam->Receive( scene );
+	magicManager->Update();
+
+	switch ( scene )
+	{
+	case SCENE::MATCHING:
+		MatchingUpdate( client );
+		break;
+
+	case SCENE::MAIN:
+		MainUpdate( client );
+		break;
+
+	case SCENE::RESULT:
+		ResultUpdate( client );
+		break;
+	}
+
+	//	送信
+	gameParam->Send( client );
 }
 
 void	MatchingUpdate( int client )
