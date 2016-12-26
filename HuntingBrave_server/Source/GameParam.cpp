@@ -2,10 +2,12 @@
 #include	"iextreme.h"
 #include	<thread>
 #include	<map>
+#include	<vector>
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"LevelManager.h"
+#include	"ItemManager.h"
 #include	"PointManager.h"
 #include	"GameParam.h"
 
@@ -48,7 +50,7 @@ GameParam*	gameParam = nullptr;
 	//	プレイヤー初期化
 	void	GameParam::InitializePlayer( int id )
 	{
-		lifeInfo[id].Initialize( INIT_LIFE );
+		lifeInfo[id].life = lifeInfo[id].maxLife;
 		playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
@@ -59,8 +61,11 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &playerStatus[id], sizeof( PlayerStatus ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
-			lifeInfo[id].Initialize( INIT_LIFE );
+			int initLife = gameManager->GetUpGrade( 0, UPGRADE_DATA::HP, 0 );
+			lifeInfo[id].Initialize( initLife );
+			gameManager->InitializeStatus( playerStatus[id] );
 		}
 	}
 
@@ -217,7 +222,6 @@ GameParam*	gameParam = nullptr;
 		attackInfo[client].vec1 = receiveAttackData->vec1;
 		attackInfo[client].vec2 = receiveAttackData->vec2;
 		attackInfo[client].radius = receiveAttackData->radius;
-		attackInfo[client].power = 1;
 		return	-1;
 	}
 
@@ -255,6 +259,7 @@ GameParam*	gameParam = nullptr;
 		ReceiveLevelData*	receiveLevelData = ( ReceiveLevelData* )data;
 		levelManager->AddLevel( client, receiveLevelData->levelType );
 		levelManager->SendLevel( client, receiveLevelData->levelType );
+		levelManager->SendAllStatus( client );
 
 		return	-1;
 	}
@@ -357,6 +362,9 @@ GameParam*	gameParam = nullptr;
 			initParam.pos, initParam.angle, initParam.motion,
 			lifeInfo[client].life );
 		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+
+		//	初期パラメータ送信
+		levelManager->SendAllStatus( client );
 
 		//	サインアップ情報を設定
 		SignUp		signUp( client, playerInfo[client].name );

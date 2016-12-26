@@ -19,7 +19,8 @@
 				ATTACK_INFO,
 				INPUT_INFO,
 				LEVEL_INFO,
-				HUNT_INFO
+				HUNT_INFO,
+				ITEM_INFO
 			};
 		}
 	}
@@ -76,4 +77,12 @@
 		char com = SEND_COMMAND::HUNT_INFO;
 		char	enemyType;
 		SendHuntData( char enemyType ) : enemyType( enemyType ){}
+	};
+
+	//	アイテム使用情報
+	struct SendItemData
+	{
+		char com = SEND_COMMAND::ITEM_INFO;
+		char item;
+		SendItemData( char item ) : item( item ) {}
 	};

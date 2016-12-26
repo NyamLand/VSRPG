@@ -13,6 +13,7 @@
 #include	"PointManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
+#include	"ItemManager.h"
 #include	"Collision.h"
 
 
@@ -41,6 +42,7 @@ void main( void )
 	levelManager = new LevelManager();
 	pointManager = new PointManager();
 	playerManager = new PlayerManager( gameParam );
+	itemManager = new ItemManager();
 	collision = new Collision( gameParam );
 	gameParam->InitializeServer();
 	gameManager->Initialize();
@@ -113,4 +115,5 @@ void	ResultUpdate( int client )
 	gameManager->ChangeScene( scene, SCENE::MATCHING );
 	gameParam->InitializeGame();
 	gameManager->Initialize();
+	itemManager->Initialize();
 }

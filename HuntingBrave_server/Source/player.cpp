@@ -33,7 +33,7 @@
 
 namespace
 {
-	namespace MOTION_FRAME
+	namespace SUPPIN_FRAME
 	{
 		const int SWORDATTACK_HIT_START = 140;
 		const int SWORDATTACK_HIT_END = 150;
@@ -162,7 +162,7 @@ namespace
 		//	倒れるモーション時
 		if ( motion == PLAYER_MOTION::FALL )
 		{
-			if ( frame >= MOTION_FRAME::FALL_END )
+			if ( frame >= SUPPIN_FRAME::FALL_END )
 			{ 
 				SetMotion( PLAYER_MOTION::DEAD );
 				timer->Start( DEATH_TIME );
@@ -234,8 +234,8 @@ namespace
 	void	Player::SwordAttack( void )
 	{
 		//	フレーム管理
-		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK_HIT_START &&
-			pParam.frame <= MOTION_FRAME::SWORDATTACK_HIT_END )
+		if ( pParam.frame >= SUPPIN_FRAME::SWORDATTACK_HIT_START &&
+			pParam.frame <= SUPPIN_FRAME::SWORDATTACK_HIT_END )
 		{
 			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK1;
 		}
@@ -245,7 +245,7 @@ namespace
 		}
 
 		// 一定以上のフレームに達すると移動に戻す
-		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK1_END )
+		if ( pParam.frame >= SUPPIN_FRAME::SWORDATTACK1_END )
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
@@ -255,14 +255,14 @@ namespace
 	//	魔法攻撃
 	void	Player::MagicAttack( void )
 	{
-		if ( pParam.frame == MOTION_FRAME::MAGICACTIVATION )
+		if ( pParam.frame == SUPPIN_FRAME::MAGICACTIVATION )
 		{
 			magicManager->Append( index, 
 				gameParam->GetAttackInfo( index ).vec1,
 				gameParam->GetAttackInfo( index ).vec2 );
 		}
 
-		if ( pParam.frame >= MOTION_FRAME::MAGICATTACK_END )
+		if ( pParam.frame >= SUPPIN_FRAME::MAGICATTACK_END )
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
@@ -318,7 +318,7 @@ namespace
 		//	押している間詠唱、一定時間経過で発動可能
 		if ( inputManager->GetInputState( index, KEY_TYPE::X, KEY_STATE::STAY ) )
 		{
-			if ( pParam.frame >= MOTION_FRAME::MAGICCHANT_END )
+			if ( pParam.frame >= SUPPIN_FRAME::MAGICCHANT_END )
 			{
 				SetMotion( PLAYER_MOTION::MAGIC_CHANT );
 				gameParam->GetAttackInfo( index ).timer.Start( CHANT_TIME );
@@ -339,7 +339,7 @@ namespace
 		gameParam->GetLifeInfo( index ).active = false;
 		SetMotion( PLAYER_MOTION::KNOCKBACK1 );
 
-		if ( pParam.frame >= MOTION_FRAME::KNOCKBACK1_END )
+		if ( pParam.frame >= SUPPIN_FRAME::KNOCKBACK1_END )
 		{
 			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );

@@ -22,12 +22,10 @@ private:
 
 	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	PlayerStatus	playerStatus;
 	AttackInfo	attackInfo[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
 	MatchingInfo	matchingInfo[PLAYER_MAX];
-
-	//	関数ポインタ
-	void( GameParam::*ReceiveFunction[RECEIVE_COMMAND::COMMAND_MAX] )( const LPSTR& data );
 
 public:
 	//	初期化・解放
@@ -60,6 +58,7 @@ public:
 	void	ReceiveLevelInfo( const LPSTR& data );
 	void	ReceiveExpInfo( const LPSTR& data );
 	void	ReceiveClassChangeInfo( const LPSTR& data );
+	void	ReceiveStatusInfo( const LPSTR& data );
 
 	//	ログイン情報受信
 	void	ReceiveSignUpInfo( const LPSTR& data );
@@ -82,6 +81,7 @@ public:
 	//	情報取得
 	PlayerParam GetPlayerParam( int id )const{ return playerParam[id]; }
 	PlayerInfo	GetPlayerInfo( int id )const{ return playerInfo[id]; }
+	PlayerStatus&	GetPlayerStatus( void ){ return playerStatus; }
 	AttackInfo&	GetAttackInfo( int id ){ return	attackInfo[id]; }
 	PointInfo&	GetPointInfo( int id ){ return	pointInfo[id]; }
 	MatchingInfo&	GetMatchingInfo( int id ){ return	matchingInfo[id]; }

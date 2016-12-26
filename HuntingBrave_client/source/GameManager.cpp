@@ -3,11 +3,13 @@
 #include	<vector>
 #include	<memory>
 #include	"GlobalFunction.h"
+#include	"GameParam.h"
 #include	"system/Framework.h"
 #include	"sceneMatching.h"
 #include	"sceneMain.h"
 #include	"sceneResult.h"
 #include	"sceneTitle.h"
+#include	"LevelManager.h"
 #include	"GameManager.h"
 
 //***************************************************************
@@ -36,32 +38,38 @@
 
 		//	CSV読み込み
 		LoadData();
+
+		//	初期化
+		Initialize();
 	}
 
 	//	デストラクタ
 	GameManager::~GameManager( void )
 	{
-		
+		Release();
 	}
 
 	//	初期化
 	bool	GameManager::Initialize( void )
 	{
+		//	初期パラメータ読み込み
+		int power = GetUpGrade( 0, UPGRADE_DATA::ATTACK, 0 );
+		int defense = GetUpGrade( 0, UPGRADE_DATA::DIFENSE, 0 );
+		int magicAttack = GetUpGrade( 0, UPGRADE_DATA::MAGIC_ATTACK, 0 );
+		int magicDefense = GetUpGrade( 0, UPGRADE_DATA::MAGIC_DIFENSE, 0 );
+		int hp = GetUpGrade( 0, UPGRADE_DATA::HP, 0 );
+		float speed = GetUpGrade( 0, UPGRADE_DATA::SPEED, 0 );
+		
+		//	初期値設定
+		gameParam->GetPlayerStatus().Initialize(
+			power, defense, magicAttack, magicDefense, speed );
 		return	true;
 	}
 
 	//	解放
 	void	GameManager::Release( void )
 	{
-		
-	}
-
-	//	クライアント初期化
-	void	GameManager::InitializeClient( void )
-	{
-		////	WinSock初期化
-		//WSADATA	wsaData;
-		//WSAStartup( MAKEWORD( 1, 1 ), &wsaData );
+		playerData.clear();
 	}
 
 	//	CSV読み込み
@@ -137,9 +145,9 @@
 //---------------------------------------------------------------------------------------
 
 	//	アップグレードデータ取得
-	int	GameManager::GetUpGrade( char type, char param, char level )
+	int	GameManager::GetUpGrade( char type, char upGradeData, char level )
 	{
-		return	std::stoi( playerData[1 + ( type * 5 )+ level][param] );
+		return	std::stoi( playerData[1 + ( type * 5 )+ level][upGradeData] );
 	}
 
 	//	フレーバーテキスト取得

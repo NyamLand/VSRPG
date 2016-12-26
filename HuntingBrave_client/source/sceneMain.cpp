@@ -19,6 +19,7 @@
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	"NameManager.h"
+#include	"ItemManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
 
@@ -127,6 +128,9 @@ void	sceneMain::Update( void )
 	//	magic更新
 	magicManager->Update();
 
+	//	item更新
+	itemManager->Update();
+
 	//	ui更新
 	uiManager->Update();
 
@@ -176,17 +180,16 @@ void	sceneMain::Render( void )
 //	debug用描画
 void	sceneMain::DebugRender( void )
 {
-	for ( int p = 0; p < PLAYER_MAX; p++ )
-	{
-		//	各プレイヤー座標描画
-		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
-		int	point = gameParam->GetPointInfo( p ).point;
-		Vector3	p_pos = playerParam.pos;
-		int	life = playerParam.life;
-		char	str[256];
-		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d, life = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point, life );
-		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
-	}
+	PlayerStatus	playerStatus = gameParam->GetPlayerStatus();
+
+	int atk = playerStatus.power;
+	int def = playerStatus.defense;
+	int mgcAtk = playerStatus.magicPower;
+	int mgcDef = playerStatus.magicDefense;
+
+	char str[256];
+	sprintf( str, "power = %d\ndefense = %d\nmagicAttack = %d\nmagicDefense = %d\n", atk, def, mgcAtk, mgcDef );
+	IEX_DrawText( str, 20, 300, 500, 500, 0xFFFFFF00 );
 }
 
 //	自分の情報表示

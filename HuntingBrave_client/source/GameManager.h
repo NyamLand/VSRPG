@@ -69,7 +69,6 @@ public:
 	//	初期化・解放
 	bool	Initialize( void );
 	void	Release( void );
-	void	InitializeClient( void );
 
 	//	更新・描画
 	void	Update( void );
@@ -90,7 +89,7 @@ public:
 	bool		GetGameState( void ){ return	gameState; }
 
 	//	アップグレードデータ取得
-	int		GetUpGrade( char type, char param, char level );
+	int		GetUpGrade( char type, char upGradeData, char level );
 	char*	GetFlavorText( char type, char level );
 };
 

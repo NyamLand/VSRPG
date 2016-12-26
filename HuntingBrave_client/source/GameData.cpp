@@ -51,6 +51,55 @@
 	}
 
 //----------------------------------------------------------------------------------------------
+//	PlayerStatus構造体
+//----------------------------------------------------------------------------------------------	
+
+	//	初期化
+	void	PlayerStatus::Initialize( int power, int defense, int magicPower, int magicDefense, float speed )
+	{
+		this->power = power;
+		this->defense = defense;
+		this->magicPower = magicPower;
+		this->magicDefense = magicDefense;
+		this->speed = speed;
+	}
+
+	//	攻撃力設定
+	void	PlayerStatus::CulcPower( int power )
+	{
+		this->power += power;
+		if ( this->power <= 0 )	this->power = 0;
+	}
+
+	//	防御力設定
+	void	PlayerStatus::CulcDefense( int defense )
+	{
+		this->defense += defense;
+		if ( this->defense <= 0 )	this->defense = 0;
+	}
+
+	//	魔法攻撃力設定
+	void	PlayerStatus::CulcMagicPower( int power )
+	{
+		this->magicPower += power;
+		if ( this->magicPower <= 0 )	this->magicPower = 0;
+	}
+
+	//	魔法攻撃力設定
+	void	PlayerStatus::CulcMagicDefense( int defense )
+	{
+		this->magicDefense += defense;
+		if ( this->magicDefense <= 0 )	this->magicDefense = 0;
+	}
+
+	//	スピード設定
+	void	PlayerStatus::DoubleSpeed( float param )
+	{
+		speed = param;
+		if ( speed <= 0.0f )		speed = 0.0f;
+	}
+
+//----------------------------------------------------------------------------------------------
 //	Matching構造体
 //----------------------------------------------------------------------------------------------
 

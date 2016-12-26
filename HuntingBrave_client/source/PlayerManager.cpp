@@ -16,6 +16,21 @@
 //	グローバル
 //-------------------------------------------------------------------------------------
 
+namespace
+{
+#define	PLAYER_SCALE	0.2f
+
+	const LPSTR fileName[] = 
+	{
+		"DATA/CHR/suppin/Suppin.IEM",
+		"DATA/CHR/Fighter/Fighter.IEM",
+		"DATA/CHR/Magician/Magician.IEM",
+		"DATA/CHR/suppin/Suppin.IEM",
+		"DATA/CHR/suppin/Suppin.IEM",
+		"DATA/CHR/suppin/Suppin.IEM"
+	};
+}
+
 //-------------------------------------------------------------------------------------
 //	初期化・解放
 //-------------------------------------------------------------------------------------
@@ -27,7 +42,6 @@
 		{
 			obj[i] = nullptr;
 		}
-
 		playerList.clear();
 	}
 		
@@ -43,10 +57,20 @@
 		//	リスト初期化
 		playerList.clear();
 
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			obj[i] = new iex3DObj( fileName[i] );
+			obj[i]->SetAngle( 0.0f );
+			obj[i]->SetScale( PLAYER_SCALE );
+			obj[i]->SetPos( 0.0f, 0.0f, 0.0f );
+			obj[i]->Update();
+		}
+
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			SetPlayer( p );
 		}
+
 		return	true;
 	}
 
@@ -56,6 +80,11 @@
 		for ( auto it = playerList.begin(); it != playerList.end(); )
 		{
 			it = playerList.erase( it );
+		}
+
+		for ( int i = 0; i < PLAYER_TYPE::MODEL_MAX; i++ )
+		{
+			SafeDelete( obj[i] );
 		}
 	}
 
@@ -122,6 +151,7 @@
 		}
 
 		//	モデルセット、初期化
+		player->SetObj( obj[nextClass]->Clone() );
 		player->Initialize( id );
 
 		//	リストに追加

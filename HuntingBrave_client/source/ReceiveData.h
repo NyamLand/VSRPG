@@ -25,8 +25,24 @@
 			MAGIC_ERASE,
 			LEVEL_INFO,
 			EXP_INFO,
+			STATUS_INFO,
 			CLASS_CHANGE_INFO,
 			COMMAND_MAX
+		};
+	}
+
+	//	ステータス送信
+	namespace RECEIVE_STATUS
+	{
+		enum
+		{
+			ATTACK,
+			DEFENSE,
+			MAGIC_ATTACK,
+			MAGIC_DEFENSE,
+			SPEED,
+			LIFE,
+			ALL
 		};
 	}
 
@@ -95,6 +111,27 @@
 	{
 		char com = RECEIVE_COMMAND::EXP_INFO;
 		int exp;
+	};
+	
+	//	全ステータス情報
+	struct ReceiveAllStatusData
+	{
+		char com = RECEIVE_COMMAND::STATUS_INFO;
+		char statusType;
+		int attack;
+		int defense;
+		int magicAttack;
+		int magicDefense;
+		int life;
+		float speed;
+	};
+
+	//	各ステータス情報
+	struct ReceiveStatusData
+	{
+		char		com = RECEIVE_COMMAND::STATUS_INFO;
+		char		statusType;
+		float		status;
 	};
 
 	//	クラスチェンジ情報

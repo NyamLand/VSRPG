@@ -34,9 +34,6 @@
 	//	‰Šú‰»
 	bool	Suppin::Initialize( int id )
 	{
-		//	ƒ‚ƒfƒ‹“Ç‚İ‚İ
-		Load( "DATA/CHR/suppin/suppin.IEM" );
-
 		//	‰Šú‰»
 		Player::Initialize( id );
 

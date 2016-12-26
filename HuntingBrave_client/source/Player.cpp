@@ -122,6 +122,9 @@ namespace
 		//	サーバーからの情報を反映
 		SetPlayerParam( playerParam );
 
+		//	テクスチャ設定
+		ChangeTexture( id );
+
 		//	更新
 		BaseChara::Update();
 	}

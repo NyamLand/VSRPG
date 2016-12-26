@@ -34,9 +34,6 @@
 	//	‰Šú‰»
 	bool	Magician::Initialize( int id )
 	{
-		//	ƒ‚ƒfƒ‹“Ç‚İ‚İ
-		Load( "DATA/CHR/Magician/magician.IEM" );
-
 		//	‰Šú‰»
 		Player::Initialize( id );
 

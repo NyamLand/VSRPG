@@ -245,7 +245,7 @@
 	}
 
 	//	ƒ‚ƒfƒ‹Ý’è
-	void	BaseChara::SetObj( iex3DObj*	obj )
+	void	BaseChara::SetObj(	iex3DObj* obj )
 	{
 		this->obj = obj;
 	}

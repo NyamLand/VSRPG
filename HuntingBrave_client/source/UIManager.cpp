@@ -45,7 +45,11 @@ bool	UIManager::Initialize( void )
 
 	timerUI = new TimerUI();
 	hpUI = new HpUI(posx, posy, width, height);
-	itemUI = new ItemUI(posx, posy, width, height);
+
+	//	アイテムアイコンの座標をセット
+
+	itemUI = new ItemUI( 
+		100, 560, 210, height );
 
 	//---------------------------------------
 	//	EXPのポジションをセット

@@ -24,7 +24,23 @@
 			MAGIC_ERASE,
 			LEVEL_INFO,
 			EXP_INFO,
+			STATUS_INFO,
 			CLASS_CHANGE_INFO,
+		};
+	}
+
+	//	ステータス送信
+	namespace SEND_STATUS
+	{
+		enum
+		{
+			ATTACK,
+			DEFENSE,
+			MAGIC_ATTACK,
+			MAGIC_DEFENSE,
+			SPEED,
+			LIFE,
+			ALL
 		};
 	}
 }
@@ -112,6 +128,33 @@
 		int	exp;
 
 		SendExpData( int exp ) :	exp( exp ){}
+	};
+
+	//	全パラメータ情報
+	struct SendAllStatusData
+	{
+		char com = SEND_COMMAND::STATUS_INFO;
+		char statusType = SEND_STATUS::ALL;
+		int attack;
+		int defense;
+		int magicAttack;
+		int magicDefense;
+		int life;
+		float speed;
+		SendAllStatusData( int attack, int defense, int magicAttack, int magicDefense, int life, float speed ) :
+			attack( attack ), defense( defense ), 
+			magicAttack( magicAttack ), magicDefense( magicDefense ), life( life ), speed( speed ) {}
+	};
+
+	//	各パラメータ情報
+	struct SendStatusData
+	{
+		char com = SEND_COMMAND::STATUS_INFO;
+		char statusType;
+		float status;
+		SendStatusData( char statusType, float status ) : 
+			statusType( statusType ), status( status ){}
+		SendStatusData( void ){}
 	};
 
 	//	クラスチェンジ情報
