@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"Interpolation.h"
+#include	"InputManager.h"
 #include	"GameParam.h"
 #include	"ItemManager.h"
 
@@ -53,18 +54,21 @@
 			if ( !item[i].state )
 			{
 				item[i].state = Interpolation::PercentageUpdate( item[i].percentage, ITEM_INTERVAL );
-				if ( item[i].state )
-				{
-					SendItemState( i );
-				}
 			}
 		}
-	}
 
-	//	描画
-	void	ItemManager::Render( void )
-	{
+		//	左右キーで使用
+		if ( item[ITEM_POS::LEFT_ITEM].state )
+		{
+			if ( KEY( KEY_LEFT ) == 3 )	
+				UseItem( ITEM_POS::LEFT_ITEM );
+		}
 		
+		if ( item[ITEM_POS::RIGHT_ITEM].state )
+		{
+			if ( KEY( KEY_RIGHT ) == 3 )	
+				UseItem( ITEM_POS::RIGHT_ITEM );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -80,7 +84,7 @@
 	}
 
 	//	アイテム試用
-	void	ItemManager::UseItem( ITEM_POS itemPos )
+	void	ItemManager::UseItem( char itemPos )
 	{
 		item[itemPos].percentage = 0.0f;
 		item[itemPos].state = false;
