@@ -6,6 +6,7 @@
 #include	<map>
 #include	"iextreme.h"
 #include	"FrameWork.h"
+#include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"GameManager.h"
 #include	"MagicManager.h"
@@ -27,6 +28,7 @@
 char	scene = SCENE::MATCHING;
 
 //	プロトタイプ宣言
+void AllUpDateFunc( void );
 void	MatchingUpdate( int client );
 void	MainUpdate( int client );
 void	ResultUpdate( int client );
@@ -54,7 +56,11 @@ void main( void )
 		
 		//	情報受信
 		int client = gameParam->Receive( scene );
-		magicManager->Update();
+		
+		//	魔法送信
+		std::thread AllUpdate( AllUpDateFunc );
+		AllUpdate.join();
+
 
 		switch ( scene )
 		{
@@ -116,4 +122,11 @@ void	ResultUpdate( int client )
 	gameParam->InitializeGame();
 	gameManager->Initialize();
 	itemManager->Initialize();
+}
+
+//	thread
+void	AllUpDateFunc( void )
+{
+	float deltaTime = GetElapseTime();
+	magicManager->Update( deltaTime );
 }

@@ -22,7 +22,7 @@ public:
 	~MagicManager( void );
 
 	//	XV
-	void	Update( void );
+	void	Update( float deltaTime );
 
 	//	“®ìŠÖ”
 	void	Append( int id, const Vector3& pos, const Vector3& vec );

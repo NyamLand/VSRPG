@@ -1,11 +1,12 @@
 
 #include	"iextreme.h"
+#include	"GlobalFunction.h"
 #include	"GameParam.h"
-#include	"Magic.h"
+#include	"DefenseItem.h"
 
 //**************************************************************************
 //
-//	Magicクラス
+//	DefenseItemクラス
 //
 //**************************************************************************
 
@@ -13,45 +14,17 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	MAGIC_ACTIVE_TIME		0.5f
-#define	MAGIC_SPEED		0.02f
-#define	MAGIC_RADIUS	1.25f
+#define	EFFECTIVE_TIME		10.0f
+#define	DOUBLE_PARAM		2.0f
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
-	//	コンストラクタ
-	Magic::Magic( void ) : timer( nullptr ),
-		pos( 0.0f, 0.0f, 0.0f ), vec( 0.0f, 0.0f, 0.0f ),
-		speed( MAGIC_SPEED ), radius( MAGIC_RADIUS ),
-		mode( 0 ),
-		isHit( false )
-	{
-	
-	}
-
 	//	デストラクタ
-	Magic::~Magic( void )
+	DefenseItem::~DefenseItem( void )
 	{
-		if ( timer != nullptr )
-		{
-			delete	timer;	
-			timer = nullptr;
-		}
-	}
 
-	//	初期化
-	bool	Magic::Initialize( int id, const Vector3& pos, const Vector3& vec )
-	{
-		this->id = id;
-		this->pos = pos;
-		this->vec = vec;
-		this->vec.Normalize();
-		timer = new Timer();
-		timer->Start( MAGIC_ACTIVE_TIME );
-
-		return	true;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -59,61 +32,45 @@
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	bool	Magic::Update( float deltaTime )
+	void	DefenseItem::Update( void )
 	{
-		//	移動
-		Move( deltaTime );
+		if ( timer->Update() )
+		{
+			//	無効中処理
+			if ( state )
+			{
+				//	有効中処理
+				gameParam->GetPlayerStatus( id ).defense =
+					gameParam->GetPlayerStatus( id ).saveDefense;
 
-		//	タイマー更新
-		bool	ret = !timer->Update();
-
-		return	ret;
+				//	ステータスを無効
+				state = false;
+			}
+		}
+		else
+		{
+			//	有効中処理
+			gameParam->GetPlayerStatus( id ).defense =
+				( int )( gameParam->GetPlayerStatus( id ).saveDefense * DOUBLE_PARAM );
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
-	//	移動
-	void	Magic::Move( float deltaTime )
+	//	アイテム使用
+	void	DefenseItem::UseItem( void )
 	{
-		pos += ( vec * speed );// *deltaTime;
-	}
-
-	//	拡大
-	void	Magic::Scaling( void )
-	{
-		
+		timer->Start( EFFECTIVE_TIME );
+		state = true;
 	}
 
 //----------------------------------------------------------------------------------------------
-//	情報設定
+//	
 //----------------------------------------------------------------------------------------------
 
-
 //----------------------------------------------------------------------------------------------
-//	情報取得
+//	グローバル
 //----------------------------------------------------------------------------------------------
-
-	//	座標取得
-	Vector3	Magic::GetPos( void )const
-	{
-		return	pos;
-	}
-
-	//	半径取得
-	float			Magic::GetRadius( void )const
-	{
-		return	radius;
-	}
-
-	//	ID取得
-	int			Magic::GetID( void )const
-	{
-		return	id;
-	}
-
-
-
-
 

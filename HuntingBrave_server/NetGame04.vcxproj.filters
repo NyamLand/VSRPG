@@ -79,12 +79,6 @@
     <Filter Include="ソース ファイル\Manager\GameManager">
       <UniqueIdentifier>{88df4ce4-73dc-4b03-a59c-1751ccaeb688}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Manager\GameManager\MagicManager">
-      <UniqueIdentifier>{77deb41f-3577-401a-95ac-33bea287550a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\GameManager\MagicManager\PlayerManager">
-      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Manager\InputManager">
       <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
     </Filter>
@@ -115,6 +109,30 @@
     <Filter Include="ソース ファイル\GameData\GameParam">
       <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction">
+      <UniqueIdentifier>{7d0be03a-f83e-4ece-84ca-da0dc849dc86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\MagicManager">
+      <UniqueIdentifier>{77deb41f-3577-401a-95ac-33bea287550a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\MagicManager\PlayerManager">
+      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\Item">
+      <UniqueIdentifier>{170f4522-ae48-48a3-a58e-9e84a4b74f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\AttackItem">
+      <UniqueIdentifier>{80c4f874-1d94-455f-8020-ca0a5b977378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\DefenseItem">
+      <UniqueIdentifier>{ac68c462-5e03-4a48-a464-e6c36821e21f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\HealItem">
+      <UniqueIdentifier>{7571904f-8e83-4436-afe8-f71e9205f6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\LedItem">
+      <UniqueIdentifier>{b10e9747-5b7d-44fa-9bfb-f991f68299fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -127,7 +145,7 @@
       <Filter>ソース ファイル\UDPServer</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerManager.cpp">
-      <Filter>ソース ファイル\Manager\GameManager\MagicManager\PlayerManager</Filter>
+      <Filter>ソース ファイル\Manager\MagicManager\PlayerManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
@@ -214,7 +232,7 @@
       <Filter>ソース ファイル\Magic</Filter>
     </ClCompile>
     <ClCompile Include="Source\MagicManager.cpp">
-      <Filter>ソース ファイル\Manager\GameManager\MagicManager</Filter>
+      <Filter>ソース ファイル\Manager\MagicManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\LevelManager.cpp">
       <Filter>ソース ファイル\Manager\LevelManager</Filter>
@@ -240,6 +258,24 @@
     <ClCompile Include="Source\CSVReader.cpp">
       <Filter>ソース ファイル\CSVReader</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GlobalFunction.cpp">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>ソース ファイル\Item\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AttackItem.cpp">
+      <Filter>ソース ファイル\Item\AttackItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DefenseItem.cpp">
+      <Filter>ソース ファイル\Item\DefenseItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HealItem.cpp">
+      <Filter>ソース ファイル\Item\HealItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LedItem.cpp">
+      <Filter>ソース ファイル\Item\LedItem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -252,7 +288,7 @@
       <Filter>ソース ファイル\UDPServer</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerManager.h">
-      <Filter>ソース ファイル\Manager\GameManager\MagicManager\PlayerManager</Filter>
+      <Filter>ソース ファイル\Manager\MagicManager\PlayerManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ソース ファイル\Player</Filter>
@@ -300,7 +336,7 @@
       <Filter>ソース ファイル\Magic</Filter>
     </ClInclude>
     <ClInclude Include="Source\MagicManager.h">
-      <Filter>ソース ファイル\Manager\GameManager\MagicManager</Filter>
+      <Filter>ソース ファイル\Manager\MagicManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\LevelManager.h">
       <Filter>ソース ファイル\Manager\LevelManager</Filter>
@@ -325,6 +361,24 @@
     </ClInclude>
     <ClInclude Include="Source\CSVReader.h">
       <Filter>ソース ファイル\CSVReader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlobalFunction.h">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>ソース ファイル\Item\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AttackItem.h">
+      <Filter>ソース ファイル\Item\AttackItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DefenseItem.h">
+      <Filter>ソース ファイル\Item\DefenseItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HealItem.h">
+      <Filter>ソース ファイル\Item\HealItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LedItem.h">
+      <Filter>ソース ファイル\Item\LedItem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
