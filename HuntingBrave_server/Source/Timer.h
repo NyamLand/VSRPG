@@ -32,4 +32,5 @@ public:
 
 	//	î•ñæ“¾
 	float	GetRemainingTime( void )const;
+	float	GetErapseTime( void )const;
 };

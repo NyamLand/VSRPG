@@ -35,7 +35,7 @@ int	UDPServer::receive( char *data, int *size )
 {
 	struct timeval tv;
 	tv.tv_sec  = 0;
-	tv.tv_usec = 0;
+	tv.tv_usec = 1000;
 
 	fd_set	fd_work;
 	memcpy( &fd_work, &fds, sizeof( fd_set ) );

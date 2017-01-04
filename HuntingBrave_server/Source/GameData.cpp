@@ -55,11 +55,11 @@
 	//	‰Šú‰»
 	void	PlayerStatus::Initialize( int power, int defense, int magicAttack, int magicDefense, float speed )
 	{
-		this->power = power;
-		this->defense = defense;
-		this->speed = speed;
-		this->magicAttack = magicAttack;
-		this->magicDefense = magicDefense;
+		this->power = this->savePower = power;
+		this->defense = this->saveDefense = defense;
+		this->speed = this->saveSpeed = speed;
+		this->magicAttack = this->saveMagicAttack = magicAttack;
+		this->magicDefense = this->saveMagicDefense = magicDefense;
 	}
 
 	//	UŒ‚—Íİ’è
@@ -67,6 +67,8 @@
 	{
 		this->power += power;
 		if ( this->power <= 0 )	this->power = 0;
+
+		savePower = this->power;
 	}
 
 	//	–hŒä—Íİ’è
@@ -74,6 +76,8 @@
 	{
 		this->defense += defense;
 		if ( this->defense <= 0 )	this->defense = 0;
+
+		saveDefense = this->defense;
 	}
 
 	//	–‚–@UŒ‚—Íİ’è
@@ -81,6 +85,8 @@
 	{
 		this->magicAttack += power;
 		if ( this->magicAttack <= 0 )	this->magicAttack = 0;
+
+		saveMagicAttack = this->magicAttack;
 	}
 
 	//	–‚–@–hŒä—Íİ’è
@@ -88,6 +94,8 @@
 	{
 		this->magicDefense += defense;
 		if ( this->magicDefense <= 0 )	this->magicDefense = 0;
+
+		saveMagicDefense = this->magicDefense;
 	}
 
 	//	ƒXƒs[ƒhİ’è
@@ -95,6 +103,8 @@
 	{
 		speed = param;
 		if ( speed <= 0.0f )		speed = 0.0f;
+
+		saveSpeed = speed;
 	}
 	
 //----------------------------------------------------------------------------------------------

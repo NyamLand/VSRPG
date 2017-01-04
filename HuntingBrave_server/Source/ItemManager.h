@@ -8,19 +8,37 @@
 //*****************************************************************************************************************************
 
 //	include
+#include	"Item.h"
 
 //	class
 class ItemManager
 {
 private:
+	struct ItemState
+	{
+		Item*	leftItem;
+		Item*	rightItem;
+	};
+
 	enum ITEM_TYPE
 	{
 		HEAL,
 		ATK,
 		DEF,
-		LED
+		LED,
+		TYPE_MAX,
+		SET_ITEM
 	};
-	std::map<char, bool>	itemMap[PLAYER_MAX];
+
+	enum ITEM_POS
+	{
+		LEFT_ITEM,
+		RIGHT_ITEM,
+		ITEM_MAX
+	};
+
+private:
+	ItemState		itemState[PLAYER_MAX];
 
 public:
 	//	初期化・解放
@@ -31,7 +49,8 @@ public:
 
 	//	情報設定
 	void	ChangeItemState( int id, char itemType );
-	void	AddItemState( int id, char itemType );
+	void	AddItemState( int id, char leftItem, char rightItem );
+	void	SetItem( Item* item, char itemType );
 
 	//	アイテム効果
 	void	Heal( int id );

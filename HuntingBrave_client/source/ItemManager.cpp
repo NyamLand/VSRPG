@@ -83,6 +83,28 @@
 		gameParam->send( ( LPSTR )&sendItemData, sizeof( sendItemData ) );
 	}
 
+	//	アイテム設定送信
+	void	ItemManager::SendItemSet( char leftItem, char rightItem )
+	{
+		//	送信するアイテム情報
+		struct
+		{
+			char com;
+			char itemCom;
+			char leftItem;
+			char rightItem;
+		} sendData;
+
+		//	情報設定
+		sendData.com = SEND_COMMAND::ITEM_INFO;
+		sendData.itemCom = ITEM_TYPE::SET_ITEM;
+		sendData.leftItem = leftItem;
+		sendData.rightItem = rightItem;
+		
+		//	情報送信
+		gameParam->send( ( LPSTR )&sendData, sizeof( sendData ) );
+	}
+
 	//	アイテム試用
 	void	ItemManager::UseItem( char itemPos )
 	{

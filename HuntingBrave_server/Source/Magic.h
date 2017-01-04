@@ -31,10 +31,10 @@ public:
 	bool	Initialize( int id, const Vector3& pos, const Vector3& vec );
 
 	//	XV
-	bool	Update( void );
+	bool	Update( float deltaTime );
 
 	//	“®ìŠÖ”
-	void	Move( void );
+	void	Move( float deltaTime );
 	void	Scaling( void );
 
 	//	î•ñæ“¾

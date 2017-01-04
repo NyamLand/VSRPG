@@ -67,11 +67,11 @@ namespace SCENE
 	struct PlayerStatus
 	{
 		//	parameter
-		int	power;
-		int	defense;
-		int	magicAttack;
-		int	magicDefense;
-		float	speed;
+		int	power, savePower;
+		int	defense, saveDefense;
+		int	magicAttack, saveMagicAttack;
+		int	magicDefense, saveMagicDefense;
+		float	speed, saveSpeed;
 
 		//	ŒvŽZ
 		void	Initialize( int power, int defense, int magicAttack, int magicDefense, float speed );

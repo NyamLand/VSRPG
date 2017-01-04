@@ -14,7 +14,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	MAGIC_ACTIVE_TIME		0.5f
-#define	MAGIC_SPEED		0.05f
+#define	MAGIC_SPEED		0.02f
 #define	MAGIC_RADIUS	1.25f
 
 //----------------------------------------------------------------------------------------------
@@ -59,10 +59,10 @@
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	bool	Magic::Update( void )
+	bool	Magic::Update( float deltaTime )
 	{
 		//	移動
-		Move();
+		Move( deltaTime );
 
 		//	タイマー更新
 		bool	ret = !timer->Update();
@@ -75,9 +75,9 @@
 //----------------------------------------------------------------------------------------------
 
 	//	移動
-	void	Magic::Move( void )
+	void	Magic::Move( float deltaTime )
 	{
-		pos += vec * speed;
+		pos += ( vec * speed );// *deltaTime;
 	}
 
 	//	拡大

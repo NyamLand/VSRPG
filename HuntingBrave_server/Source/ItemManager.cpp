@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"GlobalFunction.h"
 #include	<map>
 #include	"GameParam.h"
 #include	"ItemManager.h"
@@ -39,7 +40,8 @@ ItemManager*	itemManager = nullptr;
 	{
 		for ( int id = 0; id < PLAYER_MAX; id++ )
 		{	
-			itemMap[id].clear();
+			itemState[id].leftItem = nullptr;
+			itemState[id].rightItem = nullptr;
 		}
 
 		return	true;
@@ -50,35 +52,9 @@ ItemManager*	itemManager = nullptr;
 	{
 		for ( int id = 0; id < PLAYER_MAX; id++ )
 		{
-			itemMap[id].clear();
+			SafeDelete( itemState[id].leftItem );
+			SafeDelete( itemState[id].rightItem );
 		}
-	}
-
-//----------------------------------------------------------------------------------------------
-//	動作関数
-//----------------------------------------------------------------------------------------------
-
-	//	回復
-	void	ItemManager::Heal( int id )
-	{
-		//	回復
-		gameParam->GetLifeInfo( id ).CulcLife( HEAL_LIFE );
-	}
-
-	//	攻撃
-	void	ItemManager::Power( int id )
-	{
-		if ( !itemMap[id][ITEM_TYPE::ATK] )	return;
-
-		//	攻撃力増加
-	}
-
-	//	防御
-	void	ItemManager::Defense( int id )
-	{
-		if ( !itemMap[id][ITEM_TYPE::DEF] )	return;
-
-		//	防御力増加
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -89,17 +65,38 @@ ItemManager*	itemManager = nullptr;
 	void	ItemManager::ChangeItemState( int id, char itemType )
 	{
 		//	ON/OFF
-		itemMap[id][itemType] = !itemMap[id][itemType];
 	}
 
 	//	アイテムステート追加
-	void	ItemManager::AddItemState( int id, char itemType )
+	void	ItemManager::AddItemState( int id, char leftItem, char rightItem )
 	{
-		//	見つからない
-		itemMap[id].insert(
-			std::map<char, bool>::value_type( itemType, false ) );
+		
 	}
 
+	//	アイテム初期化
+	void	ItemManager::SetItem( Item* item, char itemType )
+	{
+		if ( item != nullptr )	return;
+
+		switch ( itemType )
+		{
+		case ITEM_TYPE::ATK:
+			break;
+
+		case ITEM_TYPE::DEF:
+			break;
+
+		case ITEM_TYPE::HEAL:
+			break;
+
+		case ITEM_TYPE::LED:
+			break;
+
+		default:
+			break;
+		}
+	}
+	
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------
@@ -107,5 +104,5 @@ ItemManager*	itemManager = nullptr;
 	//	アイテムステート取得
 	bool	ItemManager::GetItemState( int id, char itemType )
 	{
-		return	itemMap[id][itemType];
+		return	false;
 	}

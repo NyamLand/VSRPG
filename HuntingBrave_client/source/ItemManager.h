@@ -38,7 +38,8 @@ namespace
 			ATK,
 			DEF,
 			LED,
-			TYPE_MAX
+			TYPE_MAX,
+			SET_ITEM
 		};
 	}
 }
@@ -66,6 +67,7 @@ public:
 
 	//	“®ìŠÖ”
 	void	SendItemState( char item );
+	void	SendItemSet( char leftItem, char rightItem );
 	void	UseItem( char itemPos );
 
 	//	î•ñİ’è
