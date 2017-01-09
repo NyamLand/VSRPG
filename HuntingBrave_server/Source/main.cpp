@@ -28,10 +28,11 @@
 char	scene = SCENE::MATCHING;
 
 //	プロトタイプ宣言
-void AllUpDateFunc( void );
 void	MatchingUpdate( int client );
 void	MainUpdate( int client );
 void	ResultUpdate( int client );
+void	AlwaysUpdate( void );
+void	Update( void );
 
 //	main
 void main( void )
@@ -55,12 +56,9 @@ void main( void )
 		gameManager->Update();
 		
 		//	情報受信
+		std::thread	ThreadUpdate( AlwaysUpdate );
 		int client = gameParam->Receive( scene );
-		
-		//	魔法送信
-		std::thread AllUpdate( AllUpDateFunc );
-		AllUpdate.join();
-
+		ThreadUpdate.join();
 
 		switch ( scene )
 		{
@@ -105,6 +103,7 @@ void	MatchingUpdate( int client )
 
 void	MainUpdate( int client )
 {
+	
 	if ( client == -1 )	return;
 	
 	playerManager->Update( client );
@@ -112,6 +111,7 @@ void	MainUpdate( int client )
 	if ( gameManager->GetTimeUp() )
 	{
 		gameManager->ChangeScene( scene, SCENE::RESULT );
+		itemManager->Release();
 		playerManager->Release();
 	}
 }
@@ -125,8 +125,8 @@ void	ResultUpdate( int client )
 }
 
 //	thread
-void	AllUpDateFunc( void )
+void	AlwaysUpdate( void )
 {
-	float deltaTime = GetElapseTime();
-	magicManager->Update( deltaTime );
+	magicManager->Update();
+	itemManager->Update();
 }

@@ -15,6 +15,7 @@ class Magic
 {
 private:
 	Vector3	pos;
+	Vector3	startPos;
 	Vector3	vec;
 	Timer*		timer;
 	float			speed;
@@ -31,10 +32,10 @@ public:
 	bool	Initialize( int id, const Vector3& pos, const Vector3& vec );
 
 	//	XV
-	bool	Update( float deltaTime );
+	bool	Update( void );
 
 	//	“®ìŠÖ”
-	void	Move( float deltaTime );
+	void	Move( void );
 	void	Scaling( void );
 
 	//	î•ñæ“¾

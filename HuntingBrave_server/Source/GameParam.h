@@ -29,6 +29,7 @@ public:
 	bool InitializeServer( void );
 	void	InitializePlayer( int id );
 	void	InitializeGame( void );
+	void	ReleaseGame( void );
 
 	//	データ送受信
 	int Receive( char scene );
@@ -45,6 +46,7 @@ public:
 	int	ReceiveInput( int client, const LPSTR& data );
 	int	ReceiveHuntInfo( int client, const LPSTR& data );
 	int	ReceiveLevelInfo( int client, const LPSTR& data );
+	int	ReceiveItemInfo( int client, const LPSTR& data );
 
 	//	ログイン関連受信
 	int	ReceiveSignUp( int client, const LPSTR& data );

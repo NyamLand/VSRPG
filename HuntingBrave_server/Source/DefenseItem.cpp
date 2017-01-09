@@ -21,6 +21,12 @@
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
+	//	コンストラクタ
+	DefenseItem::DefenseItem( int id ) : Item( id )
+	{
+	
+	}
+
 	//	デストラクタ
 	DefenseItem::~DefenseItem( void )
 	{
@@ -45,6 +51,10 @@
 
 				//	ステータスを無効
 				state = false;
+
+				//	送信
+				SendStatusData sendData( SEND_STATUS::DEFENSE, gameParam->GetPlayerStatus( id ).defense );
+				gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 			}
 		}
 		else
@@ -52,6 +62,10 @@
 			//	有効中処理
 			gameParam->GetPlayerStatus( id ).defense =
 				( int )( gameParam->GetPlayerStatus( id ).saveDefense * DOUBLE_PARAM );
+
+			//	送信
+			SendStatusData sendData( SEND_STATUS::DEFENSE, gameParam->GetPlayerStatus( id ).defense );
+			gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 		}
 	}
 

@@ -81,26 +81,17 @@
 		return	remaining;
 	}
 
-	//	前フレームからの経過時間取得
+	//	Startしてからの経過時間取得
 	float	Timer::GetErapseTime( void )const
 	{
-		static	auto	lastTime = std::chrono::system_clock::now();
+		auto culTime = std::chrono::system_clock::now();
+		
+		//	スタート時の時間との差分を求める
+		float difference =
+			( float )std::chrono::duration_cast<std::chrono::milliseconds>( now - start ).count();
 
-		//	現在の時間を取得
-		auto	curTime = std::chrono::system_clock::now();
+		//	桁調整
+		difference /= 1000.0f;
 
-		//	経過時間を計算
-		auto	erapseTime = curTime - lastTime;
-
-		//	経過時間を足す
-		lastTime += erapseTime;
-
-		//	経過時間をミリ秒でかえす
-		float	out = ( float )std::chrono::duration_cast<std::chrono::milliseconds>( erapseTime ).count();
-		out /= 1000.0f;
-
-		//	現在の経過時間を保存
-		lastTime = std::chrono::system_clock::now();
-
-		return	out;
+		return	difference;
 	}

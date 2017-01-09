@@ -14,7 +14,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	MAGIC_ACTIVE_TIME		0.5f
-#define	MAGIC_SPEED		0.02f
+#define	MAGIC_SPEED		20.0f
 #define	MAGIC_RADIUS	1.25f
 
 //----------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@
 
 	//	コンストラクタ
 	Magic::Magic( void ) : timer( nullptr ),
-		pos( 0.0f, 0.0f, 0.0f ), vec( 0.0f, 0.0f, 0.0f ),
+		pos( 0.0f, 0.0f, 0.0f ), startPos( 0.0f, 0.0f, 0.0f ), vec( 0.0f, 0.0f, 0.0f ),
 		speed( MAGIC_SPEED ), radius( MAGIC_RADIUS ),
 		mode( 0 ),
 		isHit( false )
@@ -46,6 +46,7 @@
 	{
 		this->id = id;
 		this->pos = pos;
+		this->startPos = pos;
 		this->vec = vec;
 		this->vec.Normalize();
 		timer = new Timer();
@@ -59,10 +60,10 @@
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	bool	Magic::Update( float deltaTime )
+	bool	Magic::Update( void )
 	{
 		//	移動
-		Move( deltaTime );
+		Move();
 
 		//	タイマー更新
 		bool	ret = !timer->Update();
@@ -75,9 +76,10 @@
 //----------------------------------------------------------------------------------------------
 
 	//	移動
-	void	Magic::Move( float deltaTime )
+	void	Magic::Move( void )
 	{
-		pos += ( vec * speed );// *deltaTime;
+		pos = 
+			startPos + vec * ( speed * timer->GetErapseTime() );
 	}
 
 	//	拡大

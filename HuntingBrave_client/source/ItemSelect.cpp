@@ -250,6 +250,9 @@ namespace
 			itemManager->Initialize( 
 				selectItem[ITEM_POS::LEFT_ITEM], 
 				selectItem[ITEM_POS::RIGHT_ITEM] );
+			itemManager->SendItemSet( 
+				selectItem[ITEM_POS::LEFT_ITEM], 
+				selectItem[ITEM_POS::RIGHT_ITEM] );
 			return true;
 		}
 

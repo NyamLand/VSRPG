@@ -8,12 +8,15 @@
 //*****************************************************************************************************************************
 
 //	include
-#include	"Item.h"
+#include	"HealItem.h"
+#include	"LedItem.h"
+#include	"AttackItem.h"
+#include	"DefenseItem.h"
 
 //	class
 class ItemManager
 {
-private:
+public:
 	struct ItemState
 	{
 		Item*	leftItem;
@@ -47,18 +50,16 @@ public:
 	bool	Initialize( void );
 	void	Release( void );
 
-	//	情報設定
-	void	ChangeItemState( int id, char itemType );
-	void	AddItemState( int id, char leftItem, char rightItem );
-	void	SetItem( Item* item, char itemType );
+	//	更新
+	void	Update( void );
 
-	//	アイテム効果
-	void	Heal( int id );
-	void	Power( int id );
-	void	Defense( int id );
+	//	情報設定
+	void	ReceiveData( int id, const LPSTR& data );
+	void	ChangeItemState( int id, char itemType );
+	void	AddItemState( int id, const LPSTR& data );
+	void	SetItem( int id, Item*& item, char itemType );
 
 	//	情報取得
-	bool	GetItemState( int id, char itemType );
 };
 
 extern	ItemManager*	itemManager;

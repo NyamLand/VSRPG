@@ -60,8 +60,6 @@ GameManager*	gameManager = nullptr;
 		}
 
 		playerData.clear();
-
-
 	}
 
 	//	マッチング情報初期化

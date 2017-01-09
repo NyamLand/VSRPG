@@ -53,7 +53,9 @@
 		{
 			if ( !item[i].state )
 			{
-				item[i].state = Interpolation::PercentageUpdate( item[i].percentage, ITEM_INTERVAL );
+				item[i].state = 
+					Interpolation::PercentageUpdate( 
+						item[i].percentage, ITEM_INTERVAL );
 			}
 		}
 
@@ -76,9 +78,9 @@
 //----------------------------------------------------------------------------------------------
 
 	//	アイテム情報送信
-	void	ItemManager::SendItemState( char item )
+	void	ItemManager::SendItemState( char itemPos )
 	{
-		SendItemData	sendItemData( item );
+		SendItemData	sendItemData( itemPos );
 
 		gameParam->send( ( LPSTR )&sendItemData, sizeof( sendItemData ) );
 	}
