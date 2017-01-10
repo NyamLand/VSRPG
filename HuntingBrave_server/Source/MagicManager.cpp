@@ -40,11 +40,11 @@ MagicManager*	magicManager = nullptr;
 //------------------------------------------------------------------------------------------
 	
 	//	更新
-	void	MagicManager::Update( float deltaTime )
+	void	MagicManager::Update( void )
 	{
 		for ( auto it = magicList.begin(); it != magicList.end(); )
 		{
-			bool	isAlive = ( *it )->Update( deltaTime );
+			bool	isAlive = ( *it )->Update();
 			int	index = std::distance( magicList.begin(), it );
 
 			if ( !isAlive )	//	消滅しているときリストから削除し、削除情報送信

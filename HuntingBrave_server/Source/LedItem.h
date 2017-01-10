@@ -17,6 +17,7 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
+	LedItem( int id );
 	~LedItem( void )override;
 
 	//	XV

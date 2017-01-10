@@ -67,28 +67,28 @@
 	//	UŒ‚—ÍÝ’è
 	void	PlayerStatus::CulcPower( int power )
 	{
-		this->power += power;
+		this->power = power;
 		if ( this->power <= 0 )	this->power = 0;
 	}
 
 	//	–hŒä—ÍÝ’è
 	void	PlayerStatus::CulcDefense( int defense )
 	{
-		this->defense += defense;
+		this->defense = defense;
 		if ( this->defense <= 0 )	this->defense = 0;
 	}
 
 	//	–‚–@UŒ‚—ÍÝ’è
 	void	PlayerStatus::CulcMagicPower( int power )
 	{
-		this->magicPower += power;
+		this->magicPower = power;
 		if ( this->magicPower <= 0 )	this->magicPower = 0;
 	}
 
 	//	–‚–@UŒ‚—ÍÝ’è
 	void	PlayerStatus::CulcMagicDefense( int defense )
 	{
-		this->magicDefense += defense;
+		this->magicDefense = defense;
 		if ( this->magicDefense <= 0 )	this->magicDefense = 0;
 	}
 

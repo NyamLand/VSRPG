@@ -17,6 +17,7 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
+	AttackItem( int id );
 	~AttackItem( void )override;
 
 	//	XV

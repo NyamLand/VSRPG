@@ -83,6 +83,6 @@
 	struct SendItemData
 	{
 		char com = SEND_COMMAND::ITEM_INFO;
-		char item;
-		SendItemData( char item ) : item( item ) {}
+		char itemPos;
+		SendItemData( char itemPos ) : itemPos( itemPos ) {}
 	};

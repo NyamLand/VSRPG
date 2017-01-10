@@ -67,6 +67,16 @@ GameParam*	gameParam = nullptr;
 			lifeInfo[id].Initialize( initLife );
 			gameManager->InitializeStatus( playerStatus[id] );
 		}
+
+		itemManager->Initialize();
+	}
+
+	//	ゲームリセット
+	void	GameParam::ReleaseGame( void )
+	{
+		itemManager->Release();
+		playerManager->Release();
+		gameManager->Release();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -131,6 +141,10 @@ GameParam*	gameParam = nullptr;
 
 		case RECEIVE_COMMAND::HUNT_INFO:
 			client = ReceiveHuntInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::ITEM_INFO:
+			client = ReceiveItemInfo( client, data );
 			break;
 
 		case COMMANDS::MATCHING:
@@ -261,6 +275,13 @@ GameParam*	gameParam = nullptr;
 		levelManager->SendLevel( client, receiveLevelData->levelType );
 		levelManager->SendAllStatus( client );
 
+		return	-1;
+	}
+
+	//	アイテム情報取得
+	int	GameParam::ReceiveItemInfo( int client, const LPSTR& data )
+	{
+		itemManager->ReceiveData( client, data );
 		return	-1;
 	}
 

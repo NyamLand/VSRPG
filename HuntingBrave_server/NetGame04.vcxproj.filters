@@ -106,9 +106,6 @@
     <Filter Include="ソース ファイル\GameData\ReceiveData">
       <UniqueIdentifier>{861daa82-ab78-490e-8af2-da9f089fb228}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameData\GameParam">
-      <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\GlobalFunction">
       <UniqueIdentifier>{7d0be03a-f83e-4ece-84ca-da0dc849dc86}</UniqueIdentifier>
     </Filter>
@@ -117,9 +114,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Manager\MagicManager\PlayerManager">
       <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Item\Item">
-      <UniqueIdentifier>{170f4522-ae48-48a3-a58e-9e84a4b74f23}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Item\AttackItem">
       <UniqueIdentifier>{80c4f874-1d94-455f-8020-ca0a5b977378}</UniqueIdentifier>
@@ -133,10 +127,16 @@
     <Filter Include="ソース ファイル\Item\LedItem">
       <UniqueIdentifier>{b10e9747-5b7d-44fa-9bfb-f991f68299fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameParam">
+      <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\Item">
+      <UniqueIdentifier>{170f4522-ae48-48a3-a58e-9e84a4b74f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
-      <Filter>ソース ファイル\GameData\GameParam</Filter>
+      <Filter>ソース ファイル\GameParam</Filter>
     </ClCompile>
     <ClCompile Include="Source\sceneMain.cpp">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>
@@ -279,7 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
-      <Filter>ソース ファイル\GameData\GameParam</Filter>
+      <Filter>ソース ファイル\GameParam</Filter>
     </ClInclude>
     <ClInclude Include="Source\sceneMain.h">
       <Filter>ソース ファイル\Scene\sceneMain</Filter>

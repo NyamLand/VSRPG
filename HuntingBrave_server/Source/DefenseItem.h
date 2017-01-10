@@ -17,6 +17,7 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
+	DefenseItem( int id );
 	~DefenseItem( void )override;
 
 	//	XV

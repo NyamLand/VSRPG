@@ -17,6 +17,7 @@ private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
+	HealItem( int id );
 	~HealItem( void )override;
 
 	//	XV
