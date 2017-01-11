@@ -5,11 +5,13 @@
 //*****************************************************************************************************************************
 
 //	class‘O•ûéŒ¾
+#include	"Stage.h"
 
 //	class
 class	sceneMain : public Scene
 {
 private:
+	Stage*	stage;
 
 public:
 	~sceneMain( void );

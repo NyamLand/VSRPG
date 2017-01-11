@@ -36,6 +36,7 @@
 	//	コンストラクタ
 	PlayerParam::PlayerParam( const Vector3& pos, float angle, int motion, int frame )
 	{
+		move = Vector3( 0.0f, 0.0f, 0.0f );
 		Set( pos,angle, motion, frame );
 	}
 

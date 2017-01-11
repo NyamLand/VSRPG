@@ -167,6 +167,7 @@
     <ClCompile Include="source\SmallEnemy.cpp" />
     <ClCompile Include="source\SocketClient.cpp" />
     <ClCompile Include="source\Sound.cpp" />
+    <ClCompile Include="source\Stage.cpp" />
     <ClCompile Include="source\Status.cpp" />
     <ClCompile Include="source\Suppin.cpp" />
     <ClCompile Include="source\system\Framework.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="source\SmallEnemy.h" />
     <ClInclude Include="source\SocketClient.h" />
     <ClInclude Include="source\Sound.h" />
+    <ClInclude Include="source\Stage.h" />
     <ClInclude Include="source\Status.h" />
     <ClInclude Include="source\Suppin.h" />
     <ClInclude Include="source\system\Framework.h" />

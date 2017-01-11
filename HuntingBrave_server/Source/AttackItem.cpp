@@ -53,7 +53,7 @@
 				state = false;
 
 				//	‘—M
-				SendStatusData sendData( SEND_STATUS::ATTACK, gameParam->GetPlayerStatus( id ).power );
+				SendStatusData sendData( SEND_STATUS::ATTACK, ( float )gameParam->GetPlayerStatus( id ).power );
 				gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 			}
 		}
@@ -64,7 +64,7 @@
 				( int )( gameParam->GetPlayerStatus( id ).savePower * DOUBLE_PARAM );
 
 			//	‘—M
-			SendStatusData sendData( SEND_STATUS::ATTACK, gameParam->GetPlayerStatus( id ).power );
+			SendStatusData sendData( SEND_STATUS::ATTACK, ( float )gameParam->GetPlayerStatus( id ).power );
 			gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 		}
 	}

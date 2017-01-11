@@ -41,13 +41,14 @@ public:
 	void	ModeDamage( void );
 	void	ModeDeath( void );
 	void	ModeStep( void );
+	void	ModeMenu( void );
 
 	//	ìÆçÏä÷êî
 	void	Move( void );
 	void	SwordAttack( void );
 	void	Damage( void );
 	void	CheckInput( void );
-	void	AddMove( const Vector3& move );
+	void	AddMove( Vector3& move );
 	void	MagicAttack( void );
 	void	MagicChant( void );
 	void	MagicChantRoll( void );

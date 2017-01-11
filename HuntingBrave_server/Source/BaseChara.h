@@ -22,6 +22,7 @@ namespace MODE
 		DAMAGE,
 		DEATH,
 		STEP,
+		MENU,
 		MODE_MAX
 	};
 }

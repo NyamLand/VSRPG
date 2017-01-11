@@ -6,6 +6,7 @@
 #include	"GameManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
+#include	"Collision.h"
 #include	"Player.h"
 
 //*****************************************************************************************************************************
@@ -74,6 +75,7 @@ namespace
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
 		ModeFunction[MODE::STEP] = &Player::ModeStep;
+		ModeFunction[MODE::MENU] = &Player::ModeMenu;
 
 		timer = new Timer();
 	}
@@ -196,6 +198,16 @@ namespace
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetLifeInfo( index ).active = true;
+		}
+	}
+
+	//	メニューモード
+	void	Player::ModeMenu( void )
+	{
+		if ( inputManager->GetInputState( index, KEY_TYPE::START, KEY_STATE::ENTER ) ||
+			inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
+		{
+			SetMode( MODE::MOVE );
 		}
 	}
 	
@@ -379,11 +391,23 @@ namespace
 				return;
 			}
 		}
+
+		//	メニュー入力受付
+		if ( inputManager->GetInputState( index, KEY_TYPE::START, KEY_STATE::ENTER ) )
+		{
+			if ( SetMode( MODE::MENU ) )
+			{
+				SetMotion( PLAYER_MOTION::MENU );
+				return;
+			}
+		}
 	}
 
 	//	移動値加算
-	void	Player::AddMove( const Vector3& move )
+	void	Player::AddMove( Vector3& move )
 	{
+		collision->CheckWall( pParam.pos, move, 100.0f );
+		collision->CheckDown( pParam.pos, move );
 		pParam.pos += move;
 	}
 

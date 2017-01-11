@@ -53,7 +53,7 @@
 				state = false;
 
 				//	‘—M
-				SendStatusData sendData( SEND_STATUS::DEFENSE, gameParam->GetPlayerStatus( id ).defense );
+				SendStatusData sendData( SEND_STATUS::DEFENSE, ( float )gameParam->GetPlayerStatus( id ).defense );
 				gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 			}
 		}
@@ -64,7 +64,7 @@
 				( int )( gameParam->GetPlayerStatus( id ).saveDefense * DOUBLE_PARAM );
 
 			//	‘—M
-			SendStatusData sendData( SEND_STATUS::DEFENSE, gameParam->GetPlayerStatus( id ).defense );
+			SendStatusData sendData( SEND_STATUS::DEFENSE, ( float )gameParam->GetPlayerStatus( id ).defense );
 			gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 		}
 	}

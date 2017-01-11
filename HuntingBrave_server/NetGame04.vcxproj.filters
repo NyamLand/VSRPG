@@ -106,14 +106,8 @@
     <Filter Include="ソース ファイル\GameData\ReceiveData">
       <UniqueIdentifier>{861daa82-ab78-490e-8af2-da9f089fb228}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GlobalFunction">
-      <UniqueIdentifier>{7d0be03a-f83e-4ece-84ca-da0dc849dc86}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Manager\MagicManager">
       <UniqueIdentifier>{77deb41f-3577-401a-95ac-33bea287550a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\MagicManager\PlayerManager">
-      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Item\AttackItem">
       <UniqueIdentifier>{80c4f874-1d94-455f-8020-ca0a5b977378}</UniqueIdentifier>
@@ -133,6 +127,12 @@
     <Filter Include="ソース ファイル\Item\Item">
       <UniqueIdentifier>{170f4522-ae48-48a3-a58e-9e84a4b74f23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\RayMesh">
+      <UniqueIdentifier>{7d0be03a-f83e-4ece-84ca-da0dc849dc86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerManager">
+      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -145,7 +145,7 @@
       <Filter>ソース ファイル\UDPServer</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerManager.cpp">
-      <Filter>ソース ファイル\Manager\MagicManager\PlayerManager</Filter>
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
@@ -173,54 +173,6 @@
     </ClCompile>
     <ClCompile Include="Source\CharaInfo.cpp">
       <Filter>ソース ファイル\CharaInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_2DObject.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_3DObject.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Audio.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Direct3D.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Input.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Light.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Math.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Mesh.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Particle.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Polygon.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_RenderState.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Shader.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_SkinMesh.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_System.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Texture.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_View.cpp">
-      <Filter>IEX</Filter>
     </ClCompile>
     <ClCompile Include="Source\ShapeInfo.cpp">
       <Filter>ソース ファイル\ShapeInfo</Filter>
@@ -258,9 +210,6 @@
     <ClCompile Include="Source\CSVReader.cpp">
       <Filter>ソース ファイル\CSVReader</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GlobalFunction.cpp">
-      <Filter>ソース ファイル\GlobalFunction</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Item.cpp">
       <Filter>ソース ファイル\Item\Item</Filter>
     </ClCompile>
@@ -276,6 +225,9 @@
     <ClCompile Include="Source\LedItem.cpp">
       <Filter>ソース ファイル\Item\LedItem</Filter>
     </ClCompile>
+    <ClCompile Include="Source\IEX_RayMesh.cpp">
+      <Filter>ソース ファイル\RayMesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -288,7 +240,7 @@
       <Filter>ソース ファイル\UDPServer</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerManager.h">
-      <Filter>ソース ファイル\Manager\MagicManager\PlayerManager</Filter>
+      <Filter>ソース ファイル\Manager\PlayerManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ソース ファイル\Player</Filter>
@@ -322,9 +274,6 @@
     </ClInclude>
     <ClInclude Include="Source\CharaInfo.h">
       <Filter>ソース ファイル\CharaInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="IEX\iextreme.h">
-      <Filter>IEX</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShapeInfo.h">
       <Filter>ソース ファイル\ShapeInfo</Filter>
@@ -362,9 +311,6 @@
     <ClInclude Include="Source\CSVReader.h">
       <Filter>ソース ファイル\CSVReader</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GlobalFunction.h">
-      <Filter>ソース ファイル\GlobalFunction</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Item.h">
       <Filter>ソース ファイル\Item\Item</Filter>
     </ClInclude>
@@ -379,6 +325,12 @@
     </ClInclude>
     <ClInclude Include="Source\LedItem.h">
       <Filter>ソース ファイル\Item\LedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="IEX\iextreme.h">
+      <Filter>IEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IEX_RayMesh.h">
+      <Filter>ソース ファイル\RayMesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

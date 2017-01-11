@@ -55,6 +55,7 @@ namespace SCENE
 	struct PlayerParam
 	{
 		Vector3	pos;
+		Vector3	move;
 		float			angle;
 		int			motion;
 		int			frame;

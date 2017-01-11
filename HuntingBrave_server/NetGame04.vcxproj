@@ -97,22 +97,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IEX\IEX_2DObject.cpp" />
-    <ClCompile Include="IEX\IEX_3DObject.cpp" />
-    <ClCompile Include="IEX\IEX_Audio.cpp" />
-    <ClCompile Include="IEX\IEX_Direct3D.cpp" />
-    <ClCompile Include="IEX\IEX_Input.cpp" />
-    <ClCompile Include="IEX\IEX_Light.cpp" />
-    <ClCompile Include="IEX\IEX_Math.cpp" />
-    <ClCompile Include="IEX\IEX_Mesh.cpp" />
-    <ClCompile Include="IEX\IEX_Particle.cpp" />
-    <ClCompile Include="IEX\IEX_Polygon.cpp" />
-    <ClCompile Include="IEX\IEX_RenderState.cpp" />
-    <ClCompile Include="IEX\IEX_Shader.cpp" />
-    <ClCompile Include="IEX\IEX_SkinMesh.cpp" />
-    <ClCompile Include="IEX\IEX_System.cpp" />
-    <ClCompile Include="IEX\IEX_Texture.cpp" />
-    <ClCompile Include="IEX\IEX_View.cpp" />
     <ClCompile Include="Source\AttackItem.cpp" />
     <ClCompile Include="Source\BaseChara.cpp" />
     <ClCompile Include="Source\CharaInfo.cpp" />
@@ -125,8 +109,8 @@
     <ClCompile Include="Source\GameData.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GameParam.cpp" />
-    <ClCompile Include="Source\GlobalFunction.cpp" />
     <ClCompile Include="Source\HealItem.cpp" />
+    <ClCompile Include="Source\IEX_RayMesh.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\ItemManager.cpp" />
@@ -159,8 +143,8 @@
     <ClInclude Include="Source\GameData.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameParam.h" />
-    <ClInclude Include="Source\GlobalFunction.h" />
     <ClInclude Include="Source\HealItem.h" />
+    <ClInclude Include="Source\IEX_RayMesh.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ItemManager.h" />

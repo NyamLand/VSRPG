@@ -244,6 +244,9 @@
     <ClCompile Include="source\ItemManager.cpp">
       <Filter>Source\Manager\ItemManager</Filter>
     </ClCompile>
+    <ClCompile Include="source\Stage.cpp">
+      <Filter>Source\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -452,6 +455,9 @@
     </ClInclude>
     <ClInclude Include="source\ItemManager.h">
       <Filter>Source\Manager\ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stage.h">
+      <Filter>Source\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -700,6 +706,9 @@
     </Filter>
     <Filter Include="Source\Timer\SYSTEM\Scene">
       <UniqueIdentifier>{3632b4e4-aca5-4f58-8711-f15e77b476d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Stage">
+      <UniqueIdentifier>{cd8c2e98-900d-4808-a4c2-990c0900a82b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

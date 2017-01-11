@@ -23,10 +23,6 @@
 #include	"Collision.h"
 #include	"Sound.h"
 
-//
-#include	"BaseEquipment.h"
-//
-
 #include	"sceneMain.h"
 
 //*****************************************************************************************************************************
@@ -34,10 +30,6 @@
 //	ƒOƒ[ƒoƒ‹•Ï”
 //
 //*****************************************************************************************************************************
-
-iexMesh*	stage = nullptr;	//	‰¼(â‘ÎÁ‚·)
-iexMesh*	magic = nullptr;	//	‰¼(â‘ÎÁ‚·)
-BaseEquipment* baseEquipment;	//	‰¼(â‘ÎÁ‚·)
 
 //*****************************************************************************************************************************
 //
@@ -62,6 +54,9 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	stage‰Šú‰»
+	stage = new Stage();
+
 	//	player‰Šú‰»
 	playerManager->Initialize();
 
@@ -70,14 +65,6 @@ bool	sceneMain::Initialize( void )
 
 	//	magic‰Šú‰»
 	magicManager->Initialize();
-	
-	//	stage‰Šú‰»
-	stage = new iexMesh( "DATA/BG/stage.imo" );
-	stage->SetPos( 0.0f, -5.0f, 0.0f );
-	stage->SetScale( 0.1f );
-	stage->Update();
-
-	baseEquipment = new BaseEquipment("DATA\\player_data.csv");
 
 	//	ui‚ÌÝ’è
 	uiManager->Initialize();

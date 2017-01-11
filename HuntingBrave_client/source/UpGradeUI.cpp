@@ -5,6 +5,7 @@
 #include	"Interpolation.h"
 #include	"GameManager.h"
 #include	"GameParam.h"
+#include	"PlayerManager.h"
 #include	"LevelManager.h"
 #include	"InputManager.h"
 
@@ -168,6 +169,7 @@ namespace
 	//	更新
 	void	UpGradeUI::Update( void )
 	{
+		if ( gameParam->GetPlayerParam( id ).motion != MOTION_NUM::MENU )		return;
 		bool state1 = Interpolation::PercentageUpdate( percentage, INTERPOLATION_SPEED );
 		bool state2 = Interpolation::PercentageUpdate( percentage2, INTERPOLATION_SPEED );
 
@@ -212,6 +214,8 @@ namespace
 	//	描画
 	void	UpGradeUI::Render( void ) 
 	{
+		if ( gameParam->GetPlayerParam( id ).motion != MOTION_NUM::MENU )		return;
+
 		back->Render( IMAGE_MODE::ADOPTPARAM );
 
 		//	レベルアイコン描画

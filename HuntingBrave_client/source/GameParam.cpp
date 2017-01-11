@@ -261,6 +261,9 @@ GameParam*	gameParam = nullptr;
 
 		//	Yボタン入力
 		CheckInputData( KEY_TYPE::Y );
+
+		//	メニューボタン入力
+		CheckInputData( KEY_TYPE::START );
 	}
 
 	//	討伐情報送信
