@@ -49,7 +49,7 @@ namespace
 //	struct
 struct InputInfo
 {
-	float	axisX, axisY;
+	float	axisX, axisY, axisRX, axisRY;
 	std::map<char, char>	keyState;
 };
 
@@ -67,6 +67,7 @@ public:
 	//	î•ñİ’è
 	void	SetInput( int id, char keyType, char keyState );
 	void	SetAxis( int id, float axisX, float axisY );
+	void	SetAxisR( int id, float axisRX, float axisRY );
 	void	ResetInput( int client );
 
 	//	î•ñæ“¾

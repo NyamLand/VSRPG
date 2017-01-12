@@ -192,12 +192,14 @@ void	sceneMain::MyInfoRender( void )
 	//	自分の座標
 	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
 
+	//	中心からの距離
+	float			length = Vector3( Vector3( 0.0f, 0.0f, 0.0f ) - pos ).Length();
 	//	経験値
 	int	exp = levelManager->GetExp();
 
 	//	表示
 	char	str[256];
-	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d", id + 1, name, pos.x, pos.y, pos.z, exp );
+	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d\n\nlength : %.2f", id + 1, name, pos.x, pos.y, pos.z, exp, length );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 

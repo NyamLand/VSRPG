@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"system/Framework.h"
 #include	<thread>
+#include	"Camera.h"
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
@@ -218,14 +219,16 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendPlayerInfo( void )
 	{
 		//	スティック入力情報取得
-		float axisX = 0.0f, axisY = 0.0f;
+		float axisX, axisY, axisRX, axisRY;
+		axisX = axisY = axisRX, axisRY = 0.0f;
 		inputManager->GetStickInputLeft( axisX, axisY );
+		inputManager->GetStickInputLeft( axisRX, axisRY );
 
 		//	フレーム情報取得
 		int frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
 		//	送信
-		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
+		SendPlayerData	sendPlayerData( axisX, axisY, axisRX, axisRY, frame );
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 

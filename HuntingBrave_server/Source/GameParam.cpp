@@ -51,6 +51,7 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::InitializePlayer( int id )
 	{
 		lifeInfo[id].life = lifeInfo[id].maxLife;
+		playerParam[id].pos = gameManager->GetInitInfo( id ).pos;
 		playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
@@ -219,6 +220,9 @@ GameParam*	gameParam = nullptr;
 		
 		//	スティックの入力情報設定
 		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
+
+		//	右スティックの入力情報設定
+		inputManager->SetAxisR( client, receivePlayerData->axisRX, receivePlayerData->axisRY );
 
 		//	フレーム情報設定
 		playerParam[client].frame = receivePlayerData->frame;

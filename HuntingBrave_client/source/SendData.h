@@ -34,10 +34,11 @@
 	{
 		char	com = SEND_COMMAND::PLAYER_INFO;	//1byte
 		float	axisX, axisY;	//	8byte
+		float	axisRX, axisRY;	//	8byte
 		int 	frame;			//	4byte
 		//	13byte
-		SendPlayerData( float axisX, float axisY, int frame ) : 
-			axisX( axisX ), axisY( axisY ), frame( frame ){}
+		SendPlayerData( float axisX, float axisY, float axisRX, float axisRY, int frame ) : 
+			axisX( axisX ), axisY( axisY ), axisRX( axisRX ), axisRY( axisRY ), frame( frame ){}
 	};
 
 	//	çUåÇèÓïÒ

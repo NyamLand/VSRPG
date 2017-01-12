@@ -29,6 +29,8 @@ InputManager*	inputManager = nullptr;
 			//	スティック入力初期化
 			inputInfo[p].axisX = 0.0f;
 			inputInfo[p].axisY = 0.0f;
+			inputInfo[p].axisRX = 0.0f;
+			inputInfo[p].axisRY = 0.0f;
 			
 			//	キー情報初期化
 			inputInfo[p].keyState.insert( std::map<char, char>::value_type( KEY_TYPE::A, 0 ) );
@@ -70,6 +72,13 @@ InputManager*	inputManager = nullptr;
 	{
 		inputInfo[id].axisX = axisX;
 		inputInfo[id].axisY = axisY;
+	}
+	
+	//	右スティック入力情報せってい
+	void	InputManager::SetAxisR( int id, float axisRX, float axisRY )
+	{
+		inputInfo[id].axisRX = axisRX;
+		inputInfo[id].axisRY = axisRY;
 	}
 
 	//	入力情報リセット
