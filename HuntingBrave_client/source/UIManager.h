@@ -12,6 +12,7 @@
 #include	"Singleton.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	<vector>
 #include	"NumberUI.h"
 #include	"TimerUI.h"
 #include	"HpUI.h"

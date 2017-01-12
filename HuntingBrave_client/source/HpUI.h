@@ -31,7 +31,7 @@ public:
 	//	初期化・解放
 	HpUI(int x, int y, int w, int h);
 	~HpUI(void);
-
+	Image*	GetImageHp(){ return hpFrame_obj; }
 	//	更新・描画
 	void	Update(void);
 	void	Render(void);

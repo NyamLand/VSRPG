@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	<vector>
 #include	"NumberUI.h"
 #include	"ScoreUI.h"
 #include	<math.h>
@@ -32,7 +33,7 @@ ScoreUI::ScoreUI(int x, int y, int w, int h)
 	icon->Initialize("DATA/UI/main_UI/BigHuntIcon.png", posx, posy, size, size, 0, 0, SCORE_MAX::ICON_SIZE, SCORE_MAX::ICON_SIZE);
 
 	//	経験値の値
-	number = new NumberUI(x, y, w, h);
+	number = new NumberUI(x, y, w / 2 , h, SCORE_DIGIT);
 
 
 }
@@ -83,7 +84,7 @@ void	ScoreUI::SetParam(int x, int y, int w, int h)
 	//	SCORE文字アイコン
 	icon->x = x;	icon->y = y;	icon->w = w;	icon->h = h;
 
-	number->SetParam(x, y, w, h);
+	number->SetParam(x, y, w / 2, h);
 
 }
 
