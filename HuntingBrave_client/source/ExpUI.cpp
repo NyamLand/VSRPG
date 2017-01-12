@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	<vector>
 #include	"NumberUI.h"
 #include	"ExpUI.h"
 #include	<math.h>
@@ -32,7 +33,7 @@ ExpUI::ExpUI(int x, int y, int w, int h)
 	icon->Initialize("DATA/UI/main_UI/ExpIcon.png", posx, posy, size, size, 0, 0, EXP_MAX::ICON_SIZE, EXP_MAX::ICON_SIZE);
 
 	//	経験値の値
-	number = new NumberUI(x, y, w, h);
+	number = new NumberUI(x, y, w / 2, h, EXP_DIGIT);
 }
 
 //	デストラクタ
@@ -84,7 +85,7 @@ void	ExpUI::SetParam(int x, int y, int w, int h)
 	//	SCORE文字アイコン
 	icon->x = x;	icon->y = y;	icon->w = w;	icon->h = h;
 
-	number->SetParam(x, y, w, h);
+	number->SetParam(x, y, w / 2, h);
 
 }
 

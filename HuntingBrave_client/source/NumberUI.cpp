@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	<vector>
 #include	"NumberUI.h"
 #include	<math.h>
 
@@ -21,18 +22,25 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-NumberUI::NumberUI(int x, int y, int w, int h)
+NumberUI::NumberUI(int x, int y, int w, int h, int digit)
 {
 	//	座標、サイズ情報格納
 	size = w;
 	posx = x;
 	posy = y;	//	height / 6 = アイコンサイズの1/6分余白を空ける
+	number.clear();
+	numbox.clear();
+
+	number.resize(digit);
+	numbox.resize(digit);
+
+	DIGIT_MAX = digit;
 
 	//	経験値の値
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		number[i] = new Image();
-		number[i]->Initialize("DATA/UI/main_UI/Number.png", 0, 0, 0, 0, 0, 0, 0, 0);	//	初期化
+		number[i]->Initialize("DATA/UI/main_UI/Number.png", posx, posy, size, size, 0, 0, 0, 0);	//	初期化
 
 		numbox[i] = -1;
 	}
@@ -63,8 +71,19 @@ void	NumberUI::Update(const Image* icon)
 	NumberManager();
 
 	//	各値に合わせたパラメータを入れる
-	for (int i = 0; i < DIGIT_MAX; i++){
-		NumberSet(number[i], numbox[i], i, icon, color);
+	//	アイコンあり
+	if (icon != null)
+	{
+		for (int i = 0; i < DIGIT_MAX; i++){
+			NumberSet(number[i], numbox[i], i, icon, color);
+		}
+	}
+	//	アイコンなし
+	else
+	{
+		for (int i = 0; i < DIGIT_MAX; i++){
+			NumberSet(number[i], numbox[i], i, color);
+		}
 	}
 
 }
@@ -122,6 +141,7 @@ void	NumberUI::NumberManager(void)
 
 }
 
+//	アイコンあり
 void	NumberUI::NumberSet(Image* img, const int num, const int digit, const Image* icon, int color)
 {
 	//	0～9以外の値の場合飛ばす。
@@ -132,14 +152,36 @@ void	NumberUI::NumberSet(Image* img, const int num, const int digit, const Image
 	}
 
 	//	桁数に対応した配置
-	img->w = size / 2;	img->h = size / 2;
+	img->w = size;	img->h = size;
 	img->x = icon->x + icon->w / 2 + img->w / 2 + (img->w * digit); // アイコンの右の位置からサイズの半分*桁で場所をとる
-	img->y = icon->y;
+	img->y = posy;
 
 	//	数値に対応した切り取り範囲指定
 	img->sx = num * 64;	img->sy = 64 * color;
 	img->sw = 64;		img->sh = 64;
 	
+	img->renderflag = true;
+}
+
+//	アイコンなし
+void	NumberUI::NumberSet(Image* img, const int num, const int digit, int color)
+{
+	//	0～9以外の値の場合飛ばす。
+	if (num < 0 || num > 9)
+	{
+		img->renderflag = false;
+		return;
+	}
+
+	//	桁数に対応した配置
+	img->w = size;	img->h = size;
+	img->x = posx + img->w / 2 + (img->w * digit);
+	img->y = posy;
+
+	//	数値に対応した切り取り範囲指定
+	img->sx = num * 64;	img->sy = 64 * color;
+	img->sw = 64;		img->sh = 64;
+
 	img->renderflag = true;
 }
 

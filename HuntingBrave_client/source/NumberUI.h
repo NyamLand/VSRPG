@@ -7,7 +7,6 @@
 //
 //***************************************************************
 
-#define	DIGIT_MAX 4
 
 namespace NUM_COLOR
 {
@@ -25,23 +24,24 @@ class NumberUI
 {
 private:
 //	Image* icon;
-	Image* number[DIGIT_MAX];
-	int numbox[DIGIT_MAX];
-	int	num, digit;
+	std::vector<Image*> number;
+	std::vector<int>	numbox;
+	int	num, digit, DIGIT_MAX;
 	int	color;
 	int	posx, posy, size;
 
 public:
 	//	初期化・解放
-	NumberUI(int x, int y, int w, int h);
+	NumberUI(int x, int y, int w, int h, int digit);
 	~NumberUI(void);
 
 	//	更新・描画
-	void	Update(const Image* icon);
+	void	Update(const Image* icon = null);
 	void	NumberManager(void);
 	void	SetParam(int x, int y, int w, int h);
 	void	SetRenderFlag(bool c);
 	void	NumberSet(Image* img, const int num, const int digit, const Image* icon, int color);
+	void	NumberSet(Image* img, const int num, const int digit, int color);
 	void	SetNum(int n);
 	void	SetColor(int c);
 	void	SetColor(float r, float g, float b);
