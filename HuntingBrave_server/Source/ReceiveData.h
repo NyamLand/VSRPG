@@ -34,7 +34,8 @@
 	struct ReceivePlayerData
 	{
 		char		com = RECEIVE_COMMAND::PLAYER_INFO;
-		float		axisX, axisY, axisRX, axisRY;
+		float		axisX, axisY;
+		float		cameraAngle;
 		int		frame;
 	};
 

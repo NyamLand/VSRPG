@@ -417,9 +417,18 @@ namespace
 		//	移動方向を求める
 		float	moveAngle = atan2f( targetVec.x, targetVec.z );
 
+		//	カメラの前方方向を求める
+		float	cameraAngle = gameParam->GetPlayerParam( index ).cameraAngle;
+
+		//	入力方向を求める
+		float inputAngle = atan2f( targetVec.x, targetVec.z );
+
+		//	目標の角度を求める
+		float	targetAngle = cameraAngle + inputAngle;
+
 		//	親に投げる
 		AngleAdjustParent(
-			Vector3( sinf( moveAngle ), 0.0f, cosf( moveAngle ) ),
+			Vector3( sinf( targetAngle ), 0.0f, cosf( targetAngle ) ),
 			adjustSpeed );
 	}
 

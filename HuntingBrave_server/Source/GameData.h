@@ -57,11 +57,12 @@ namespace SCENE
 		Vector3	pos;
 		Vector3	move;
 		float			angle;
+		float			cameraAngle;
 		int			motion;
 		int			frame;
 		PlayerParam( void ){}
-		PlayerParam( const Vector3& pos, float angle, int motion, int frame );
-		void Set( const Vector3& pos, float angle, int motion, int frame );
+		PlayerParam( const Vector3& pos, float angle, float cameraAngle, int motion, int frame );
+		void Set( const Vector3& pos, float angle, float cameraAngle, int motion, int frame );
 	};
 
 	//	プレイヤーステータス

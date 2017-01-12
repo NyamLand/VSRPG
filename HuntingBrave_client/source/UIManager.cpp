@@ -100,6 +100,8 @@ bool	UIManager::Initialize( void )
 	yaju = new Image();
 	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
 	yaju->SetScaling(0.01f);
+
+	upGradeUI = new UpGradeUI();
 	check = false;
 	return	true;
 }
@@ -114,6 +116,7 @@ void	UIManager::Release(void)
 	SafeDelete( mapUI );
 	SafeDelete( scoreUI );
 	SafeDelete( boardUI );
+	SafeDelete( upGradeUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -130,6 +133,7 @@ void	UIManager::Update(void)
 	mapUI->Update();
 	scoreUI->Update();
 	boardUI->Update();
+	upGradeUI->Update();
 	
 
 	//	値セット
@@ -160,6 +164,7 @@ void	UIManager::Render(void)
 	mapUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
+	upGradeUI->Render();
 	yaju->Render(IMAGE_MODE::SCALING);
 }
 

@@ -220,15 +220,18 @@ GameParam*	gameParam = nullptr;
 	{
 		//	スティック入力情報取得
 		float axisX, axisY, axisRX, axisRY;
-		axisX = axisY = axisRX, axisRY = 0.0f;
+		axisX = axisY = 0.0f;
 		inputManager->GetStickInputLeft( axisX, axisY );
-		inputManager->GetStickInputLeft( axisRX, axisRY );
 
 		//	フレーム情報取得
 		int frame = playerManager->GetPlayer( myIndex )->GetFrame();
 
+		//	カメラ方向設定
+		Vector3	vEye( mainView->GetTarget() - mainView->GetPos() );
+		float	cameraAngle = atan2f( vEye.x, vEye.z );
+
 		//	送信
-		SendPlayerData	sendPlayerData( axisX, axisY, axisRX, axisRY, frame );
+		SendPlayerData	sendPlayerData( axisX, axisY, cameraAngle, frame );
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 

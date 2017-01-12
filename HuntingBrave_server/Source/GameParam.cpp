@@ -221,9 +221,9 @@ GameParam*	gameParam = nullptr;
 		//	スティックの入力情報設定
 		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
 
-		//	右スティックの入力情報設定
-		inputManager->SetAxisR( client, receivePlayerData->axisRX, receivePlayerData->axisRY );
-
+		//	カメラアングル取得
+		playerParam[client].cameraAngle = receivePlayerData->cameraAngle;
+		
 		//	フレーム情報設定
 		playerParam[client].frame = receivePlayerData->frame;
 

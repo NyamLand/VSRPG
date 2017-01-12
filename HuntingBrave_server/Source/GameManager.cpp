@@ -36,10 +36,10 @@ GameManager*	gameManager = nullptr;
 	{
 		//	èâä˙ç¿ïWê›íË
 		int initMotion = 0;
-		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, CENTER_DIST ), D3DX_PI, initMotion, 0 );
-		initPlayerParam[1].Set( Vector3( CENTER_DIST, 0.0f, 0.0f ), D3DX_PI * 1.5f, initMotion, 0 );
-		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -CENTER_DIST ), 0.0f, initMotion, 0);
-		initPlayerParam[3].Set( Vector3( -CENTER_DIST, 0.0f, 0.0f ), D3DX_PI * 0.5f, initMotion, 0 );
+		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, CENTER_DIST ), D3DX_PI, 0.0f, initMotion, 0 );
+		initPlayerParam[1].Set( Vector3( CENTER_DIST, 0.0f, 0.0f ), D3DX_PI * 1.5f, 0.0f, initMotion, 0 );
+		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -CENTER_DIST ), 0.0f, 0.0f, initMotion, 0);
+		initPlayerParam[3].Set( Vector3( -CENTER_DIST, 0.0f, 0.0f ), D3DX_PI * 0.5f, 0.0f, initMotion, 0 );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
