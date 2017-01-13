@@ -43,8 +43,10 @@ bool	UIManager::Initialize( void )
 	int posx = width / 2;								//	中心から端までの距離
 	int posy = iexSystem::ScreenHeight - height / 2;	//	画面端から画像の中心から端までの距離引く
 
-	hpUI = new HpUI(posx, posy, width, height);
-	itemUI = new ItemUI(posx, posy, width, height);
+	hpUI = new HpUI( posx, posy, width, height );
+
+	//	アイテムアイコンの座標をセット
+	itemUI = new ItemUI( 100, 560, 210, height );
 
 	//---------------------------------------
 	//	Timerのポジションをセット(真ん中の上)

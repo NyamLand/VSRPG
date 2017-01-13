@@ -22,7 +22,7 @@
 //---------------------------------------------------------------------------------------
 
 //	ボード用
-namespace
+namespace                                                                             
 {
 #define	BOARD_ALPHA	0.6f
 #define	SELECT_CENTER_DIST	170
@@ -170,54 +170,48 @@ namespace
 	void	UpGradeUI::Update( void )
 	{
 		if ( gameParam->GetPlayerParam( id ).motion != MOTION_NUM::MENU )		return;
-		bool state1 = Interpolation::PercentageUpdate( percentage, INTERPOLATION_SPEED );
-		bool state2 = Interpolation::PercentageUpdate( percentage2, INTERPOLATION_SPEED );
-
+		
 		//	読み込み位置設定
 		SetBigIconSrcPos();
 
-		//	入力取得
-		float	axisX, axisY;
-		inputManager->GetStickInputLeft( axisX, axisY );
+		//	経験値設定
+		expUI->SetExp( levelManager->GetExp() );
+		expUI->Update();
 
-		//	補間
-		Interpolation::LinearInterpolation( typeIcon[select]->w, ICON_SCALE, ICON_BIG_SCALE, percentage );
-		Interpolation::LinearInterpolation( typeIcon[select]->h, ICON_SCALE, ICON_BIG_SCALE, percentage );
-		Interpolation::LinearInterpolation( typeIcon[beforeSelect]->w, ICON_BIG_SCALE, ICON_SCALE, percentage2 );
-		Interpolation::LinearInterpolation( typeIcon[beforeSelect]->h, ICON_BIG_SCALE, ICON_SCALE, percentage2 );
+		//	拡大縮小補間
+		bool	lerpState = IconScaling();
 
-		//	選択
-		if ( state1 && state2 )
-		{
-			if ( KEY( KEY_ENTER ) == 3 )
-			{
-				Dicision();
-			}
-
-			if ( abs( axisX ) >= 0.3f )
-			{
-				//	カーソル移動
-				beforeSelect = select;
-				if ( axisX > 0.0f )	select++;
-				else select--;
-
-				//	パラメータリセット
-				percentage = percentage2 = 0.0f;
-
-				//	カーソル制限
-				if ( select >= LEVEL_TYPE::TYPE_MAX )		select = 0;
-				if ( select < 0 )			select = LEVEL_TYPE::TYPE_MAX - 1;
-			}
-		}
+		//	選択・カーソル移動
+		if ( lerpState )	MoveCursor();
 	}
 
 	//	描画
 	void	UpGradeUI::Render( void ) 
 	{
+		//	メニューを開いてないときはスキップ
 		if ( gameParam->GetPlayerParam( id ).motion != MOTION_NUM::MENU )		return;
 
+		//	アップグレードボード描画
 		back->Render( IMAGE_MODE::ADOPTPARAM );
 
+		//	レベルアイコン描画
+		LevelIconRender();
+
+		//	経験値描画
+		expUI->Render();
+
+		//	現在レベル描画
+		curLevelIcon->Render( IMAGE_MODE::NORMAL );
+
+		//	フレーバーテキスト描画
+		flavorText->DrawFont( text, 
+			iexSystem::ScreenWidth / 2 - 450, 
+			iexSystem::ScreenHeight / 2 + 220, 1000, 720, 0xFFFFFFFF );
+	}
+
+	//	レベルアイコン描画
+	void	UpGradeUI::LevelIconRender( void )
+	{
 		//	レベルアイコン描画
 		for ( int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++ ) 
 		{
@@ -232,16 +226,6 @@ namespace
 					levelIcon[i * levelManager->LEVEL_MAX + j]->Render( IMAGE_MODE::NORMAL, shader2D, "blackWhite" );
 			}
 		}
-
-		//	経験値描画
-		expUI->Render();
-
-		//	現在レベル描画
-		curLevelIcon->Render( IMAGE_MODE::NORMAL );
-
-		flavorText->DrawFont( text, 
-			iexSystem::ScreenWidth / 2 - 450, 
-			iexSystem::ScreenHeight / 2 + 220, 1000, 720, 0xFFFFFFFF );
 	}
 
 //---------------------------------------------------------------------------------------
@@ -255,6 +239,52 @@ namespace
 		{
 			levelManager->SendLevel( select );
 		}
+	}
+
+	//	カーソル移動
+	void	UpGradeUI::MoveCursor( void )
+	{
+		if ( KEY( KEY_ENTER ) == 3 )
+		{
+			Dicision();
+		}
+
+		//	入力取得
+		float	axisX, axisY;
+		inputManager->GetStickInputLeft( axisX, axisY );
+
+		if ( abs( axisX ) >= 0.3f )
+		{
+			//	カーソル移動
+			beforeSelect = select;
+			if ( axisX > 0.0f )	select++;
+			else select--;
+
+			//	パラメータリセット
+			percentage = percentage2 = 0.0f;
+
+			//	カーソル制限
+			if ( select >= LEVEL_TYPE::TYPE_MAX )		select = 0;
+			if ( select < 0 )			select = LEVEL_TYPE::TYPE_MAX - 1;
+		}
+	}
+
+	//	アイコンスケール補間
+	bool	UpGradeUI::IconScaling( void )
+	{
+		//	percentage更新
+		bool state1 = Interpolation::PercentageUpdate( percentage, INTERPOLATION_SPEED );
+		bool state2 = Interpolation::PercentageUpdate( percentage2, INTERPOLATION_SPEED );
+
+		//	補間
+		Interpolation::LinearInterpolation( typeIcon[select]->w, ICON_SCALE, ICON_BIG_SCALE, percentage );
+		Interpolation::LinearInterpolation( typeIcon[select]->h, ICON_SCALE, ICON_BIG_SCALE, percentage );
+		Interpolation::LinearInterpolation( typeIcon[beforeSelect]->w, ICON_BIG_SCALE, ICON_SCALE, percentage2 );
+		Interpolation::LinearInterpolation( typeIcon[beforeSelect]->h, ICON_BIG_SCALE, ICON_SCALE, percentage2 );
+
+
+		if ( state1 && state2 )	return	true;
+		return	false;
 	}
 	
 //---------------------------------------------------------------------------------------

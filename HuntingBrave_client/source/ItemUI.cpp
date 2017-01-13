@@ -20,7 +20,7 @@
 
 #define	ICON_SIZE		50
 #define	ICON_SPACE	90
-#define	ICON_HEIGHT_DIST	20
+#define	ICON_HEIGHT_DIST	17
 #define	ICON_SRC_SIZE	128
 
 #define	WIDTH  512				//	âÊëúâ°ïù

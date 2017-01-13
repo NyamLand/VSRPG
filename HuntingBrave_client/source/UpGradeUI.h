@@ -40,9 +40,12 @@ public:
 	//	XVE•`‰æ
 	void	Update( void );
 	void	Render( void );
+	void	LevelIconRender( void );
 
 	//	“®ìŠÖ”
 	void	Dicision( void );
+	void	MoveCursor( void );
+	bool	IconScaling( void );
 
 	//	î•ñİ’è
 	void	SetBigIconSrcPos( void );
