@@ -66,6 +66,7 @@ public:
 	bool	GetGameState( void );
 
 	//	アップグレードデータ取得
+	int	GetInitStatus( char upGradeData );
 	int	GetUpGrade( char levelType, char upGradeData, char level );
 	float GetUpGradeSpeed( char levelType, char level );
 };

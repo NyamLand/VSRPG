@@ -21,6 +21,7 @@ private:
 	Image**	levelIcon;
 	Image*		curLevelIcon;
 	ExpUI*		expUI;
+	NeedExpUI*		needExpUI;
 	Font*		flavorText;
 
 	float		percentage;

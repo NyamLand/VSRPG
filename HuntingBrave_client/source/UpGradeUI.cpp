@@ -53,6 +53,7 @@ namespace
 #define	EXP_UI_DIST	150
 #define	EXP_UI_WIDTH	100
 #define	EXP_UI_HEIGHT	50
+#define	NEED_EXP_CENTER_DIST	175
 }
 
 //	現在レベルアイコン用
@@ -93,6 +94,7 @@ namespace
 	UpGradeUI::UpGradeUI( void ) : back( nullptr ), 
 		typeIcon( nullptr ), levelIcon( nullptr ),
 		expUI( nullptr ), flavorText( nullptr ),
+		needExpUI( nullptr ),
 		select( 0 ), beforeSelect( 1 ),
 		percentage( 0.0f ), percentage2( 1.0f )
 	{
@@ -145,6 +147,9 @@ namespace
 		expUI = new ExpUI( x + EXP_UI_DIST, y + EXP_UI_CENTER_DIST, 
 			EXP_UI_WIDTH, EXP_UI_HEIGHT );
 
+		needExpUI = new NeedExpUI( x + EXP_UI_DIST, y + NEED_EXP_CENTER_DIST,
+			EXP_UI_WIDTH, EXP_UI_HEIGHT );
+
 		//	フォント初期化
 		flavorText = new Font( "ＤＦ麗雅宋W5", 25 );
 
@@ -158,6 +163,7 @@ namespace
 		SafeDeleteArray( typeIcon );
 		SafeDeleteArray( levelIcon );
 		SafeDelete( expUI );
+		SafeDelete( needExpUI );
 		SafeDelete( curLevelIcon );
 		SafeDelete( flavorText );
 	}
@@ -177,6 +183,9 @@ namespace
 		//	経験値設定
 		expUI->SetExp( levelManager->GetExp() );
 		expUI->Update();
+
+		needExpUI->SetExp( levelManager->GetExp() );
+		needExpUI->Update();
 
 		//	拡大縮小補間
 		bool	lerpState = IconScaling();
@@ -199,6 +208,7 @@ namespace
 
 		//	経験値描画
 		expUI->Render();
+		needExpUI->Render();
 
 		//	現在レベル描画
 		curLevelIcon->Render( IMAGE_MODE::NORMAL );
@@ -297,7 +307,7 @@ namespace
 		//	レベル取得
 		char level = levelManager->GetLevel( select );
 
-		//	フレーバーテキスト読み込み、設定
+		//	フレーバーテキスト読み込み、設定( 次のレベル )
 		text = gameManager->GetFlavorText( select, level + 1 );
 
 		//	画像X座標読み込み位置設定

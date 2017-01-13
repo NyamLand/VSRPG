@@ -154,7 +154,7 @@
 	char*	GameManager::GetFlavorText( char type, char level )
 	{
 		//	一行目は説明なのでスキップ
-		string str = playerData[1 + ( type * 6 ) + level][UPGRADE_DATA::TEXT];
+		string str = playerData[2 + ( type * 7 ) + level][UPGRADE_DATA::TEXT];
 		int length = str.length();
 		char*	ret = new char[length + 1];
 		memcpy( ret, str.c_str(), length + 1 );

@@ -710,9 +710,6 @@
     <Filter Include="Source\Stage">
       <UniqueIdentifier>{cd8c2e98-900d-4808-a4c2-990c0900a82b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\UI\NeedExpUI">
-      <UniqueIdentifier>{32563431-b16b-49c1-8963-e1fa706a6cc1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">

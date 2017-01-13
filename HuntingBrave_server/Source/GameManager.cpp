@@ -123,10 +123,10 @@ GameManager*	gameManager = nullptr;
 	//	プレイヤーステータス初期化
 	void	GameManager::InitializeStatus( PlayerStatus& playerStatus )
 	{
-		int power = GetUpGrade( 0, UPGRADE_DATA::ATTACK, 0 );
-		int defense = GetUpGrade( 0, UPGRADE_DATA::DEFENSE, 0 );
-		int magicAttack = GetUpGrade( 0, UPGRADE_DATA::MAGIC_ATTACK , 0 );
-		int magicDefense = GetUpGrade( 0, UPGRADE_DATA::MAGIC_DIFENSE, 0 );
+		int power = GetInitStatus( UPGRADE_DATA::ATTACK );
+		int defense = GetInitStatus( UPGRADE_DATA::DEFENSE );
+		int magicAttack = GetInitStatus( UPGRADE_DATA::MAGIC_ATTACK );
+		int magicDefense = GetInitStatus( UPGRADE_DATA::MAGIC_DIFENSE );
 		float speed = GetUpGradeSpeed( 0, 0 );
 
 		playerStatus.Initialize( power, defense, magicAttack, magicDefense, speed );
@@ -224,13 +224,19 @@ GameManager*	gameManager = nullptr;
 	//	アップグレードデータ取得
 	int	GameManager::GetUpGrade( char levelType, char upGradeData, char level )
 	{
-		return	std::stoi( playerData[1 + ( levelType * 5 ) + level][upGradeData] );
+		return	std::stoi( playerData[2 + ( levelType * 7 ) + level][upGradeData] );
+	}
+
+	//	アップグレード初期値取得
+	int	GameManager::GetInitStatus( char upGradeData )
+	{
+		return	std::stoi( playerData[1][upGradeData] );
 	}
 
 	//	スピードアップグレードデータ取得
 	float	GameManager::GetUpGradeSpeed( char levelType, char level )
 	{
-		return	std::stof( playerData[1 + ( levelType * 5 ) + level][UPGRADE_DATA::SPEED] );
+		return	std::stof( playerData[2 + ( levelType * 7 ) + level][UPGRADE_DATA::SPEED] );
 	}
 
 
