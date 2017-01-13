@@ -40,8 +40,8 @@ LevelManager*	levelManager = nullptr;
 			}
 		}
 
-		expData[ENEMY_EXP::BIG_ENEMY] = 5000;
-		expData[ENEMY_EXP::SMALL_ENEMY] = 1000;
+		expData[ENEMY_EXP::BIG_ENEMY] = 50;
+		expData[ENEMY_EXP::SMALL_ENEMY] = 10;
 	}
 
 	//	デストラクタ

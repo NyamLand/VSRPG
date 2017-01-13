@@ -261,7 +261,7 @@ GameParam*	gameParam = nullptr;
 		//	‘åŒ^‚Ì“_”‚ğ‰ÁZ
 		if ( receiveHuntData->enemyType == ENEMY_EXP::BIG_ENEMY )
 		{
-			pointManager->CalcPoint( client, 1000 );
+			pointManager->CalcPoint( client, 50 );
 			pointManager->SendPoint( client );
 		}
 

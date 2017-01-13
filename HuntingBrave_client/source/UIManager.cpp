@@ -87,19 +87,19 @@ bool	UIManager::Initialize( void )
 	//---------------------------------------
 	//	スコアボードのポジションをセット(中心）
 	//---------------------------------------
-	width = (int)(BOARD_MAX::BOARD_WIDTH / BOARD_PER);
-	height = (int)(BOARD_MAX::BOARD_HEIGHT / BOARD_PER);
+	width = (int)(BOARD_MAX::BOARD_WIDTH / BOARD_PER );
+	height = (int)(BOARD_MAX::BOARD_HEIGHT / BOARD_PER );
 	posx = iexSystem::ScreenWidth / 2;				//	画面の中心
 	posy = iexSystem::ScreenHeight / 2;				//	画面の中心
 
-	boardUI = new ScoreBoardUI(posx, posy, width, height);
+	boardUI = new ScoreBoardUI( posx, posy, width, height );
 	
 	//	プレイヤー自身のナンバーセット
 	p_num = gameParam->GetMyIndex();
 	//	neta
 	yaju = new Image();
-	yaju->Initialize("DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540);
-	yaju->SetScaling(0.01f);
+	yaju->Initialize( "DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540 );
+	yaju->SetScaling( 0.01f );
 
 	upGradeUI = new UpGradeUI();
 	check = false;
@@ -107,7 +107,7 @@ bool	UIManager::Initialize( void )
 }
 
 //	解放
-void	UIManager::Release(void)
+void	UIManager::Release( void )
 {
 	SafeDelete( timerUI );
 	SafeDelete( hpUI );
@@ -124,7 +124,7 @@ void	UIManager::Release(void)
 //---------------------------------------------------------------------------------------
 
 //	更新
-void	UIManager::Update(void)
+void	UIManager::Update( void )
 {
 	timerUI->Update();
 	hpUI->Update();
@@ -154,7 +154,7 @@ void	UIManager::Update(void)
 	}
 }
 //	描画
-void	UIManager::Render(void)
+void	UIManager::Render( void )
 {
 	enemyManager->RenderHp();
 	timerUI->Render();
