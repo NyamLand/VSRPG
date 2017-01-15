@@ -23,10 +23,10 @@ public:
 	//	初期化・解放
 	NameUI( void );
 	~NameUI( void );
-	bool	Initialize( int x, int y, int w, int h, int* name );
+	bool	Initialize( int x, int y, int w, int h );
 
 	//	更新・描画
-	void	Update( void );
+	void	Update( int* name );
 	void	Render( void );
 
 	//	情報設定

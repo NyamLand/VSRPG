@@ -133,6 +133,9 @@
     <Filter Include="ソース ファイル\Manager\PlayerManager">
       <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\PlayerName">
+      <UniqueIdentifier>{aee619cf-f15c-4b6e-8950-182ffcabb07f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -227,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="Source\IEX_RayMesh.cpp">
       <Filter>ソース ファイル\RayMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerName.cpp">
+      <Filter>ソース ファイル\PlayerName</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="Source\IEX_RayMesh.h">
       <Filter>ソース ファイル\RayMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerName.h">
+      <Filter>ソース ファイル\PlayerName</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 //*****************************************************************************************************************************
 
 #include	"GameData.h"
+#include	"WaitLoad.h"
 #include	"NameInput.h"
 #include	"ItemSelect.h"
 #include	"GameWait.h"

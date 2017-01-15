@@ -17,16 +17,18 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PlayerInfo::PlayerInfo( bool active, const LPSTR& name )
+	PlayerInfo::PlayerInfo( bool active, const LPSTR& name, char frontTitle, char backTitle )
 	{
-		Set( active, name );
+		Set( active, name, frontTitle, backTitle );
 	}
 
 	//	情報設定
-	void	PlayerInfo::Set( bool active, const LPSTR& name )
+	void	PlayerInfo::Set( bool active, const LPSTR& name, char frontTitle, char backTitle )
 	{
 		this->active = active;
 		strcpy( this->name, name );
+		this->frontTitle = frontTitle;
+		this->backTitle = backTitle;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -114,18 +116,21 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	SignUp::SignUp( int id, const LPSTR& name )
+	SignUp::SignUp( int id, int* name, char frontTitle, char backTitle )
 	{
-		this->id = id;
-		strcpy( this->name, name );
+		Set( id, name, frontTitle, backTitle );
 	}
 
 	//	情報設定
-	void	SignUp::Set( int id, const LPSTR& name )
+	void	SignUp::Set( int id, int* name, char frontTitle, char backTitle )
 	{
-		this->com = com;
 		this->id = id;
-		strcpy( this->name, name );
+		this->frontTitle = frontTitle;
+		this->backTitle = backTitle;
+		for ( int i = 0; i < 4; i++ )
+		{
+			this->name[i] = name[i];
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

@@ -72,6 +72,9 @@ bool	sceneMain::Initialize( void )
 	//	í“¬BGM
 	sound->PlayBGM( BGM::MAIN );
 
+	//	level‰Šú‰»
+	levelManager->Initialize();
+
 	//	‘—M
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
@@ -186,7 +189,7 @@ void	sceneMain::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 	
 	//	©•ª‚Ì–¼‘O
-	LPSTR name = gameParam->GetPlayerName( id );
+	LPSTR name = gameParam->GetPlayerName( id )->GetName( id );
 	nameManager->SetNameIndex( id, name );
 
 	//	©•ª‚ÌÀ•W

@@ -4,7 +4,7 @@
 #include	"system/system.h"
 #include	<fstream>
 #include	<iostream>
-#include	<thread>
+#include	<process.h>
 #include	<vector>
 #include	"PlayerManager.h"
 #include	"Random.h"
@@ -120,6 +120,7 @@ namespace
 	//	全体更新
 	void	sceneMatching::Update( void )
 	{
+
 		//	テスト
 		switch ( step )
 		{
@@ -128,8 +129,10 @@ namespace
 			if ( !screen->GetScreenState() )	break;
 			
 			//	名前入力
-			if( nameInput->Update() )	step = MATCHING_MODE::SIGN_UP;
-
+			if ( nameInput->Update() )
+			{
+				step = MATCHING_MODE::SIGN_UP;
+			}
 			if ( nameInput->GetCancelState() )
 			{
 				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
@@ -139,11 +142,11 @@ namespace
 
 		case MATCHING_MODE::SIGN_UP:
 			//	クライアント初期化( serverと接続 )
-			if ( gameParam->InitializeClient( addr, 7000, name ) )
+			if ( gameParam->InitializeClient( addr, 7000, nameInput->GetName() ) )
 			{
 				int id = gameParam->GetMyIndex();
 				itemSelect->Initialize( id );
-				gameWait->Initialize( id, nameInput->GetName() );
+				gameWait->Initialize( id );
 				step = MATCHING_MODE::ITEM_SELECT;
 			}
 			break;
@@ -168,7 +171,10 @@ namespace
 		}
 
 		//	シーン切り替え
-		if ( screen->Update() )		gameManager->ChangeScene( nextScene );
+		if ( screen->Update() )
+		{
+			gameManager->ChangeScene( nextScene );
+		}
 	}
 
 //*****************************************************************************************************************************
@@ -247,14 +253,13 @@ void	sceneMatching::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 
 	//	自分の名前
-	LPSTR name = gameParam->GetPlayerName(id);
+	LPSTR name = gameParam->GetPlayerName( id )->GetName( id );
 
 	//	表示
 	char	str[256];
 	//sprintf_s(str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z);
 	IEX_DrawText(str, 20, 50, 500, 500, 0xFFFFFF00);
 }
-
 
 
 

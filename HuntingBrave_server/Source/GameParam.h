@@ -11,6 +11,7 @@
 #include	"GameData.h"
 #include	"CharaInfo.h"
 #include	"ShapeInfo.h"
+#include	"PlayerName.h"
 #include	"UDPServer.h"
 
 //	class
@@ -22,10 +23,12 @@ private:
 	PlayerStatus	playerStatus[PLAYER_MAX];
 	AttackInfo	attackInfo[PLAYER_MAX];
 	LifeInfo			lifeInfo[PLAYER_MAX];
+	PlayerName*	playerName;
 
 public:
 	//	èâä˙âªÅEâï˙
 	GameParam( void );
+	~GameParam( void );
 	bool InitializeServer( void );
 	void	InitializePlayer( int id );
 	void	InitializeGame( void );

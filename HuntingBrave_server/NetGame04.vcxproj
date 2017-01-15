@@ -121,6 +121,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerManager.cpp" />
+    <ClCompile Include="Source\PlayerName.cpp" />
     <ClCompile Include="Source\PointManager.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Source\main.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerManager.h" />
+    <ClInclude Include="Source\PlayerName.h" />
     <ClInclude Include="Source\PointManager.h" />
     <ClInclude Include="Source\ReceiveData.h" />
     <ClInclude Include="Source\sceneMain.h" />

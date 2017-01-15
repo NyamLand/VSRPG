@@ -62,13 +62,15 @@ public:
 	//------------------------------------------------------
 	//	シーンの切り替え
 	//------------------------------------------------------
-	void ChangeScene( Scene* newScene )
+	void ChangeScene( Scene* newScene, bool doInit = true )
 	{
 		//	現在のシーン解放
 		if( scene != NULL ) delete scene;
+
 		//	シーンの切り替え＆初期化
 		scene = newScene;
-		scene->Initialize();
+		
+		if( doInit )		scene->Initialize();
 	}
 };
 

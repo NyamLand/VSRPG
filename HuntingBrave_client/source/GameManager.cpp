@@ -9,6 +9,7 @@
 #include	"sceneMain.h"
 #include	"sceneResult.h"
 #include	"sceneTitle.h"
+#include	"sceneLoad.h"
 #include	"LevelManager.h"
 #include	"GameManager.h"
 
@@ -36,9 +37,6 @@
 
 		scene = SCENE::MATCHING;
 
-		//	CSV読み込み
-		LoadData();
-
 		//	初期化
 		Initialize();
 	}
@@ -52,6 +50,9 @@
 	//	初期化
 	bool	GameManager::Initialize( void )
 	{
+		//	CSV読み込み
+		LoadData();
+
 		//	初期パラメータ読み込み
 		int power = GetUpGrade( 0, UPGRADE_DATA::ATTACK, 0 );
 		int defense = GetUpGrade( 0, UPGRADE_DATA::DIFENSE, 0 );
@@ -69,7 +70,7 @@
 	//	解放
 	void	GameManager::Release( void )
 	{
-		playerData.clear();
+		
 	}
 
 	//	CSV読み込み
@@ -83,6 +84,7 @@
 			std::make_unique<CSVReader>( playerStream );
 
 		//	ファイルから読み込み、vector配列に保存する
+		playerData.clear();
 		int index = 0;
 		while (1)
 		{
@@ -117,7 +119,7 @@
 		switch ( nextScene )
 		{
 		case SCENE::TITLE:
-			MainFrame->ChangeScene( new sceneTitle() );
+			MainFrame->ChangeScene( new sceneLoad( new sceneTitle() ) );
 			break;
 
 		case SCENE::MATCHING:
@@ -125,7 +127,7 @@
 			break;
 
 		case SCENE::MAIN:
-			MainFrame->ChangeScene( new sceneMain() );
+			MainFrame->ChangeScene( new sceneLoad( new sceneMain() ) );
 			break;
 
 		case SCENE::RESULT:

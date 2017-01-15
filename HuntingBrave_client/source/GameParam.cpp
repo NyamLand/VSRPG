@@ -2,6 +2,8 @@
 #include	"iextreme.h"
 #include	"system/Framework.h"
 #include	<thread>
+#include	"GlobalFunction.h"
+#include	"Random.h"
 #include	"Camera.h"
 #include	"GameData.h"
 #include	"GameManager.h"
@@ -36,7 +38,8 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameParam::GameParam( void ) : myIndex( -1 ), inputAcceptance( true )
+	GameParam::GameParam( void ) : playerName( nullptr ),
+		myIndex( -1 ), inputAcceptance( true )
 	{
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
@@ -47,11 +50,16 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
+
+		//	プレイヤー名初期化
+		playerName = new PlayerName();
+		playerName->Initialize();
 	}
 
 	//	デストラクタ
 	GameParam::~GameParam( void )
 	{
+		SafeDelete( playerName );
 		CloseClient();
 	}
 
@@ -66,14 +74,14 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
-
 		ZeroMemory( &playerStatus, sizeof( PlayerStatus ) );
+
 
 		return	true;
 	}
 	
 	//	クライアント初期化
-	bool	GameParam::InitializeClient( char* addr, int nPort, char* name )
+	bool	GameParam::InitializeClient( char* addr, int nPort, int* name )
 	{
 		//	初期化
 		Initialize();
@@ -82,7 +90,9 @@ GameParam*	gameParam = nullptr;
 		InitializeUDP( nPort, addr );
 
 		//	タイプと名前の送信
-		SignUp signUp( -1, name );
+		char frontTitle = ( char )random->GetInt( 0, 19 );
+		char backTitle = ( char )random->GetInt( 0, 9 );
+		SignUp signUp( -1, name, frontTitle, backTitle );
 		send( ( char* )&signUp, sizeof( signUp ) );
 
 		//	個人ID取得
@@ -219,7 +229,7 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendPlayerInfo( void )
 	{
 		//	スティック入力情報取得
-		float axisX, axisY, axisRX, axisRY;
+		float axisX, axisY;
 		axisX = axisY = 0.0f;
 		inputManager->GetStickInputLeft( axisX, axisY );
 
@@ -394,7 +404,8 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::ReceiveSignUpInfo( const LPSTR& data )
 	{
 		SignUp*	signUp = ( SignUp* )data;
-		SetPlayerInfo( signUp->id, signUp->name );
+		playerName->SetName( signUp->id, signUp->name );
+		SetPlayerInfo( signUp->id, playerName->GetName( signUp->id ), signUp->frontTitle, signUp->backTitle );
 		sound->PlaySE( SE::JOIN );
 	}
 
@@ -446,10 +457,12 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	プレイヤー情報設定
-	void	GameParam::SetPlayerInfo( int id, char* name )
+	void	GameParam::SetPlayerInfo( int id, char* name, char frontTitle, char backTitle )
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
+		playerInfo[id].frontTitle = frontTitle;
+		playerInfo[id].backTitle = backTitle;
 	}
 
 	//	点数情報設定

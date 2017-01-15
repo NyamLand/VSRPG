@@ -11,6 +11,7 @@
 #include	"GameData.h"
 #include	"CharaInfo.h"
 #include	"SocketClient.h"
+#include	"PlayerName.h"
 
 //	class
 class GameParam : public SocketClient
@@ -26,13 +27,14 @@ private:
 	AttackInfo	attackInfo[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
 	MatchingInfo	matchingInfo[PLAYER_MAX];
+	PlayerName*	playerName;
 
 public:
 	//	初期化・解放
 	GameParam( void );
 	~GameParam( void );
 	bool	Initialize( void );
-	bool InitializeClient( char* addr, int nPort, char* name );
+	bool InitializeClient( char* addr, int nPort, int* name );
 	void CloseClient( void );
 
 	//	データ更新（送受信）
@@ -72,7 +74,7 @@ public:
 	//	情報設定
 	void	SetPlayerParam( int id, const PlayerParam& param );
 	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life );
-	void	SetPlayerInfo( int id, char* name );
+	void	SetPlayerInfo( int id, char* name, char frontTItle, char backTitle );
 	void	SetPointInfo( int id, int addPoint );
 	void	SetMatchingInfo( int id, bool isComplete );
 	void	AddPoint( int id, int point );
@@ -87,7 +89,7 @@ public:
 	MatchingInfo&	GetMatchingInfo( int id ){ return	matchingInfo[id]; }
 	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
-	char*	GetPlayerName( int id ){ return playerInfo[id].name; }
+	PlayerName*&	GetPlayerName( int id ){ return playerName; }
 };
 
 extern	GameParam*	gameParam;

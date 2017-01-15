@@ -55,10 +55,12 @@ public:
 private:
 	LevelInfo	levelInfo;
 
-public:
 	//	‰Šú‰»E‰ğ•ú
 	LevelManager( void );
 	~LevelManager( void );
+public:
+	//	‰Šú‰»E‰ğ•ú
+	bool	Initialize( void );
 
 	//	“®ìŠÖ”
 	void	SendLevel( char levelType );

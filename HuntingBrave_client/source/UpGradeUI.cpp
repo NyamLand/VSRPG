@@ -21,69 +21,81 @@
 //	グローバル	
 //---------------------------------------------------------------------------------------
 
-//	ボード用
-namespace                                                                             
-{
-#define	BOARD_ALPHA	0.6f
-#define	SELECT_CENTER_DIST	170
-}
-
-//	レベル種類アイコン用
 namespace
 {
-#define	ICON_START_DIST	400
-#define	ICON_SCALE	70
-#define	ICON_SPACE	100
-#define	ICON_BIG_SCALE	90
-#define	BIG_SRC_SIZE	128
-}
-
-//	レベルアイコン用
-namespace
-{
-#define	LEVEL_ICON_DIST	50
-#define	LEVEL_ICON_SCALE	45
-#define	SRC_SIZE		64
-}
-
-//	数値UI用
-namespace
-{
-#define	EXP_UI_CENTER_DIST	100
-#define	EXP_UI_DIST	150
-#define	EXP_UI_WIDTH	100
-#define	EXP_UI_HEIGHT	50
-#define	NEED_EXP_CENTER_DIST	175
-}
-
-//	現在レベルアイコン用
-namespace
-{
-#define	CUR_LEVEL_CENTER_DIST		70
-#define	CUR_LEVEL_DIST	250
-#define	CUR_LEVEL_SIZE		150
-}
-
-//	その他
-#define	INTERPOLATION_SPEED	0.1f
-
-//	構造体
-namespace
-{
-	struct IconSrcPos
+	//	ボード用
+	namespace                                                                             
 	{
-		int sx;
-		int sy;
-	};
+	#define	BOARD_ALPHA	0.6f
+	#define	SELECT_CENTER_DIST	170
+	}
 
-	IconSrcPos	srcPos[] =
+	//	レベル種類アイコン用
+	namespace
 	{
-		{ 384, 128 },	//	attack
-		{ 384, 384 },	//	magicAttack
-		{ 384, 256 },	//	difense
-		{ 256, 384 },	//	magicDifense
-		{ 128, 384 }	//	speed
-	};
+	#define	ICON_START_DIST	400
+	#define	ICON_SCALE	70
+	#define	ICON_SPACE	100
+	#define	ICON_BIG_SCALE	90
+	#define	BIG_SRC_SIZE	128
+	}
+
+	//	レベルアイコン用
+	namespace
+	{
+	#define	LEVEL_ICON_DIST	50
+	#define	LEVEL_ICON_SCALE	45
+	#define	SRC_SIZE		64
+	}
+
+	//	数値UI用
+	namespace
+	{
+	#define	EXP_UI_CENTER_DIST	100
+	#define	EXP_UI_DIST	150
+	#define	EXP_UI_WIDTH	100
+	#define	EXP_UI_HEIGHT	50
+	#define	NEED_EXP_CENTER_DIST	175
+	}
+
+	//	現在レベルアイコン用
+	namespace
+	{
+	#define	CUR_LEVEL_CENTER_DIST		70
+	#define	CUR_LEVEL_DIST	250
+	#define	CUR_LEVEL_SIZE		150
+	}
+
+	//	その他
+	#define	INTERPOLATION_SPEED	0.1f
+
+	//	経験値情報
+	namespace 
+	{
+		const int NEXT_EXP[] =
+		{
+			50, 100, 150, 200, 250, 300, 350,
+		};
+	}
+
+	//	構造体
+	namespace
+	{
+		struct IconSrcPos
+		{
+			int sx;
+			int sy;
+		};
+
+		IconSrcPos	srcPos[] =
+		{
+			{ 384, 128 },	//	attack
+			{ 384, 384 },	//	magicAttack
+			{ 384, 256 },	//	difense
+			{ 256, 384 },	//	magicDifense
+			{ 128, 384 }	//	speed
+		};
+	}
 }
 
 //---------------------------------------------------------------------------------------

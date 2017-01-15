@@ -30,9 +30,21 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameParam::GameParam( void )
+	GameParam::GameParam( void ) : playerName( nullptr )
 	{
+		playerName = new PlayerName();
 		InitializeGame();
+
+	}
+
+	//	デストラクタ
+	GameParam::~GameParam( void )
+	{
+		if ( playerName != nullptr )
+		{
+			delete	playerName;
+			playerName = nullptr;
+		}
 	}
 
 	//	サーバー初期化
@@ -75,6 +87,7 @@ GameParam*	gameParam = nullptr;
 	//	ゲームリセット
 	void	GameParam::ReleaseGame( void )
 	{
+		playerName->Initialize();
 		itemManager->Release();
 		playerManager->Release();
 		gameManager->Release();
@@ -303,7 +316,12 @@ GameParam*	gameParam = nullptr;
 
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
-		strcpy( playerInfo[client].name, signUp->name );
+		playerName->SetName( client, signUp->name );
+		strcpy( playerInfo[client].name, playerName->GetName( client ) );
+
+		//	称号保存
+		playerInfo[client].frontTitle = signUp->frontTitle;
+		playerInfo[client].backTitle = signUp->backTitle;
 
 		//	IDを返信
 		signUp->id = client;
@@ -392,7 +410,10 @@ GameParam*	gameParam = nullptr;
 		levelManager->SendAllStatus( client );
 
 		//	サインアップ情報を設定
-		SignUp		signUp( client, playerInfo[client].name );
+		SignUp		signUp( client, 
+			playerName->GetNameIndex( client ),
+			playerInfo[client].frontTitle, 
+			playerInfo[client].backTitle );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -406,7 +427,7 @@ GameParam*	gameParam = nullptr;
 		{
 			if ( playerInfo[p].active == false ) continue;
 			signUp.id = p;
-			strcpy( signUp.name, playerInfo[p].name );
+			memcpy( signUp.name, playerName->GetNameIndex( p ), sizeof( playerName->GetNameIndex( p ) ) );
 			send( client, ( char* )&signUp, sizeof( signUp ) );
 		}
 		printf( "%dP %sさんが参加しました。\n", client + 1, signUp.name );

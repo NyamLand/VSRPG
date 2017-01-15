@@ -46,9 +46,11 @@ namespace SCENE
 	{
 		bool	active;
 		char	name[17];
+		char frontTitle;
+		char backTitle;
 		PlayerInfo( void ){};
-		PlayerInfo( bool active, const LPSTR& name );
-		void Set( bool active, const LPSTR& name );
+		PlayerInfo( bool active, const LPSTR& name, char frontTitle, char backTitle );
+		void Set( bool active, const LPSTR& name, char frontTitle, char backTitle );
 	};
 
 	//	プレイヤーパラメータ
@@ -141,10 +143,12 @@ namespace SCENE
 	{
 		char	com = COMMANDS::SIGN_UP;
 		int		id;
-		char	name[17];
+		int		name[4];
+		char		frontTitle;
+		char		backTitle;
 		SignUp( void ){}
-		SignUp( int id, const LPSTR& name );
-		void Set( int id, const LPSTR& name );
+		SignUp( int id, int* name, char frontTitle, char backTitle );
+		void Set( int id, int* name, char frontTitle, char backTitle );
 	};
 
 	//	脱退情報

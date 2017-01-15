@@ -247,6 +247,15 @@
     <ClCompile Include="source\Stage.cpp">
       <Filter>Source\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="source\PlayerName.cpp">
+      <Filter>Source\PlayerName</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerTitleUI.cpp">
+      <Filter>Source\UI\PlayerTitleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WaitLoad.cpp">
+      <Filter>Source\Scene\sceneLoad\WaitLoad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -458,6 +467,15 @@
     </ClInclude>
     <ClInclude Include="source\Stage.h">
       <Filter>Source\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerName.h">
+      <Filter>Source\PlayerName</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerTitleUI.h">
+      <Filter>Source\UI\PlayerTitleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WaitLoad.h">
+      <Filter>Source\Scene\sceneLoad\WaitLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -709,6 +727,15 @@
     </Filter>
     <Filter Include="Source\Stage">
       <UniqueIdentifier>{cd8c2e98-900d-4808-a4c2-990c0900a82b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PlayerName">
+      <UniqueIdentifier>{878176d3-805d-4227-809a-e4d8e741ecb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\PlayerTitleUI">
+      <UniqueIdentifier>{b2b43c57-0851-4874-81b5-0c721befc321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneLoad\WaitLoad">
+      <UniqueIdentifier>{dc24fd0b-6ac1-47f8-af36-71e31402b02c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
