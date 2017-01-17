@@ -200,9 +200,9 @@
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			if ( i != 0 )
-				nameUI[i]->SetPos( NAME_UI_POS_X, NAME_INIT_HEIGHT + NAME_POS_SPACE * order[i - 1] );
+				nameUI[i]->SetPos( NAME_UI_POS_X, NAME_INIT_HEIGHT + NAME_POS_SPACE * ( i - 1 ) );
 			
-			nameUI[order[i]]->Update( gameParam->GetPlayerName( order[i] )->GetNameIndex( order[i] ) );
+			nameUI[i]->Update( gameParam->GetPlayerName( order[i] )->GetNameIndex( order[i] ) );
 		}
 	}
 
@@ -212,10 +212,10 @@
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			if ( i != 0 )
-				playerTitleUI[order[i]]->SetPos( 
+				playerTitleUI[i]->SetPos( 
 					TITLE_UI_POS_X, 
-					TITLE_INIT_HEIGHT + TITLE_POS_SPACE * order[i - 1] );
-			playerTitleUI[order[i]]->SetTitle( 
+					TITLE_INIT_HEIGHT + TITLE_POS_SPACE * ( i - 1 ) );
+			playerTitleUI[i]->SetTitle( 
 				gameParam->GetPlayerInfo( order[i] ).frontTitle,
 				gameParam->GetPlayerInfo( order[i] ).backTitle );
 		}

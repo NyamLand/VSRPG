@@ -26,10 +26,10 @@
 	{
 		bool	active;
 		char	name[17];
-		char frontTitle, backTitle;
+		int frontTitle, backTitle;
 		PlayerInfo( void ){};
-		PlayerInfo( bool active, const LPSTR& name, char frontTitle, char backTitle );
-		void Set( bool active, const LPSTR& name, char frontTitle, char backTitle );
+		PlayerInfo( bool active, const LPSTR& name, int frontTitle, int backTitle );
+		void Set( bool active, const LPSTR& name, int frontTitle, int backTitle );
 	};
 
 	//	プレイヤーパラメータ
@@ -136,11 +136,11 @@
 		char	com = COMMANDS::SIGN_UP;
 		int		id;
 		int	name[4];
-		char frontTitle;
-		char backTitle;
+		int frontTitle;
+		int backTitle;
 		SignUp( void ){}
-		SignUp( int id, int* name, char frontTitle, char backTitle );
-		void Set( int id, int* name, char frontTitle, char backTitle );
+		SignUp( int id, int* name, int frontTitle, int backTitle );
+		void Set( int id, int* name, int frontTitle, int backTitle );
 	};
 
 	//	脱退情報
