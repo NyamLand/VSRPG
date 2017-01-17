@@ -89,7 +89,7 @@ public:
 	MatchingInfo&	GetMatchingInfo( int id ){ return	matchingInfo[id]; }
 	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
-	PlayerName*&	GetPlayerName( int id ){ return playerName; }
+	PlayerName*&	GetPlayerName( void ){ return playerName; }
 };
 
 extern	GameParam*	gameParam;

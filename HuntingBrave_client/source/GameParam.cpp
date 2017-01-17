@@ -405,7 +405,8 @@ GameParam*	gameParam = nullptr;
 	{
 		SignUp*	signUp = ( SignUp* )data;
 		playerName->SetName( signUp->id, signUp->name );
-		SetPlayerInfo( signUp->id, playerName->GetName( signUp->id ), signUp->frontTitle, signUp->backTitle );
+		LPSTR name = playerName->GetName( signUp->id );
+		SetPlayerInfo( signUp->id, name, signUp->frontTitle, signUp->backTitle );
 		sound->PlaySE( SE::JOIN );
 	}
 

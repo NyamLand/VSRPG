@@ -189,7 +189,7 @@ void	sceneMain::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 	
 	//	©•ª‚Ì–¼‘O
-	LPSTR name = gameParam->GetPlayerName( id )->GetName( id );
+	LPSTR name = gameParam->GetPlayerName()->GetName( id );
 	nameManager->SetNameIndex( id, name );
 
 	//	©•ª‚ÌÀ•W
