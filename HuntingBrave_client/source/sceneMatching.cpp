@@ -167,8 +167,6 @@ bool	sceneMatching::threadState;
 				}
 			}
 		case MATCHING_MODE::WAIT:
-			//gameParam->Update();
-
 			//	待機画面更新
 			gameWait->Update();
 			break;
@@ -177,7 +175,7 @@ bool	sceneMatching::threadState;
 		screen->Update();
 
 		//	シーン切り替え
-		if ( gameManager->GetChangeSceneFrag() )
+		if ( threadState )
 		{
 			gameManager->ChangeScene( nextScene );
 		}

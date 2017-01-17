@@ -408,6 +408,10 @@ GameParam*	gameParam = nullptr;
 	{
 		Matching*	matching = ( Matching* )data;
 		SetMatchingInfo( matching->id, matching->isComplete );
+		if ( matching->isComplete == false )
+		{
+			int a = 0;
+		}
 	}
 
 	//	サインアップ情報受信

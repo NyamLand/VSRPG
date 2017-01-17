@@ -117,7 +117,7 @@
 	Matching::Matching( int id, bool isComplete )
 	{
 		this->id = id;
-		this->isComplete;
+		this->isComplete = isComplete;
 	}
 
 //----------------------------------------------------------------------------------------------
