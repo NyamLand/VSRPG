@@ -4,6 +4,7 @@
 #include	"system/system.h"
 #include	<fstream>
 #include	<iostream>
+#include	<thread>
 #include	<process.h>
 #include	<vector>
 #include	"PlayerManager.h"
@@ -44,6 +45,8 @@ namespace
 		};
 	}
 }
+
+bool	sceneMatching::threadState;
 
 //*****************************************************************************************************************************
 //
@@ -98,6 +101,8 @@ namespace
 
 		//	画面演出初期化
 		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
+
+		threadState = false;
 		return true;
 	}
 
@@ -147,6 +152,7 @@ namespace
 				itemSelect->Initialize( id );
 				gameWait->Initialize( id );
 				step = MATCHING_MODE::ITEM_SELECT;
+				_beginthread( ThreadFunc, 0, NULL );
 			}
 			break;
 
@@ -161,16 +167,17 @@ namespace
 				}
 			}
 		case MATCHING_MODE::WAIT:
-				//	サーバーから情報受信
-				gameParam->Update();
+			//gameParam->Update();
 
-				//	待機画面更新
-				gameWait->Update();
+			//	待機画面更新
+			gameWait->Update();
 			break;
 		}
 
+		screen->Update();
+
 		//	シーン切り替え
-		if ( screen->Update() )
+		if ( gameManager->GetChangeSceneFrag() )
 		{
 			gameManager->ChangeScene( nextScene );
 		}
@@ -261,7 +268,20 @@ void	sceneMatching::MyInfoRender( void )
 }
 
 
+void	sceneMatching::ThreadFunc( void* ptr )
+{
+	for (;;)
+	{
+		//	サーバーから情報受信
+		gameParam->Update();
 
+		//	thread終了
+		if ( gameManager->GetChangeSceneFrag() )	break;
+	}
+
+	threadState = true;
+	_endthread();
+}
 
 
 
