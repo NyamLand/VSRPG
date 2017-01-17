@@ -120,7 +120,6 @@ namespace
 	//	全体更新
 	void	sceneMatching::Update( void )
 	{
-
 		//	テスト
 		switch ( step )
 		{
@@ -253,12 +252,12 @@ void	sceneMatching::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 
 	//	自分の名前
-	LPSTR name = gameParam->GetPlayerName( id )->GetName( id );
+	LPSTR name = gameParam->GetPlayerName()->GetName( id );
 
 	//	表示
 	char	str[256];
 	//sprintf_s(str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z);
-	IEX_DrawText(str, 20, 50, 500, 500, 0xFFFFFF00);
+	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 
 

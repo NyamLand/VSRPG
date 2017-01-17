@@ -157,7 +157,11 @@ GameManager*	gameManager = nullptr;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( !gameParam->GetPlayerActive( p ) )	continue;
-			ret = matchingInfo[p].isComplete;
+			else
+			{
+				ret = matchingInfo[p].isComplete;
+				if ( !ret ) 	break;
+			}
 		}
 
 		return	ret;

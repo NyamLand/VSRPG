@@ -122,16 +122,17 @@ namespace
 		//	サーバーからの情報を反映
 		SetPlayerParam( playerParam );
 		
-		//	テクスチャ設定
-		ChangeTexture( id );
-		
 		//	更新
 		BaseChara::Update();
+		
+
 	}
 
 	//	描画
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
+		//	テクスチャ設定
+		ChangeTexture( id );
 		BaseChara::Render();	
 	}
 

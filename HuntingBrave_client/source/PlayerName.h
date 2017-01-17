@@ -27,7 +27,7 @@ public:
 	void	Initialize( void );
 
 	//	“®ìŠÖ”
-	char*	SrcCharFromIndex( int* nameIndex );
+	char*	SrcCharFromIndex( int id, int* nameIndex );
 	void		SetName( int id, int* nameIndex );
 
 	//	î•ñæ“¾

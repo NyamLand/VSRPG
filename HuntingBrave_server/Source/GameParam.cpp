@@ -216,10 +216,10 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendMatchingInfo( int client, int player )
 	{
 		//	情報設定
-		Matching	matching( player, gameManager->GetMatchingInfo( player ).isComplete );
+		Matching	matching( client, gameManager->GetMatchingInfo( client ).isComplete );
 
 		//	送信
-		send( client, ( char* )&matching, sizeof( matching ) );
+		send( player, ( char* )&matching, sizeof( matching ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -317,7 +317,8 @@ GameParam*	gameParam = nullptr;
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
 		playerName->SetName( client, signUp->name );
-		strcpy( playerInfo[client].name, playerName->GetName( client ) );
+		char*	name = playerName->GetName( client );
+		strcpy( playerInfo[client].name, name );
 
 		//	称号保存
 		playerInfo[client].frontTitle = signUp->frontTitle;
@@ -363,7 +364,7 @@ GameParam*	gameParam = nullptr;
 		{
 			//	アクティブでないプレイヤーはとばす
 			if ( playerInfo[p].active == false ) continue;
-			SendMatchingInfo( client, p );
+			SendMatchingInfo( /*受信したプレイヤー情報*/client, /*送信したい他のプレイヤー*/p );
 		}
 
 		return	-1;
@@ -399,12 +400,19 @@ GameParam*	gameParam = nullptr;
 		SetPlayer( client, playerInfo[client].name );
 
 		//	初期情報送信
-		PlayerParam	initParam = gameManager->GetInitInfo( client );
-		SendCharaData	sendCharaData( client,
-			AttackInfo::NO_ATTACK,
-			initParam.pos, initParam.angle, initParam.motion,
-			lifeInfo[client].life );
-		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+		{
+			//	初期情報取得
+			PlayerParam		initParam = gameManager->GetInitInfo( client );
+
+			//	初期情報設定
+			SendCharaData	sendCharaData( client,
+				AttackInfo::NO_ATTACK,
+				initParam.pos, initParam.angle, initParam.motion,
+				lifeInfo[client].life );
+
+			//	初期情報送信
+			send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+		}
 
 		//	初期パラメータ送信
 		levelManager->SendAllStatus( client );
@@ -427,7 +435,14 @@ GameParam*	gameParam = nullptr;
 		{
 			if ( playerInfo[p].active == false ) continue;
 			signUp.id = p;
-			memcpy( signUp.name, playerName->GetNameIndex( p ), sizeof( playerName->GetNameIndex( p ) ) );
+			signUp.frontTitle = playerInfo[p].frontTitle;
+			signUp.backTitle = playerInfo[p].backTitle;
+
+			//	名前インデックスコピー
+			for ( int i = 0; i < 4; i++ )
+			{
+				signUp.name[i] = playerName->GetNameIndex( p )[i];
+			}
 			send( client, ( char* )&signUp, sizeof( signUp ) );
 		}
 		printf( "%dP %sさんが参加しました。\n", client + 1, signUp.name );

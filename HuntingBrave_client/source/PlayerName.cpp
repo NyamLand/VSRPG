@@ -57,11 +57,12 @@ namespace
 //--------------------------------------------------------------------------------------
 
 	//	インデックスから文字を検索して連結
-	char*	PlayerName::SrcCharFromIndex( int* nameIndex )
+	char*	PlayerName::SrcCharFromIndex( int id, int* nameIndex )
 	{
 		char	out[17] = "";
 		for ( int i = 0; i < 4; i++ )
 		{
+			nameInfo[id].nameIndex[i] = nameIndex[i];
 			strcat( out, nameChar[nameIndex[i]] );
 		}
 
@@ -71,7 +72,7 @@ namespace
 	//	名前設定
 	void		PlayerName::SetName( int id, int* nameIndex )
 	{
-		char*	name = SrcCharFromIndex( nameIndex );
+		char*	name = SrcCharFromIndex( id, nameIndex );
 		strcpy( nameInfo[id].name, name );
 
 		for ( int i = 0; i < 4; i++ )
@@ -80,7 +81,7 @@ namespace
 		}
 	}
 
-//--------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------xx---------------
 //	情報取得
 //--------------------------------------------------------------------------------------
 
