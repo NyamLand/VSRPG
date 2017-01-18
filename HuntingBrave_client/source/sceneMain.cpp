@@ -6,6 +6,7 @@
 #include	<vector>
 #include	<thread>
 #include	<map>
+#include	<process.h>
 #include	"GlobalFunction.h"
 #include	"Image.h"
 #include	"DrawShape.h"
@@ -30,6 +31,8 @@
 //	グローバル変数
 //
 //*****************************************************************************************************************************
+
+bool	sceneMain::threadState;
 
 //*****************************************************************************************************************************
 //
@@ -78,6 +81,8 @@ bool	sceneMain::Initialize( void )
 	//	送信
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
+	_beginthread( ThreadFunction, 0, nullptr );
+	threadState = false;
 	return true;
 }
 
@@ -101,10 +106,6 @@ void	sceneMain::Update( void )
 {
 	//	経過時間取得
 	float elapseTime = GetElapseTime();
-
-	//	送受信
-	std::thread		ThreadFunc( ThreadFunction );
-	ThreadFunc.join();
 
 	//	GameManager更新
 	gameManager->Update();
@@ -131,8 +132,12 @@ void	sceneMain::Update( void )
 	//	collision
 	collision->AllCollision();
 
+	//	送信
+	gameParam->Send();
+
 	//	シーン切り替え
-	gameManager->ChangeScene( SCENE::RESULT );
+	if ( threadState )
+		gameManager->ChangeScene( SCENE::RESULT );
 }
 
 //*****************************************************************************************************************************
@@ -207,10 +212,18 @@ void	sceneMain::MyInfoRender( void )
 }
 
 //	受信送信
-void	sceneMain::ThreadFunction( void )
+void	sceneMain::ThreadFunction( void* ptr )
 {
 	//	サーバーから情報受信
-	gameParam->Update();
+	for (;;)
+	{
+		gameParam->Receive();
+
+		if ( gameManager->GetChangeSceneFrag() )	break;
+	}
+
+	threadState = true;
+	_endthread();
 }
 
 

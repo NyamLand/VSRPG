@@ -23,6 +23,7 @@ private:
 	NameInput*	nameInput;
 	ItemSelect*	itemSelect;
 	GameWait*	gameWait;
+	static	bool	threadState;
 
 public:
 	~sceneMatching( void );
@@ -38,6 +39,9 @@ public:
 	void	CheckComplete( void );
 	void	DebugRender( void );
 	void	MyInfoRender( void );
+
+	//	thread
+	static	void	ThreadFunc( void* ptr );
 };
 
 

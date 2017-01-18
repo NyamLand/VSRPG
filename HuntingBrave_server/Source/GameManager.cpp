@@ -191,6 +191,12 @@ GameManager*	gameManager = nullptr;
 		gameState = state;
 	}
 
+	//	マッチング情報設定
+	void	GameManager::SetMatchingInfo( int id, bool state )
+	{
+		matchingInfo[id].isComplete = state;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------

@@ -124,8 +124,6 @@ namespace
 		
 		//	XV
 		BaseChara::Update();
-		
-
 	}
 
 	//	•`‰æ

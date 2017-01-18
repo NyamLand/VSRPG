@@ -57,6 +57,7 @@ public:
 
 	//	î•ñİ’è
 	void	SetGameState( bool state );
+	void	SetMatchingInfo( int id, bool state );
 
 	//	î•ñæ“¾
 	Timer*&	GetTimer( void );
