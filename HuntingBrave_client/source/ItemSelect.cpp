@@ -135,7 +135,7 @@ namespace
 			MoveCursor();
 
 			//	Œˆ’è
-			if ( KEY( KEY_TYPE::B ) == 3 )	dicisionState = Dicision();
+			if ( KEY( KEY_TYPE::A ) == 3 )	dicisionState = Dicision();
 		}
 
 		return	dicisionState;

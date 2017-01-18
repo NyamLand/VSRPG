@@ -40,6 +40,7 @@ public:
 	//	データ更新（送受信）
 	void Update( void );
 	void Receive( void );
+	void	Send( void );
 
 	//	送信処理
 	void	SendPlayerInfo( void );

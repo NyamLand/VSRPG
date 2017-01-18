@@ -129,6 +129,16 @@ GameParam*	gameParam = nullptr;
 //	データ送受信
 //----------------------------------------------------------------------------------------------
 
+	//	データ送信
+	void	GameParam::Send( void )
+	{
+		//	キャラクター情報送信
+		SendPlayerInfo();
+
+		//	入力情報送信
+		SendInputInfo();
+	}
+
 	//	データ受信
 	void	GameParam::Receive( void )
 	{
@@ -398,6 +408,10 @@ GameParam*	gameParam = nullptr;
 	{
 		Matching*	matching = ( Matching* )data;
 		SetMatchingInfo( matching->id, matching->isComplete );
+		if ( matching->isComplete == false )
+		{
+			int a = 0;
+		}
 	}
 
 	//	サインアップ情報受信

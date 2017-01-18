@@ -358,7 +358,7 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveMatching( int client, const LPSTR& data )
 	{
 		Matching*	matching = ( Matching* )data;
-		gameManager->GetMatchingInfo( client ).isComplete = matching->isComplete;
+		gameManager->SetMatchingInfo( client, matching->isComplete );
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
