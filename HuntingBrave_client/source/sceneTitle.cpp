@@ -42,8 +42,6 @@ namespace
 	}
 }
 
-std::vector<std::vector<string>>		vec;
-
 //-----------------------------------------------------------------------------------
 //	初期化・解放
 //-----------------------------------------------------------------------------------
@@ -76,15 +74,6 @@ std::vector<std::vector<string>>		vec;
 		fstream		fstr( "DATA/player_data.csv" );
 		reader = new CSVReader( fstr, DEFAULT_SEPARATOR, DEFAULT_QUOTE_CHARACTER );
 
-		int index = 0;
-		while ( 1 ) 
-		{
-			vec.resize( index + 1 );
-			reader->Read( vec[index] );
-			if( vec[index].size() == 0	)	break;
-			index++;
-		}
-		int a = 0;
 		return	true;
 	}
 
@@ -104,6 +93,9 @@ std::vector<std::vector<string>>		vec;
 	//	更新
 	void	sceneTitle::Update( void )
 	{
+		circleGage += 0.01f;
+		if ( circleGage >= PI )	circleGage = -PI;
+
 		switch ( step )
 		{
 		case TITLE_STEP::FADE_IN:
@@ -134,17 +126,9 @@ std::vector<std::vector<string>>		vec;
 		mainView->Clear();
 
 		//	bg描画
-		static	const LPSTR	technique[] =
-		{
-			"copy",
-			"blackWhite",
-			"negaPosi"
-		};
-
-		static int tec = random->GetInt( 0, 2 );
 		bg->Render( 0, 0, 
 			iexSystem::ScreenWidth, iexSystem::ScreenHeight, 
-			0, 0, 1280, 720, shader2D, technique[tec] );
+			0, 0, 1280, 720 );
 
 		//	スクリーン制御
 		screen->Render();

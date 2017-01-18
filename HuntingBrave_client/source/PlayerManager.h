@@ -9,16 +9,42 @@
 
 //	include
 #include	"Singleton.h"
+#include	"Suppin.h"
+#include	"Fighter.h"
+#include	"Magician.h"
 #include	"Player.h"
+
+
+namespace
+{
+	namespace PLAYER_TYPE
+	{
+		enum
+		{
+			NORMAL,
+			FIGHTER,		//	ファイター
+			MAGICIAN,	//	マジシャン
+			KNIGHT,		//	ナイト
+			PRIEST,		//	プリースト
+			ASSASSIN,	//	アサシン
+			MODEL_MAX
+		};
+	}
+}
 
 //	class
 class PlayerManager : public Singleton<PlayerManager>
 {
 	friend class Singleton<PlayerManager>;
+public:
+
 
 private:
+	//	元モデル
+	iex3DObj*	obj[PLAYER_TYPE::MODEL_MAX];
+
 	//	パラメータ
-	Player*	player[PLAYER_MAX];
+	std::vector<Player*>	playerList;
 
 	//	初期化・解放
 	PlayerManager( void );
@@ -33,6 +59,10 @@ public:
 	void	Update( void );
 	void	Render( void );
 	void	RenderHp( void );
+
+	//	動作関数
+	void	ClassChange( int id, char nextClass );
+	
 	//	情報設定
 	void	SetPlayer( int id );
 

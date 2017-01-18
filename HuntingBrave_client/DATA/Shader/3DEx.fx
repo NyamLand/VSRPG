@@ -65,13 +65,14 @@ VS_OUTPUT VS_Basic( VS_INPUT In )
 float4 PS_Basic( VS_OUTPUT In) : COLOR
 {   
 	float4	OUT;
+
 	//	ピクセル色決定
 	OUT = In.Color * tex2D( DecaleSamp, In.Tex );
 
 	return OUT;
 }
 
-//	ランバート拡散照明
+#include	"colorChange.fx"
 
 //------------------------------------------------------
 //		通常描画テクニック

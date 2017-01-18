@@ -2,6 +2,9 @@
 #include	"iextreme.h"
 #include	"system/Framework.h"
 #include	<thread>
+#include	"GlobalFunction.h"
+#include	"Random.h"
+#include	"Camera.h"
 #include	"GameData.h"
 #include	"GameManager.h"
 #include	"PlayerManager.h"
@@ -35,31 +38,28 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameParam::GameParam( void ) : myIndex( -1 ), inputAcceptance( true )
+	GameParam::GameParam( void ) : playerName( nullptr ),
+		myIndex( -1 ), inputAcceptance( true )
 	{
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &playerParam[id], sizeof( PlayerStatus ) );
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
 
-		//	関数ポインタ
-		ReceiveFunction[RECEIVE_COMMAND::GAME_INFO] = &GameParam::ReceiveGameInfo;
-		ReceiveFunction[RECEIVE_COMMAND::POINT_INFO] = &GameParam::ReceivePointInfo;
-		ReceiveFunction[RECEIVE_COMMAND::CHARA_INFO] = &GameParam::ReceiveCharaInfo;
-		ReceiveFunction[RECEIVE_COMMAND::MAGIC_INFO] = &GameParam::ReceiveMagicInfo;
-		ReceiveFunction[RECEIVE_COMMAND::MAGIC_APPEND] = &GameParam::ReceiveMagicAppendInfo;
-		ReceiveFunction[RECEIVE_COMMAND::MAGIC_ERASE] = &GameParam::ReceiveMagicEraseInfo;
-		ReceiveFunction[RECEIVE_COMMAND::LEVEL_INFO] = &GameParam::ReceiveLevelInfo;
-		ReceiveFunction[RECEIVE_COMMAND::EXP_INFO] = &GameParam::ReceiveExpInfo;
+		//	プレイヤー名初期化
+		playerName = new PlayerName();
+		playerName->Initialize();
 	}
 
 	//	デストラクタ
 	GameParam::~GameParam( void )
 	{
+		SafeDelete( playerName );
 		CloseClient();
 	}
 
@@ -74,12 +74,14 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
+		ZeroMemory( &playerStatus, sizeof( PlayerStatus ) );
+
 
 		return	true;
 	}
 	
 	//	クライアント初期化
-	bool	GameParam::InitializeClient( char* addr, int nPort, char* name )
+	bool	GameParam::InitializeClient( char* addr, int nPort, int* name )
 	{
 		//	初期化
 		Initialize();
@@ -88,7 +90,9 @@ GameParam*	gameParam = nullptr;
 		InitializeUDP( nPort, addr );
 
 		//	タイプと名前の送信
-		SignUp signUp( -1, name );
+		char frontTitle = ( char )random->GetInt( 0, 19 );
+		char backTitle = ( char )random->GetInt( 0, 9 );
+		SignUp signUp( -1, name, frontTitle, backTitle );
 		send( ( char* )&signUp, sizeof( signUp ) );
 
 		//	個人ID取得
@@ -105,6 +109,11 @@ GameParam*	gameParam = nullptr;
 		SetPlayerParam( myIndex, 
 			receiveCharaData.pos, receiveCharaData.angle, 
 			receiveCharaData.motion, receiveCharaData.life );
+
+		//	初期パラメータ受信
+		ReceiveAllStatusData	receiveAllStatus;
+		if ( receive( ( LPSTR )&receiveAllStatus, sizeof( receiveAllStatus ) ) <= 0 )	return	false;
+		levelManager->CulcAllStatus( receiveAllStatus );
 		return true;
 	}
 
@@ -119,6 +128,16 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 //	データ送受信
 //----------------------------------------------------------------------------------------------
+
+	//	データ送信
+	void	GameParam::Send( void )
+	{
+		//	キャラクター情報送信
+		SendPlayerInfo();
+
+		//	入力情報送信
+		SendInputInfo();
+	}
 
 	//	データ受信
 	void	GameParam::Receive( void )
@@ -169,6 +188,14 @@ GameParam*	gameParam = nullptr;
 				ReceiveExpInfo( data );
 				break;
 
+			case RECEIVE_COMMAND::CLASS_CHANGE_INFO:
+				ReceiveClassChangeInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::STATUS_INFO:
+				ReceiveStatusInfo( data );
+				break;
+
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;
@@ -212,18 +239,19 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendPlayerInfo( void )
 	{
 		//	スティック入力情報取得
-		float axisX = 0.0f, axisY = 0.0f;
+		float axisX, axisY;
+		axisX = axisY = 0.0f;
 		inputManager->GetStickInputLeft( axisX, axisY );
 
 		//	フレーム情報取得
-		int	frame = 0;
-		if ( playerManager->GetPlayer( myIndex ) != nullptr )
-		{
-			frame = playerManager->GetPlayer( myIndex )->GetFrame();
-		}
+		int frame = playerManager->GetPlayer( myIndex )->GetFrame();
+
+		//	カメラ方向設定
+		Vector3	vEye( mainView->GetTarget() - mainView->GetPos() );
+		float	cameraAngle = atan2f( vEye.x, vEye.z );
 
 		//	送信
-		SendPlayerData	sendPlayerData( axisX, axisY, frame  );
+		SendPlayerData	sendPlayerData( axisX, axisY, cameraAngle, frame );
 		send( ( LPSTR )&sendPlayerData, sizeof( sendPlayerData ) );
 	}
 
@@ -249,20 +277,19 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendInputInfo( void )
 	{
 		//	回避ボタン入力
-		char	keyA = ( char )KEY( KEY_TYPE::A );
+		CheckInputData( KEY_TYPE::A );
 
 		//	剣攻撃ボタン入力
-		char	keyB = ( char )KEY( KEY_TYPE::B );
+		CheckInputData( KEY_TYPE::B );
 		
 		//	魔法攻撃ボタン入力
-		char	keyX = ( char )KEY( KEY_TYPE::X );
+		CheckInputData( KEY_TYPE::X );
 
 		//	Yボタン入力
-		char	keyY = ( char )KEY( KEY_TYPE::Y );
+		CheckInputData( KEY_TYPE::Y );
 
-		//	送信
-		SendInputData		sendInputData( keyA, keyB, keyX, keyY );
-		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
+		//	メニューボタン入力
+		CheckInputData( KEY_TYPE::START );
 	}
 
 	//	討伐情報送信
@@ -359,6 +386,19 @@ GameParam*	gameParam = nullptr;
 		levelManager->SetExp( receiveExpdata->exp );
 	}
 
+	//	クラスチェンジ情報受信
+	void	GameParam::ReceiveClassChangeInfo( const LPSTR& data )
+	{
+		ReceiveClassChangeData* receiveData = ( ReceiveClassChangeData* )data;
+		playerManager->ClassChange( receiveData->id, receiveData->nextClass );
+	}
+
+	//	ステータス受信
+	void	GameParam::ReceiveStatusInfo( const LPSTR& data )
+	{
+		levelManager->CulcStatus( data );
+	}
+
 //----------------------------------------------------------------------------------------------
 //	ログイン関連受信
 //----------------------------------------------------------------------------------------------
@@ -368,13 +408,19 @@ GameParam*	gameParam = nullptr;
 	{
 		Matching*	matching = ( Matching* )data;
 		SetMatchingInfo( matching->id, matching->isComplete );
+		if ( matching->isComplete == false )
+		{
+			int a = 0;
+		}
 	}
 
 	//	サインアップ情報受信
 	void	GameParam::ReceiveSignUpInfo( const LPSTR& data )
 	{
 		SignUp*	signUp = ( SignUp* )data;
-		SetPlayerInfo( signUp->id, signUp->name );
+		playerName->SetName( signUp->id, signUp->name );
+		LPSTR name = playerName->GetName( signUp->id );
+		SetPlayerInfo( signUp->id, name, signUp->frontTitle, signUp->backTitle );
 		sound->PlaySE( SE::JOIN );
 	}
 
@@ -406,14 +452,32 @@ GameParam*	gameParam = nullptr;
 	}
 
 //----------------------------------------------------------------------------------------------
+//	動作関数
+//----------------------------------------------------------------------------------------------
+
+	//	キー情報チェック
+	void	GameParam::CheckInputData( char keyType )
+	{
+		char keyState = ( char )KEY( keyType );
+		if ( keyState == KEY_STATE::STAY || 
+			keyState == KEY_STATE::NO_INPUT )	return;
+
+		//	送信
+		SendInputData	sendInputData( keyType, keyState );
+		send( ( LPSTR )&sendInputData, sizeof( sendInputData ) );
+	}
+
+//----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
 	//	プレイヤー情報設定
-	void	GameParam::SetPlayerInfo( int id, char* name )
+	void	GameParam::SetPlayerInfo( int id, char* name, char frontTitle, char backTitle )
 	{
 		playerInfo[id].active = true;
 		strcpy( playerInfo[id].name, name );
+		playerInfo[id].frontTitle = frontTitle;
+		playerInfo[id].backTitle = backTitle;
 	}
 
 	//	点数情報設定

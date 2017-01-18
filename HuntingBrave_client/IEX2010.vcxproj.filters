@@ -50,7 +50,7 @@
       <Filter>IEX</Filter>
     </ClCompile>
     <ClCompile Include="source\system\WinMain.cpp">
-      <Filter>Source\SYSTEM</Filter>
+      <Filter>Source\Timer\SYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="source\BaseChara.cpp">
       <Filter>Source\BaseChara</Filter>
@@ -70,17 +70,14 @@
     <ClCompile Include="source\PlayerManager.cpp">
       <Filter>Source\Manager\PlayerManager</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player.cpp">
-      <Filter>Source\Player</Filter>
-    </ClCompile>
     <ClCompile Include="source\Status.cpp">
       <Filter>Source\Status</Filter>
     </ClCompile>
     <ClCompile Include="source\system\Framework.cpp">
-      <Filter>Source\SYSTEM\Framework</Filter>
+      <Filter>Source\Timer\SYSTEM\Framework</Filter>
     </ClCompile>
     <ClCompile Include="source\system\System.cpp">
-      <Filter>Source\SYSTEM\System</Filter>
+      <Filter>Source\Timer\SYSTEM\System</Filter>
     </ClCompile>
     <ClCompile Include="source\BaseEquipment.cpp">
       <Filter>Source\Equipment\BaseEquipment</Filter>
@@ -172,9 +169,6 @@
     <ClCompile Include="source\NetState.cpp">
       <Filter>Source\NetState</Filter>
     </ClCompile>
-    <ClCompile Include="source\Effect.cpp">
-      <Filter>Source\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="source\ScoreBoardUI.cpp">
       <Filter>Source\UI\ScoreBoard</Filter>
     </ClCompile>
@@ -214,11 +208,53 @@
     <ClCompile Include="source\Font.cpp">
       <Filter>Source\Font</Filter>
     </ClCompile>
+    <ClCompile Include="source\NumberUI.cpp">
+      <Filter>Source\UI\NumberUI</Filter>
+    </ClCompile>
     <ClCompile Include="source\UpGradeUI.cpp">
       <Filter>Source\UI\UpGradeUI</Filter>
     </ClCompile>
     <ClCompile Include="source\sceneLoad.cpp">
       <Filter>Source\Scene\sceneLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EffectManager.cpp">
+      <Filter>Source\Manager\EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Effect.cpp">
+      <Filter>Source\Effect\BaseEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LightSphereEffect.cpp">
+      <Filter>Source\Effect\LightSphereEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>Source\Player\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Suppin.cpp">
+      <Filter>Source\Player\Suppin</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fighter.cpp">
+      <Filter>Source\Player\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Magician.cpp">
+      <Filter>Source\Player\Magician</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Timer.cpp">
+      <Filter>Source\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ItemManager.cpp">
+      <Filter>Source\Manager\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Stage.cpp">
+      <Filter>Source\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerName.cpp">
+      <Filter>Source\PlayerName</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerTitleUI.cpp">
+      <Filter>Source\UI\PlayerTitleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WaitLoad.cpp">
+      <Filter>Source\Scene\sceneLoad\WaitLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,20 +276,17 @@
     <ClInclude Include="source\PlayerManager.h">
       <Filter>Source\Manager\PlayerManager</Filter>
     </ClInclude>
-    <ClInclude Include="source\Player.h">
-      <Filter>Source\Player</Filter>
-    </ClInclude>
     <ClInclude Include="source\Status.h">
       <Filter>Source\Status</Filter>
     </ClInclude>
     <ClInclude Include="source\system\Framework.h">
-      <Filter>Source\SYSTEM\Framework</Filter>
+      <Filter>Source\Timer\SYSTEM\Framework</Filter>
     </ClInclude>
     <ClInclude Include="source\system\System.h">
-      <Filter>Source\SYSTEM\System</Filter>
+      <Filter>Source\Timer\SYSTEM\System</Filter>
     </ClInclude>
     <ClInclude Include="source\system\Scene.h">
-      <Filter>Source\SYSTEM\Scene</Filter>
+      <Filter>Source\Timer\SYSTEM\Scene</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneMain.h">
       <Filter>Source\Scene\sceneMain</Filter>
@@ -357,9 +390,6 @@
     <ClInclude Include="source\NetState.h">
       <Filter>Source\NetState</Filter>
     </ClInclude>
-    <ClInclude Include="source\Effect.h">
-      <Filter>Source\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="source\ScoreBoardUI.h">
       <Filter>Source\UI\ScoreBoard</Filter>
     </ClInclude>
@@ -399,11 +429,53 @@
     <ClInclude Include="source\Font.h">
       <Filter>Source\Font</Filter>
     </ClInclude>
+    <ClInclude Include="source\NumberUI.h">
+      <Filter>Source\UI\NumberUI</Filter>
+    </ClInclude>
     <ClInclude Include="source\UpGradeUI.h">
       <Filter>Source\UI\UpGradeUI</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneLoad.h">
       <Filter>Source\Scene\sceneLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EffectManager.h">
+      <Filter>Source\Manager\EffectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effect.h">
+      <Filter>Source\Effect\BaseEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LightSphereEffect.h">
+      <Filter>Source\Effect\LightSphereEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>Source\Player\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Suppin.h">
+      <Filter>Source\Player\Suppin</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fighter.h">
+      <Filter>Source\Player\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Magician.h">
+      <Filter>Source\Player\Magician</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Timer.h">
+      <Filter>Source\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ItemManager.h">
+      <Filter>Source\Manager\ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stage.h">
+      <Filter>Source\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerName.h">
+      <Filter>Source\PlayerName</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerTitleUI.h">
+      <Filter>Source\UI\PlayerTitleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WaitLoad.h">
+      <Filter>Source\Scene\sceneLoad\WaitLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -436,18 +508,6 @@
     </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{840fd280-9f4b-48d9-96f1-9bf53ec3d2c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\SYSTEM">
-      <UniqueIdentifier>{328e3617-650c-4c9b-b829-e38566478169}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\SYSTEM\Framework">
-      <UniqueIdentifier>{8315e0c5-9963-4f16-86c1-24527c70122d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\SYSTEM\System">
-      <UniqueIdentifier>{ced84632-0908-4540-971d-2443acd91156}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\SYSTEM\Scene">
-      <UniqueIdentifier>{3632b4e4-aca5-4f58-8711-f15e77b476d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Equipment">
       <UniqueIdentifier>{6706e893-914f-4187-95e2-1bc3874d7019}</UniqueIdentifier>
@@ -614,23 +674,69 @@
     <Filter Include="Source\Font">
       <UniqueIdentifier>{17f11c64-ab66-469a-863e-033fc04e1472}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\UI\NumberUI">
+      <UniqueIdentifier>{a4f17874-75fc-406c-8529-1285a7eb19e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\shader2D">
+      <UniqueIdentifier>{d58c73c9-9693-43a9-ad06-9dee79bcb3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\shader3D">
+      <UniqueIdentifier>{bbb1566f-7c2a-4058-bb7a-d799b96dc850}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\UI\UpGradeUI">
-      <UniqueIdentifier>{8911ce1e-a39f-4b93-a093-ffa15b77c27e}</UniqueIdentifier>
+      <UniqueIdentifier>{983e0813-75cc-4b61-bc2e-26622f568049}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\2DShader">
-      <UniqueIdentifier>{3002b0f1-e6a7-4df2-ae5d-41b842585aa9}</UniqueIdentifier>
+    <Filter Include="Source\Manager\EffectManager">
+      <UniqueIdentifier>{4190cef5-3752-4c1c-8567-d4cd04231207}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\3DShader">
-      <UniqueIdentifier>{2ab630bf-f7a3-4104-af82-41d7aa3f790a}</UniqueIdentifier>
+    <Filter Include="Source\Effect\BaseEffect">
+      <UniqueIdentifier>{cf958fd1-9fef-413c-8d93-17330bf2db98}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="DATA\Shader\NegaPosi.fx">
-      <Filter>Shader\2DShader</Filter>
-    </FxCompile>
-    <FxCompile Include="DATA\Shader\BlackWhite.fx">
-      <Filter>Shader\2DShader</Filter>
-    </FxCompile>
+    <Filter Include="Source\Effect\LightSphereEffect">
+      <UniqueIdentifier>{7a56858e-23e6-4a94-a950-cd18a53405d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Suppin">
+      <UniqueIdentifier>{d0a3e358-844f-4bd4-8e49-17944714b8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Player">
+      <UniqueIdentifier>{d702ce97-0fba-4944-a6e2-d94e58f2d584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Fighter">
+      <UniqueIdentifier>{f40cc6ae-c7da-4619-a610-b659684d1a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Magician">
+      <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Timer">
+      <UniqueIdentifier>{98a372dc-ee41-4e49-827b-fc212fb975bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\ItemManager">
+      <UniqueIdentifier>{aa088781-77bb-41a6-8c19-883ca4ca0980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Timer\SYSTEM">
+      <UniqueIdentifier>{328e3617-650c-4c9b-b829-e38566478169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Timer\SYSTEM\Framework">
+      <UniqueIdentifier>{8315e0c5-9963-4f16-86c1-24527c70122d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Timer\SYSTEM\System">
+      <UniqueIdentifier>{ced84632-0908-4540-971d-2443acd91156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Timer\SYSTEM\Scene">
+      <UniqueIdentifier>{3632b4e4-aca5-4f58-8711-f15e77b476d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Stage">
+      <UniqueIdentifier>{cd8c2e98-900d-4808-a4c2-990c0900a82b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PlayerName">
+      <UniqueIdentifier>{878176d3-805d-4227-809a-e4d8e741ecb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\PlayerTitleUI">
+      <UniqueIdentifier>{b2b43c57-0851-4874-81b5-0c721befc321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneLoad\WaitLoad">
+      <UniqueIdentifier>{dc24fd0b-6ac1-47f8-af36-71e31402b02c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">
@@ -641,5 +747,19 @@
     <CustomBuild Include="DATA\Shader\3DEx.fx">
       <Filter>Shader</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DATA\Shader\BlackWhite.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\NegaPosi.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\colorChange.fx">
+      <Filter>Shader\shader3D</Filter>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\CircleGage.fx">
+      <Filter>Shader\shader2D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

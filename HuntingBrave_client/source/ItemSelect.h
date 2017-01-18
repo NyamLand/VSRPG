@@ -8,18 +8,31 @@
 //***************************************************************
 
 //	include
+#include	"ItemManager.h"
 #include	"Image.h"
 
 //	class
 class ItemSelect
 {
 private:
+	//	構造体
+	struct ItemIcon
+	{
+		bool checkState;
+		Image*		itemImage;
+	};
+
+private:
+	//	パラメータ
 	int	posX, posY;
-	int	select1, select2, before;
+	int	select, before;
+	int	itemPos;
 	float	percentage;
 	float	percentage1;
 	float	percentage2;
-	Image*		itemImage[4];
+	ItemIcon		itemIcon[ITEM_TYPE::TYPE_MAX];
+	Image*			checkImage[ITEM_TYPE::TYPE_MAX];
+	char				selectItem[ITEM_POS::ITEM_MAX];
 
 public:
 	//	初期化・開放
@@ -28,9 +41,12 @@ public:
 	bool	Initialize( int id );
 
 	//	更新・描画
-	void	Update( void );
+	bool	Update( void );
 	void	Render( void );
-	
-	//	動作関数
 
+	//	動作関数
+	bool	OpenItem( void );
+	void	MoveCursor( void );
+	bool	MoveInterpolation( void );
+	bool	Dicision( void );
 };

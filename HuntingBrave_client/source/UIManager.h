@@ -12,6 +12,7 @@
 #include	"Singleton.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	<vector>
 #include	"NumberUI.h"
 #include	"TimerUI.h"
 #include	"HpUI.h"
@@ -42,6 +43,9 @@ private:
 	ScoreUI*		scoreUI;
 	ScoreBoardUI*	boardUI;
 	UpGradeUI*	upGradeUI;
+
+	//	ÉvÉåÉCÉÑÅ[î‘çÜ
+	int				p_num;
 
 	//	neta
 	Image*			yaju;

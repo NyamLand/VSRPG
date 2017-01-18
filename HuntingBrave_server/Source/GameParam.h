@@ -11,6 +11,7 @@
 #include	"GameData.h"
 #include	"CharaInfo.h"
 #include	"ShapeInfo.h"
+#include	"PlayerName.h"
 #include	"UDPServer.h"
 
 //	class
@@ -19,15 +20,19 @@ class GameParam : public UDPServer
 private:
 	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	PlayerStatus	playerStatus[PLAYER_MAX];
 	AttackInfo	attackInfo[PLAYER_MAX];
 	LifeInfo			lifeInfo[PLAYER_MAX];
+	PlayerName*	playerName;
 
 public:
 	//	初期化・解放
 	GameParam( void );
+	~GameParam( void );
 	bool InitializeServer( void );
 	void	InitializePlayer( int id );
 	void	InitializeGame( void );
+	void	ReleaseGame( void );
 
 	//	データ送受信
 	int Receive( char scene );
@@ -44,6 +49,7 @@ public:
 	int	ReceiveInput( int client, const LPSTR& data );
 	int	ReceiveHuntInfo( int client, const LPSTR& data );
 	int	ReceiveLevelInfo( int client, const LPSTR& data );
+	int	ReceiveItemInfo( int client, const LPSTR& data );
 
 	//	ログイン関連受信
 	int	ReceiveSignUp( int client, const LPSTR& data );
@@ -62,6 +68,7 @@ public:
 	//	情報取得
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }
 	PlayerParam&	GetPlayerParam( int id ){ return playerParam[id]; }
+	PlayerStatus&	GetPlayerStatus( int id ){ return playerStatus[id]; }
 	AttackInfo&		GetAttackInfo( int id ){ return attackInfo[id]; }
 	LifeInfo&			GetLifeInfo( int id ){ return	lifeInfo[id]; }
 };

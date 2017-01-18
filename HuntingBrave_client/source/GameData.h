@@ -26,9 +26,10 @@
 	{
 		bool	active;
 		char	name[17];
+		int frontTitle, backTitle;
 		PlayerInfo( void ){};
-		PlayerInfo( bool active, const LPSTR& name );
-		void Set( bool active, const LPSTR& name );
+		PlayerInfo( bool active, const LPSTR& name, int frontTitle, int backTitle );
+		void Set( bool active, const LPSTR& name, int frontTitle, int backTitle );
 	};
 
 	//	プレイヤーパラメータ
@@ -42,6 +43,25 @@
 		PlayerParam( void ){};
 		PlayerParam( const Vector3& pos, float angle, int motion, int frame, int life );
 		void Set( const Vector3& pos, float angle, int motion, int frame, int life );
+	};
+
+	//	プレイヤーステータス
+	struct PlayerStatus
+	{
+		//	parameter
+		int power;
+		int defense;
+		int magicPower;
+		int magicDefense;
+		float speed;
+
+		//	計算
+		void	Initialize( int power, int defense, int magicPower, int magicDefense, float speed );
+		void	CulcPower( int power );
+		void	CulcDefense( int defense );
+		void	CulcMagicPower( int power );
+		void	CulcMagicDefense( int defense );
+		void	DoubleSpeed( float param );
 	};
 
 	//	点数、順位情報
@@ -115,10 +135,12 @@
 	{
 		char	com = COMMANDS::SIGN_UP;
 		int		id;
-		char	name[17];
+		int	name[4];
+		int frontTitle;
+		int backTitle;
 		SignUp( void ){}
-		SignUp( int id, const LPSTR& name );
-		void Set( int id, const LPSTR& name );
+		SignUp( int id, int* name, int frontTitle, int backTitle );
+		void Set( int id, int* name, int frontTitle, int backTitle );
 	};
 
 	//	脱退情報

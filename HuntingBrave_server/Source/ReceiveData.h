@@ -20,6 +20,7 @@
 				INPUT_INFO,
 				LEVEL_INFO,
 				HUNT_INFO,
+				ITEM_INFO,
 				COMMAND_MAX
 			};
 		}
@@ -34,6 +35,7 @@
 	{
 		char		com = RECEIVE_COMMAND::PLAYER_INFO;
 		float		axisX, axisY;
+		float		cameraAngle;
 		int		frame;
 	};
 
@@ -51,11 +53,8 @@
 	struct ReceiveInputData
 	{
 		char		com = RECEIVE_COMMAND::INPUT_INFO;
-		char		keyA;
-		char		keyB;
-		char		keyX;
-		char		keyY;
-		//	5byte
+		char		key;
+		char		keyState;
 	};
 
 	//	ÉåÉxÉãèÓïÒ

@@ -1,10 +1,12 @@
 
 #include	"iextreme.h"
 #include	<vector>
+#include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
+
 #include	"Collision.h"
 
 //****************************************************************************************
@@ -26,15 +28,20 @@ Collision*	collision = nullptr;
 //--------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Collision::Collision( GameParam* gameParam ) : gameParam( gameParam )
+	Collision::Collision( GameParam* gameParam ) : 
+		gameParam( gameParam ), collisionMesh( nullptr )
 	{
-		
+		collisionMesh = new iexRayMesh( "DATA/STAGE/collision.IMO" );
 	}
 
 	//	デストラクタ
 	Collision::~Collision( void )
 	{
-
+		if ( collisionMesh != nullptr )
+		{
+			delete	collisionMesh;
+			collisionMesh = nullptr;
+		}
 	}
 
 //--------------------------------------------------------------------------------------------
@@ -113,7 +120,7 @@ Collision*	collision = nullptr;
 		if ( isHit == true )
 		{
 			//	ライフ計算
-			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -attackInfo.power );
+			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( 1 );
 			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
 			else playerManager->GetPlayer( target )->SetDeath();
 		}
@@ -148,7 +155,7 @@ Collision*	collision = nullptr;
 			if ( isHit == true )
 			{
 				//	ライフ計算
-				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -gameParam->GetAttackInfo( player ).power );
+				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -gameParam->GetPlayerStatus( player ).power );
 				if ( isAlive )playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
 				else playerManager->GetPlayer( player )->SetDeath();
 			}
@@ -250,29 +257,74 @@ Collision*	collision = nullptr;
 	}
 
 //--------------------------------------------------------------------------------------------
-//	材質判定
+//	ステージモデルとの当たり判定
 //--------------------------------------------------------------------------------------------
 
-	//	現在立っている位置の材質取得( テクスチャの番号 )
-	int		Collision::GetMaterial( iexMesh* obj, const Vector3& pos )
+	//	壁判定
+	bool	Collision::CheckWall( Vector3& pos, Vector3& move, float dist )
 	{
-		Vector3	out;
-		float	d = 50.0f;
-		Vector3	p = pos + Vector3( 0.0f, 2.0f, 0.0f );
-		Vector3	v = Vector3( 0.0f, -1.0f, 0.0f );
+		const	float	DIST = 2.0f;	//	壁との距離
 
-		//	更新
-		obj->Update();
-		int index = obj->RayPick( &out, &p, &v, &d );
-		if ( index == -1 )	return	-1;
+		Vector3	givePos = pos;
+		Vector3	giveVec( move.x, 0.0f, move.z );
+		giveVec.Normalize();
+		Vector3	takePos;
+		
+		if ( collisionMesh->RayPick( &takePos, &givePos, &giveVec, &dist ) != -1 )
+		{
+			float	disToWall = Vector3( Vector3( takePos.x, 0.0f, takePos.z ) - Vector3( pos.x, 0.0f, pos.z ) ).Length();
+			if ( disToWall <= DIST )
+			{
+				//	移動量
+				float	moveAmo = Vector3( move.x, 0.0f, move.z ).Length();
+				
+				//	プレイヤーからレイの交差点へのベクトル
+				Vector3	vPtoWall( takePos - pos );
+				vPtoWall.y = 0.0f;	vPtoWall.Normalize();
+				giveVec.y = 0.0f;	giveVec.Normalize();
+				
+				//	法線の上方向を求める
+				Vector3	crossUp;
+				Vector3Cross( crossUp, giveVec, vPtoWall );
+				crossUp.Normalize();
+				
+				//	法線の上方向と法線の外積から滑る方向を計算
+				Vector3	crossSide;
+				Vector3Cross( crossSide, crossUp, giveVec );
+				crossSide.Normalize();
+				
+				//	法線とプレーヤーからレイの交差点へのベクトルの内積
+				float	dotNP( Vector3Dot( giveVec, vPtoWall ) );
+				
+				//	移動量の調整
+				move.x = crossSide.x * moveAmo * ( dotNP + 1.0f );
+				move.z = crossSide.z * moveAmo * ( dotNP + 1.0f );
 
-		DWORD*	pAttr;
-		obj->GetMesh()->LockAttributeBuffer( D3DLOCK_READONLY, &pAttr );
+				return	true;
+			}
+		}
 
-		DWORD	mat = pAttr[index];
-		obj->GetMesh()->UnlockAttributeBuffer();
+		return	false;
+	}
 
-		return	mat;
+	//	床判定
+	bool	Collision::CheckDown( Vector3& pos, Vector3& move )
+	{
+		Vector3	givePos( pos.x, pos.y + 1.5f, pos.z );
+		Vector3	giveVec( 0.0f, -1.0f, 0.0f );
+		Vector3	takePos;
+		float	giveDist( 100.0f );
+
+		if ( collisionMesh->RayPick( &takePos, &givePos, &giveVec, &giveDist ) != -1 )
+		{
+			if ( pos.y <= takePos.y ) 
+			{
+				pos.y = takePos.y;
+				move.y = 0.0f;
+				return	true;
+			}
+		}
+		return	false;
 	}
 
 //--------------------------------------------------------------------------------------------

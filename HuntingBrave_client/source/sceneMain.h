@@ -5,11 +5,14 @@
 //*****************************************************************************************************************************
 
 //	class‘O•ûéŒ¾
+#include	"Stage.h"
 
 //	class
 class	sceneMain : public Scene
 {
 private:
+	Stage*	stage;
+	static	bool	threadState;
 
 public:
 	~sceneMain( void );
@@ -22,7 +25,7 @@ public:
 	//	“®ìŠÖ”
 	void	DebugRender( void );
 	void	MyInfoRender( void );
-	static		void	ThreadFunction( void );
+	static void	ThreadFunction( void* ptr );
 };
 
 

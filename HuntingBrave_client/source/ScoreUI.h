@@ -7,6 +7,9 @@
 //
 //***************************************************************
 
+#define	SCORE_DIGIT 4
+
+
 namespace SCORE_MAX
 {
 	enum
@@ -21,9 +24,7 @@ class ScoreUI
 {
 private:
 	Image* icon;
-	Image* number[DIGIT_MAX];
-	int numbox[DIGIT_MAX];
-	int	score, score_digit;
+	NumberUI*	number;
 	int	posx, posy, size;
 
 public:
@@ -36,6 +37,7 @@ public:
 	void	ScoreManager(void);
 	void	SetParam(int x, int y, int w, int h);
 	void	SetRenderFlag(bool c);
+	void	SetScore(int s);
 	void	NumberSet(Image* img, const int num, const int digit);
 	void	Render(void);
 };

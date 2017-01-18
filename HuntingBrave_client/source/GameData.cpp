@@ -17,17 +17,21 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PlayerInfo::PlayerInfo( bool active, const LPSTR& name )
+	PlayerInfo::PlayerInfo( bool active, const LPSTR& name, int frontTitle, int backTitle )
 	{
 		this->active = active;
 		strcpy( this->name, name );
+		this->frontTitle = frontTitle;
+		this->backTitle = backTitle;
 	}
 
 	//	情報設定
-	void	PlayerInfo::Set( bool active, const LPSTR& name )
+	void	PlayerInfo::Set( bool active, const LPSTR& name, int frontTitle, int backTitle )
 	{
 		this->active = active;
 		strcpy( this->name, name );
+		this->frontTitle = frontTitle;
+		this->backTitle = backTitle;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -51,6 +55,55 @@
 	}
 
 //----------------------------------------------------------------------------------------------
+//	PlayerStatus構造体
+//----------------------------------------------------------------------------------------------	
+
+	//	初期化
+	void	PlayerStatus::Initialize( int power, int defense, int magicPower, int magicDefense, float speed )
+	{
+		this->power = power;
+		this->defense = defense;
+		this->magicPower = magicPower;
+		this->magicDefense = magicDefense;
+		this->speed = speed;
+	}
+
+	//	攻撃力設定
+	void	PlayerStatus::CulcPower( int power )
+	{
+		this->power = power;
+		if ( this->power <= 0 )	this->power = 0;
+	}
+
+	//	防御力設定
+	void	PlayerStatus::CulcDefense( int defense )
+	{
+		this->defense = defense;
+		if ( this->defense <= 0 )	this->defense = 0;
+	}
+
+	//	魔法攻撃力設定
+	void	PlayerStatus::CulcMagicPower( int power )
+	{
+		this->magicPower = power;
+		if ( this->magicPower <= 0 )	this->magicPower = 0;
+	}
+
+	//	魔法攻撃力設定
+	void	PlayerStatus::CulcMagicDefense( int defense )
+	{
+		this->magicDefense = defense;
+		if ( this->magicDefense <= 0 )	this->magicDefense = 0;
+	}
+
+	//	スピード設定
+	void	PlayerStatus::DoubleSpeed( float param )
+	{
+		speed = param;
+		if ( speed <= 0.0f )		speed = 0.0f;
+	}
+
+//----------------------------------------------------------------------------------------------
 //	Matching構造体
 //----------------------------------------------------------------------------------------------
 
@@ -64,7 +117,7 @@
 	Matching::Matching( int id, bool isComplete )
 	{
 		this->id = id;
-		this->isComplete;
+		this->isComplete = isComplete;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -72,17 +125,28 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	SignUp::SignUp( int id, const LPSTR& name )
+	SignUp::SignUp( int id, int* name, int frontTitle, int backTitle )
 	{
 		this->id = id;
-		strcpy( this->name, name );
+		this->frontTitle = frontTitle;
+		this->backTitle = backTitle;
+		
+		for ( int i = 0; i < 4; i++ )
+		{
+			this->name[i] = name[i];
+		}
 	}
 
 	//	情報設定
-	void	SignUp::Set( int id, const LPSTR& name )
+	void	SignUp::Set( int id, int* name, int frontTitle, int backTitle )
 	{
 		this->id = id;
-		strcpy( this->name, name );
+		this->frontTitle = frontTitle;
+		this->backTitle = backTitle;
+		for ( int i = 0; i < 4; i++ )
+		{
+			this->name[i] = name[i];
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

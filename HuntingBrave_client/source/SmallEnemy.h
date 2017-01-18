@@ -14,6 +14,7 @@
 class SmallEnemy : public Enemy
 {
 private:
+	int texType;
 
 	//	モード別関数ポインタ
 	void( SmallEnemy::*ModeFunction[MODE_MAX] )( void );
@@ -26,6 +27,7 @@ public:
 
 	//	更新
 	void	Update( void )override;
+	void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr )override;
 
 	//	各モード動作関数
 	void	EntryMode( void )override;

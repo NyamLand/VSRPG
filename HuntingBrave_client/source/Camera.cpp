@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"InputManager.h"
 #include	"Camera.h"
 
 //***************************************************************
@@ -141,19 +142,18 @@ Camera* mainView = nullptr;
 	//	‰ñ“]
 	void	Camera::HerfTopViewRotate( void )
 	{
-		////	“ü—ÍŽæ“¾
-		//bool	pushR1 = UIPad[0]->GetR1Button( UIPad::BUTTON_STATE::STAY );
-		//bool	pushL1 = UIPad[0]->GetL1Button( UIPad::BUTTON_STATE::STAY );
+		//	“ü—ÍŽæ“¾
+		float	axisX, axisY;
+		inputManager->GetStickInputRight( axisX, axisY );
 
-		////	‰ñ“]
-		//if ( pushR1 )
-		//{
-		//	rotateAngle -= HERFTOP_VIEW_ROTATE_SPEED;
-		//}
-		//else if ( pushL1 )
-		//{
-		//	rotateAngle += HERFTOP_VIEW_ROTATE_SPEED;
-		//}
+		//	‰ñ“]
+		if ( abs( axisX ) >= MIN_INPUT_STICK )
+		{
+			if ( axisX < 0.0f )
+				rotateAngle -= HERFTOP_VIEW_ROTATE_SPEED;
+			else
+				rotateAngle += HERFTOP_VIEW_ROTATE_SPEED;	
+		}
 	}
 
 	//	U“®

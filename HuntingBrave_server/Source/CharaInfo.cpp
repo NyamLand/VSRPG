@@ -19,7 +19,7 @@
 
 	//	コンストラクタ
 	AttackInfo::AttackInfo( void ) : attackParam( NO_ATTACK ),
-		power( 0 ), step( 0 ),
+		step( 0 ),
 		shapeType( 0 ),
 		vec1( 0.0f, 0.0f, 0.0f ), vec2( 0.0f, 0.0f, 0.0f ),
 		radius( 0.0f )
@@ -75,6 +75,12 @@
 		maxLife = initLife;
 		isAlive = true;
 		active = true;
+	}
+
+	//	ライフ最大値加算
+	void	LifeInfo::AddMaxLife( int param )
+	{
+		maxLife += param;
 	}
 
 //-------------------------------------------------------------------------------------

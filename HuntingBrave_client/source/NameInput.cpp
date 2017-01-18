@@ -193,7 +193,7 @@ namespace
 	//	•¶ŽšŒˆ’è
 	void	NameInput::DecisionCharacter( void )
 	{
-		if ( KEY( KEY_B ) == 3 )
+		if ( KEY( KEY_TYPE::A ) == 3 )
 		{
 			sound->PlaySE( SE::OK );
 			if ( !inputState )
@@ -225,7 +225,7 @@ namespace
 	//	ƒLƒƒƒ“ƒZƒ‹
 	void	NameInput::Cancel( void )
 	{
-		if ( KEY( KEY_A ) == 3 )
+		if ( KEY( KEY_TYPE::B ) == 3 )
 		{
 			if ( nameCursor != 0 )
 			{

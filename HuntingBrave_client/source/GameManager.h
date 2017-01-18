@@ -9,17 +9,39 @@
 
 //	include
 #include	"Singleton.h"
+#include	"CSVReader.h"
 
-namespace SCENE
+
+namespace
 {
-	enum
+	//	シーン
+	namespace SCENE
 	{
-		TITLE,
-		MATCHING,
-		MAIN,
-		RESULT,
-		END
-	};
+		enum
+		{
+			TITLE,
+			MATCHING,
+			MAIN,
+			RESULT,
+			END
+		};
+	}
+
+	//	アップグレードデータ
+	namespace UPGRADE_DATA
+	{
+		enum
+		{
+			NAME,
+			ATTACK,
+			DIFENSE,
+			MAGIC_ATTACK,
+			MAGIC_DIFENSE,
+			HP,
+			SPEED,
+			TEXT
+		};
+	}
 }
 
 //	class
@@ -33,18 +55,20 @@ public:
 	bool	isComplete;		//接続時に準備完了したかどうか
 	char	scene;
 	bool	changeSceneFrag;
-	bool	gameState;
+	bool	gameState; 
+	std::vector<std::vector<string>>		playerData;
+	std::vector<std::vector<string>>		enemyData;
 
 private:
 	//	初期化・解放
 	GameManager( void );
 	~GameManager( void )override;
+	bool	LoadData( void );
 
 public:
 	//	初期化・解放
 	bool	Initialize( void );
 	void	Release( void );
-	void	InitializeClient( void );
 
 	//	更新・描画
 	void	Update( void );
@@ -63,6 +87,10 @@ public:
 	bool		GetChangeSceneFrag( void ){ return	changeSceneFrag; }
 	char		GetNextScene( void ){ return scene; }
 	bool		GetGameState( void ){ return	gameState; }
+
+	//	アップグレードデータ取得
+	int		GetUpGrade( char type, char upGradeData, char level );
+	char*	GetFlavorText( char type, char level );
 };
 
 #define	gameManager ( GameManager::GetInstance() )

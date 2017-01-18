@@ -9,6 +9,7 @@
 
 //	include
 #include	"NameUI.h"
+#include	"PlayerTitleUI.h"
 #include	"GameData.h"
 
 //	class
@@ -19,7 +20,8 @@ private:
 	iex3DObj*	obj[PLAYER_MAX];
 	iex2DObj*	targetTex[PLAYER_MAX];
 	iexView*	view;
-	NameUI*	nameUI;
+	NameUI*	nameUI[PLAYER_MAX];
+	PlayerTitleUI*	playerTitleUI[PLAYER_MAX];
 
 	//	バックバッファ
 	Surface*	backBuffer;
@@ -33,19 +35,25 @@ public:
 	//	初期化・解放
 	GameWait( void );
 	~GameWait( void );
-	void	Initialize( int index, int* name );
+	void	Initialize( int index );
 	void	ObjInitialize( int index );
 	void	ViewInitialize( int index );
 	void	TextureInitialize( int index );
+	void	NameUIInitialize( int index );
+	void	PlayerTitleUIInitialize( int index );
 
 	//	更新
 	void	Update( void );
 	void	UpdateInfo( void );
+	void	UpdateName( void );
+	void	UpdatePlayerTitle( void );
 
 	//	描画
 	void	Render( void );
 	void	MyCharacterRender( void );
 	void	OtherPlayerRender( int index );
+	void	NameUIRender( void );
+	void	PlayerTitleUIRender( void );
 	void	VSRender( void );
 
 };

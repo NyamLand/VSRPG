@@ -117,12 +117,14 @@
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\CSVReader.cpp" />
     <ClCompile Include="source\Effect.cpp" />
+    <ClCompile Include="source\EffectManager.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\BaseEquipment.cpp" />
     <ClCompile Include="source\EnemyHp.cpp" />
     <ClCompile Include="source\EnemyManager.cpp" />
     <ClCompile Include="source\Equipments.cpp" />
     <ClCompile Include="source\ExpUI.cpp" />
+    <ClCompile Include="source\Fighter.cpp" />
     <ClCompile Include="source\Font.cpp" />
     <ClCompile Include="source\GameData.cpp" />
     <ClCompile Include="source\GameParam.cpp" />
@@ -130,18 +132,24 @@
     <ClCompile Include="source\HpUI.cpp" />
     <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
+    <ClCompile Include="source\ItemManager.cpp" />
     <ClCompile Include="source\ItemSelect.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
     <ClCompile Include="source\LevelManager.cpp" />
+    <ClCompile Include="source\LightSphereEffect.cpp" />
     <ClCompile Include="source\Magic.cpp" />
+    <ClCompile Include="source\Magician.cpp" />
     <ClCompile Include="source\MagicManager.cpp" />
     <ClCompile Include="source\MapUI.cpp" />
     <ClCompile Include="source\NameInput.cpp" />
     <ClCompile Include="source\NameManager.cpp" />
     <ClCompile Include="source\NameUI.cpp" />
     <ClCompile Include="source\NetState.cpp" />
+    <ClCompile Include="source\NumberUI.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerManager.cpp" />
+    <ClCompile Include="source\PlayerName.cpp" />
+    <ClCompile Include="source\PlayerTitleUI.cpp" />
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\sceneLoad.cpp" />
     <ClCompile Include="source\sceneMatching.cpp" />
@@ -161,7 +169,9 @@
     <ClCompile Include="source\SmallEnemy.cpp" />
     <ClCompile Include="source\SocketClient.cpp" />
     <ClCompile Include="source\Sound.cpp" />
+    <ClCompile Include="source\Stage.cpp" />
     <ClCompile Include="source\Status.cpp" />
+    <ClCompile Include="source\Suppin.cpp" />
     <ClCompile Include="source\system\Framework.cpp" />
     <ClCompile Include="source\system\System.cpp" />
     <ClCompile Include="source\system\WinMain.cpp" />
@@ -181,9 +191,11 @@
     <ClCompile Include="IEX\IEX_System.cpp" />
     <ClCompile Include="IEX\IEX_Texture.cpp" />
     <ClCompile Include="IEX\IEX_View.cpp" />
+    <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\TImerUI.cpp" />
     <ClCompile Include="source\UIManager.cpp" />
     <ClCompile Include="source\UpGradeUI.cpp" />
+    <ClCompile Include="source\WaitLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
@@ -192,12 +204,14 @@
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\CSVReader.h" />
     <ClInclude Include="source\Effect.h" />
+    <ClInclude Include="source\EffectManager.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\BaseEquipment.h" />
     <ClInclude Include="source\EnemyHp.h" />
     <ClInclude Include="source\EnemyManager.h" />
     <ClInclude Include="source\Equipments.h" />
     <ClInclude Include="source\ExpUI.h" />
+    <ClInclude Include="source\Fighter.h" />
     <ClInclude Include="source\Font.h" />
     <ClInclude Include="source\GameData.h" />
     <ClInclude Include="source\GameParam.h" />
@@ -205,18 +219,24 @@
     <ClInclude Include="source\HpUI.h" />
     <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\InputManager.h" />
+    <ClInclude Include="source\ItemManager.h" />
     <ClInclude Include="source\ItemSelect.h" />
     <ClInclude Include="source\ItemUI.h" />
     <ClInclude Include="source\LevelManager.h" />
+    <ClInclude Include="source\LightSphereEffect.h" />
     <ClInclude Include="source\Magic.h" />
+    <ClInclude Include="source\Magician.h" />
     <ClInclude Include="source\MagicManager.h" />
     <ClInclude Include="source\MapUI.h" />
     <ClInclude Include="source\NameInput.h" />
     <ClInclude Include="source\NameManager.h" />
     <ClInclude Include="source\NameUI.h" />
     <ClInclude Include="source\NetState.h" />
+    <ClInclude Include="source\NumberUI.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PlayerManager.h" />
+    <ClInclude Include="source\PlayerName.h" />
+    <ClInclude Include="source\PlayerTitleUI.h" />
     <ClInclude Include="source\Random.h" />
     <ClInclude Include="source\ReceiveData.h" />
     <ClInclude Include="source\sceneLoad.h" />
@@ -238,15 +258,19 @@
     <ClInclude Include="source\SmallEnemy.h" />
     <ClInclude Include="source\SocketClient.h" />
     <ClInclude Include="source\Sound.h" />
+    <ClInclude Include="source\Stage.h" />
     <ClInclude Include="source\Status.h" />
+    <ClInclude Include="source\Suppin.h" />
     <ClInclude Include="source\system\Framework.h" />
     <ClInclude Include="source\system\Scene.h" />
     <ClInclude Include="source\sceneMain.h" />
     <ClInclude Include="source\system\System.h" />
     <ClInclude Include="IEX\iextreme.h" />
+    <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\TimerUI.h" />
     <ClInclude Include="source\UIManager.h" />
     <ClInclude Include="source\UpGradeUI.h" />
+    <ClInclude Include="source\WaitLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx" />
@@ -258,6 +282,12 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="DATA\Shader\BlackWhite.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\CircleGage.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="DATA\Shader\colorChange.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="DATA\Shader\NegaPosi.fx">

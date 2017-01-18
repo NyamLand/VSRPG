@@ -6,6 +6,7 @@
 #include	"GameManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
+#include	"Collision.h"
 #include	"Player.h"
 
 //*****************************************************************************************************************************
@@ -33,7 +34,7 @@
 
 namespace
 {
-	namespace MOTION_FRAME
+	namespace SUPPIN_FRAME
 	{
 		const int SWORDATTACK_HIT_START = 140;
 		const int SWORDATTACK_HIT_END = 150;
@@ -74,6 +75,7 @@ namespace
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
 		ModeFunction[MODE::STEP] = &Player::ModeStep;
+		ModeFunction[MODE::MENU] = &Player::ModeMenu;
 
 		timer = new Timer();
 	}
@@ -162,7 +164,7 @@ namespace
 		//	倒れるモーション時
 		if ( motion == PLAYER_MOTION::FALL )
 		{
-			if ( frame >= MOTION_FRAME::FALL_END )
+			if ( frame >= SUPPIN_FRAME::FALL_END )
 			{ 
 				SetMotion( PLAYER_MOTION::DEAD );
 				timer->Start( DEATH_TIME );
@@ -196,6 +198,16 @@ namespace
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetLifeInfo( index ).active = true;
+		}
+	}
+
+	//	メニューモード
+	void	Player::ModeMenu( void )
+	{
+		if ( inputManager->GetInputState( index, KEY_TYPE::START, KEY_STATE::ENTER ) ||
+			inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
+		{
+			SetMode( MODE::MOVE );
 		}
 	}
 	
@@ -234,8 +246,8 @@ namespace
 	void	Player::SwordAttack( void )
 	{
 		//	フレーム管理
-		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK_HIT_START &&
-			pParam.frame <= MOTION_FRAME::SWORDATTACK_HIT_END )
+		if ( pParam.frame >= SUPPIN_FRAME::SWORDATTACK_HIT_START &&
+			pParam.frame <= SUPPIN_FRAME::SWORDATTACK_HIT_END )
 		{
 			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK1;
 		}
@@ -245,7 +257,7 @@ namespace
 		}
 
 		// 一定以上のフレームに達すると移動に戻す
-		if ( pParam.frame >= MOTION_FRAME::SWORDATTACK1_END )
+		if ( pParam.frame >= SUPPIN_FRAME::SWORDATTACK1_END )
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
@@ -255,14 +267,14 @@ namespace
 	//	魔法攻撃
 	void	Player::MagicAttack( void )
 	{
-		if ( pParam.frame == MOTION_FRAME::MAGICACTIVATION )
+		if ( pParam.frame == SUPPIN_FRAME::MAGICACTIVATION )
 		{
 			magicManager->Append( index, 
 				gameParam->GetAttackInfo( index ).vec1,
 				gameParam->GetAttackInfo( index ).vec2 );
 		}
 
-		if ( pParam.frame >= MOTION_FRAME::MAGICATTACK_END )
+		if ( pParam.frame >= SUPPIN_FRAME::MAGICATTACK_END )
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
@@ -318,7 +330,7 @@ namespace
 		//	押している間詠唱、一定時間経過で発動可能
 		if ( inputManager->GetInputState( index, KEY_TYPE::X, KEY_STATE::STAY ) )
 		{
-			if ( pParam.frame >= MOTION_FRAME::MAGICCHANT_END )
+			if ( pParam.frame >= SUPPIN_FRAME::MAGICCHANT_END )
 			{
 				SetMotion( PLAYER_MOTION::MAGIC_CHANT );
 				gameParam->GetAttackInfo( index ).timer.Start( CHANT_TIME );
@@ -339,7 +351,7 @@ namespace
 		gameParam->GetLifeInfo( index ).active = false;
 		SetMotion( PLAYER_MOTION::KNOCKBACK1 );
 
-		if ( pParam.frame >= MOTION_FRAME::KNOCKBACK1_END )
+		if ( pParam.frame >= SUPPIN_FRAME::KNOCKBACK1_END )
 		{
 			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
@@ -379,11 +391,23 @@ namespace
 				return;
 			}
 		}
+
+		//	メニュー入力受付
+		if ( inputManager->GetInputState( index, KEY_TYPE::START, KEY_STATE::ENTER ) )
+		{
+			if ( SetMode( MODE::MENU ) )
+			{
+				SetMotion( PLAYER_MOTION::MENU );
+				return;
+			}
+		}
 	}
 
 	//	移動値加算
-	void	Player::AddMove( const Vector3& move )
+	void	Player::AddMove( Vector3& move )
 	{
+		collision->CheckWall( pParam.pos, move, 100.0f );
+		collision->CheckDown( pParam.pos, move );
 		pParam.pos += move;
 	}
 
@@ -393,9 +417,18 @@ namespace
 		//	移動方向を求める
 		float	moveAngle = atan2f( targetVec.x, targetVec.z );
 
+		//	カメラの前方方向を求める
+		float	cameraAngle = gameParam->GetPlayerParam( index ).cameraAngle;
+
+		//	入力方向を求める
+		float inputAngle = atan2f( targetVec.x, targetVec.z );
+
+		//	目標の角度を求める
+		float	targetAngle = cameraAngle + inputAngle;
+
 		//	親に投げる
 		AngleAdjustParent(
-			Vector3( sinf( moveAngle ), 0.0f, cosf( moveAngle ) ),
+			Vector3( sinf( targetAngle ), 0.0f, cosf( targetAngle ) ),
 			adjustSpeed );
 	}
 

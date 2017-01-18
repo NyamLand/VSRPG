@@ -18,8 +18,8 @@ namespace
 		enum
 		{
 			ATTACK,
-			DEFENSE,
 			MAGIC_ATTACK,
+			DEFENSE,
 			MAGIC_DEFENSE,
 			SPEED,
 			TYPE_MAX
@@ -55,10 +55,12 @@ public:
 private:
 	LevelInfo	levelInfo;
 
-public:
 	//	初期化・解放
 	LevelManager( void );
 	~LevelManager( void );
+public:
+	//	初期化・解放
+	bool	Initialize( void );
 
 	//	動作関数
 	void	SendLevel( char levelType );
@@ -66,6 +68,16 @@ public:
 	//	情報設定
 	void	SetExp( int exp );
 	void	SetLevelInfo( char levelType, char level );
+
+	//	ステータス設定
+	void	CulcAllStatus( const LPSTR& data );
+	void	CulcAllStatus( const ReceiveAllStatusData& statusData );
+	void	CulcStatus( const LPSTR& data );
+	void	CulcPower( const LPSTR& data );
+	void	CulcDefense( const LPSTR& data );
+	void	CulcMagicAttack( const LPSTR& data );
+	void	CulcMagicDefense( const LPSTR& data );
+	void	CulcSpeed( const LPSTR& data );
 
 	//	情報取得
 	LevelInfo&	GetLevelInfo( void );

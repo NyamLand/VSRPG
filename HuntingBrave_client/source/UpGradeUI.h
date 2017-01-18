@@ -10,6 +10,7 @@
 //	include
 #include	"Image.h"
 #include	"ExpUI.h"
+#include	"Font.h"
 
 //	class
 class UpGradeUI
@@ -20,12 +21,15 @@ private:
 	Image**	levelIcon;
 	Image*		curLevelIcon;
 	ExpUI*		expUI;
+	NeedExpUI*		needExpUI;
+	Font*		flavorText;
 
 	float		percentage;
 	float		percentage2;
 
 	char		select;
 	char		beforeSelect;
+	LPSTR	text;
 
 	int id;
 
@@ -37,9 +41,12 @@ public:
 	//	XVE•`‰æ
 	void	Update( void );
 	void	Render( void );
+	void	LevelIconRender( void );
 
 	//	“®ìŠÖ”
 	void	Dicision( void );
+	void	MoveCursor( void );
+	bool	IconScaling( void );
 
 	//	î•ñİ’è
 	void	SetBigIconSrcPos( void );

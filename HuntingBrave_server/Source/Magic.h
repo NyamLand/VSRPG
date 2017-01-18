@@ -15,6 +15,7 @@ class Magic
 {
 private:
 	Vector3	pos;
+	Vector3	startPos;
 	Vector3	vec;
 	Timer*		timer;
 	float			speed;

@@ -11,6 +11,7 @@
 #include	"GameData.h"
 #include	"CharaInfo.h"
 #include	"SocketClient.h"
+#include	"PlayerName.h"
 
 //	class
 class GameParam : public SocketClient
@@ -22,24 +23,24 @@ private:
 
 	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
+	PlayerStatus	playerStatus;
 	AttackInfo	attackInfo[PLAYER_MAX];
 	PointInfo		pointInfo[PLAYER_MAX];
 	MatchingInfo	matchingInfo[PLAYER_MAX];
-
-	//	関数ポインタ
-	void( GameParam::*ReceiveFunction[RECEIVE_COMMAND::COMMAND_MAX] )( const LPSTR& data );
+	PlayerName*	playerName;
 
 public:
 	//	初期化・解放
 	GameParam( void );
 	~GameParam( void );
 	bool	Initialize( void );
-	bool InitializeClient( char* addr, int nPort, char* name );
+	bool InitializeClient( char* addr, int nPort, int* name );
 	void CloseClient( void );
 
 	//	データ更新（送受信）
 	void Update( void );
 	void Receive( void );
+	void	Send( void );
 
 	//	送信処理
 	void	SendPlayerInfo( void );
@@ -59,6 +60,8 @@ public:
 	void	ReceiveMagicEraseInfo( const LPSTR& data );
 	void	ReceiveLevelInfo( const LPSTR& data );
 	void	ReceiveExpInfo( const LPSTR& data );
+	void	ReceiveClassChangeInfo( const LPSTR& data );
+	void	ReceiveStatusInfo( const LPSTR& data );
 
 	//	ログイン情報受信
 	void	ReceiveSignUpInfo( const LPSTR& data );
@@ -67,12 +70,12 @@ public:
 	void	ReceiveResponse( const LPSTR& data );
 	
 	//	動作関数
-	void CheckInputData( int keyType );
+	void CheckInputData( char keyType );
 
 	//	情報設定
 	void	SetPlayerParam( int id, const PlayerParam& param );
 	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life );
-	void	SetPlayerInfo( int id, char* name );
+	void	SetPlayerInfo( int id, char* name, char frontTItle, char backTitle );
 	void	SetPointInfo( int id, int addPoint );
 	void	SetMatchingInfo( int id, bool isComplete );
 	void	AddPoint( int id, int point );
@@ -81,12 +84,13 @@ public:
 	//	情報取得
 	PlayerParam GetPlayerParam( int id )const{ return playerParam[id]; }
 	PlayerInfo	GetPlayerInfo( int id )const{ return playerInfo[id]; }
+	PlayerStatus&	GetPlayerStatus( void ){ return playerStatus; }
 	AttackInfo&	GetAttackInfo( int id ){ return	attackInfo[id]; }
 	PointInfo&	GetPointInfo( int id ){ return	pointInfo[id]; }
 	MatchingInfo&	GetMatchingInfo( int id ){ return	matchingInfo[id]; }
 	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
-	char*	GetPlayerName( int id ){ return playerInfo[id].name; }
+	PlayerName*&	GetPlayerName( void ){ return playerName; }
 };
 
 extern	GameParam*	gameParam;

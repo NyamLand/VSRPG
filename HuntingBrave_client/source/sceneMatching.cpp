@@ -5,6 +5,9 @@
 #include	<fstream>
 #include	<iostream>
 #include	<thread>
+#include	<process.h>
+#include	<vector>
+#include	"PlayerManager.h"
 #include	"Random.h"
 #include	"GlobalFunction.h"
 #include	"Image.h"
@@ -13,7 +16,6 @@
 #include	"GameManager.h"
 #include	"UIManager.h"
 #include	"Camera.h"
-#include	"PlayerManager.h"
 #include	"Sound.h"
 #include	"Screen.h"
 
@@ -38,10 +40,13 @@ namespace
 		{
 			NAME_INPUT,
 			SIGN_UP,
+			ITEM_SELECT,
 			WAIT
 		};
 	}
 }
+
+bool	sceneMatching::threadState;
 
 //*****************************************************************************************************************************
 //
@@ -77,6 +82,9 @@ namespace
 
 		//	GameParam初期化
 		gameParam = new GameParam();
+
+		//	PlayerManager初期化
+		playerManager->Initialize();
 	
 		//	テキスト読み込み
 		std::ifstream	ifs( "onlineInfo.txt" );
@@ -93,6 +101,8 @@ namespace
 
 		//	画面演出初期化
 		screen->SetScreenMode( SCREEN_MODE::WHITE_IN, 0.01f );
+
+		threadState = false;
 		return true;
 	}
 
@@ -104,7 +114,6 @@ namespace
 		SafeDelete( itemSelect );
 		SafeDelete( gameWait );
 		sound->StopBGM();
-		playerManager->Release();
 	}
 
 //*****************************************************************************************************************************
@@ -124,8 +133,10 @@ namespace
 			if ( !screen->GetScreenState() )	break;
 			
 			//	名前入力
-			if( nameInput->Update() )	step = MATCHING_MODE::SIGN_UP;
-
+			if ( nameInput->Update() )
+			{
+				step = MATCHING_MODE::SIGN_UP;
+			}
 			if ( nameInput->GetCancelState() )
 			{
 				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
@@ -135,37 +146,39 @@ namespace
 
 		case MATCHING_MODE::SIGN_UP:
 			//	クライアント初期化( serverと接続 )
-			if ( gameParam->InitializeClient( addr, 7000, name ) )
+			if ( gameParam->InitializeClient( addr, 7000, nameInput->GetName() ) )
 			{
 				int id = gameParam->GetMyIndex();
 				itemSelect->Initialize( id );
-				gameWait->Initialize( id, nameInput->GetName() );
-				step = MATCHING_MODE::WAIT;
+				gameWait->Initialize( id );
+				step = MATCHING_MODE::ITEM_SELECT;
+				_beginthread( ThreadFunc, 0, NULL );
 			}
 			break;
 
+		case MATCHING_MODE::ITEM_SELECT:
+			{
+				//	アイテム選択更新
+				bool selectOK = itemSelect->Update();
+				if ( selectOK )
+				{
+					gameParam->SendMatching();
+					step = MATCHING_MODE::WAIT;
+				}
+			}
 		case MATCHING_MODE::WAIT:
-			//	サーバーから情報受信
-			gameParam->Update();
-
-			//	GameManager更新
-			gameManager->Update();
-
 			//	待機画面更新
 			gameWait->Update();
-
-			//	アイテム選択更新
-			itemSelect->Update();
-
-			if ( KEY_Get( KEY_ENTER ) == 3 )
-			{
-				gameParam->SendMatching();
-			}
 			break;
 		}
 
+		screen->Update();
+
 		//	シーン切り替え
-		if ( screen->Update() )		gameManager->ChangeScene( nextScene );
+		if ( threadState )
+		{
+			gameManager->ChangeScene( nextScene );
+		}
 	}
 
 //*****************************************************************************************************************************
@@ -190,6 +203,7 @@ namespace
 		case MATCHING_MODE::SIGN_UP:
 			break;
 
+		case MATCHING_MODE::ITEM_SELECT:
 		case MATCHING_MODE::WAIT:
 			gameWait->Render();
 			itemSelect->Render();
@@ -243,17 +257,29 @@ void	sceneMatching::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 
 	//	自分の名前
-	LPSTR name = gameParam->GetPlayerName(id);
+	LPSTR name = gameParam->GetPlayerName()->GetName( id );
 
 	//	表示
 	char	str[256];
 	//sprintf_s(str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )", id + 1, name, pos.x, pos.y, pos.z);
-	IEX_DrawText(str, 20, 50, 500, 500, 0xFFFFFF00);
+	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 
 
+void	sceneMatching::ThreadFunc( void* ptr )
+{
+	for (;;)
+	{
+		//	サーバーから情報受信
+		gameParam->Update();
 
+		//	thread終了
+		if ( gameManager->GetChangeSceneFrag() )	break;
+	}
 
+	threadState = true;
+	_endthread();
+}
 
 
 

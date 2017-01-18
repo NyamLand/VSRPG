@@ -6,6 +6,7 @@
 //*****************************************************************************************************************************
 
 #include	"GameData.h"
+#include	"WaitLoad.h"
 #include	"NameInput.h"
 #include	"ItemSelect.h"
 #include	"GameWait.h"
@@ -22,6 +23,7 @@ private:
 	NameInput*	nameInput;
 	ItemSelect*	itemSelect;
 	GameWait*	gameWait;
+	static	bool	threadState;
 
 public:
 	~sceneMatching( void );
@@ -37,6 +39,9 @@ public:
 	void	CheckComplete( void );
 	void	DebugRender( void );
 	void	MyInfoRender( void );
+
+	//	thread
+	static	void	ThreadFunc( void* ptr );
 };
 
 

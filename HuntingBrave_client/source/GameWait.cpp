@@ -19,18 +19,28 @@
 
 #define	VS_SIZE	100
 
+#define	TITLE_UI_POS_X			1115
+#define	TITLE_INIT_HEIGHT	65
+#define	TITLE_POS_SPACE		240
+
+#define	NAME_UI_POS_X			1115
+#define	NAME_INIT_HEIGHT	175
+#define	NAME_POS_SPACE		240	
+
 //----------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameWait::GameWait( void ) : back( nullptr ), nameUI( nullptr ), view( nullptr ),
+	GameWait::GameWait( void ) : back( nullptr ), view( nullptr ),
 		index( -1 )
 	{
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			obj[i] = nullptr;
 			targetTex[i] = nullptr;
+			nameUI[i] = nullptr;
+			playerTitleUI[i]= nullptr;
 		}
 	}
 
@@ -38,18 +48,19 @@
 	GameWait::~GameWait( void )
 	{
 		SafeDelete( back );
-		SafeDelete( nameUI );
 		SafeDelete( view );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			SafeDelete( targetTex[i] );
 			SafeDelete( obj[i] );
+			SafeDelete( nameUI[i] );
+			SafeDelete( playerTitleUI[i] );
 		}
 	}
 
 	//	初期化
-	void	GameWait::Initialize( int index, int* name )
+	void	GameWait::Initialize( int index )
 	{
 		this->index = index;
 
@@ -58,12 +69,6 @@
 
 		//	バックバッファポインタ退避
 		iexSystem::GetDevice()->GetRenderTarget( 0, &backBuffer );
-
-		//	nameUI設定
-		nameUI = new NameUI();
-		nameUI->Initialize( 
-			iexSystem::ScreenWidth / 4, ( int )( iexSystem::ScreenHeight * 0.89f ), 
-			50, 50, name );
 
 		//	順番設定
 		order[0] = index;
@@ -85,6 +90,12 @@
 
 			//	テクスチャ初期化
 			TextureInitialize( i );
+
+			//	NameUI初期化
+			NameUIInitialize( i );
+
+			//	playerTitleUI初期化
+			PlayerTitleUIInitialize( i );
 		}
 	}
 	
@@ -133,6 +144,29 @@
 		targetTex[index] = new iex2DObj( iexSystem::ScreenWidth, iexSystem::ScreenHeight, IEX2D_RENDERTARGET );
 	}
 
+	//	NameUI初期化
+	void	GameWait::NameUIInitialize( int index )
+	{
+		//	nameUI設定
+		nameUI[index] = new NameUI();
+
+		nameUI[index]->Initialize(
+			iexSystem::ScreenWidth / 4, ( int )( iexSystem::ScreenHeight * 0.89f ),
+			50, 50 );
+	}
+
+	//	PlayerTitleUI初期化
+	void	GameWait::PlayerTitleUIInitialize( int index )
+	{
+		//	playerTitleUI初期化
+		playerTitleUI[index] = new PlayerTitleUI();
+		playerTitleUI[index]->Initialize( 
+			0, 0, 
+			iexSystem::ScreenWidth / 4, 
+			65, 
+			150, 100 );
+	}
+
 //----------------------------------------------------------------------------------
 //	更新
 //----------------------------------------------------------------------------------
@@ -140,8 +174,11 @@
 	//	更新
 	void	GameWait::Update( void )
 	{
-		//	名前位置更新
-		nameUI->Update();
+		//	名前更新
+		UpdateName();
+
+		//	称号更新
+		UpdatePlayerTitle();
 
 		//	モデル情報更新
 		UpdateInfo();
@@ -154,6 +191,34 @@
 		{
 			obj[i]->Update();
 			obj[i]->Animation();
+		}
+	}
+
+	//	名前UI更新
+	void	GameWait::UpdateName( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( i != 0 )
+				nameUI[order[i]]->SetPos( NAME_UI_POS_X, NAME_INIT_HEIGHT + NAME_POS_SPACE * ( i - 1 ) );
+			
+			char*	nameText = gameParam->GetPlayerName()->GetName( order[i] );
+			nameUI[order[i]]->Update( gameParam->GetPlayerName()->GetNameIndex( order[i] ) );
+		}
+	}
+
+	//	プレイヤー称号更新
+	void	GameWait::UpdatePlayerTitle( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( i != 0 )
+				playerTitleUI[order[i]]->SetPos( 
+					TITLE_UI_POS_X, 
+					TITLE_INIT_HEIGHT + TITLE_POS_SPACE * ( i - 1 ) );
+			playerTitleUI[order[i]]->SetTitle( 
+				gameParam->GetPlayerInfo( order[i] ).frontTitle,
+				gameParam->GetPlayerInfo( order[i] ).backTitle );
 		}
 	}
 
@@ -174,8 +239,12 @@
 		}
 
 		//	名前描画
-		nameUI->Render();
+		NameUIRender();
 
+		//	称号描画
+		PlayerTitleUIRender();
+
+		//	VS描画
 		VSRender();
 	}
 
@@ -227,6 +296,7 @@
 		bool active = gameParam->GetPlayerActive( order[index] );
 		if( active )obj[order[index]]->Render();
 		//obj[order[index]]->Render();
+
 		//	フレームバッファへ切り替え
 		iexSystem::GetDevice()->SetRenderTarget( 0, backBuffer );
 		
@@ -246,6 +316,28 @@
 			iexSystem::ScreenHeight / 2 - ( VS_SIZE / 2 ),
 			VS_SIZE, VS_SIZE,
 			650, 480, 325, 240 );
+	}
+
+	//	名前UI描画
+	void	GameWait::NameUIRender( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			bool active = gameParam->GetPlayerActive( order[i] );
+			if ( active )
+				nameUI[order[i]]->Render();
+		}
+	}
+
+	//	プレイヤー称号UI描画
+	void	GameWait::PlayerTitleUIRender( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			bool active = gameParam->GetPlayerActive( order[i] );
+			if ( active )
+				playerTitleUI[order[i]]->Render();
+		}
 	}
 
 

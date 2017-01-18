@@ -46,7 +46,7 @@
 	}
 
 	//	初期化
-	bool	NameUI::Initialize( int x, int y, int w, int h, int* name )
+	bool	NameUI::Initialize( int x, int y, int w, int h )
 	{
 		scale = w;
 		space = w + 10;
@@ -59,6 +59,22 @@
 			nameImage[i]->Initialize( "DATA/UI/main_UI/ward.png", x, y, w, h, 0, 0, SRC_SIZE, SRC_SIZE );
 			
 			//	読み込み位置設定
+			nameImage[i]->sy = 0;
+			nameImage[i]->sx = 0;
+		}
+		return	true;
+	}
+
+//----------------------------------------------------------------------------------
+//	更新・描画
+//----------------------------------------------------------------------------------
+
+	//	更新
+	void	NameUI::Update( int* name )
+	{
+		for ( int i = 0; i < NAME_MAX; i++ ) 
+		{
+			//	読み込み位置設定
 			if ( name[i] == 0 )
 			{
 				nameImage[i]->sy = 0;
@@ -67,7 +83,7 @@
 			else
 			{
 				int sx, sy;
-				if ( name[i] != 0 )
+				if (name[i] != 0)
 				{
 					sy = name[i] / SRC_X_MAX;
 					sx = name[i] % SRC_X_MAX;
@@ -79,19 +95,7 @@
 				nameImage[i]->sy = sy * SRC_SIZE;
 				nameImage[i]->sx = sx * SRC_SIZE;
 			}
-		}
-		return	true;
-	}
 
-//----------------------------------------------------------------------------------
-//	更新・描画
-//----------------------------------------------------------------------------------
-
-	//	更新
-	void	NameUI::Update( void )
-	{
-		for ( int i = 0; i < NAME_MAX; i++ ) 
-		{
 			nameImage[i]->x = ( int )( posX - ( space * 1.5f ) + ( space * i ) );
 			nameImage[i]->y = posY;
 		}

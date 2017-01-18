@@ -6,6 +6,7 @@
 #include	<vector>
 #include	<thread>
 #include	<map>
+#include	<process.h>
 #include	"GlobalFunction.h"
 #include	"Image.h"
 #include	"DrawShape.h"
@@ -19,12 +20,9 @@
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	"NameManager.h"
+#include	"ItemManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
-
-//
-#include	"BaseEquipment.h"
-//
 
 #include	"sceneMain.h"
 
@@ -34,9 +32,7 @@
 //
 //*****************************************************************************************************************************
 
-iexMesh*	stage = nullptr;	//	仮(絶対消す)
-iexMesh*	magic = nullptr;	//	仮(絶対消す)
-BaseEquipment* baseEquipment;	//	仮(絶対消す)
+bool	sceneMain::threadState;
 
 //*****************************************************************************************************************************
 //
@@ -61,6 +57,9 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	stage初期化
+	stage = new Stage();
+
 	//	player初期化
 	playerManager->Initialize();
 
@@ -69,14 +68,6 @@ bool	sceneMain::Initialize( void )
 
 	//	magic初期化
 	magicManager->Initialize();
-	
-	//	stage初期化
-	stage = new iexMesh( "DATA/BG/stage.imo" );
-	stage->SetPos( 0.0f, -5.0f, 0.0f );
-	stage->SetScale( 0.1f );
-	stage->Update();
-
-	baseEquipment = new BaseEquipment("DATA\\player_data.csv");
 
 	//	uiの設定
 	uiManager->Initialize();
@@ -84,9 +75,14 @@ bool	sceneMain::Initialize( void )
 	//	戦闘BGM
 	sound->PlayBGM( BGM::MAIN );
 
+	//	level初期化
+	levelManager->Initialize();
+
 	//	送信
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
+	_beginthread( ThreadFunction, 0, nullptr );
+	threadState = false;
 	return true;
 }
 
@@ -111,10 +107,6 @@ void	sceneMain::Update( void )
 	//	経過時間取得
 	float elapseTime = GetElapseTime();
 
-	//	送受信
-	std::thread		ThreadFunc( ThreadFunction );
-	ThreadFunc.join();
-
 	//	GameManager更新
 	gameManager->Update();
 
@@ -127,6 +119,9 @@ void	sceneMain::Update( void )
 	//	magic更新
 	magicManager->Update();
 
+	//	item更新
+	itemManager->Update();
+
 	//	ui更新
 	uiManager->Update();
 
@@ -137,8 +132,12 @@ void	sceneMain::Update( void )
 	//	collision
 	collision->AllCollision();
 
+	//	送信
+	gameParam->Send();
+
 	//	シーン切り替え
-	gameManager->ChangeScene( SCENE::RESULT );
+	if ( threadState )
+		gameManager->ChangeScene( SCENE::RESULT );
 }
 
 //*****************************************************************************************************************************
@@ -176,17 +175,16 @@ void	sceneMain::Render( void )
 //	debug用描画
 void	sceneMain::DebugRender( void )
 {
-	for ( int p = 0; p < PLAYER_MAX; p++ )
-	{
-		//	各プレイヤー座標描画
-		PlayerParam	playerParam = gameParam->GetPlayerParam( p );
-		int	point = gameParam->GetPointInfo( p ).point;
-		Vector3	p_pos = playerParam.pos;
-		int	life = playerParam.life;
-		char	str[256];
-		sprintf_s( str, "%dP pos = Vector3( %.2f, %.2f, %.2f ), score = %d, life = %d",  p + 1, p_pos.x, p_pos.y, p_pos.z, point, life );
-		IEX_DrawText( str, 20 , 300 + p * 50, 500, 200, 0xFFFFFF00 );
-	}
+	PlayerStatus	playerStatus = gameParam->GetPlayerStatus();
+
+	int atk = playerStatus.power;
+	int def = playerStatus.defense;
+	int mgcAtk = playerStatus.magicPower;
+	int mgcDef = playerStatus.magicDefense;
+
+	char str[256];
+	sprintf( str, "power = %d\ndefense = %d\nmagicAttack = %d\nmagicDefense = %d\n", atk, def, mgcAtk, mgcDef );
+	IEX_DrawText( str, 20, 300, 500, 500, 0xFFFFFF00 );
 }
 
 //	自分の情報表示
@@ -196,26 +194,36 @@ void	sceneMain::MyInfoRender( void )
 	int	 id = gameParam->GetMyIndex();
 	
 	//	自分の名前
-	LPSTR name = gameParam->GetPlayerName( id );
+	LPSTR name = gameParam->GetPlayerName()->GetName( id );
 	nameManager->SetNameIndex( id, name );
 
 	//	自分の座標
 	Vector3	pos = playerManager->GetPlayer( id )->GetPos();
 
+	//	中心からの距離
+	float			length = Vector3( Vector3( 0.0f, 0.0f, 0.0f ) - pos ).Length();
 	//	経験値
 	int	exp = levelManager->GetExp();
 
 	//	表示
 	char	str[256];
-	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d", id + 1, name, pos.x, pos.y, pos.z, exp );
+	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d\n\nlength : %.2f", id + 1, name, pos.x, pos.y, pos.z, exp, length );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
 }
 
 //	受信送信
-void	sceneMain::ThreadFunction( void )
+void	sceneMain::ThreadFunction( void* ptr )
 {
 	//	サーバーから情報受信
-	gameParam->Update();
+	for (;;)
+	{
+		gameParam->Receive();
+
+		if ( gameManager->GetChangeSceneFrag() )	break;
+	}
+
+	threadState = true;
+	_endthread();
 }
 
 

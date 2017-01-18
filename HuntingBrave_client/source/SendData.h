@@ -19,7 +19,8 @@
 				ATTACK_INFO,
 				INPUT_INFO,
 				LEVEL_INFO,
-				HUNT_INFO
+				HUNT_INFO,
+				ITEM_INFO
 			};
 		}
 	}
@@ -33,10 +34,11 @@
 	{
 		char	com = SEND_COMMAND::PLAYER_INFO;	//1byte
 		float	axisX, axisY;	//	8byte
+		float	cameraAngle;	//	4byte
 		int 	frame;			//	4byte
 		//	13byte
-		SendPlayerData( float axisX, float axisY, int frame ) : 
-			axisX( axisX ), axisY( axisY ), frame( frame ){}
+		SendPlayerData( float axisX, float axisY, float cameraAngle, int frame ) : 
+			axisX( axisX ), axisY( axisY ), cameraAngle( cameraAngle ), frame( frame ){}
 	};
 
 	//	攻撃情報
@@ -55,13 +57,11 @@
 	struct SendInputData
 	{
 		char		com = SEND_COMMAND::INPUT_INFO;
-		char		keyA;
-		char		keyB;
-		char		keyX;
-		char		keyY;
+		char		key;
+		char		keyState;
 		SendInputData( void ){};
-		SendInputData( char keyA, char keyB, char keyX, char keyY ) :
-			keyA( keyA ), keyB( keyB ), keyX( keyX ), keyY( keyY ){}
+		SendInputData( char key, char keyState ) :
+			key( key ), keyState( keyState ){}
 	};
 
 	//	レベル情報
@@ -78,4 +78,12 @@
 		char com = SEND_COMMAND::HUNT_INFO;
 		char	enemyType;
 		SendHuntData( char enemyType ) : enemyType( enemyType ){}
+	};
+
+	//	アイテム使用情報
+	struct SendItemData
+	{
+		char com = SEND_COMMAND::ITEM_INFO;
+		char itemPos;
+		SendItemData( char itemPos ) : itemPos( itemPos ) {}
 	};

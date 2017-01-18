@@ -188,49 +188,6 @@ public:
 } Vector3, *LPVECTOR3;
 
 //------------------------------------------------------
-//	２Ｄベクトル構造体
-//------------------------------------------------------
-typedef struct Vector2 : public Vector
-{
-public:
-	//	コンストラクタ
-	Vector2() {};
-	inline Vector2(float x, float y){ this->x = x, this->y = y; }
-	inline Vector2(CONST Vector& v){ this->x = v.x, this->y = v.y; }
-
-	//	距離計算
-	inline float Length(){ return sqrtf(x*x + y*y); }
-	inline float LengthSq(){ return x*x + y*y; }
-
-	//	正規化
-	void Normalize()
-	{
-		float l = Length();
-		if (l != .0f){ x /= l; y /= l; }
-	}
-
-	//	オペレーター
-	inline Vector2& operator = (CONST Vector& v){ x = v.x; y = v.y; z = v.z; return *this; }
-	inline Vector2& operator += (CONST Vector2& v){ x += v.x; y += v.y; z += v.z; return *this; }
-	inline Vector2& operator -= (CONST Vector2& v){ x -= v.x; y -= v.y; z -= v.z; return *this; }
-	inline Vector2& operator *= (FLOAT v){ x *= v; y *= v; z *= v; return *this; }
-	inline Vector2& operator /= (FLOAT v){ x /= v; y /= v; z /= v; return *this; }
-
-	inline Vector2 operator + () const { Vector2 ret(x, y); return ret; }
-	inline Vector2 operator - () const { Vector2 ret(-x, -y); return ret; }
-
-	inline Vector2 operator + (CONST Vector2& v) const { return Vector2(x + v.x, y + v.y); }
-	inline Vector2 operator - (CONST Vector2& v) const { return Vector2(x - v.x, y - v.y); }
-	inline Vector2 operator * (FLOAT v) const { Vector2 ret(x*v, y*v); return ret; }
-	inline Vector2 operator / (FLOAT v) const { Vector2 ret(x / v, y / v); return ret; }
-
-	BOOL operator == (CONST Vector2& v) const { return (x == v.x) && (y == v.y); }
-	BOOL operator != (CONST Vector2& v) const { return (x != v.x) || (y != v.y); }
-
-} Vector2, *LPVECTOR2;
-
-
-//------------------------------------------------------
 //	外積
 //------------------------------------------------------
 inline void Vector3Cross( Vector& out, Vector& v1, Vector& v2 )
@@ -388,7 +345,7 @@ public:
 //
 //*****************************************************************************
 class iexView {
-protected:
+private:
 	Matrix	matView;
 	Matrix	matProj;
 
@@ -455,6 +412,7 @@ public:
 	//	読み込み・解放
 	static Texture2D* Load( char* filename, int flag = 0 );
 	static void	Release( Texture2D* lpTexture );
+
 };
 
 extern	Texture2D*	lpLastTexture;
@@ -573,10 +531,6 @@ public:
 	iex2DObj(){};
 	//	ファイルから作成
 	iex2DObj( char* filename );
-
-	//	Teture2Dから作成
-	iex2DObj( Texture2D* texture );
-
 	//	作成
 	iex2DObj( u32 width, u32 height, u8 flag );
 	//	解放
@@ -589,25 +543,16 @@ public:
 	//	設定・取得
 	//------------------------------------------------------
 	void RenderTarget( int index = 0 );
-	void SetTexture( Texture2D* texture ){ lpTexture = texture; }
 	Texture2D*	GetTexture(){ return lpTexture; }
 
 	//------------------------------------------------------
 	//	描画
 	//------------------------------------------------------
-	void	Render( void );
-	void	Render( iexShader* shader, char* tech );
-	void	Render( s32 DstX, s32 DstY, s32 DstW, s32 DstH, s32 SrcX, s32 SrcY, s32 width, s32 height, u32 dwFlags=RS_COPY, COLOR color=0xFFFFFFFF, float z=.0f );
-	void	Render( s32 DstX, s32 DstY, s32 DstW, s32 DstH, s32 SrcX, s32 SrcY, s32 width, s32 height, iexShader* shader, char* tech, COLOR color=0xFFFFFFFF, float z=.0f );
-	
-	//	回転対応
-	void	Render(s32 x, s32 y, s32 w, s32 h, s32 sx, s32 sy, s32 sw, s32 sh, POINT p,
-		float angle, u32 dwFlags = RS_COPY, COLOR color = 0xFFFFFFFF, float z = 0.0f);
+	void Render();
+	void Render( iexShader* shader, char* tech );
+	void Render( s32 DstX, s32 DstY, s32 DstW, s32 DstH, s32 SrcX, s32 SrcY, s32 width, s32 height, u32 dwFlags=RS_COPY, COLOR color=0xFFFFFFFF, float z=.0f );
+	void Render( s32 DstX, s32 DstY, s32 DstW, s32 DstH, s32 SrcX, s32 SrcY, s32 width, s32 height, iexShader* shader, char* tech, COLOR color=0xFFFFFFFF, float z=.0f );
 
-
-	//	画像サイズ取得
-	int		GetWidth( void )const;
-	int		GetHeight( void )const;
 };
 
 
@@ -777,9 +722,6 @@ public:
 	void SetScale( float scale );
 	void SetScale( float x, float y, float z );
 	inline Vector3	GetScale(){ return Scale; }
-
-	//	テクスチャ設定
-	void	SetTexture( int n, LPSTR filename );
 
 	//	情報
 	LPD3DXMESH	GetMesh(){ return lpMesh; }
@@ -952,7 +894,7 @@ public:
 	//	更新
 	void Update();
 	//	描画
-	inline bool SetVertex( TLVERTEX* v );
+	inline void SetVertex( TLVERTEX* v );
 	void Render();
 	void Render( iexShader* shader, char* name );
 };
@@ -991,7 +933,6 @@ public:
 //		２Ｄフォント関連
 //
 //*****************************************************************************
-
 
 void	IEX_InitText( void );
 void	IEX_ReleaseText( void );
@@ -1160,8 +1101,6 @@ BOOL	IEX_InitInput();
 void	IEX_ReleaseInput();
 
 #define	KEY(x)	KEY_Get(x)
-
-extern	iexInput*	input[4];
 
 
 //*****************************************************************************

@@ -46,21 +46,44 @@ namespace SCENE
 	{
 		bool	active;
 		char	name[17];
+		int frontTitle;
+		int backTitle;
 		PlayerInfo( void ){};
-		PlayerInfo( bool active, const LPSTR& name );
-		void Set( bool active, const LPSTR& name );
+		PlayerInfo( bool active, const LPSTR& name, int frontTitle, int backTitle );
+		void Set( bool active, const LPSTR& name, int frontTitle, int backTitle );
 	};
 
 	//	プレイヤーパラメータ
 	struct PlayerParam
 	{
 		Vector3	pos;
+		Vector3	move;
 		float			angle;
+		float			cameraAngle;
 		int			motion;
 		int			frame;
 		PlayerParam( void ){}
-		PlayerParam( const Vector3& pos, float angle, int motion, int frame );
-		void Set( const Vector3& pos, float angle, int motion, int frame );
+		PlayerParam( const Vector3& pos, float angle, float cameraAngle, int motion, int frame );
+		void Set( const Vector3& pos, float angle, float cameraAngle, int motion, int frame );
+	};
+
+	//	プレイヤーステータス
+	struct PlayerStatus
+	{
+		//	parameter
+		int	power, savePower;
+		int	defense, saveDefense;
+		int	magicAttack, saveMagicAttack;
+		int	magicDefense, saveMagicDefense;
+		float	speed, saveSpeed;
+
+		//	計算
+		void	Initialize( int power, int defense, int magicAttack, int magicDefense, float speed );
+		void	CulcPower( int power );
+		void	CulcDefense( int defense );
+		void	CulcMagicAttack( int power );
+		void	CulcMagicDefense( int defense );
+		void	DoubleSpeed( float param );
 	};
 
 	//	点数、順位情報
@@ -88,6 +111,7 @@ namespace SCENE
 //*****************************************************************************************************************************
 //	ネットデータ
 //*****************************************************************************************************************************
+	
 	//	コマンド
 	namespace
 	{
@@ -110,7 +134,7 @@ namespace SCENE
 			{
 				SIGN_UP,
 				GAME_START,
-				CHANGE_SCENE
+				CHANGE_SCENE,
 			};
 		}
 	}
@@ -120,10 +144,12 @@ namespace SCENE
 	{
 		char	com = COMMANDS::SIGN_UP;
 		int		id;
-		char	name[17];
+		int		name[4];
+		int		frontTitle;
+		int		backTitle;
 		SignUp( void ){}
-		SignUp( int id, const LPSTR& name );
-		void Set( int id, const LPSTR& name );
+		SignUp( int id, int* name, int frontTitle, int backTitle );
+		void Set( int id, int* name, int frontTitle, int backTitle );
 	};
 
 	//	脱退情報

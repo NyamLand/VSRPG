@@ -3,6 +3,8 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"Image.h"
+#include	<vector>
+#include	"NumberUI.h"
 #include	"TimerUI.h"
 
 //***************************************************************
@@ -20,12 +22,20 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-TimerUI::TimerUI(void) : timer( 0 )
+TimerUI::TimerUI(int x, int y, int w, int h)
 {
-	time_obj = new Image();
-	time_obj->Initialize("DATA/UI/main_UI/Number.png", 300, 500, 100, 100, 0, 0, 64 * 3, 64);
-	time_obj->SetFlash(0.1f);
+	//	座標、サイズ情報格納
+	size = w;
+	posx = x;
+	posy = y;	//	height / 6 = アイコンサイズの1/6分余白を空ける
+	color = NUM_COLOR::WHITE;
 
+	//	タイマーの値
+	number[TIME::MIN] = new NumberUI(x - (size * 2.5f), y, w, h, TIME_DIGIT);
+	number[TIME::SECOND] = new NumberUI(x + (size * 0.5f) , y, w, h, TIME_DIGIT);
+
+	period = new Image();
+	period->Initialize("DATA/UI/main_UI/Number.png", posx, posy, size, size, 64 * 10, 64 * color , 64, 64);
 }
 
 //	デストラクタ
@@ -44,11 +54,12 @@ TimerUI::~TimerUI(void)
 void	TimerUI::Update(void)
 {
 	timer = gameManager->GetTime();
-	if ( KEY_Get( KEY_SPACE ) == 1 ){
-		time_obj->FlashUpdate();
-	//time_obj->SetFlash( 0.1f );
 
-	}
+	number[TIME::MIN]->SetNum(timer / 60);
+	number[TIME::SECOND]->SetNum((int)timer % 60);
+
+	number[TIME::MIN]->Update();
+	number[TIME::SECOND]->Update();
 }
 
 //	描画
@@ -57,6 +68,10 @@ void	TimerUI::Render(void)
 	char str[64];
 	sprintf_s( str, "timer = %f秒",timer );
 	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
+
+	period->Render(IMAGE_MODE::ADOPTPARAM);
+	number[TIME::MIN]->Render();
+	number[TIME::SECOND]->Render();
 
 	//time_obj->Render( IMAGE_MODE::FLASH );
 }

@@ -9,11 +9,14 @@
 
 //	include
 #include	"ShapeInfo.h"
+#include	"IEX_RayMesh.h"
 
 //	class
 class Collision
 {
 public:
+	iexRayMesh*	collisionMesh;
+
 	//	形状組み合わせ
 	enum COLLISION_PAIR
 	{
@@ -42,8 +45,9 @@ public:
 	COLLISION_PAIR	GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 );
 	CollisionShape	SetCollisionShape( char shapeType, const Vector3& vec1, const Vector3& vec2, float radius );
 	
-	//	材質判定
-	int		GetMaterial( iexMesh* obj, const Vector3& pos );
+	//	ステージモデルとの当たり判定
+	bool	CheckDown( Vector3& pos, Vector3& move );
+	bool	CheckWall( Vector3& pos, Vector3& move, float dist );
 
 	//	各形状当たり判定
 	bool	DistCheck( const Vector3& p1, const Vector3& p2, float dist );

@@ -36,6 +36,21 @@
 
 	}
 
+	//	初期化
+	bool	LevelManager::Initialize( void )
+	{
+		//	経験値初期化
+		levelInfo.exp = 0;
+
+		//	各レベル初期化
+		for (int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++)
+		{
+			levelInfo.level[i] = 0;
+		}
+
+		return	true;
+	}
+
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
@@ -64,6 +79,97 @@
 	void	LevelManager::SetLevelInfo( char levelType, char level )
 	{
 		levelInfo.level[levelType] = level;
+	}
+
+//----------------------------------------------------------------------------------------------
+//	情報設定
+//----------------------------------------------------------------------------------------------
+
+	//	ステータス計算
+	void	LevelManager::CulcStatus( const LPSTR& data )
+	{
+		switch ( data[1] )
+		{
+		case RECEIVE_STATUS::ATTACK:
+			CulcPower( data );
+			break;
+
+		case RECEIVE_STATUS::DEFENSE:
+			CulcDefense( data );
+			break;
+
+		case RECEIVE_STATUS::MAGIC_ATTACK:
+			CulcMagicAttack( data );
+			break;
+
+		case RECEIVE_STATUS::MAGIC_DEFENSE:
+			CulcMagicDefense( data );
+			break;
+
+		case RECEIVE_STATUS::SPEED:
+			CulcSpeed( data );
+			break;
+
+		case RECEIVE_STATUS::ALL:
+			CulcAllStatus( data );
+			break;
+		}
+	}
+
+	//	全ステータス計算
+	void	LevelManager::CulcAllStatus( const LPSTR& data )
+	{
+		ReceiveAllStatusData*	allStatusData = ( ReceiveAllStatusData* )data;
+		gameParam->GetPlayerStatus().power = allStatusData->attack;
+		gameParam->GetPlayerStatus().defense = allStatusData->defense;
+		gameParam->GetPlayerStatus().magicPower = allStatusData->magicAttack;
+		gameParam->GetPlayerStatus().magicDefense = allStatusData->magicDefense;
+		gameParam->GetPlayerStatus().speed = allStatusData->speed;
+	}
+
+	//	全ステータス計算
+	void	LevelManager::CulcAllStatus( const ReceiveAllStatusData& statusData )
+	{
+		gameParam->GetPlayerStatus().power = statusData.attack;
+		gameParam->GetPlayerStatus().defense = statusData.defense;
+		gameParam->GetPlayerStatus().magicPower = statusData.magicAttack;
+		gameParam->GetPlayerStatus().magicDefense = statusData.magicDefense;
+		gameParam->GetPlayerStatus().speed = statusData.speed;
+	}
+
+	//	攻撃力計算
+	void	LevelManager::CulcPower( const LPSTR& data )
+	{
+		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
+		gameParam->GetPlayerStatus().CulcPower( ( int )statusData->status );
+	}
+
+	//	防御力計算
+	void	LevelManager::CulcDefense( const LPSTR& data )
+	{
+		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
+		gameParam->GetPlayerStatus().CulcDefense( ( int )statusData->status );
+	}
+
+	//	魔法攻撃力計算
+	void	LevelManager::CulcMagicAttack( const LPSTR& data )
+	{
+		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
+		gameParam->GetPlayerStatus().CulcMagicPower( ( int )statusData->status );
+	}
+	
+	//	魔法防御力計算
+	void	LevelManager::CulcMagicDefense( const LPSTR& data )
+	{
+		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
+		gameParam->GetPlayerStatus().CulcMagicDefense( ( int )statusData->status );
+	}
+
+	//	スピード計算
+	void	LevelManager::CulcSpeed( const LPSTR& data )
+	{
+		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
+		gameParam->GetPlayerStatus().DoubleSpeed( statusData->status );
 	}
 
 //----------------------------------------------------------------------------------------------

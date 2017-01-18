@@ -14,13 +14,13 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Font::Font( char* fontName )
+	Font::Font( char* fontName, UINT fontSize )
 	{
-		UINT	fontWidth		=	50;
-		UINT	fontHeight	=	60;
+		UINT	fontHeight	=	fontSize;
 		UINT	fontWeight	=	15;
 		UINT	mipLevels		=	1;
 
+		//	フォント作成
 		D3DXCreateFont(
 			iexSystem::Device,								//	デバイス
 			fontHeight,											//	フォント高さ

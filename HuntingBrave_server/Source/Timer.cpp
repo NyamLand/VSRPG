@@ -80,3 +80,18 @@
 	{
 		return	remaining;
 	}
+
+	//	Startしてからの経過時間取得
+	float	Timer::GetErapseTime( void )const
+	{
+		auto culTime = std::chrono::system_clock::now();
+		
+		//	スタート時の時間との差分を求める
+		float difference =
+			( float )std::chrono::duration_cast<std::chrono::milliseconds>( now - start ).count();
+
+		//	桁調整
+		difference /= 1000.0f;
+
+		return	difference;
+	}

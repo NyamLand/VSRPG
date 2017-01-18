@@ -1,9 +1,12 @@
 
 #include	"iextreme.h"
+#include	<vector>
+#include	<memory>
 #include	"FrameWork.h"
 #include	"GameParam.h"
 #include	"sceneMain.h"
 #include	"sceneMatching.h"
+#include	"CSVReader.h"
 #include	"GameManager.h"
 
 //*****************************************************************************************************************************
@@ -16,8 +19,9 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	TIME_MAX	( 1.0f * MINUTE )
+#define	TIME_MAX	( 5 )
 #define	INIT_LIFE		5
+#define	CENTER_DIST		340.0f
 
 //	実体
 GameManager*	gameManager = nullptr;
@@ -32,18 +36,19 @@ GameManager*	gameManager = nullptr;
 	{
 		//	初期座標設定
 		int initMotion = 0;
-		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, 15.0f ), D3DX_PI, initMotion, 0 );
-		initPlayerParam[1].Set( Vector3( 15.0f, 0.0f, 0.0f ), D3DX_PI * 1.5f, initMotion, 0 );
-		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -15.0f ), 0.0f, initMotion, 0 );
-		initPlayerParam[3].Set( Vector3( -15.0f, 0.0f, 0.0f ), D3DX_PI * 0.5f, initMotion, 0 );
+		initPlayerParam[0].Set( Vector3( 0.0f, 0.0f, CENTER_DIST ), D3DX_PI, 0.0f, initMotion, 0 );
+		initPlayerParam[1].Set( Vector3( CENTER_DIST, 0.0f, 0.0f ), D3DX_PI * 1.5f, 0.0f, initMotion, 0 );
+		initPlayerParam[2].Set( Vector3( 0.0f, 0.0f, -CENTER_DIST ), 0.0f, 0.0f, initMotion, 0);
+		initPlayerParam[3].Set( Vector3( -CENTER_DIST, 0.0f, 0.0f ), D3DX_PI * 0.5f, 0.0f, initMotion, 0 );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			matchingInfo[i].isComplete = false;
 		}
+		playerData.clear();
 
-		//	タイマー初期化
-		timer = new Timer();
+		//	csv読み込み
+		LoadData();
 	}
 
 	//	デストラクタ
@@ -54,6 +59,8 @@ GameManager*	gameManager = nullptr;
 			delete timer;
 			timer = nullptr;
 		}
+
+		playerData.clear();
 	}
 
 	//	マッチング情報初期化
@@ -65,14 +72,38 @@ GameManager*	gameManager = nullptr;
 		}
 	}
 
+	//	CSV読み込み
+	void	GameManager::LoadData( void )
+	{
+		//	CSVファイル
+		fstream playerStream( "DATA/player_data.csv" );
+
+		//	CSVリーダー初期化
+		std::unique_ptr<CSVReader>	reader =
+			std::make_unique<CSVReader>( playerStream );
+
+		//	ファイルから読み込み、vector配列に保存する
+		int index = 0;
+		while ( 1 )
+		{
+			playerData.resize( index + 1 );
+			reader->Read( playerData[index] );
+			if ( playerData[index].size() == 0 )	break;
+			index++;
+		}
+	}
+
 	//	初期化
 	bool	GameManager::Initialize( void )
 	{
+		//	解放
+		Release();
+
 		//	マッチング情報初期化
 		MatchingInfoInitialize();
+		if ( timer == nullptr )	
+			timer = new Timer();
 
-		//	変数初期化
-		gameState = false;
 		return	true;
 	}
 
@@ -84,6 +115,21 @@ GameManager*	gameManager = nullptr;
 			delete	timer;
 			timer = nullptr;
 		}
+
+		gameState = false;
+		timeUp = false;
+	}
+
+	//	プレイヤーステータス初期化
+	void	GameManager::InitializeStatus( PlayerStatus& playerStatus )
+	{
+		int power = GetInitStatus( UPGRADE_DATA::ATTACK );
+		int defense = GetInitStatus( UPGRADE_DATA::DEFENSE );
+		int magicAttack = GetInitStatus( UPGRADE_DATA::MAGIC_ATTACK );
+		int magicDefense = GetInitStatus( UPGRADE_DATA::MAGIC_DIFENSE );
+		float speed = GetUpGradeSpeed( 0, 0 );
+
+		playerStatus.Initialize( power, defense, magicAttack, magicDefense, speed );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -94,7 +140,10 @@ GameManager*	gameManager = nullptr;
 	void	GameManager::Update( void )
 	{
 		//	タイマー更新
-		if ( gameState )		timeUp = timer->Update();
+		if ( gameState )
+		{
+			if ( timer != nullptr )		timeUp = timer->Update();
+		}
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -108,7 +157,11 @@ GameManager*	gameManager = nullptr;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( !gameParam->GetPlayerActive( p ) )	continue;
-			ret = matchingInfo[p].isComplete;
+			else
+			{
+				ret = matchingInfo[p].isComplete;
+				if ( !ret ) 	break;
+			}
 		}
 
 		return	ret;
@@ -136,6 +189,12 @@ GameManager*	gameManager = nullptr;
 	void	GameManager::SetGameState( bool state )
 	{
 		gameState = state;
+	}
+
+	//	マッチング情報設定
+	void	GameManager::SetMatchingInfo( int id, bool state )
+	{
+		matchingInfo[id].isComplete = state;
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -170,7 +229,24 @@ GameManager*	gameManager = nullptr;
 	bool	GameManager::GetGameState( void )
 	{
 		return	gameState;
+	}
 
+	//	アップグレードデータ取得
+	int	GameManager::GetUpGrade( char levelType, char upGradeData, char level )
+	{
+		return	std::stoi( playerData[2 + ( levelType * 7 ) + level][upGradeData] );
+	}
+
+	//	アップグレード初期値取得
+	int	GameManager::GetInitStatus( char upGradeData )
+	{
+		return	std::stoi( playerData[1][upGradeData] );
+	}
+
+	//	スピードアップグレードデータ取得
+	float	GameManager::GetUpGradeSpeed( char levelType, char level )
+	{
+		return	std::stof( playerData[2 + ( levelType * 7 ) + level][UPGRADE_DATA::SPEED] );
 	}
 
 

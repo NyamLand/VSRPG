@@ -2,10 +2,12 @@
 #include	"iextreme.h"
 #include	<thread>
 #include	<map>
+#include	<vector>
 #include	"GameManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"LevelManager.h"
+#include	"ItemManager.h"
 #include	"PointManager.h"
 #include	"GameParam.h"
 
@@ -28,9 +30,21 @@ GameParam*	gameParam = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	GameParam::GameParam( void )
+	GameParam::GameParam( void ) : playerName( nullptr )
 	{
+		playerName = new PlayerName();
 		InitializeGame();
+
+	}
+
+	//	デストラクタ
+	GameParam::~GameParam( void )
+	{
+		if ( playerName != nullptr )
+		{
+			delete	playerName;
+			playerName = nullptr;
+		}
 	}
 
 	//	サーバー初期化
@@ -48,7 +62,8 @@ GameParam*	gameParam = nullptr;
 	//	プレイヤー初期化
 	void	GameParam::InitializePlayer( int id )
 	{
-		lifeInfo[id].Initialize( INIT_LIFE );
+		lifeInfo[id].life = lifeInfo[id].maxLife;
+		playerParam[id].pos = gameManager->GetInitInfo( id ).pos;
 		playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
@@ -59,9 +74,23 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
+			ZeroMemory( &playerStatus[id], sizeof( PlayerStatus ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
-			lifeInfo[id].Initialize( INIT_LIFE );
+			int initLife = gameManager->GetUpGrade( 0, UPGRADE_DATA::HP, 0 );
+			lifeInfo[id].Initialize( initLife );
+			gameManager->InitializeStatus( playerStatus[id] );
 		}
+
+		itemManager->Initialize();
+	}
+
+	//	ゲームリセット
+	void	GameParam::ReleaseGame( void )
+	{
+		playerName->Initialize();
+		itemManager->Release();
+		playerManager->Release();
+		gameManager->Release();
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -89,6 +118,10 @@ GameParam*	gameParam = nullptr;
 		//	終端通知
 		char end = -1;
 		send( client, &end, 1 );
+
+		//	キー情報リセット
+		inputManager->ResetInput( client );
+
 		return client;
 	}
 
@@ -122,6 +155,10 @@ GameParam*	gameParam = nullptr;
 
 		case RECEIVE_COMMAND::HUNT_INFO:
 			client = ReceiveHuntInfo( client, data );
+			break;
+
+		case RECEIVE_COMMAND::ITEM_INFO:
+			client = ReceiveItemInfo( client, data );
 			break;
 
 		case COMMANDS::MATCHING:
@@ -179,10 +216,10 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendMatchingInfo( int client, int player )
 	{
 		//	情報設定
-		Matching	matching( player, gameManager->GetMatchingInfo( player ).isComplete );
+		Matching	matching( client, gameManager->GetMatchingInfo( client ).isComplete );
 
 		//	送信
-		send( client, ( char* )&matching, sizeof( matching ) );
+		send( player, ( char* )&matching, sizeof( matching ) );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -197,6 +234,9 @@ GameParam*	gameParam = nullptr;
 		//	スティックの入力情報設定
 		inputManager->SetAxis( client, receivePlayerData->axisX,	receivePlayerData->axisY );
 
+		//	カメラアングル取得
+		playerParam[client].cameraAngle = receivePlayerData->cameraAngle;
+		
 		//	フレーム情報設定
 		playerParam[client].frame = receivePlayerData->frame;
 
@@ -213,7 +253,6 @@ GameParam*	gameParam = nullptr;
 		attackInfo[client].vec1 = receiveAttackData->vec1;
 		attackInfo[client].vec2 = receiveAttackData->vec2;
 		attackInfo[client].radius = receiveAttackData->radius;
-		attackInfo[client].power = 1;
 		return	-1;
 	}
 
@@ -223,10 +262,7 @@ GameParam*	gameParam = nullptr;
 		ReceiveInputData*	receiveInputData = ( ReceiveInputData* )data;
 
 		//	ボタンの入力情報設定
-		inputManager->SetInput( client, KEY_TYPE::A, receiveInputData->keyA );
-		inputManager->SetInput( client, KEY_TYPE::B, receiveInputData->keyB );
-		inputManager->SetInput( client, KEY_TYPE::X, receiveInputData->keyX );
-		inputManager->SetInput( client, KEY_TYPE::Y, receiveInputData->keyY );
+		inputManager->SetInput( client, receiveInputData->key, receiveInputData->keyState );
 		return	-1;
 	}
 
@@ -238,7 +274,7 @@ GameParam*	gameParam = nullptr;
 		//	大型の時点数を加算
 		if ( receiveHuntData->enemyType == ENEMY_EXP::BIG_ENEMY )
 		{
-			pointManager->CalcPoint( client, 1000 );
+			pointManager->CalcPoint( client, 50 );
 			pointManager->SendPoint( client );
 		}
 
@@ -254,7 +290,15 @@ GameParam*	gameParam = nullptr;
 		ReceiveLevelData*	receiveLevelData = ( ReceiveLevelData* )data;
 		levelManager->AddLevel( client, receiveLevelData->levelType );
 		levelManager->SendLevel( client, receiveLevelData->levelType );
+		levelManager->SendAllStatus( client );
 
+		return	-1;
+	}
+
+	//	アイテム情報取得
+	int	GameParam::ReceiveItemInfo( int client, const LPSTR& data )
+	{
+		itemManager->ReceiveData( client, data );
 		return	-1;
 	}
 
@@ -265,11 +309,20 @@ GameParam*	gameParam = nullptr;
 	//	サインアップ情報受信
 	int	GameParam::ReceiveSignUp( int client, const LPSTR& data )
 	{
-		if ( gameManager->GetGameState() )	return	-1;
+		if ( gameManager->GetGameState() )
+		{
+			return	-1;
+		}
 
 		//	名前保存
 		SignUp* signUp = ( SignUp* )data;
-		strcpy( playerInfo[client].name, signUp->name );
+		playerName->SetName( client, signUp->name );
+		char*	name = playerName->GetName( client );
+		strcpy( playerInfo[client].name, name );
+
+		//	称号保存
+		playerInfo[client].frontTitle = signUp->frontTitle;
+		playerInfo[client].backTitle = signUp->backTitle;
 
 		//	IDを返信
 		signUp->id = client;
@@ -305,13 +358,13 @@ GameParam*	gameParam = nullptr;
 	int	GameParam::ReceiveMatching( int client, const LPSTR& data )
 	{
 		Matching*	matching = ( Matching* )data;
-		gameManager->GetMatchingInfo( client ).isComplete = matching->isComplete;
+		gameManager->SetMatchingInfo( client, matching->isComplete );
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			//	アクティブでないプレイヤーはとばす
 			if ( playerInfo[p].active == false ) continue;
-			SendMatchingInfo( client, p );
+			SendMatchingInfo( /*受信したプレイヤー情報*/client, /*送信したい他のプレイヤー*/p );
 		}
 
 		return	-1;
@@ -347,15 +400,28 @@ GameParam*	gameParam = nullptr;
 		SetPlayer( client, playerInfo[client].name );
 
 		//	初期情報送信
-		PlayerParam	initParam = gameManager->GetInitInfo( client );
-		SendCharaData	sendCharaData( client,
-			AttackInfo::NO_ATTACK,
-			initParam.pos, initParam.angle, initParam.motion,
-			lifeInfo[client].life );
-		send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+		{
+			//	初期情報取得
+			PlayerParam		initParam = gameManager->GetInitInfo( client );
+
+			//	初期情報設定
+			SendCharaData	sendCharaData( client,
+				AttackInfo::NO_ATTACK,
+				initParam.pos, initParam.angle, initParam.motion,
+				lifeInfo[client].life );
+
+			//	初期情報送信
+			send( client, ( LPSTR )&sendCharaData, sizeof( sendCharaData ) );
+		}
+
+		//	初期パラメータ送信
+		levelManager->SendAllStatus( client );
 
 		//	サインアップ情報を設定
-		SignUp		signUp( client, playerInfo[client].name );
+		SignUp		signUp( client, 
+			playerName->GetNameIndex( client ),
+			playerInfo[client].frontTitle, 
+			playerInfo[client].backTitle );
 
 		//	全員にデータ送信
 		for ( int p = 0; p < PLAYER_MAX; p++ )
@@ -369,7 +435,14 @@ GameParam*	gameParam = nullptr;
 		{
 			if ( playerInfo[p].active == false ) continue;
 			signUp.id = p;
-			strcpy( signUp.name, playerInfo[p].name );
+			signUp.frontTitle = playerInfo[p].frontTitle;
+			signUp.backTitle = playerInfo[p].backTitle;
+
+			//	名前インデックスコピー
+			for ( int i = 0; i < 4; i++ )
+			{
+				signUp.name[i] = playerName->GetNameIndex( p )[i];
+			}
 			send( client, ( char* )&signUp, sizeof( signUp ) );
 		}
 		printf( "%dP %sさんが参加しました。\n", client + 1, signUp.name );

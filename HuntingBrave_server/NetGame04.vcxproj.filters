@@ -16,12 +16,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\GameParam">
-      <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\GameData">
-      <UniqueIdentifier>{7fbb0178-ee12-4124-a353-7569e4ab1745}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Player">
       <UniqueIdentifier>{46752ebd-a905-4cc5-af38-5d2f011432e9}</UniqueIdentifier>
     </Filter>
@@ -34,35 +28,11 @@
     <Filter Include="ソース ファイル\UDPServer">
       <UniqueIdentifier>{14488d16-5070-4bcd-8330-b539e199b489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Manager">
-      <UniqueIdentifier>{b9e49e64-c0fe-4bf2-9352-65e62c4ba62c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\PlayerManager">
-      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\BaseChara">
       <UniqueIdentifier>{0354be5f-46f2-4182-846a-9a49f3f6f954}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Manager\EnemyManager">
-      <UniqueIdentifier>{108be3e4-fdca-4318-91e6-3115e8c992d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\GameManager">
-      <UniqueIdentifier>{88df4ce4-73dc-4b03-a59c-1751ccaeb688}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Timer">
       <UniqueIdentifier>{f0af59b6-6349-4757-a705-e0f87f635d4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\InputManager">
-      <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\GameData\SendData">
-      <UniqueIdentifier>{202f5623-39fa-4062-8587-bb97e16241bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\GameData\GameData">
-      <UniqueIdentifier>{b36ce8c5-9c2d-49f4-a724-b598cd156c0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\GameData\ReceiveData">
-      <UniqueIdentifier>{861daa82-ab78-490e-8af2-da9f089fb228}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\CharaInfo">
       <UniqueIdentifier>{6709b4a8-10a6-4f5f-8385-5e2e32e860a4}</UniqueIdentifier>
@@ -73,23 +43,8 @@
     <Filter Include="ソース ファイル\ShapeInfo">
       <UniqueIdentifier>{c356096f-8b22-45b6-a036-bab7ab67a7bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Manager\MagicManager">
-      <UniqueIdentifier>{77deb41f-3577-401a-95ac-33bea287550a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Magic">
       <UniqueIdentifier>{bc321496-9273-4457-a3a5-2ca35d0a55e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Collision\Enemy">
-      <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\LevelManager">
-      <UniqueIdentifier>{afc70951-4417-4516-9515-59778bf5d2c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\PointManager">
-      <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\SceneManager">
-      <UniqueIdentifier>{9b87f1e9-69c2-40a4-a5c2-781a0cee554d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\SYSTEM">
       <UniqueIdentifier>{e203447f-a8ae-4700-b3b7-3dd3fa368895}</UniqueIdentifier>
@@ -105,6 +60,81 @@
     </Filter>
     <Filter Include="ソース ファイル\Scene\sceneMatching">
       <UniqueIdentifier>{a9530f24-d50e-496d-816d-d3c5c5e5d6fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{df4da85a-7825-4c71-a6c4-291ccabf7340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CSVReader">
+      <UniqueIdentifier>{ec211e16-bdab-4cba-a512-a95d824729a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy">
+      <UniqueIdentifier>{f78915f2-4f91-48f0-9a16-bd3cff4a86c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{b9e49e64-c0fe-4bf2-9352-65e62c4ba62c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\EnemyManager">
+      <UniqueIdentifier>{108be3e4-fdca-4318-91e6-3115e8c992d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\GameManager">
+      <UniqueIdentifier>{88df4ce4-73dc-4b03-a59c-1751ccaeb688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\InputManager">
+      <UniqueIdentifier>{df213ed7-aa1f-4ce3-a0ee-a6c23ffc59a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\LevelManager">
+      <UniqueIdentifier>{afc70951-4417-4516-9515-59778bf5d2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PointManager">
+      <UniqueIdentifier>{92490d40-a892-4e2d-b60a-0ac39e189a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\SceneManager">
+      <UniqueIdentifier>{9b87f1e9-69c2-40a4-a5c2-781a0cee554d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\ItemManager">
+      <UniqueIdentifier>{769f227c-73ce-4b7d-afb6-550ec9081160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData">
+      <UniqueIdentifier>{7fbb0178-ee12-4124-a353-7569e4ab1745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\SendData">
+      <UniqueIdentifier>{202f5623-39fa-4062-8587-bb97e16241bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\GameData">
+      <UniqueIdentifier>{b36ce8c5-9c2d-49f4-a724-b598cd156c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameData\ReceiveData">
+      <UniqueIdentifier>{861daa82-ab78-490e-8af2-da9f089fb228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\MagicManager">
+      <UniqueIdentifier>{77deb41f-3577-401a-95ac-33bea287550a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\AttackItem">
+      <UniqueIdentifier>{80c4f874-1d94-455f-8020-ca0a5b977378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\DefenseItem">
+      <UniqueIdentifier>{ac68c462-5e03-4a48-a464-e6c36821e21f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\HealItem">
+      <UniqueIdentifier>{7571904f-8e83-4436-afe8-f71e9205f6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\LedItem">
+      <UniqueIdentifier>{b10e9747-5b7d-44fa-9bfb-f991f68299fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameParam">
+      <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\Item">
+      <UniqueIdentifier>{170f4522-ae48-48a3-a58e-9e84a4b74f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\RayMesh">
+      <UniqueIdentifier>{7d0be03a-f83e-4ece-84ca-da0dc849dc86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerManager">
+      <UniqueIdentifier>{10d05596-ba02-4498-b6d9-30c2d955043a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\PlayerName">
+      <UniqueIdentifier>{aee619cf-f15c-4b6e-8950-182ffcabb07f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +160,7 @@
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
-      <Filter>ソース ファイル\Collision\Enemy</Filter>
+      <Filter>ソース ファイル\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameManager.cpp">
       <Filter>ソース ファイル\Manager\GameManager</Filter>
@@ -146,54 +176,6 @@
     </ClCompile>
     <ClCompile Include="Source\CharaInfo.cpp">
       <Filter>ソース ファイル\CharaInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_2DObject.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_3DObject.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Audio.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Direct3D.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Input.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Light.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Math.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Mesh.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Particle.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Polygon.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_RenderState.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Shader.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_SkinMesh.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_System.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_Texture.cpp">
-      <Filter>IEX</Filter>
-    </ClCompile>
-    <ClCompile Include="IEX\IEX_View.cpp">
-      <Filter>IEX</Filter>
     </ClCompile>
     <ClCompile Include="Source\ShapeInfo.cpp">
       <Filter>ソース ファイル\ShapeInfo</Filter>
@@ -225,6 +207,33 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>ソース ファイル\Scene\main</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ItemManager.cpp">
+      <Filter>ソース ファイル\Manager\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSVReader.cpp">
+      <Filter>ソース ファイル\CSVReader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>ソース ファイル\Item\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AttackItem.cpp">
+      <Filter>ソース ファイル\Item\AttackItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DefenseItem.cpp">
+      <Filter>ソース ファイル\Item\DefenseItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HealItem.cpp">
+      <Filter>ソース ファイル\Item\HealItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LedItem.cpp">
+      <Filter>ソース ファイル\Item\LedItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IEX_RayMesh.cpp">
+      <Filter>ソース ファイル\RayMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerName.cpp">
+      <Filter>ソース ファイル\PlayerName</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameParam.h">
@@ -249,7 +258,7 @@
       <Filter>ソース ファイル\Manager\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
-      <Filter>ソース ファイル\Collision\Enemy</Filter>
+      <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameManager.h">
       <Filter>ソース ファイル\Manager\GameManager</Filter>
@@ -271,9 +280,6 @@
     </ClInclude>
     <ClInclude Include="Source\CharaInfo.h">
       <Filter>ソース ファイル\CharaInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="IEX\iextreme.h">
-      <Filter>IEX</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShapeInfo.h">
       <Filter>ソース ファイル\ShapeInfo</Filter>
@@ -304,6 +310,36 @@
     </ClInclude>
     <ClInclude Include="Source\main.h">
       <Filter>ソース ファイル\Scene\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ItemManager.h">
+      <Filter>ソース ファイル\Manager\ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSVReader.h">
+      <Filter>ソース ファイル\CSVReader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>ソース ファイル\Item\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AttackItem.h">
+      <Filter>ソース ファイル\Item\AttackItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DefenseItem.h">
+      <Filter>ソース ファイル\Item\DefenseItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HealItem.h">
+      <Filter>ソース ファイル\Item\HealItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LedItem.h">
+      <Filter>ソース ファイル\Item\LedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="IEX\iextreme.h">
+      <Filter>IEX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IEX_RayMesh.h">
+      <Filter>ソース ファイル\RayMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerName.h">
+      <Filter>ソース ファイル\PlayerName</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@ private:
 	float					stepSpeed;
 	Timer*				timer;
 	int					index;
+	char					charType;
 
 	//	モード別関数ポインタ
 	void( Player::*ModeFunction[MODE::MODE_MAX] )( void );
@@ -40,13 +41,14 @@ public:
 	void	ModeDamage( void );
 	void	ModeDeath( void );
 	void	ModeStep( void );
+	void	ModeMenu( void );
 
 	//	動作関数
 	void	Move( void );
 	void	SwordAttack( void );
 	void	Damage( void );
 	void	CheckInput( void );
-	void	AddMove( const Vector3& move );
+	void	AddMove( Vector3& move );
 	void	MagicAttack( void );
 	void	MagicChant( void );
 	void	MagicChantRoll( void );

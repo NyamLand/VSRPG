@@ -6,6 +6,7 @@
 #include	<map>
 #include	"iextreme.h"
 #include	"FrameWork.h"
+#include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"GameManager.h"
 #include	"MagicManager.h"
@@ -13,6 +14,7 @@
 #include	"PointManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
+#include	"ItemManager.h"
 #include	"Collision.h"
 
 
@@ -29,6 +31,8 @@ char	scene = SCENE::MATCHING;
 void	MatchingUpdate( int client );
 void	MainUpdate( int client );
 void	ResultUpdate( int client );
+void	AlwaysUpdate( void );
+void	Update( void );
 
 //	main
 void main( void )
@@ -41,8 +45,10 @@ void main( void )
 	levelManager = new LevelManager();
 	pointManager = new PointManager();
 	playerManager = new PlayerManager( gameParam );
+	itemManager = new ItemManager();
 	collision = new Collision( gameParam );
 	gameParam->InitializeServer();
+	gameManager->Initialize();
 
 	//	–³ŒÀƒ‹[ƒv
 	for (;;)
@@ -50,8 +56,9 @@ void main( void )
 		gameManager->Update();
 		
 		//	î•ñŽóM
+		std::thread	ThreadUpdate( AlwaysUpdate );
 		int client = gameParam->Receive( scene );
-		magicManager->Update();
+		ThreadUpdate.join();
 
 		switch ( scene )
 		{
@@ -96,6 +103,7 @@ void	MatchingUpdate( int client )
 
 void	MainUpdate( int client )
 {
+	
 	if ( client == -1 )	return;
 	
 	playerManager->Update( client );
@@ -103,6 +111,7 @@ void	MainUpdate( int client )
 	if ( gameManager->GetTimeUp() )
 	{
 		gameManager->ChangeScene( scene, SCENE::RESULT );
+		itemManager->Release();
 		playerManager->Release();
 	}
 }
@@ -111,4 +120,13 @@ void	ResultUpdate( int client )
 {
 	gameManager->ChangeScene( scene, SCENE::MATCHING );
 	gameParam->InitializeGame();
+	gameManager->Initialize();
+	itemManager->Initialize();
+}
+
+//	thread
+void	AlwaysUpdate( void )
+{
+	magicManager->Update();
+	itemManager->Update();
 }
