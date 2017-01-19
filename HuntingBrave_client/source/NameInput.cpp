@@ -42,6 +42,12 @@ namespace
 	#define	NAME_END_POS	878
 	#define	NAME_SCALE	80
 	#define	NAME_FRASH_SPEED	0.1f
+
+	//	濁点、半濁点
+	#define	VOICED_SPOT_INDEX		56
+	#define	SEMI_VOICED_SPOT_INDEX	57
+	#define	SRC_SEMIVOICED_SPOT_CHAR_X  640
+	#define	SRC_SEMIVOICED_SPOT_CHER_Y	64
 }
 
 //------------------------------------------------------------------------------------
@@ -193,31 +199,40 @@ namespace
 	//	文字決定
 	void	NameInput::DecisionCharacter( void )
 	{
+		bool	voicedSpotState = false;
+
 		if ( KEY( KEY_TYPE::A ) == 3 )
 		{
 			sound->PlaySE( SE::OK );
-			if ( !inputState )
+			
+			//	文字決定
+			if ( nameCursor != NAME_MAX )
 			{
-				name[nameCursor] = cursorX + cursorY * CURSOR_MAX_X;
-				nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
-				nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
-			}
+				//	文字チェック
+				CharacterCheck( voicedSpotState );
 
-			if ( nameCursor != NAME_MAX - 1 )
-			{
-				nameCursor++;
-				nameImage[nameCursor]->renderflag = true;
+				//	濁点、半濁点時意外ならカーソル加算
+				if ( !voicedSpotState )	nameCursor++;
+				if ( nameCursor == NAME_MAX )
+				{
+					//	カーソルを決定に移動
+					cursorX = CURSOR_MAX_X - 1;
+					cursorY = CURSOR_MAX_Y;
+					inputState = true;
+				}
+				else nameImage[nameCursor]->renderflag = true;
+
 			}
+			//	カーソルが最後の場合
 			else
 			{
-				if ( inputState )
+				//	決定
+				if ( cursorX == CURSOR_MAX_X - 1 && cursorY == CURSOR_MAX_Y )		doneState = true;
+				else
 				{
-					if ( cursorX == CURSOR_MAX_X - 1 && cursorY == CURSOR_MAX_Y )
-						doneState = true;
+					//	濁点、半濁点のみ判定
+					CharacterCheckLast();
 				}
-				cursorX = CURSOR_MAX_X - 1;
-				cursorY = CURSOR_MAX_Y;
-				inputState = true;
 			}
 		}
 	}
@@ -229,7 +244,11 @@ namespace
 		{
 			if ( nameCursor != 0 )
 			{
-				if ( inputState )	inputState = false;
+				if ( inputState )
+				{
+					inputState = false;
+					nameCursor--;
+				}
 				else
 				{
 					nameImage[nameCursor]->renderflag = false;
@@ -242,6 +261,140 @@ namespace
 				nameImage[nameCursor]->renderflag = false;
 				cancelState = true;
 			}
+		}
+	}
+
+	//	文字チェック
+	void	NameInput::CharacterCheck( bool& voicedSpotState )
+	{
+		bool	semiVoicedSpot = false;
+
+		//	選択したカーソル位置を保存
+		int out = 0;
+		int nameIndex = cursorX + cursorY * CURSOR_MAX_X;
+
+		//	濁点、半濁点チェック
+		semiVoicedSpot = false;
+		voicedSpotState = VoicedSpotCheck( out, name[nameCursor - 1], nameIndex, semiVoicedSpot );
+
+		//	読み込み位置を指定
+		if ( !voicedSpotState )
+		{
+			name[nameCursor] = nameIndex;
+			NormalCharacterSet();
+		}
+		else
+		{
+			name[nameCursor - 1] = out;
+			VoicedSpotCharacterSet( out, semiVoicedSpot );
+		}
+	}
+
+	//	文字チェック最終
+	void	NameInput::CharacterCheckLast( void )
+	{
+		//	濁点、半濁点チェック
+		bool semiVoicedSpot = false;
+		int nameIndex = cursorX + cursorY * CURSOR_MAX_X;
+		int out;
+		bool voicedSpotState = VoicedSpotCheck( out, name[nameCursor - 1], nameIndex, semiVoicedSpot );
+
+		//	読み込み位置を指定
+		if ( voicedSpotState )
+		{
+			name[nameCursor - 1] = out;
+
+			//	半濁点時
+			if ( semiVoicedSpot )
+			{
+				nameImage[nameCursor - 1]->sx =
+					SRC_SEMIVOICED_SPOT_CHAR_X + ( ( out % 5 ) * SRC_SCALE );
+
+				nameImage[nameCursor - 1]->sy = SRC_SEMIVOICED_SPOT_CHER_Y;
+			}
+			else
+			{
+				//	濁点時
+				nameImage[nameCursor - 1]->sx = ( ( out - 5 ) % CURSOR_MAX_X * SRC_SCALE );
+				nameImage[nameCursor - 1]->sy = ( ( out - 5 ) / CURSOR_MAX_X * SRC_SCALE );
+			}
+		}
+	}
+
+	//	濁点、半濁点チェック( 半濁点時trueをかえす )
+	bool	NameInput::VoicedSpotCheck( int& outIndex, int beforeIndex, int nameIndex, bool& semiVoicedSpot )
+	{
+		bool	out = false;
+
+		//	半濁点
+		if ( nameIndex == SEMI_VOICED_SPOT_INDEX )
+		{
+			out = true;
+			semiVoicedSpot = true;
+			if ( beforeIndex >= 25 && beforeIndex <= 29 )
+			{
+				outIndex = 60 + beforeIndex + 5;
+			}
+			else	return	false;
+		}
+
+		//	濁点
+		else if ( nameIndex == VOICED_SPOT_INDEX )
+		{
+			out = true;
+
+			//	か行
+			if ( beforeIndex >= 5 && beforeIndex <= 9 )	
+			{
+				outIndex = 60 + beforeIndex;
+			}
+			//	さ行
+			else if ( beforeIndex >= 10 && beforeIndex <= 14 )
+			{
+				outIndex = 60 + beforeIndex;
+			}
+			//	た行
+			else if ( beforeIndex >= 15 && beforeIndex <= 19 )
+			{
+				outIndex = 60 + beforeIndex;
+			}
+			//	は行
+			else if ( beforeIndex >= 25 && beforeIndex <= 29 )
+			{
+				outIndex = 60 + beforeIndex - 5;
+			}
+			//	該当なし
+			else	return	false;
+		}
+		else return	false;
+
+		return	out;
+	}
+
+	//	通常文字設定
+	void	NameInput::NormalCharacterSet( void )
+	{
+		//	通常時
+		nameImage[nameCursor]->sx = cursorX * SRC_SCALE;
+		nameImage[nameCursor]->sy = cursorY * SRC_SCALE;
+	}
+	
+	//	濁点、半濁点文字設定
+	void	NameInput::VoicedSpotCharacterSet( int nameIndex, bool semiVoicedSpot )
+	{
+		//	半濁点時
+		if ( semiVoicedSpot )
+		{
+			nameImage[nameCursor - 1]->sx =
+				SRC_SEMIVOICED_SPOT_CHAR_X + ( ( nameIndex % 5 ) * SRC_SCALE );
+
+			nameImage[nameCursor - 1]->sy = SRC_SEMIVOICED_SPOT_CHER_Y;
+		}
+		else
+		{
+			//	濁点時
+			nameImage[nameCursor - 1]->sx = ( ( nameIndex - 5 ) % 10 * SRC_SCALE );
+			nameImage[nameCursor - 1]->sy = ( ( nameIndex - 5 ) / 10 * SRC_SCALE );
 		}
 	}
 

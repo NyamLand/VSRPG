@@ -63,7 +63,7 @@
 		
 		//	‰Šú’lÝ’è
 		gameParam->GetPlayerStatus().Initialize(
-			power, defense, magicAttack, magicDefense, speed );
+			power, defense, magicAttack, magicDefense, hp, speed );
 		return	true;
 	}
 

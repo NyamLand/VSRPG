@@ -36,10 +36,16 @@ public:
 	void	Render( void );
 
 	//	“®ìŠÖ”
+	void	CharacterCheck( bool& voicedSpotState );
+	void	CharacterCheckLast( void );
+	bool	VoicedSpotCheck( int& out, int beforeIndex, int nameIndex, bool& semiVoicedSpot );
 	void	MoveCursor( void );
 	void	UpdateInfo( void );
 	void	DecisionCharacter( void );
 	void	Cancel( void );
+
+	void	NormalCharacterSet( void );
+	void	VoicedSpotCharacterSet( int nameIndex, bool semiVoicedSpot );
 
 	//	î•ñæ“¾
 	bool	GetCancelState( void );

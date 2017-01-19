@@ -166,7 +166,11 @@ bool	sceneMatching::threadState;
 					step = MATCHING_MODE::WAIT;
 				}
 			}
+
 		case MATCHING_MODE::WAIT:
+			//	プレイヤー情報送信
+			gameParam->SendPlayerInfo();
+
 			//	待機画面更新
 			gameWait->Update();
 			break;
@@ -271,7 +275,7 @@ void	sceneMatching::ThreadFunc( void* ptr )
 	for (;;)
 	{
 		//	サーバーから情報受信
-		gameParam->Update();
+		gameParam->Receive();
 
 		//	thread終了
 		if ( gameManager->GetChangeSceneFrag() )	break;

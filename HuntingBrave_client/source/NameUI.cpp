@@ -23,6 +23,12 @@
 #define	SRC_SIZE			64
 #define	DAKUTEN			60
 
+//	濁点、半濁点
+#define	VOICED_SPOT_INDEX		56
+#define	SEMI_VOICED_SPOT_INDEX	57
+#define	SRC_SEMIVOICED_SPOT_CHAR_X  640
+#define	SRC_SEMIVOICED_SPOT_CHER_Y	64
+
 //----------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------
@@ -74,30 +80,19 @@
 	{
 		for ( int i = 0; i < NAME_MAX; i++ ) 
 		{
-			//	読み込み位置設定
-			if ( name[i] == 0 )
+			//	座標設定
+			nameImage[i]->x = ( int )( posX - ( space * 1.5f ) + ( space * i ) );
+			nameImage[i]->y = posY;
+
+			//	読み込み位置を指定
+			if ( name[i] < 60 )
 			{
-				nameImage[i]->sy = 0;
-				nameImage[i]->sx = 0;
+				NormalCharacterSet( name, i );
 			}
 			else
 			{
-				int sx, sy;
-				if (name[i] != 0)
-				{
-					sy = name[i] / SRC_X_MAX;
-					sx = name[i] % SRC_X_MAX;
-				}
-				else
-				{
-					sx = 0; sy = 0;
-				}
-				nameImage[i]->sy = sy * SRC_SIZE;
-				nameImage[i]->sx = sx * SRC_SIZE;
+				VoicedSpotCharacterSet( name, i );
 			}
-
-			nameImage[i]->x = ( int )( posX - ( space * 1.5f ) + ( space * i ) );
-			nameImage[i]->y = posY;
 		}
 	}
 
@@ -113,6 +108,52 @@
 //----------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------
+
+	//	通常文字設定
+	void	NameUI::NormalCharacterSet( int* name, int index )
+	{
+		//	通常文字設定
+		if ( name[index] == 0 )
+		{
+			nameImage[index]->sy = 0;
+			nameImage[index]->sx = 0;
+		}
+		else
+		{
+			int sx, sy;
+			if ( name[index] != 0 )
+			{
+				sy = name[index] / SRC_X_MAX;
+				sx = name[index] % SRC_X_MAX;
+			}
+			else
+			{
+				sx = 0; sy = 0;
+			}
+
+			nameImage[index]->sy = sy * SRC_SIZE;
+			nameImage[index]->sx = sx * SRC_SIZE;
+		}
+	}
+
+	//	濁点、半濁点文字設定
+	void	NameUI::VoicedSpotCharacterSet( int* name, int index )
+	{
+		//	半濁点時
+		if ( name[index] >= 90 )
+		{
+			nameImage[index]->sx =
+				SRC_SEMIVOICED_SPOT_CHAR_X + ( ( name[index] % 5 ) * SRC_SIZE );
+
+			nameImage[index]->sy = SRC_SEMIVOICED_SPOT_CHER_Y;
+		}
+		else
+		{
+			//	濁点時
+			nameImage[index]->sx = ( ( name[index] - 5 ) % 10 * SRC_SIZE );
+			nameImage[index]->sy = ( ( name[index] - 5 ) / 10 * SRC_SIZE );
+		}
+	}
 
 //----------------------------------------------------------------------------------
 //	情報設定

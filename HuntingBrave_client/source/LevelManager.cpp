@@ -110,6 +110,10 @@
 			CulcSpeed( data );
 			break;
 
+		case RECEIVE_STATUS::LIFE:
+			CulcMaxLife( data );
+			break;
+
 		case RECEIVE_STATUS::ALL:
 			CulcAllStatus( data );
 			break;
@@ -134,6 +138,7 @@
 		gameParam->GetPlayerStatus().defense = statusData.defense;
 		gameParam->GetPlayerStatus().magicPower = statusData.magicAttack;
 		gameParam->GetPlayerStatus().magicDefense = statusData.magicDefense;
+		gameParam->GetPlayerStatus().maxLife = statusData.life;
 		gameParam->GetPlayerStatus().speed = statusData.speed;
 	}
 
@@ -163,6 +168,13 @@
 	{
 		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
 		gameParam->GetPlayerStatus().CulcMagicDefense( ( int )statusData->status );
+	}
+
+	//	最大HP計算
+	void	LevelManager::CulcMaxLife( const LPSTR& data )
+	{
+		ReceiveStatusData*	statusData = ( ReceiveStatusData* )data;
+		gameParam->GetPlayerStatus().CulcMaxLife( ( int )statusData->status );
 	}
 
 	//	スピード計算
