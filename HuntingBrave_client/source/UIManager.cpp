@@ -102,6 +102,8 @@ bool	UIManager::Initialize( void )
 	yaju = new Image();
 	yaju->Initialize( "DATA/UI/main_UI/Yaju.png", posx, posy, 0, 0, 0, 0, 960, 540 );
 	yaju->SetScaling( 0.01f );
+	//	test
+	hp = 50;
 
 	upGradeUI = new UpGradeUI();
 	check = false;
@@ -137,12 +139,15 @@ void	UIManager::Update( void )
 	boardUI->Update();
 	upGradeUI->Update();
 	
-
+	
 	//	値セット
 	scoreUI->SetScore(gameParam->GetPointInfo(p_num).point);
 	expUI->SetExp(levelManager->GetExp());
+	hpUI->SetHp(hp);
+	if (KEY_Get(KEY_A) == 3) hp -= 10;
 
-	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 3000) == 1)	check = true;
+
+	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 30000) == 1)	check = true;
 	if (check){
 		//	neta
 		if (yaju->scalingState != IMAGE_SCALING::SMALL)
