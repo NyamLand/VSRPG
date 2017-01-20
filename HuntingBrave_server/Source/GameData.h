@@ -135,6 +135,7 @@ namespace SCENE
 				SIGN_UP,
 				GAME_START,
 				CHANGE_SCENE,
+				KILL_INFO
 			};
 		}
 	}

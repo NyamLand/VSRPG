@@ -42,6 +42,7 @@ public:
 	void	SendCharaInfo( int client, int player );
 	void	SendMatchingInfo( int client, int player );
 	void	SendGameInfo( int client );
+	void	SendKillInfo( int killer, int dead );
 
 	//	óMˆ—
 	int	ReceiveChara( int client, const LPSTR& data );

@@ -448,6 +448,12 @@ GameParam*	gameParam = nullptr;
 
 		case RESPONSE_COMMAND::GAME_START:
 			break;
+
+		case RESPONSE_COMMAND::KILL_INFO:
+			{
+				KillInfo*	killInfo = ( KillInfo* )data;			
+			}
+			break;
 		}
 	}
 

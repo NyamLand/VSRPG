@@ -127,7 +127,8 @@
 			{
 				SIGN_UP,
 				GAME_START,
-				CHANGE_SCENE
+				CHANGE_SCENE,
+				KILL_INFO
 			};
 		}
 	}
@@ -170,6 +171,15 @@
 		bool	isComplete;
 		Matching( void );
 		Matching( int id, bool isComplete );
+	};
+
+	//	ÉLÉãÉçÉOóp
+	struct KillInfo
+	{
+		char com;
+		char responseCom;
+		int killer;
+		int dead;
 	};
 
 //*****************************************************************************************************************************
