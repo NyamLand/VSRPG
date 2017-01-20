@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
 #include	"GameParam.h"
+#include	"Camera.h"
 #include	"Image.h"
 #include	"MapUI.h"
 
@@ -45,6 +46,9 @@
 		posy = MAP_POS_Y;	
 		width = MAP_SIZE;	
 		height = MAP_SIZE;
+
+		//	自分のID取得
+		myIndex = gameParam->GetMyIndex();
 
 		//	レーダー背景初期化
 		back = new Image();
@@ -97,22 +101,33 @@
 
 			PlayerParam	playerParam = gameParam->GetPlayerParam( i );
 
-			//	マップ中央からの距離を求める
-			Vector3 vec = playerParam.pos - Vector3( 0.0f, 0.0f, 0.0f );
+			//	自キャラからの距離を求める
+			Vector3 vec = playerParam.pos - gameParam->GetPlayerParam( myIndex ).pos;
 
 			//	マップ表示用に割合を求める
-			float length = vec.Length() / MAP_MAX_LENGTH;
+			float percentage = vec.Length() / RADER_LENGTH;
 
-			//	マップ上のアイコン座標を求める
+			//	マップ上のアイコン距離を求める
+			float	length = 0.0f;
+			if ( percentage >= 1.0f )	length = ICON_MAX_POS;
+			else  length = ICON_MAX_POS * percentage;
+
+			//	距離からアイコン座標を求める
 			vec.Normalize();
-			Vector3 iconPos = vec * ( ICON_MAX_POS * length );
+			Vector3 iconPos = vec * length;
+			
+			//	カメラ方向取得
+			Vector3	vEye( mainView->GetTarget() - mainView->GetPos() );
+			float	cameraAngle = atan2f( vEye.x, vEye.z );
+			iconPos.x *= sinf( cameraAngle );
+			iconPos.z *= cosf( cameraAngle );
 
 			//	アイコン座標設定
 			player[i]->x = player[i]->p.x = MAP_POS_X + ( int )iconPos.x;
 			player[i]->y = player[i]->p.y = MAP_POS_Y - ( int )iconPos.z;
 
 			//	アイコン向き設定
-			player[i]->angle = playerParam.angle;
+			player[i]->angle = playerParam.angle + cameraAngle;
 		}
 	}
 

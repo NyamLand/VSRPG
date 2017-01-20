@@ -65,6 +65,7 @@ public:
 	Vector3	GetPos( void )const;
 	Vector3	GetTarget( void )const;
 	Matrix	GetMatrix( void )const;
+	float		GetRotateAngle( void )const;
 };
 
 extern Camera* mainView;

@@ -113,6 +113,18 @@
 		}
 	}
 
+	//	Œü‚«’²®iC³”Åj
+	void	Enemy::AngleAdjust( const Vector3& moveVec, float adjustSpeed )
+	{
+		//	ˆÚ“®•ûŒü‚ğ‹‚ß‚é
+		float	moveAngle = atan2f( moveVec.x, moveVec.z );
+
+		//	e‚É“Š‚°‚é
+		AngleAdjustParent(
+			Vector3( sinf( moveAngle ), 0.0f, cosf( moveAngle ) ),
+			adjustSpeed);
+	}
+
 //------------------------------------------------------------------------------------
 //	“®ìŠÖ”
 //------------------------------------------------------------------------------------

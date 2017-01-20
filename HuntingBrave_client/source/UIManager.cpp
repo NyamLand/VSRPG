@@ -21,13 +21,13 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-UIManager::UIManager(void)
+UIManager::UIManager( void )
 {
 
 }
 
 //	デストラクタ
-UIManager::~UIManager(void)
+UIManager::~UIManager( void )
 {
 	Release();
 }
