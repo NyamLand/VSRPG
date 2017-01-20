@@ -8,6 +8,7 @@
 //***************************************************************
 
 //	include
+#include	"Result.h"
 
 //	class
 class sceneResult : public Scene
@@ -15,6 +16,7 @@ class sceneResult : public Scene
 private:
 	iex2DObj*	back;
 	iex2DObj*	lovelive;
+	Result*		result;
 
 	float	percentage;
 	float alpha;
