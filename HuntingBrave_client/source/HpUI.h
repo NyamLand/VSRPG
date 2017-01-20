@@ -26,7 +26,7 @@ private:
 	iex2DObj* hp_obj;
 	Image* hpBack_obj;
 	int	posx, posy, width, height;
-	int hp,damage,damage_width,keep_width;
+	int hp,max_hp,damage,damage_width,keep_width;
 	float damage_volume;
 
 	int hp_damage_x, hp_damage_sx, hp_damage_sw;
@@ -46,5 +46,6 @@ public:
 
 	//	î•ñæ“¾Eİ’è
 	void	SetHp(int hp);
+	void	SetMaxHp(int max_hp);
 };
 

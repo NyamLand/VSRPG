@@ -87,7 +87,7 @@ void	HpUI::SetDamage(void)
 	if (damage_state == true) return;
 
 	//	hp‚ÌŠ„‡
-	float p = (float)((float)hp / 50.0f);
+	float p = (float)((float)hp / (float)max_hp);
 
 	//	hpŽc—Ê‚ÌŒvŽZ
 	hp_w = width * p;
@@ -159,6 +159,11 @@ void	HpUI::SetHp(int hp)
 	{
 		keep_width = hp_w;
 	}
+}
+
+void	HpUI::SetMaxHp(int max_hp)
+{
+	this->max_hp = max_hp;
 }
 
 //---------------------------------------------------------------------------------------
