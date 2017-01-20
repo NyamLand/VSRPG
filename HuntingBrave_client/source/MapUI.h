@@ -17,6 +17,7 @@ private:
 	Image*	back;
 	Image*		player[PLAYER_MAX];
 	int	posx, posy, width, height;
+	int	myIndex;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
