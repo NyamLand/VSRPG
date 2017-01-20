@@ -59,6 +59,7 @@ public:
 	bool	DistCheck( float& length );
 	void	LifeCheck( void );
 	void	StageCheck( void );
+	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed )override;
 
 	//ÉÇÅ[Éhä÷êî
 

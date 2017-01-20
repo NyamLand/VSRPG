@@ -107,6 +107,9 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
+	//	送信
+	gameParam->Send();
+
 	//	経過時間取得
 	float elapseTime = GetElapseTime();
 
@@ -134,10 +137,6 @@ void	sceneMain::Update( void )
 
 	//	collision
 	collision->AllCollision();
-
-	//	送信
-	gameParam->Send();
-
 	//	シーン切り替え
 	if ( threadState )
 		gameManager->ChangeScene( SCENE::RESULT );
