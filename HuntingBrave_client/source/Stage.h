@@ -13,11 +13,19 @@
 class Stage
 {
 private:
+	enum
+	{
+		STAGE,
+		SOTO,
+		TREE,
+		TORIDE,
+		DEPARI,
+		HEI,
+		MOUNTAIN,
+		PARTS_MAX
+	};
 	iexMesh*	collisionMesh;
-	iexMesh*	stage;
-	iexMesh*	soto;
-	iexMesh*	tree;
-	iexMesh*	toride;
+	iexMesh*	stage[PARTS_MAX];
 
 public:
 	//	‰Šú‰»E‰ğ•ú

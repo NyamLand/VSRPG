@@ -31,7 +31,7 @@ Collision*	collision = nullptr;
 	Collision::Collision( GameParam* gameParam ) : 
 		gameParam( gameParam ), collisionMesh( nullptr )
 	{
-		collisionMesh = new iexRayMesh( "DATA/STAGE/collision.IMO" );
+		collisionMesh = new iexRayMesh( "DATA/STAGE/stage_atari.IMO" );
 	}
 
 	//	デストラクタ
