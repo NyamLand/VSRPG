@@ -40,6 +40,7 @@ public:
 	~Camera( void );
 	bool Initialize( VIEW_MODE view_mode, const Vector3& Pos, const Vector3& Target  );
 	void Release( void );
+	void	AngleInit( int index );
 
 	//	XVE•`‰æ
 	void	Update( const Vector3& Taget );
@@ -57,6 +58,7 @@ public:
 	void	Shake( void );
 
 	//	î•ñİ’è
+	void	SetRotateAngle( float rotateAngle );
 
 	//	î•ñæ“¾
 	static Camera* GetInstance( void );

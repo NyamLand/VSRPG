@@ -79,12 +79,7 @@ bool	UIManager::Initialize( void )
 	//---------------------------------------
 	//	マップのポジションをセット(右上）
 	//---------------------------------------
-	width = (int)(MAP_MAX::WIDTH / 2.5f);			//	スケール1/2.5
-	height = (int)(MAP_MAX::HEIGHT / 2.5f);			//	スケール1/2.5
-	posx = iexSystem::ScreenWidth - (width / 2);	//	中心から端までの距離
-	posy = height / 2;								//	画面端から画像の中心から端までの距離引く
-
-	mapUI = new MapUI(posx, posy, width, height);
+	mapUI = new MapUI();
 
 	//---------------------------------------
 	//	スコアボードのポジションをセット(中心）

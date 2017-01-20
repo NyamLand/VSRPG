@@ -57,6 +57,9 @@ bool	sceneMain::Initialize( void )
 		Vector3( 0.0f, 15.0f, -15.0f ),
 		Vector3( 0.0f, 3.0f, 0.0f ) );
 
+	//	ƒJƒƒ‰‰Šú‰»
+	mainView->AngleInit( gameParam->GetMyIndex() );
+
 	//	stage‰Šú‰»
 	stage = new Stage();
 
