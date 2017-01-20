@@ -51,9 +51,6 @@ private:
 	Image*			yaju;
 	bool			check;
 
-	//	test
-	int				hp;
-
 public:
 	//	‰Šú‰»E‰ğ•ú
 	bool	Initialize( void );
