@@ -7,8 +7,7 @@
 //
 //***************************************************************
 
-//	define
-#define	BOARD_PER 1.5
+
 
 #include	"GameData.h"
 #include	"ScoreUI.h"

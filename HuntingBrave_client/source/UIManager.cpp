@@ -84,8 +84,8 @@ bool	UIManager::Initialize( void )
 	//---------------------------------------
 	//	スコアボードのポジションをセット(中心）
 	//---------------------------------------
-	width = (int)(BOARD_MAX::BOARD_WIDTH / BOARD_PER );
-	height = (int)(BOARD_MAX::BOARD_HEIGHT / BOARD_PER );
+	width = (int)(BOARD_MAX::BOARD_WIDTH);
+	height = (int)(BOARD_MAX::BOARD_HEIGHT);
 	posx = iexSystem::ScreenWidth / 2;				//	画面の中心
 	posy = iexSystem::ScreenHeight / 2;				//	画面の中心
 
