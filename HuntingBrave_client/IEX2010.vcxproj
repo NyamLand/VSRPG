@@ -136,6 +136,7 @@
     <ClCompile Include="source\ItemManager.cpp" />
     <ClCompile Include="source\ItemSelect.cpp" />
     <ClCompile Include="source\ItemUI.cpp" />
+    <ClCompile Include="source\KillLogUI.cpp" />
     <ClCompile Include="source\LevelManager.cpp" />
     <ClCompile Include="source\LightSphereEffect.cpp" />
     <ClCompile Include="source\Magic.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="source\ItemManager.h" />
     <ClInclude Include="source\ItemSelect.h" />
     <ClInclude Include="source\ItemUI.h" />
+    <ClInclude Include="source\KillLogUI.h" />
     <ClInclude Include="source\LevelManager.h" />
     <ClInclude Include="source\LightSphereEffect.h" />
     <ClInclude Include="source\Magic.h" />

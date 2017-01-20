@@ -22,6 +22,7 @@
 #include	"ScoreUI.h"
 #include	"UpGradeUI.h"
 #include	"ScoreBoardUI.h"
+#include	"KillLogUI.h"
 
 //	class
 class UIManager : public Singleton<UIManager> 
@@ -43,6 +44,7 @@ private:
 	ScoreUI*		scoreUI;
 	ScoreBoardUI*	boardUI;
 	UpGradeUI*	upGradeUI;
+	KillLogUI*	killLogUI;
 
 	//	プレイヤー番号
 	int				p_num;
@@ -59,6 +61,9 @@ public:
 	//	更新・描画
 	void	Update(void);
 	void	Render(void);
+
+	//	情報設定
+	void	SetKillLog( int killer, int dead );
 };
 
 #define	uiManager ( UIManager::GetInstance() )

@@ -11,6 +11,7 @@
 #include	"InputManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"UIManager.h"
 #include	"Sound.h"
 #include	"sceneTitle.h"
 #include	"sceneMatching.h"
@@ -451,7 +452,8 @@ GameParam*	gameParam = nullptr;
 
 		case RESPONSE_COMMAND::KILL_INFO:
 			{
-				KillInfo*	killInfo = ( KillInfo* )data;			
+				KillInfo*	killInfo = ( KillInfo* )data;
+				uiManager->SetKillLog( killInfo->killer, killInfo->dead );
 			}
 			break;
 		}

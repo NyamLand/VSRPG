@@ -259,6 +259,9 @@
     <ClCompile Include="source\Result.cpp">
       <Filter>Source\Scene\sceneResult</Filter>
     </ClCompile>
+    <ClCompile Include="source\KillLogUI.cpp">
+      <Filter>Source\UI\KillLogUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -482,6 +485,9 @@
     </ClInclude>
     <ClInclude Include="source\Result.h">
       <Filter>Source\Scene\sceneResult</Filter>
+    </ClInclude>
+    <ClInclude Include="source\KillLogUI.h">
+      <Filter>Source\UI\KillLogUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -742,6 +748,9 @@
     </Filter>
     <Filter Include="Source\Scene\sceneLoad\WaitLoad">
       <UniqueIdentifier>{dc24fd0b-6ac1-47f8-af36-71e31402b02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\KillLogUI">
+      <UniqueIdentifier>{393d7d6c-5ea8-4685-bc69-19afb0fcf461}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
