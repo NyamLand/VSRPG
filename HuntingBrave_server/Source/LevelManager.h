@@ -69,6 +69,7 @@ public:
 	void	CulcDefense( int id, char levelType );
 	void	CulcMagicAttack( int id, char levelType );
 	void	CulcMagicDefense( int id, char levelType );
+	void	CulcMaxLife( int id, char levelType );
 	void	CulcSpeed( int id, char levelType );
 	
 	//	ステータス送信

@@ -188,6 +188,7 @@ LevelManager*	levelManager = nullptr;
 		CulcDefense( id, levelType );
 		CulcMagicAttack( id, levelType );
 		CulcMagicDefense( id, levelType );
+		CulcMaxLife( id, levelType );
 		CulcSpeed( id, levelType );
 	}
 
@@ -229,6 +230,16 @@ LevelManager*	levelManager = nullptr;
 			UPGRADE_DATA::MAGIC_DIFENSE,
 			levelInfo[id].level[levelType] );
 		gameParam->GetPlayerStatus( id ).CulcMagicDefense( addParam );
+	}
+
+	//	最大HP計算
+	void	LevelManager::CulcMaxLife( int id, char levelType )
+	{
+		int addParam = gameManager->GetUpGrade(
+			levelType,
+			UPGRADE_DATA::HP,
+			levelInfo[id].level[levelType] );
+		gameParam->GetLifeInfo( id ).AddMaxLife( addParam );
 	}
 
 	//	スピード計算

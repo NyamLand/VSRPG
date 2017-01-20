@@ -7,30 +7,24 @@
 //
 //***************************************************************
 
-namespace MAP_MAX
-{
-	enum
-	{
-		WIDTH = 512,				//	画像横幅
-		HEIGHT = 512,				//	画像縦幅
-	};
-}
-
+//	include
+#include	"GameData.h"
 
 //	class
 class MapUI
 {
 private:
-	Image*	obj;
+	Image*	back;
+	Image*		player[PLAYER_MAX];
 	int	posx, posy, width, height;
 
 public:
 	//	初期化・解放
-	MapUI(int x, int y, int w, int h);
-	~MapUI(void);
+	MapUI( void );
+	~MapUI( void );
 
 	//	更新・描画
-	void	Update(void);
-	void	Render(void);
+	void	Update( void );
+	void	Render( void );
 };
 

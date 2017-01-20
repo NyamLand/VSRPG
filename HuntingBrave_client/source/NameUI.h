@@ -28,6 +28,8 @@ public:
 	//	XVE•`‰æ
 	void	Update( int* name );
 	void	Render( void );
+	void	NormalCharacterSet( int* name, int index );
+	void	VoicedSpotCharacterSet( int* name, int index );
 
 	//	î•ñİ’è
 	void	SetPos( int posx, int posy );

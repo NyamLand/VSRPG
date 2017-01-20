@@ -256,6 +256,9 @@
     <ClCompile Include="source\WaitLoad.cpp">
       <Filter>Source\Scene\sceneLoad\WaitLoad</Filter>
     </ClCompile>
+    <ClCompile Include="source\Result.cpp">
+      <Filter>Source\Scene\sceneResult</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -476,6 +479,9 @@
     </ClInclude>
     <ClInclude Include="source\WaitLoad.h">
       <Filter>Source\Scene\sceneLoad\WaitLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Result.h">
+      <Filter>Source\Scene\sceneResult</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -53,14 +53,16 @@
 		int defense;
 		int magicPower;
 		int magicDefense;
+		int maxLife;
 		float speed;
 
 		//	ŒvŽZ
-		void	Initialize( int power, int defense, int magicPower, int magicDefense, float speed );
+		void	Initialize( int power, int defense, int magicPower, int magicDefense, int maxLife, float speed );
 		void	CulcPower( int power );
 		void	CulcDefense( int defense );
 		void	CulcMagicPower( int power );
 		void	CulcMagicDefense( int defense );
+		void	CulcMaxLife( int maxLife );
 		void	DoubleSpeed( float param );
 	};
 

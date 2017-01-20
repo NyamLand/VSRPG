@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameManager.h"
+#include	"GameParam.h"
 #include	"Image.h"
 #include	"MapUI.h"
 
@@ -15,44 +16,116 @@
 //	グローバル	
 //---------------------------------------------------------------------------------------
 
+//	マップ、レーダー距離
+#define	MAP_MAX_LENGTH		400.0f
+#define	RADER_LENGTH		50.0f
+
+//	マップUIサイズ
+#define	MAP_SIZE		250
+#define	MAP_POS_X		1150
+#define	MAP_POS_Y		130
+#define	MAP_SRC_SIZE	512
+
+//	アイコンUIサイズ
+#define	ICON_SIZE	15
+#define	MY_ICON_SIZE	20
+#define	ICON_MAX_POS	125
+#define	ICON_SRC_POS	512
+#define	ICON_SRC_SIZE	32
+
 //---------------------------------------------------------------------------------------
 //	初期化・解放
 //---------------------------------------------------------------------------------------
 
-//	コンストラクタ
-MapUI::MapUI(int x, int y, int w, int h)
-{
-	//	座標、サイズ情報格納
-	posx = x;	posy = y;	width = w;	height = h;
+	//	コンストラクタ
+	MapUI::MapUI( void )
+	{
+		//	座標、サイズ情報格納
+		posx = MAP_POS_X;	
+		posy = MAP_POS_Y;	
+		width = MAP_SIZE;	
+		height = MAP_SIZE;
 
-	obj = new Image();
-	obj->Initialize("DATA/UI/main_UI/Map_UI.png", posx, posy, width, height, 0, 0, MAP_MAX::WIDTH, MAP_MAX::HEIGHT);
+		//	レーダー背景初期化
+		back = new Image();
+		back->Initialize( "DATA/UI/main_UI/Map_UI.png", 
+			MAP_POS_X, MAP_POS_Y, 
+			MAP_SIZE, MAP_SIZE, 
+			0, 0, MAP_SRC_SIZE, MAP_SRC_SIZE );
 
-}
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			player[i] = new Image();
+			player[i]->Initialize( "DATA/UI/main_UI/Map_UI.png",
+				MAP_POS_X, MAP_POS_Y,
+				ICON_SIZE, ICON_SIZE,
+				ICON_SRC_POS + ICON_SRC_SIZE * ( i % 2 ), 
+				ICON_SRC_SIZE * ( i / 2 ), 
+				ICON_SRC_SIZE, ICON_SRC_SIZE );
 
-//	デストラクタ
-MapUI::~MapUI(void)
-{
-	SafeDelete(obj);
-}
+			if ( !gameParam->GetPlayerActive( i ) )	player[i]->renderflag = false;
 
+			//	自キャラだけ若干大きく表示
+			if ( gameParam->GetMyIndex() == i )
+			{
+				player[i]->w = player[i]->h = MY_ICON_SIZE;
+			}
+		}
+	}
 
+	//	デストラクタ
+	MapUI::~MapUI( void )
+	{
+		SafeDelete( back );
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			SafeDelete( player[i] );
+		}
+	}
 
 //---------------------------------------------------------------------------------------
 //	更新・描画
 //---------------------------------------------------------------------------------------
 
-//	更新
-void	MapUI::Update(void)
-{
+	//	更新
+	void	MapUI::Update( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( !gameParam->GetPlayerActive( i ) )	continue;
 
-}
+			PlayerParam	playerParam = gameParam->GetPlayerParam( i );
 
-//	描画
-void	MapUI::Render(void)
-{
-	obj->Render(IMAGE_MODE::ADOPTPARAM);
-}
+			//	マップ中央からの距離を求める
+			Vector3 vec = playerParam.pos - Vector3( 0.0f, 0.0f, 0.0f );
+
+			//	マップ表示用に割合を求める
+			float length = vec.Length() / MAP_MAX_LENGTH;
+
+			//	マップ上のアイコン座標を求める
+			vec.Normalize();
+			Vector3 iconPos = vec * ( ICON_MAX_POS * length );
+
+			//	アイコン座標設定
+			player[i]->x = player[i]->p.x = MAP_POS_X + ( int )iconPos.x;
+			player[i]->y = player[i]->p.y = MAP_POS_Y - ( int )iconPos.z;
+
+			//	アイコン向き設定
+			player[i]->angle = playerParam.angle;
+		}
+	}
+
+	//	描画
+	void	MapUI::Render( void )
+	{
+		back->Render( IMAGE_MODE::ADOPTPARAM );
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			player[i]->Render( IMAGE_MODE::ADOPTPARAM );
+		}
+	}
 
 //---------------------------------------------------------------------------------------
 //	動作関数

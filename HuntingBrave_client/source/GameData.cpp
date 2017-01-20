@@ -59,12 +59,13 @@
 //----------------------------------------------------------------------------------------------	
 
 	//	初期化
-	void	PlayerStatus::Initialize( int power, int defense, int magicPower, int magicDefense, float speed )
+	void	PlayerStatus::Initialize( int power, int defense, int magicPower, int magicDefense, int maxLife, float speed )
 	{
 		this->power = power;
 		this->defense = defense;
 		this->magicPower = magicPower;
 		this->magicDefense = magicDefense;
+		this->maxLife = maxLife;
 		this->speed = speed;
 	}
 
@@ -94,6 +95,12 @@
 	{
 		this->magicDefense = defense;
 		if ( this->magicDefense <= 0 )	this->magicDefense = 0;
+	}
+
+	//	最大HP設定
+	void	PlayerStatus::CulcMaxLife( int maxLife )
+	{
+		this->maxLife = maxLife;
 	}
 
 	//	スピード設定

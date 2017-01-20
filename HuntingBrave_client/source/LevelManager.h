@@ -77,6 +77,7 @@ public:
 	void	CulcDefense( const LPSTR& data );
 	void	CulcMagicAttack( const LPSTR& data );
 	void	CulcMagicDefense( const LPSTR& data );
+	void	CulcMaxLife( const LPSTR& data );
 	void	CulcSpeed( const LPSTR& data );
 
 	//	î•ñæ“¾

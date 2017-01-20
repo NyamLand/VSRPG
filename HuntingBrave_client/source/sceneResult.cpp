@@ -58,6 +58,10 @@
 		//	BGMÄ¶
 		sound->PlayBGM( BGM::RESULT );
 
+		//	ƒŠƒUƒ‹ƒg‰Šú‰»
+		result = new Result();
+		result->Initialize(gameParam->GetMyIndex());
+
 		return	true;
 	}
 
@@ -69,6 +73,7 @@
 		SafeDelete( lovelive );
 		SafeDelete( gameParam );
 		//gameManager->Release();
+		SafeDelete( result );
 		sound->StopBGM();
 	}
 
@@ -81,6 +86,8 @@
 	{
 		Interpolation::PercentageUpdate( percentage, 0.03f );
 		bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
+
+		result->Update();
 		if ( !pushState )
 		{
 			if ( KEY( KEY_B ) == 3 ||
@@ -101,4 +108,5 @@
 	{
 		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
 		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		result->Render();
 	}

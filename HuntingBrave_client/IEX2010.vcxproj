@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,13 +14,14 @@
     <ProjectGuid>{C9433152-1C2D-4F56-9C7A-1FBCA2E5D65F}</ProjectGuid>
     <RootNamespace>IEX2009</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -151,6 +152,7 @@
     <ClCompile Include="source\PlayerName.cpp" />
     <ClCompile Include="source\PlayerTitleUI.cpp" />
     <ClCompile Include="source\Random.cpp" />
+    <ClCompile Include="source\Result.cpp" />
     <ClCompile Include="source\sceneLoad.cpp" />
     <ClCompile Include="source\sceneMatching.cpp" />
     <ClCompile Include="source\sceneResult.cpp" />
@@ -239,6 +241,7 @@
     <ClInclude Include="source\PlayerTitleUI.h" />
     <ClInclude Include="source\Random.h" />
     <ClInclude Include="source\ReceiveData.h" />
+    <ClInclude Include="source\Result.h" />
     <ClInclude Include="source\sceneLoad.h" />
     <ClInclude Include="source\sceneMatching.h" />
     <ClInclude Include="source\sceneResult.h" />

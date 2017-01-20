@@ -79,18 +79,13 @@ bool	UIManager::Initialize( void )
 	//---------------------------------------
 	//	マップのポジションをセット(右上）
 	//---------------------------------------
-	width = (int)(MAP_MAX::WIDTH / 2.5f);			//	スケール1/2.5
-	height = (int)(MAP_MAX::HEIGHT / 2.5f);			//	スケール1/2.5
-	posx = iexSystem::ScreenWidth - (width / 2);	//	中心から端までの距離
-	posy = height / 2;								//	画面端から画像の中心から端までの距離引く
-
-	mapUI = new MapUI(posx, posy, width, height);
+	mapUI = new MapUI();
 
 	//---------------------------------------
 	//	スコアボードのポジションをセット(中心）
 	//---------------------------------------
-	width = (int)(BOARD_MAX::BOARD_WIDTH / BOARD_PER );
-	height = (int)(BOARD_MAX::BOARD_HEIGHT / BOARD_PER );
+	width = (int)(BOARD_MAX::BOARD_WIDTH);
+	height = (int)(BOARD_MAX::BOARD_HEIGHT);
 	posx = iexSystem::ScreenWidth / 2;				//	画面の中心
 	posy = iexSystem::ScreenHeight / 2;				//	画面の中心
 
@@ -137,12 +132,15 @@ void	UIManager::Update( void )
 	boardUI->Update();
 	upGradeUI->Update();
 	
-
+	
 	//	値セット
 	scoreUI->SetScore(gameParam->GetPointInfo(p_num).point);
 	expUI->SetExp(levelManager->GetExp());
+	hpUI->SetMaxHp(gameParam->GetPlayerStatus().maxLife);
+	hpUI->SetHp(gameParam->GetPlayerParam(p_num).life);
 
-	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 3000) == 1)	check = true;
+
+	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 30000) == 1)	check = true;
 	if (check){
 		//	neta
 		if (yaju->scalingState != IMAGE_SCALING::SMALL)
