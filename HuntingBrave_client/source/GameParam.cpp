@@ -76,7 +76,6 @@ GameParam*	gameParam = nullptr;
 		}
 		ZeroMemory( &playerStatus, sizeof( PlayerStatus ) );
 
-
 		return	true;
 	}
 	
@@ -114,6 +113,7 @@ GameParam*	gameParam = nullptr;
 		ReceiveAllStatusData	receiveAllStatus;
 		if ( receive( ( LPSTR )&receiveAllStatus, sizeof( receiveAllStatus ) ) <= 0 )	return	false;
 		levelManager->CulcAllStatus( receiveAllStatus );
+
 		return true;
 	}
 

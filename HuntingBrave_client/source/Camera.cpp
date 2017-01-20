@@ -24,6 +24,17 @@ Camera* mainView = nullptr;
 #define	HERFTOP_VIEW_HEIGHT				15.0f
 #define	HERFTOP_VIEW_ROTATE_SPEED		D3DX_PI * 0.015f
 
+namespace
+{
+	const float	rotateInit[] =
+	{
+		PI, 
+		PI * 1.5f, 
+		0.0f,
+		PI * 0.5f
+	};
+}
+
 //----------------------------------------------------------------------------------
 //	‰Šú‰»E‰ğ•ú
 //----------------------------------------------------------------------------------
@@ -58,6 +69,12 @@ Camera* mainView = nullptr;
 		UpdateInfo();
 
 		return	true;
+	}
+
+	//	‰ñ“]‰Šú‰»
+	void	Camera::AngleInit( int index )
+	{
+		rotateAngle = rotateInit[index];
 	}
 
 	//	‰ğ•ú
@@ -150,9 +167,9 @@ Camera* mainView = nullptr;
 		if ( abs( axisX ) >= MIN_INPUT_STICK )
 		{
 			if ( axisX < 0.0f )
-				rotateAngle -= HERFTOP_VIEW_ROTATE_SPEED;
+				rotateAngle += HERFTOP_VIEW_ROTATE_SPEED;
 			else
-				rotateAngle += HERFTOP_VIEW_ROTATE_SPEED;	
+				rotateAngle -= HERFTOP_VIEW_ROTATE_SPEED;	
 		}
 	}
 
@@ -165,6 +182,12 @@ Camera* mainView = nullptr;
 //----------------------------------------------------------------------------------
 //	î•ñİ’è
 //----------------------------------------------------------------------------------
+
+	//	ƒJƒƒ‰•ûŒüİ’è
+	void	Camera::SetRotateAngle( float rotateAngle )
+	{
+		this->rotateAngle = rotateAngle;
+	}
 
 //----------------------------------------------------------------------------------
 //	î•ñæ“¾
