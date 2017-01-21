@@ -144,13 +144,13 @@
 	}
 	
 	//	コンストラクタ
-	Matching::Matching( int id, int mode )
+	Matching::Matching( int id, bool mode )
 	{
 		Set( id, mode );
 	}
 
 	//	情報設定
-	void Matching::Set( int id, int mode )
+	void Matching::Set( int id, bool mode )
 	{
 		this->id = id;
 		this->isComplete = mode;

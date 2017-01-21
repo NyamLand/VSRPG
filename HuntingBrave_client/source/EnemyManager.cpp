@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<vector>
 #include	"Random.h"
 #include	"GameData.h"
 #include	"GlobalFunction.h"

@@ -136,6 +136,12 @@
     <Filter Include="ソース ファイル\PlayerName">
       <UniqueIdentifier>{aee619cf-f15c-4b6e-8950-182ffcabb07f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Enemy\BigEnemy">
+      <UniqueIdentifier>{03d15c30-1596-4c12-9a75-7664a9156db8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Random">
+      <UniqueIdentifier>{ebb16752-6890-4c14-a568-0507ac1c54d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -233,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="Source\PlayerName.cpp">
       <Filter>ソース ファイル\PlayerName</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Random.cpp">
+      <Filter>ソース ファイル\Random</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="Source\PlayerName.h">
       <Filter>ソース ファイル\PlayerName</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Random.h">
+      <Filter>ソース ファイル\Random</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

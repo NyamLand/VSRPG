@@ -16,7 +16,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	ENEMY_MAX	5
-#define	APPEND_INTERVAL	5
+#define	APPEND_INTERVAL	10
 
 namespace
 {
@@ -42,6 +42,7 @@ EnemyManager*	enemyManager = nullptr;
 	EnemyManager::EnemyManager( void ) : timer( nullptr )
 	{
 		enemyList.clear();
+		if ( timer == nullptr )	timer = new Timer();
 	}
 
 	//	デストラクタ
@@ -55,7 +56,6 @@ EnemyManager*	enemyManager = nullptr;
 	{
 		enemyList.clear();
 		if ( timer == nullptr )	timer = new Timer();
-		timer->Start( APPEND_INTERVAL );
 		return	true;
 	}
 
@@ -88,24 +88,21 @@ EnemyManager*	enemyManager = nullptr;
 			( *it )->Update();
 
 			//	敵情報送信
-			if ( (*it)->GetAlive() )
-			{
-				int index = std::distance( enemyList.begin(), it );
-				SendEnemyInfo( index, ( *it )->GetEnemyParam() );
-			}
+			int index = std::distance( enemyList.begin(), it );
+			SendEnemyInfo( index, ( *it )->GetEnemyParam() );
 
 			enemyNum++;
 			it++;
 		}
 
 		//	一定時間ごとに生成
-		if ( timer == nullptr )		return;
+		if ( timer != nullptr )		return;
 
 		if ( timer->Update() )
 		{
 			//	追加
 			if ( enemyNum < ENEMY_MAX )
-				Append( Vector3( 0.0f, 0.0f, 50.0f ), 0.0f );
+				Append( Vector3( 0.0f, 0.0f, 0.0f ), 0.0f );
 
 			timer->Start( APPEND_INTERVAL );
 		}
@@ -128,7 +125,7 @@ EnemyManager*	enemyManager = nullptr;
 		enemyList.push_back( enemy );
 
 		//	追加情報送信
-		SendAppend( pos, angle );
+		SendAppend();
 	}
 
 	//	敵情報送信
@@ -182,20 +179,16 @@ EnemyManager*	enemyManager = nullptr;
 	}
 
 	//	リスト追加情報送信
-	void	EnemyManager::SendAppend( const Vector3& pos, float angle )
+	void	EnemyManager::SendAppend( void )
 	{	
 		static	struct
 		{
 			char com;
 			char enemyCom;
-			Vector3	pos;
-			float			angle;
 		} enemyInfo;
 
 		enemyInfo.com = SEND_COMMAND::ENEMY_INFO;
 		enemyInfo.enemyCom = ENEMY_COMMAND::APPEND_INFO;
-		enemyInfo.pos = pos;
-		enemyInfo.angle = angle;
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{

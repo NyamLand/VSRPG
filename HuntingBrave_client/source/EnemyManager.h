@@ -32,6 +32,8 @@ private:
 	iex3DObj*	org[ENEMY_TYPE::TYPE_MAX];
 	bool		appendOK;
 
+	std::vector<Enemy*>	netList;
+
 	//	‰Šú‰»E‰ğ•ú
 	EnemyManager( void );
 	~EnemyManager( void )override;

@@ -113,7 +113,7 @@
 		{
 			enum
 			{
-				MATCHING = 10,
+				MATCHING = 12,
 				SIGN_UP,
 				SIGN_OUT,
 				RESPONSE
@@ -137,10 +137,10 @@
 	struct SignUp
 	{
 		char	com = COMMANDS::SIGN_UP;
-		int		id;
+		int	id;
 		int	name[4];
-		int frontTitle;
-		int backTitle;
+		int	frontTitle;
+		int	backTitle;
 		SignUp( void ){}
 		SignUp( int id, int* name, int frontTitle, int backTitle );
 		void Set( int id, int* name, int frontTitle, int backTitle );

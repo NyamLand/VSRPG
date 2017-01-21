@@ -146,6 +146,8 @@
     <ClCompile Include="source\NameInput.cpp" />
     <ClCompile Include="source\NameManager.cpp" />
     <ClCompile Include="source\NameUI.cpp" />
+    <ClCompile Include="source\NetEnemy.cpp" />
+    <ClCompile Include="source\NetEnemyManager.cpp" />
     <ClCompile Include="source\NetState.cpp" />
     <ClCompile Include="source\NumberUI.cpp" />
     <ClCompile Include="source\Player.cpp" />
@@ -235,6 +237,8 @@
     <ClInclude Include="source\NameInput.h" />
     <ClInclude Include="source\NameManager.h" />
     <ClInclude Include="source\NameUI.h" />
+    <ClInclude Include="source\NetEnemy.h" />
+    <ClInclude Include="source\NetEnemyManager.h" />
     <ClInclude Include="source\NetState.h" />
     <ClInclude Include="source\NumberUI.h" />
     <ClInclude Include="source\Player.h" />

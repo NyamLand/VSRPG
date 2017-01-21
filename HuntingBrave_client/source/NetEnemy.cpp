@@ -1,13 +1,15 @@
 
 #include	"iextreme.h"
+#include	"GlobalFunction.h"
 #include	"GameParam.h"
-#include	"BaseChara.h"
+#include	"DrawShape.h"
+#include	"NetEnemy.h"
 
-//*****************************************************************************************************************************
+//***************************************************************
 //
-//	BaseCharaクラス
+//	NetEnemyクラス
 //
-//*****************************************************************************************************************************
+//***************************************************************
 
 //----------------------------------------------------------------------------------------------
 //	グローバル
@@ -18,44 +20,91 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	BaseChara::BaseChara( void ) :
-		mode( MODE::MOVE )
+	NetEnemy::NetEnemy( void ) : obj( nullptr ),
+		pos( 0.0f, 0.0f, 0.0f ), 
+		angle( 0.0f )
 	{
-		
+	
 	}
 
 	//	デストラクタ
-	BaseChara::~BaseChara( void )
+	NetEnemy::~NetEnemy( void )
 	{
+		//SafeDelete( obj );
+	}
 
+	//	初期化
+	void	NetEnemy::Initialize( iex3DObj* org, const Vector3& Pos, float Angle )
+	{
+		this->pos = Pos;
+		this->angle = Angle;
+		obj = org;
+		obj->SetPos( pos );
+		obj->SetAngle( angle );
+		obj->Update();
 	}
 
 //----------------------------------------------------------------------------------------------
-//	更新
+//	更新・描画
 //----------------------------------------------------------------------------------------------
+
+	//	更新
+	void	NetEnemy::Update( void )
+	{
+		obj->SetPos( pos );
+		obj->SetAngle( angle );
+		obj->Update();
+		obj->Animation();
+	}
+
+	//	描画
+	void	NetEnemy::Render( void )
+	{
+		obj->Render();
+	}
 
 //----------------------------------------------------------------------------------------------
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
-
 //----------------------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------------------
 
-	//	モード設定( 新規モードが同じならfalseをかえす )
-	bool	BaseChara::SetMode( int nextMode )
+	//	座標設定
+	void	NetEnemy::SetPos( const Vector3& pos )
 	{
-		if ( mode != nextMode )
-		{ 
-			mode = nextMode;
-			return	true;
+		this->pos = pos;
+	}
+
+	//	方向設定
+	void	NetEnemy::SetAngle( float angle )
+	{
+		this->angle = angle;
+	}
+
+	//	モーション設定
+	void	NetEnemy::SetMotion( int motion )
+	{
+		if ( obj->GetMotion() != motion )
+		{
+			obj->SetMotion( motion );
 		}
-		
-		return	false;
+	}
+
+	//	メッシュ設定
+	void	NetEnemy::SetMesh( iex3DObj*	mesh )
+	{
+		obj = mesh;
 	}
 
 //----------------------------------------------------------------------------------------------
 //	情報取得
 //----------------------------------------------------------------------------------------------
+
+	//	座標取得
+	Vector3	NetEnemy::GetPos( void )const
+	{
+		return	pos;
+	}
 

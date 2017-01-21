@@ -123,6 +123,7 @@
     <ClCompile Include="Source\PlayerManager.cpp" />
     <ClCompile Include="Source\PlayerName.cpp" />
     <ClCompile Include="Source\PointManager.cpp" />
+    <ClCompile Include="Source\Random.cpp" />
     <ClCompile Include="Source\sceneMain.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\sceneMatching.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Source\PlayerManager.h" />
     <ClInclude Include="Source\PlayerName.h" />
     <ClInclude Include="Source\PointManager.h" />
+    <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\ReceiveData.h" />
     <ClInclude Include="Source\sceneMain.h" />
     <ClInclude Include="Source\SceneManager.h" />
