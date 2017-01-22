@@ -25,8 +25,6 @@ namespace ENEMY_COMMAND
 }
 
 #define	MINOTAURUS_SCALE	0.02f
-#define	MINOTAURUS_HEIGHT	2.0f
-#define	MINOTAURUS_RADIUS	1.5f
 
 //----------------------------------------------------------------------------------------------
 //	èâä˙âªÅEâï˙
@@ -48,9 +46,12 @@ namespace ENEMY_COMMAND
 	bool	NetEnemyManager::Initialize( void )
 	{
 		if ( org == nullptr )
+		{
 			org = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
+			org->SetScale( MINOTAURUS_SCALE );
+			org->Update();
+		}
 
-		org->SetScale( MINOTAURUS_SCALE );
 		enemyList.clear();
 		return	true;
 	}
@@ -73,18 +74,18 @@ namespace ENEMY_COMMAND
 	//	çXêV
 	void	NetEnemyManager::Update( void )
 	{
-		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		for ( int i = 0; i < enemyList.size(); i++)
 		{
-			( *it )->Update();
+			enemyList[i]->Update();
 		}
 	}
 
 	//	ï`âÊ
 	void	NetEnemyManager::Render( void )
 	{
-		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		for ( int i = 0; i < enemyList.size(); i++ )
 		{
-			( *it )->Render();
+			enemyList[i]->Render();
 		}
 	}
 
@@ -121,10 +122,12 @@ namespace ENEMY_COMMAND
 		switch ( data[1] )
 		{
 		case ENEMY_COMMAND::ENEMY_INFO:
+			if ( enemyList.empty() )	break;
 			ReceiveEnemyInfo( data );
 			break;
 
 		case ENEMY_COMMAND::ERASE_INFO:
+			if ( enemyList.empty() )	break;
 			ReceiveEraseInfo( data );
 			break;
 
@@ -133,9 +136,6 @@ namespace ENEMY_COMMAND
 			break;
 
 		default:
-		{
-			int a = 0;
-		}
 			break;
 		}
 	}

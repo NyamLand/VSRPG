@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GameParam.h"
+#include	"GlobalFunction.h"
 
 #include	"Enemy.h"
 
@@ -14,8 +15,26 @@
 //	グローバル
 //------------------------------------------------------------------------------------
 
+#define	MINOTAURUS_HEIGHT	2.0f
+#define	MINOTAURUS_RADIUS	1.5f
+
 #define	ANGLEADJUST_SPEED 1.0f
-#define	MOVE_SPEED	20.0f
+#define	MOVE_SPEED	10.0f
+#define	SEARCH_DIST	10.0f
+#define	ATTACK_DIST	5.0f
+
+namespace
+{
+	namespace MOTION_NUM
+	{
+		enum
+		{
+			POSTURE,	//	待機モーション
+			MOVE,			//	移動モーション
+			ATTACK,		//	攻撃モーション
+		};
+	}
+}
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
@@ -23,12 +42,17 @@
 
 	//	コンストラクタ
 	Enemy::Enemy( void ): timer( nullptr ),
-		targetPos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		interpolationParam( 0.0f ), searchDist( 0.0f ), attackDist( 0.0f ), count( 40 ),
-		alive( true )
+		deltaTime( 0.0f ),
+		searchDist( SEARCH_DIST ), alive( true )
 	{
+		//	構造体初期化
 		ZeroMemory( &lifeInfo, sizeof( lifeInfo ) );
 		ZeroMemory( &enemyParam, sizeof( enemyParam ) );
+
+		//	コリジョン情報設定
+		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
+		
+		//	タイマー初期化
 		timer = new Timer();
 	}
 
@@ -46,6 +70,15 @@
 //	更新・描画
 //------------------------------------------------------------------------------------
 
+	//	更新
+	void	Enemy::Update( float deltaTime )
+	{
+		this->deltaTime = deltaTime;
+
+		//	通常移動
+		Move();
+	}
+
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------
@@ -53,34 +86,50 @@
 	//	移動
 	void	Enemy::Move( void )
 	{
-		Vector3	target;
+		Vector3	target = Vector3( 0.0f, 0.0f, 0.0f );
+		bool	atkFlag = false;
 
 		//	プレイヤーが感知範囲にいれば行動開始
-		if ( DistCheck( target ) )
+		if ( DistCheck( target, atkFlag ) )
 		{
-			//	プレイヤーの方を向く
-			AngleAdjust( target, ANGLEADJUST_SPEED );
+			if ( !atkFlag )
+			{
+				//	プレイヤーの方を向く
+				target.Normalize();
+				AngleAdjust( target, ANGLEADJUST_SPEED );
 
-			//	向いてる方向に前進
-			Advance();
+				//	向いてる方向に前進
+				Advance();
+			}
+			else
+			{
+				//	攻撃時
+				SetMotion( MOTION_NUM::ATTACK );
+			}
+		}
+		else
+		{
+			//	待機モーション
+			SetMotion( MOTION_NUM::POSTURE );
 		}
 	}
 
 	//	前進
 	void	Enemy::Advance( void )
 	{
-		Vector3	moveVec = Vector3( sinf( angle ), 0.0f, cosf( angle ) );
-		move = moveVec * MOVE_SPEED;
+		SetMotion( MOTION_NUM::MOVE );
+		Vector3	moveVec = Vector3( sinf( enemyParam.angle ), 0.0f, cosf( enemyParam.angle ) );
+		AddMove( moveVec * MOVE_SPEED );
 	}
 
 	//	プレイヤーとの距離チェック
-	bool	Enemy::DistCheck( Vector3& target )
+	bool	Enemy::DistCheck( Vector3& target, bool& attackFlag )
 	{
 		float length = 500.0f;
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			//	非アクティブのプレイヤーはスキップ
-			if ( gameParam->GetPlayerActive( i ) )	continue;
+			if ( gameParam->GetPlayerActive( i ) == false )	continue;
 			target = gameParam->GetPlayerParam( i ).pos - enemyParam.pos;
 
 			//	とりあえず一番近い人の長さを保存
@@ -90,6 +139,10 @@
 			}
 		}
 		target.Normalize();
+
+		//	攻撃フラグ設定
+		if ( length <= ATTACK_DIST )	attackFlag = true;
+		else attackFlag = false;
 
 		//	一定の距離まで近づくと感知
 		if ( length <= searchDist )	return	true;
@@ -109,9 +162,9 @@
 	}
 	
 	//	移動値加算
-	void	Enemy::AddMove( void )
+	void	Enemy::AddMove( const Vector3& move )
 	{
-		enemyParam.pos += move * timer->GetErapseTime();
+		enemyParam.pos += move * deltaTime;
 	}
 
 	//	向き調整（ カメラ影響なし ）
@@ -159,24 +212,6 @@
 	}
 
 //------------------------------------------------------------------------------------
-//	動作関数
-//------------------------------------------------------------------------------------
-	
-	//	更新
-	void	Enemy::Update( void )
-	{
-		//	通常移動
-		Move();
-
-		//	移動値加算
-		AddMove();
-	}
-
-//------------------------------------------------------------------------------------
-//	モード関数
-//------------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
 
@@ -192,9 +227,36 @@
 		enemyParam.angle = angle;
 	}
 
+	//	モーション設定
+	void	Enemy::SetMotion( int motion )
+	{
+		if ( enemyParam.motion != motion )
+		{
+			enemyParam.motion = motion;
+		}
+	}
+
 //------------------------------------------------------------------------------------
 //	情報取得
 //------------------------------------------------------------------------------------
+
+	//	座標取得
+	Vector3	Enemy::GetPos( void )const
+	{
+		return	enemyParam.pos;
+	}
+
+	//	方向取得
+	float			Enemy::GetAngle( void )const
+	{
+		return	enemyParam.angle;
+	}
+
+	//	モーション取得
+	int			Enemy::GetMotion( void )const
+	{
+		return	enemyParam.motion;
+	}
 
 	int	Enemy::GetMode( void )const
 	{

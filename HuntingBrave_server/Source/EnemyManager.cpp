@@ -17,6 +17,7 @@
 
 #define	ENEMY_MAX	5
 #define	APPEND_INTERVAL	5
+#define	PLAYER_RADIUS	1.5f
 
 namespace
 {
@@ -79,13 +80,17 @@ EnemyManager*	enemyManager = nullptr;
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	void	EnemyManager::Update( void )
+	void	EnemyManager::Update( float deltaTime )
 	{
 		int	enemyNum = 0;
 		for ( auto it = enemyList.begin(); it != enemyList.end(); )
 		{
+			//	座標チェック
+			PosCheck( *it );
+			PlayerPosCheck( *it );
+
 			//	更新
-			( *it )->Update();
+			( *it )->Update( deltaTime );
 
 			//	敵情報送信
 			if ( (*it)->GetAlive() )
@@ -122,13 +127,13 @@ EnemyManager*	enemyManager = nullptr;
 		Enemy*	enemy = new Enemy();
 		enemy->SetPos( pos );
 		enemy->SetAngle( angle );
-		enemy->Update();
+		enemy->Update( 1.0f );
+		
+		//	追加情報送信
+		SendAppend( pos, angle );
 		
 		//	リストに追加
 		enemyList.push_back( enemy );
-
-		//	追加情報送信
-		SendAppend( pos, angle );
 	}
 
 	//	敵情報送信
@@ -201,6 +206,62 @@ EnemyManager*	enemyManager = nullptr;
 		{
 			if( gameParam->GetPlayerActive( i ) == false )	continue;
 			gameParam->send( i, ( char* )&enemyInfo, sizeof( enemyInfo ) );
+		}
+	}
+
+	//	座標チェック（ 近ければ遠ざける ）
+	void	EnemyManager::PosCheck( Enemy* enemy )
+	{
+		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
+		{
+			//	自分VS自分は除外
+			if ( ( *it ) == enemy )	continue;
+
+			//	自分→相手へのベクトル
+			Vector3	vec = enemy->GetPos() - ( *it )->GetPos();
+			float		length = vec.Length();
+
+			float collisionDist = enemy->GetCollisionInfo().radius + ( *it )->GetCollisionInfo().radius;
+			
+			//	近い場合は離す
+			if ( length < collisionDist )
+			{
+				//	ベクトル正規化
+				vec.Normalize();
+
+				//	離す
+				( *it )->SetPos( enemy->GetPos() - vec * collisionDist );
+			}
+		}
+
+	}
+
+	//	プレイヤーとの座標チェック
+	void	EnemyManager::PlayerPosCheck( Enemy* enemy )
+	{
+		//	自分→相手へのベクトル
+		for (int p = 0; p < PLAYER_MAX; p++)
+		{
+			//	存在チェック
+			if ( !gameParam->GetPlayerActive( p ) )	continue;
+			PlayerParam		playerParam = gameParam->GetPlayerParam( p );
+
+			//	プレイヤーへのベクトルを求める
+			Vector3	pPos = playerParam.pos;
+			Vector3	vec = pPos - enemy->GetPos();
+			float		length = vec.Length();
+
+			float collisionDist = enemy->GetCollisionInfo().radius + PLAYER_RADIUS;
+			
+			//	近い場合は離す
+			if ( length <  collisionDist )
+			{
+				//	ベクトル正規化
+				vec.Normalize();
+
+				//	離す
+				enemy->SetPos( pPos - vec * collisionDist );
+			}
 		}
 	}
 

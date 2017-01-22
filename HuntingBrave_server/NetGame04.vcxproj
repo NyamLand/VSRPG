@@ -59,7 +59,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -109,6 +109,7 @@
     <ClCompile Include="Source\GameData.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GameParam.cpp" />
+    <ClCompile Include="Source\GlobalFunction.cpp" />
     <ClCompile Include="Source\HealItem.cpp" />
     <ClCompile Include="Source\IEX_RayMesh.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Source\GameData.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameParam.h" />
+    <ClInclude Include="Source\GlobalFunction.h" />
     <ClInclude Include="Source\HealItem.h" />
     <ClInclude Include="Source\IEX_RayMesh.h" />
     <ClInclude Include="Source\InputManager.h" />

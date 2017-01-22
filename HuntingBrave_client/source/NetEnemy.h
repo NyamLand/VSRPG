@@ -17,6 +17,7 @@ private:
 	Vector3	pos;
 	float			radius;
 	float			angle;
+	bool			isAlive;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -38,4 +39,5 @@ public:
 
 	//	î•ñæ“¾
 	Vector3	GetPos( void )const;
+	bool			GetIsAlive( void ){ return isAlive; }
 };

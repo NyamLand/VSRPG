@@ -22,7 +22,8 @@
 	//	コンストラクタ
 	NetEnemy::NetEnemy( void ) : obj( nullptr ),
 		pos( 0.0f, 0.0f, 0.0f ), 
-		angle( 0.0f )
+		angle( 0.0f ),
+		isAlive( false )
 	{
 	
 	}

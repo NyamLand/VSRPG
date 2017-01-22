@@ -26,13 +26,15 @@ public:
 	void	Release( void );
 	
 	//	XV
-	void	Update( void );
+	void	Update( float deltaTime );
 	void	SendEnemyInfo( int index, const EnemyParam& enemyParam );
 	void	SendErase( int index );
 	void	SendAppend( const Vector3& pos, float angle );
 
 	//	“®ìŠÖ”
 	void	Append( const Vector3& pos, float angle );
+	void	PosCheck( Enemy*	enemy );
+	void	PlayerPosCheck( Enemy*	eneny );
 
 	//	î•ñİ’è
 	void	TimerStart( void );

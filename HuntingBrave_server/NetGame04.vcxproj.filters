@@ -142,6 +142,9 @@
     <Filter Include="ソース ファイル\Random">
       <UniqueIdentifier>{ebb16752-6890-4c14-a568-0507ac1c54d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GlobalFunction">
+      <UniqueIdentifier>{7716bc88-4c94-4d9e-97b1-eac1753e6b37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GameParam.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Source\Random.cpp">
       <Filter>ソース ファイル\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GlobalFunction.cpp">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Source\Random.h">
       <Filter>ソース ファイル\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlobalFunction.h">
+      <Filter>ソース ファイル\GlobalFunction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

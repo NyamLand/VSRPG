@@ -7,6 +7,7 @@
 #include	"iextreme.h"
 #include	"GameParam.h"
 #include	"GameManager.h"
+#include	"GlobalFunction.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	"PointManager.h"
@@ -128,7 +129,8 @@ void	ResultUpdate( int client )
 //	thread
 void	AlwaysUpdate( void )
 {
+	float deltaTime = GetElapseTime();
 	magicManager->Update();
-	enemyManager->Update();
+	enemyManager->Update( deltaTime );
 	itemManager->Update();
 }
