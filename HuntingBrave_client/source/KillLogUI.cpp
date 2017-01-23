@@ -72,8 +72,8 @@ namespace
 	{
 		//	補間
 		Interpolation::LinearInterpolation( killLogImage->y,
-			( int )iexSystem::ScreenHeight / 2,
 			( int )iexSystem::ScreenHeight / 2 - KILL_LOG_DIST,
+			( int )iexSystem::ScreenHeight / 3,
 			percentage );
 
 		//	補間パラメータ更新
