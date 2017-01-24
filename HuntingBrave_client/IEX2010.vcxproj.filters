@@ -55,12 +55,6 @@
     <ClCompile Include="source\BaseChara.cpp">
       <Filter>Source\BaseChara</Filter>
     </ClCompile>
-    <ClCompile Include="source\BigEnemy.cpp">
-      <Filter>Source\Enemy\BigEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="source\SmallEnemy.cpp">
-      <Filter>Source\Enemy\SmallEnemy</Filter>
-    </ClCompile>
     <ClCompile Include="source\sceneTitle.cpp">
       <Filter>Source\Scene\sceneTitle</Filter>
     </ClCompile>
@@ -268,6 +262,12 @@
     <ClCompile Include="source\NetEnemy.cpp">
       <Filter>Source\Enemy\NetEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="source\Moffu.cpp">
+      <Filter>Source\Enemy\Moffu</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Wolf.cpp">
+      <Filter>Source\Enemy\Wolf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -275,12 +275,6 @@
     </ClInclude>
     <ClInclude Include="source\BaseChara.h">
       <Filter>Source\BaseChara</Filter>
-    </ClInclude>
-    <ClInclude Include="source\BigEnemy.h">
-      <Filter>Source\Enemy\BigEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="source\SmallEnemy.h">
-      <Filter>Source\Enemy\SmallEnemy</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneTitle.h">
       <Filter>Source\Scene\sceneTitle</Filter>
@@ -501,6 +495,12 @@
     <ClInclude Include="source\NetEnemy.h">
       <Filter>Source\Enemy\NetEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="source\Moffu.h">
+      <Filter>Source\Enemy\Moffu</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Wolf.h">
+      <Filter>Source\Enemy\Wolf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IEX">
@@ -592,12 +592,6 @@
     </Filter>
     <Filter Include="Source\Enemy">
       <UniqueIdentifier>{271840fe-9343-42a4-85a1-eaa2cd8467a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Enemy\BigEnemy">
-      <UniqueIdentifier>{a8a38afe-9ac9-4daf-81bd-ad1791e4566a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Enemy\SmallEnemy">
-      <UniqueIdentifier>{7ba92694-7e48-4b37-a7f8-8be58a288972}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Enemy\Enemy">
       <UniqueIdentifier>{dc7d625e-a28e-4a7f-b90e-0970bec169b0}</UniqueIdentifier>
@@ -769,6 +763,12 @@
     </Filter>
     <Filter Include="Source\Manager\NetEnemyManager">
       <UniqueIdentifier>{b4cae9ae-8c02-4637-9650-e83ffcec05ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\Wolf">
+      <UniqueIdentifier>{a8a38afe-9ac9-4daf-81bd-ad1791e4566a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\Moffu">
+      <UniqueIdentifier>{7ba92694-7e48-4b37-a7f8-8be58a288972}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

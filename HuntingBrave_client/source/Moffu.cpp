@@ -6,7 +6,7 @@
 #include	"PlayerManager.h"
 #include	"Random.h"
 
-#include	"SmallEnemy.h"
+#include	"Moffu.h"
 
 //***************************************************************
 //
@@ -27,7 +27,7 @@
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
-#define	MOVE_SPEED		0.18f
+#define	MOVE_SPEED		0.2f
 
 //	その他パラメータ
 #define	ATTACK_DIST		5.0f
@@ -77,13 +77,13 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	SmallEnemy::SmallEnemy( void )
+	Moffu::Moffu(void)
 	{
-		ModeFunction[MODE::ENTRY] = &SmallEnemy::EntryMode;
-		ModeFunction[MODE::MOVE] = &SmallEnemy::MoveMode;
-		ModeFunction[MODE::ATTACK] = &SmallEnemy::AttackMode;
-		ModeFunction[MODE::DAMAGE] = &SmallEnemy::DamageMode;
-		ModeFunction[MODE::DEAD] = &SmallEnemy::DeadMode;
+		ModeFunction[MODE::ENTRY] = &Moffu::EntryMode;
+		ModeFunction[MODE::MOVE] = &Moffu::MoveMode;
+		ModeFunction[MODE::ATTACK] = &Moffu::AttackMode;
+		ModeFunction[MODE::DAMAGE] = &Moffu::DamageMode;
+		ModeFunction[MODE::DEAD] = &Moffu::DeadMode;
 
 		//	変数初期化
 		speed = MOVE_SPEED;
@@ -94,13 +94,13 @@ namespace
 	}
 
 	//	デストラクタ
-	SmallEnemy::~SmallEnemy( void )
+	Moffu::~Moffu(void)
 	{
 
 	}
 
 	//	初期化
-	bool	SmallEnemy::Initialize( void )
+	bool	Moffu::Initialize(void)
 	{
 		SetMode( MODE::ENTRY );
 		SetAngle( 0.0f );
@@ -135,7 +135,7 @@ namespace
 //-----------------------------------------------------------------------------------
 
 	//	更新
-	void	SmallEnemy::Update( void )
+	void	Moffu::Update(void)
 	{
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
@@ -144,7 +144,7 @@ namespace
 	}
 
 	//	描画
-	void	SmallEnemy::Render( iexShader* shader, LPSTR technique )
+	void	Moffu::Render(iexShader* shader, LPSTR technique)
 	{
 		//	情報更新
 		obj->SetTexture( 0, MOFUMOFU::mofooTex0[texType] );
@@ -159,7 +159,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	出現時モード動作
-	void	SmallEnemy::EntryMode( void )
+	void	Moffu::EntryMode(void)
 	{
 		//	補間
 		bool	expantion = Interpolation::LinearInterpolation(
@@ -177,14 +177,14 @@ namespace
 	}
 
 	//	移動モード動作
-	void	SmallEnemy::MoveMode( void )
+	void	Moffu::MoveMode(void)
 	{
 		//	移動
 		Move( speed );
 	}
 
 	//	攻撃モード動作
-	void	SmallEnemy::AttackMode( void )
+	void	Moffu::AttackMode(void)
 	{
 		SetMotion( 2 );
 
@@ -210,7 +210,7 @@ namespace
 		}
 	}
 
-	void	SmallEnemy::DeadMode( void )
+	void	Moffu::DeadMode(void)
 	{
 		SetMotion(3);
 		static float alpha = 1.0f;
@@ -235,7 +235,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	攻撃
-	void	SmallEnemy::Attack( void )
+	void	Moffu::Attack(void)
 	{
 
 	}

@@ -113,7 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
-    <ClCompile Include="source\BigEnemy.cpp" />
+    <ClCompile Include="source\Wolf.cpp" />
     <ClCompile Include="source\CharaInfo.cpp" />
     <ClCompile Include="source\Collision.cpp" />
     <ClCompile Include="source\CSVReader.cpp" />
@@ -171,7 +171,7 @@
     <ClCompile Include="source\GameManager.cpp" />
     <ClCompile Include="source\GlobalFunction.cpp" />
     <ClCompile Include="source\sceneMain.cpp" />
-    <ClCompile Include="source\SmallEnemy.cpp" />
+    <ClCompile Include="source\Moffu.cpp" />
     <ClCompile Include="source\SocketClient.cpp" />
     <ClCompile Include="source\Sound.cpp" />
     <ClCompile Include="source\Stage.cpp" />
@@ -204,7 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
-    <ClInclude Include="source\BigEnemy.h" />
+    <ClInclude Include="source\Wolf.h" />
     <ClInclude Include="source\CharaInfo.h" />
     <ClInclude Include="source\Collision.h" />
     <ClInclude Include="source\CSVReader.h" />
@@ -264,7 +264,7 @@
     <ClInclude Include="source\GameManager.h" />
     <ClInclude Include="source\GlobalFunction.h" />
     <ClInclude Include="source\Interpolation.h" />
-    <ClInclude Include="source\SmallEnemy.h" />
+    <ClInclude Include="source\Moffu.h" />
     <ClInclude Include="source\SocketClient.h" />
     <ClInclude Include="source\Sound.h" />
     <ClInclude Include="source\Stage.h" />

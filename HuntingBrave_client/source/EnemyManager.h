@@ -10,8 +10,8 @@
 //	include
 #include	"Singleton.h"
 #include	<list>
-#include	"BigEnemy.h"
-#include	"SmallEnemy.h"
+#include	"Wolf.h"
+#include	"Moffu.h"
 
 //	class
 class EnemyManager : public Singleton<EnemyManager>
