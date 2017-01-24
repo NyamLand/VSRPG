@@ -39,8 +39,6 @@ namespace
 	{
 		//	stage‰Šú‰»
 		collisionMesh = new iexMesh( "DATA/BG/stage_atari.IMO" );
-		collisionMesh->SetScale( STAGE_SCALE );
-		collisionMesh->SetPos( STAGE_DOWN );
 		collisionMesh->Update();
 
 		//	Šeƒ‚ƒfƒ‹’²®
@@ -71,7 +69,7 @@ namespace
 	//	•`‰æ
 	void	Stage::Render( void )
 	{
-		collisionMesh->Render();
+		//collisionMesh->Render();
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
 			stage[i]->Render();
