@@ -11,18 +11,18 @@
 #include	"Enemy.h"
 
 //	class
-class SmallEnemy : public Enemy
+class Moffu : public Enemy
 {
 private:
 	int texType;
 
 	//	モード別関数ポインタ
-	void( SmallEnemy::*ModeFunction[MODE_MAX] )( void );
+	void(Moffu::*ModeFunction[MODE_MAX])(void);
 
 public:
 	//	初期化・解放
-	SmallEnemy( void );
-	~SmallEnemy( void )override;
+	Moffu(void);
+	~Moffu(void)override;
 	bool	Initialize( void )override;
 
 	//	更新

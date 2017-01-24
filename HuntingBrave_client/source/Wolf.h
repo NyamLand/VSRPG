@@ -10,18 +10,18 @@
 #include	"Enemy.h"
 
 //	class
-class BigEnemy : public Enemy
+class Wolf : public Enemy
 {
 
 	
 
 	//	モード別関数ポインタ
-	void( BigEnemy::*ModeFunction[MODE_MAX] )( void );
+	void(Wolf::*ModeFunction[MODE_MAX])(void);
 
 public:
 	//	初期化・解放
-	BigEnemy( void );
-	~BigEnemy( void )override;
+	Wolf(void);
+	~Wolf(void)override;
 	bool	Initialize( void )override;
 
 	//	更新

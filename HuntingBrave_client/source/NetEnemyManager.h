@@ -18,7 +18,6 @@ class NetEnemyManager : public Singleton<NetEnemyManager>
 private:
 	iex3DObj*	org;
 	std::vector<NetEnemy*>	enemyList;
-
 private:
 	//	初期化・解放
 	NetEnemyManager( void );
@@ -32,7 +31,7 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
-
+	//void	RenderHp(void);
 	//	動作関数
 	void	Erase( int index );
 	void	Append( const Vector3& pos, float angle );
