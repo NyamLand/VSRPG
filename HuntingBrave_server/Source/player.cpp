@@ -231,7 +231,7 @@ namespace
 				ANGLE_ADJUST_MOVE_SPEED );
 
 			//	ˆÚ“®
-			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
+			Vector3 move = Vector3( sinf( pParam.angle ), GRAVITY, cosf( pParam.angle ) ) * MOVE_SPEED;
 			AddMove( move );
 
 			SetMotion( PLAYER_MOTION::RUN );
