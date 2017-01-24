@@ -21,6 +21,7 @@
 #include	"LevelManager.h"
 #include	"NameManager.h"
 #include	"ItemManager.h"
+#include	"NetEnemyManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
 
@@ -69,6 +70,9 @@ bool	sceneMain::Initialize( void )
 	//	enemy‰Šú‰»
 	enemyManager->Initialize();
 
+	//	netEnemy‰Šú‰»
+	netEnemyManager->Initialize();
+
 	//	magic‰Šú‰»
 	magicManager->Initialize();
 
@@ -94,6 +98,7 @@ sceneMain::~sceneMain( void )
 	SafeDelete( mainView );
 	SafeDelete( stage );
 	enemyManager->Release();
+	netEnemyManager->Release();
 	uiManager->Release();
 	magicManager->Release();
 	playerManager->Release();
@@ -121,6 +126,9 @@ void	sceneMain::Update( void )
 
 	//	enemyXV
 	enemyManager->Update();
+
+	//	netEnemyXV
+	netEnemyManager->Update();
 
 	//	magicXV
 	magicManager->Update();
@@ -160,7 +168,10 @@ void	sceneMain::Render( void )
 	playerManager->Render();
 
 	//	enemy•`‰æ
-	enemyManager->Render();
+	//enemyManager->Render();
+	
+	//	netEnemy•`‰æ
+	netEnemyManager->Render();
 
 	//	magic•`‰æ
 	magicManager->Render();

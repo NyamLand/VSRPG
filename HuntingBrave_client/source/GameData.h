@@ -113,7 +113,7 @@
 		{
 			enum
 			{
-				MATCHING = 10,
+				MATCHING = 12,
 				SIGN_UP,
 				SIGN_OUT,
 				RESPONSE
@@ -127,7 +127,8 @@
 			{
 				SIGN_UP,
 				GAME_START,
-				CHANGE_SCENE
+				CHANGE_SCENE,
+				KILL_INFO
 			};
 		}
 	}
@@ -136,10 +137,10 @@
 	struct SignUp
 	{
 		char	com = COMMANDS::SIGN_UP;
-		int		id;
+		int	id;
 		int	name[4];
-		int frontTitle;
-		int backTitle;
+		int	frontTitle;
+		int	backTitle;
 		SignUp( void ){}
 		SignUp( int id, int* name, int frontTitle, int backTitle );
 		void Set( int id, int* name, int frontTitle, int backTitle );
@@ -170,6 +171,15 @@
 		bool	isComplete;
 		Matching( void );
 		Matching( int id, bool isComplete );
+	};
+
+	//	ÉLÉãÉçÉOóp
+	struct KillInfo
+	{
+		char com;
+		char responseCom;
+		int killer;
+		int dead;
 	};
 
 //*****************************************************************************************************************************

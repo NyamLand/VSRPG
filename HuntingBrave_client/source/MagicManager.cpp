@@ -59,18 +59,18 @@
 	//	XV
 	void	MagicManager::Update( void )
 	{
-		for ( auto it = magicList.begin(); it != magicList.end(); it++ )
+		for ( int i = 0; i < magicList.size(); i++ )
 		{
-			( *it )->Update();
+			magicList[i]->Update();
 		}
 	}
 
 	//	•`‰æ
 	void	MagicManager::Render( void )
 	{
-		for ( auto it = magicList.begin(); it != magicList.end(); it++ )
+		for ( int i = 0; i < magicList.size(); i++ )
 		{
-			( *it )->Render();
+			magicList[i]->Render();
 		}
 	}
 

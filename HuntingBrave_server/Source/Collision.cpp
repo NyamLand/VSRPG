@@ -31,7 +31,7 @@ Collision*	collision = nullptr;
 	Collision::Collision( GameParam* gameParam ) : 
 		gameParam( gameParam ), collisionMesh( nullptr )
 	{
-		collisionMesh = new iexRayMesh( "DATA/STAGE/collision.IMO" );
+		collisionMesh = new iexRayMesh( "DATA/STAGE/stage_atari.IMO" );
 	}
 
 	//	デストラクタ
@@ -122,7 +122,14 @@ Collision*	collision = nullptr;
 			//	ライフ計算
 			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( 1 );
 			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
-			else playerManager->GetPlayer( target )->SetDeath();
+			else
+			{
+				//	プレイヤーを死亡させる
+				playerManager->GetPlayer( target )->SetDeath();
+
+				//	キル情報を送信する
+				gameParam->SendKillInfo( player, target );
+			}
 		}
 	}
 
@@ -157,7 +164,14 @@ Collision*	collision = nullptr;
 				//	ライフ計算
 				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -gameParam->GetPlayerStatus( player ).power );
 				if ( isAlive )playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
-				else playerManager->GetPlayer( player )->SetDeath();
+				else 
+				{
+					//	プレイヤーを死亡させる
+					playerManager->GetPlayer( player )->SetDeath();
+
+					//	キル情報を送信
+					gameParam->SendKillInfo( ( *it )->GetID(), player );
+				}
 			}
 		}
 	}

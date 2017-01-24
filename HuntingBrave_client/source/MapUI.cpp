@@ -119,15 +119,15 @@
 			//	カメラ方向取得
 			Vector3	vEye( mainView->GetTarget() - mainView->GetPos() );
 			float	cameraAngle = atan2f( vEye.x, vEye.z );
-			iconPos.x *= sinf( cameraAngle );
-			iconPos.z *= cosf( cameraAngle );
+			iconPos.x *= cosf( cameraAngle );
+			iconPos.z *= sinf( cameraAngle );
 
 			//	アイコン座標設定
 			player[i]->x = player[i]->p.x = MAP_POS_X + ( int )iconPos.x;
 			player[i]->y = player[i]->p.y = MAP_POS_Y - ( int )iconPos.z;
 
 			//	アイコン向き設定
-			player[i]->angle = playerParam.angle + cameraAngle;
+			player[i]->angle = playerParam.angle * cameraAngle;
 		}
 	}
 

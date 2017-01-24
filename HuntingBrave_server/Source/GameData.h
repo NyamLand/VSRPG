@@ -120,7 +120,7 @@ namespace SCENE
 		{
 			enum
 			{
-				MATCHING = 10,
+				MATCHING = 12,
 				SIGN_UP,
 				SIGN_OUT,
 				RESPONSE
@@ -135,6 +135,7 @@ namespace SCENE
 				SIGN_UP,
 				GAME_START,
 				CHANGE_SCENE,
+				KILL_INFO
 			};
 		}
 	}
@@ -176,6 +177,6 @@ namespace SCENE
 		int	id;
 		bool	isComplete;
 		Matching( void );
-		Matching( int id, int mode );
-		void	Set( int id, int mode );
+		Matching( int id, bool mode );
+		void	Set( int id, bool mode );
 	};

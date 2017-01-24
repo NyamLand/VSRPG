@@ -59,9 +59,6 @@ namespace
 		attackDist = ATTACK_DIST;
 		lifeInfo.isAlive = true;
 		lifeInfo.active = false;
-
-		
-
 	}
 
 	//	デストラクタ
@@ -79,7 +76,7 @@ namespace
 		SetMotion( 1 );	//	数値仮
 		
 		lifeInfo.Initialize( INIT_LIFE );
-		ZeroMemory(&attackInfo, sizeof(AttackInfo));
+		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 
 		bar = new EnemyHpUI();

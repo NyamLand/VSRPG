@@ -113,7 +113,7 @@
 		}
 	}
 
-	//	向き調整（修正版）
+	//	向き調整（ カメラ影響なし ）
 	void	Enemy::AngleAdjust( const Vector3& moveVec, float adjustSpeed )
 	{
 		//	移動方向を求める
