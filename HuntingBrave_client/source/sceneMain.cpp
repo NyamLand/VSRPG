@@ -168,7 +168,7 @@ void	sceneMain::Render( void )
 	playerManager->Render();
 
 	//	enemy•`‰æ
-	//enemyManager->Render();
+	enemyManager->Render();
 	
 	//	netEnemy•`‰æ
 	netEnemyManager->Render();
