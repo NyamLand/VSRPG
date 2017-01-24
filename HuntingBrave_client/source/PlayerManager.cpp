@@ -106,6 +106,7 @@ namespace
 	//	•`‰æ
 	void	PlayerManager::Render( void )
 	{
+		RenderHp();
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( gameParam->GetPlayerActive( p ) )
