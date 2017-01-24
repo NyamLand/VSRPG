@@ -80,6 +80,7 @@ Collision*	collision = nullptr;
 	{
 		//	Ž©•ª¨‘ŠŽè‚Ö‚ÌƒxƒNƒgƒ‹
 		Vector3	vec = gameParam->GetPlayerParam( player ).pos - gameParam->GetPlayerParam( target ).pos;
+		vec.y = 0.0f;
 		float		length = vec.Length();
 
 		float collisionDist = 3.0f;
