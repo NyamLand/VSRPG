@@ -59,6 +59,7 @@ namespace SCENE
 	{
 		Vector3	pos;
 		Vector3	move;
+		char	charType;
 		float			angle;
 		float			cameraAngle;
 		int			motion;

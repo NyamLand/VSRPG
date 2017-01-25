@@ -8,18 +8,18 @@
 //****************************************************************
 
 //	include
-#include	"CharaInfo.h"
-
+#include	"EnemyHp.h"
 //	class
 class NetEnemy
 {
 private:
-	AttackInfo	attackInfo;
 	iex3DObj*	obj;
 	Vector3	pos;
+	EnemyHpUI*	bar;
 	float			radius;
 	float			angle;
 	bool			isAlive;
+	int			life;
 
 public:
 	//	初期化・解放
@@ -30,20 +30,19 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
-
+	void	RenderHpBar( void );
 	//	動作関数
-	void	Death( void );
-	void	CheckAttackInfo( void );
 
 	//	情報設定
 	void	SetPos( const Vector3& pos );
 	void	SetAngle( float angle );
 	void	SetMotion( int motion );
 	void	SetMesh( iex3DObj* mesh );
-	void	SetDeath( void );
 
 	//	情報取得
-	AttackInfo&	GetAttackInfo( void ){ return attackInfo; }
 	Vector3	GetPos( void )const;
 	bool			GetIsAlive( void ){ return isAlive; }
+	int		GetLife( void )const{ return life; }
+	Vector3	GetUp( void )const;
+	Matrix	NetEnemy::GetMatrix( void )const;
 };

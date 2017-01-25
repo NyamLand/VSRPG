@@ -18,16 +18,13 @@ namespace ENEMY_COMMAND
 {
 	enum
 	{
-		MOVE,
-		MODE,
-		MOTION,
-		DEAD,
-		ERASE = 10,
-		APPEND
+		ENEMY_INFO,
+		ERASE_INFO,
+		APPEND_INFO,
 	};
 }
 
-#define	MINOTAURUS_SCALE	0.015f
+#define	MINOTAURUS_SCALE	0.02f
 
 //----------------------------------------------------------------------------------------------
 //	‰Šú‰»E‰ð•ú
@@ -50,7 +47,7 @@ namespace ENEMY_COMMAND
 	{
 		if ( org == nullptr )
 		{
-			org = new iex3DObj( "DATA/CHR/Enemy/halk/halk.IEM" );
+			org = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
 			org->SetScale( MINOTAURUS_SCALE );
 			org->Update();
 		}
@@ -80,12 +77,6 @@ namespace ENEMY_COMMAND
 		for ( int i = 0; i < enemyList.size(); i++)
 		{
 			enemyList[i]->Update();
-
-			bool	isAlive = enemyList[i]->GetIsAlive();
-			if ( !isAlive )
-			{
-				enemyList.erase( enemyList.begin() + i );
-			}
 		}
 	}
 
@@ -95,6 +86,15 @@ namespace ENEMY_COMMAND
 		for ( int i = 0; i < enemyList.size(); i++ )
 		{
 			enemyList[i]->Render();
+		}
+	}
+
+	//	HP•`‰æ
+	void	NetEnemyManager::RenderHp(void)
+	{
+		for (auto it = enemyList.begin(); it != enemyList.end(); it++)
+		{
+			(*it)->RenderHpBar();
 		}
 	}
 
@@ -130,32 +130,17 @@ namespace ENEMY_COMMAND
 	{
 		switch ( data[1] )
 		{
-		case ENEMY_COMMAND::MOVE:
+		case ENEMY_COMMAND::ENEMY_INFO:
 			if ( enemyList.empty() )	break;
 			ReceiveEnemyInfo( data );
 			break;
 
-		case ENEMY_COMMAND::MODE:
-			if ( enemyList.empty() )	break;
-			ReceiveModeInfo( data );
-			break;
-
-		case ENEMY_COMMAND::MOTION:
-			if ( enemyList.empty() )	break;
-			ReceiveMotionInfo( data );
-			break;
-
-		case ENEMY_COMMAND::DEAD:
-			if ( enemyList.empty() )	break;
-			ReceiveDeadInfo( data );
-			break;
-
-		case ENEMY_COMMAND::ERASE:
+		case ENEMY_COMMAND::ERASE_INFO:
 			if ( enemyList.empty() )	break;
 			ReceiveEraseInfo( data );
 			break;
 
-		case ENEMY_COMMAND::APPEND:
+		case ENEMY_COMMAND::APPEND_INFO:
 			ReceiveAppendInfo( data );
 			break;
 
@@ -174,11 +159,13 @@ namespace ENEMY_COMMAND
 			int	index;
 			Vector3	pos;
 			float			angle;
+			int			motion;
 		}* enemyInfo = ( EnemyInfo* )data;
 
 		SetInfo( enemyInfo->index, 
 			enemyInfo->pos, 
-			enemyInfo->angle );
+			enemyInfo->angle, 
+			enemyInfo->motion );
 	}
 
 	//	“GÁ‹Žî•ñŽóM
@@ -211,58 +198,16 @@ namespace ENEMY_COMMAND
 		Append( enemyInfo->pos, enemyInfo->angle );
 	}
 
-	//	“GˆÚ“®î•ñŽóM
-	void	NetEnemyManager::ReceiveMoveInfo( const LPSTR& data )
-	{
-
-	}
-
-	//	“Gƒ‚[ƒhî•ñŽóM
-	void	NetEnemyManager::ReceiveModeInfo( const LPSTR& data )
-	{
-		//	î•ñÝ’è
-		struct EnemyInfo
-		{
-			char com;
-			char infoType;
-			char enemyIndex;
-			char nextMode;
-		} *sendInfo = ( EnemyInfo* )data;
-
-
-	}
-
-	//	“Gƒ‚[ƒVƒ‡ƒ“ŽóM
-	void	NetEnemyManager::ReceiveMotionInfo( const LPSTR& data )
-	{
-		//	î•ñÝ’è
-		struct EnemyInfo
-		{
-			char com;
-			char infoType;
-			char enemyIndex;
-			int motion;
-		}* receiveInfo;
-		receiveInfo = ( EnemyInfo* )data;
-
-		enemyList[receiveInfo->enemyIndex]->SetMotion( receiveInfo->motion );
-	}
-
-	//	“GŽ€–Sî•ñŽóM
-	void	NetEnemyManager::ReceiveDeadInfo( const LPSTR& data )
-	{
-
-	}
-
 //----------------------------------------------------------------------------------------------
 //	î•ñÝ’è
 //----------------------------------------------------------------------------------------------
 
 	//	ŽóMî•ñÝ’è
-	void	NetEnemyManager::SetInfo( int index, const Vector3& pos, float angle )
+	void	NetEnemyManager::SetInfo( int index, const Vector3& pos, float angle, int motion )
 	{
 		enemyList[index]->SetPos( pos );
 		enemyList[index]->SetAngle( angle );
+		enemyList[index]->SetMotion( motion );
 	}
 
 //----------------------------------------------------------------------------------------------

@@ -118,6 +118,7 @@ LevelManager*	levelManager = nullptr;
 	void	LevelManager::SendClassChange( int id, char nextClass )
 	{
 		SendClassChangeData	sendData( id, nextClass );
+		gameParam->GetPlayerParam(id).charType = nextClass;
 
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{

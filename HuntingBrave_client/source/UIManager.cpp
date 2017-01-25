@@ -5,6 +5,7 @@
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
 #include	"UIManager.h"
+#include	"NetEnemyManager.h"
 #include	"GameParam.h"
 #include	"LevelManager.h"
 //***************************************************************
@@ -163,6 +164,7 @@ void	UIManager::Render( void )
 {
 	playerManager->RenderHp();
 	enemyManager->RenderHp();
+	netEnemyManager->RenderHp();
 	timerUI->Render();
 	hpUI->Render();
 	expUI->Render();

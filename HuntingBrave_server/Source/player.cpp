@@ -39,6 +39,7 @@ namespace
 		const int SWORDATTACK_HIT_START = 140;
 		const int SWORDATTACK_HIT_END = 150;
 		const int SWORDATTACK1_END = 160;
+		const int STEP_END = 260;
 		const int MAGICCHANT_END = 290;
 		const int MAGICACTIVATION = 340;
 		const int MAGICATTACK_END = 370;
@@ -55,6 +56,123 @@ namespace
 			ACTIVATION,
 		};
 	}
+	namespace
+	{
+		namespace FRAME_TYPE
+		{
+			enum
+			{
+				ATTACK_HIT_START,
+				ATTACK_HIT_END,
+				ATTACK_END,
+				STEP_END,
+				MAGIC_CHANT_END,
+				MAGIC_ATTACK_START,
+				MAGIC_ATTACK_END,
+				DAMAGE1_END,
+				DAMAGE2_END,
+				FALL_END,
+				TYPE_MAX
+
+			};
+		}
+
+		namespace  PLAYER_TYPE
+		{
+			enum
+			{
+				NORMAL,
+				FIGHTER,	//	ファイター
+				MAGICIAN,	//	マジシャン
+				KNIGHT,		//	ナイト
+				PRIEST,		//	プリースト
+				ASSASSIN,	//	アサシン
+				MODEL_MAX
+			};
+		}
+
+		const int motionFrame[][FRAME_TYPE::TYPE_MAX] =
+		{
+			//すっぴん
+			{
+				140,// 攻撃判定開始
+				150,// 攻撃判定終了
+				160,// 攻撃終了
+				260,// ステップ終了
+				290,// 魔法詠唱終了
+				340,// 魔法攻撃開始
+				370,// 魔法攻撃終章
+				409,// ノックバック(ダメージ)1
+				438,// ノックバック(ダメージ)2
+				494// 死にモーション終了
+			},
+			//ファイター
+			{
+				107,// 攻撃判定開始
+				119,// 攻撃判定終了
+				130,// 攻撃終了
+				200,// ステップ終了
+				258,// 魔法詠唱終了
+				280,// 魔法攻撃開始
+				287,// 魔法攻撃終章
+				316,// ノックバック(ダメージ)1
+				345,// ノックバック(ダメージ)2
+				404// 死にモーション終了
+			},
+			//マジシャン
+			{
+				108,// 攻撃判定開始
+				115,// 攻撃判定終了
+				132,// 攻撃終了
+				200,// ステップ終了
+				258,// 魔法詠唱終了
+				275,// 魔法攻撃開始
+				287,// 魔法攻撃終章
+				316,// ノックバック(ダメージ)1
+				345,// ノックバック(ダメージ)2
+				404// 死にモーション終了
+			},
+			//ナイト
+			{
+				127,// 攻撃判定開始
+				140,// 攻撃判定終了
+				152,// 攻撃終了
+				220,// ステップ終了
+				278,// 魔法詠唱終了
+				295,// 魔法攻撃開始
+				307,// 魔法攻撃終章
+				336,// ノックバック(ダメージ)1
+				365,// ノックバック(ダメージ)2
+				424// 死にモーション終了
+			},
+			//プリースト
+			{
+				126,// 攻撃判定開始
+				136,// 攻撃判定終了
+				152,// 攻撃終了
+				220,// ステップ終了
+				278,// 魔法詠唱終了
+				295,// 魔法攻撃開始
+				307,// 魔法攻撃終章
+				336,// ノックバック(ダメージ)1
+				365,// ノックバック(ダメージ)2
+				424// 死にモーション終了
+			},
+			//アサシン(仮)
+			{
+				127,// 攻撃判定開始
+				140,// 攻撃判定終了
+				155,// 攻撃終了
+				260,// ステップ終了
+				281,// 魔法詠唱終了
+				333,// 魔法攻撃開始
+				310,// 魔法攻撃終章
+				339,// ノックバック(ダメージ)1
+				368,// ノックバック(ダメージ)2
+				1000// モーション終了
+			},
+		};
+	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -63,7 +181,7 @@ namespace
 	
 	//	コンストラクタ
 	Player::Player( int id ) : timer( nullptr ),
-		stepSpeed( 0.0f ),
+		stepSpeed(0.0f), charType(PLAYER_TYPE::NORMAL),
 		index( id )
 	{
 		ZeroMemory( &pParam, sizeof( PlayerParam ) );
@@ -164,7 +282,7 @@ namespace
 		//	倒れるモーション時
 		if ( motion == PLAYER_MOTION::FALL )
 		{
-			if ( frame >= SUPPIN_FRAME::FALL_END )
+			if ( frame >= motionFrame[charType][FRAME_TYPE::FALL_END] )
 			{ 
 				SetMotion( PLAYER_MOTION::DEAD );
 				timer->Start( DEATH_TIME );
@@ -194,7 +312,7 @@ namespace
 		stepSpeed *= STEP_DRAG;
 
 		//	モーションが終了すれば移動に戻る
-		if ( pParam.frame >= 260 )
+		if ( pParam.frame >= motionFrame[charType][FRAME_TYPE::STEP_END])
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetLifeInfo( index ).active = true;
@@ -246,8 +364,8 @@ namespace
 	void	Player::SwordAttack( void )
 	{
 		//	フレーム管理
-		if ( pParam.frame >= SUPPIN_FRAME::SWORDATTACK_HIT_START &&
-			pParam.frame <= SUPPIN_FRAME::SWORDATTACK_HIT_END )
+		if ( pParam.frame >= motionFrame[charType][FRAME_TYPE::ATTACK_HIT_START] &&
+			pParam.frame <= motionFrame[charType][FRAME_TYPE::ATTACK_HIT_END])
 		{
 			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK1;
 		}
@@ -257,7 +375,7 @@ namespace
 		}
 
 		// 一定以上のフレームに達すると移動に戻す
-		if ( pParam.frame >= SUPPIN_FRAME::SWORDATTACK1_END )
+		if (pParam.frame >= motionFrame[charType][FRAME_TYPE::ATTACK_END])
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
@@ -267,14 +385,14 @@ namespace
 	//	魔法攻撃
 	void	Player::MagicAttack( void )
 	{
-		if ( pParam.frame == SUPPIN_FRAME::MAGICACTIVATION )
+		if (pParam.frame == motionFrame[charType][FRAME_TYPE::MAGIC_ATTACK_START])
 		{
 			magicManager->Append( index, 
 				gameParam->GetAttackInfo( index ).vec1,
 				gameParam->GetAttackInfo( index ).vec2 );
 		}
 
-		if ( pParam.frame >= SUPPIN_FRAME::MAGICATTACK_END )
+		if (pParam.frame >= motionFrame[charType][FRAME_TYPE::MAGIC_ATTACK_END])
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
@@ -330,7 +448,7 @@ namespace
 		//	押している間詠唱、一定時間経過で発動可能
 		if ( inputManager->GetInputState( index, KEY_TYPE::X, KEY_STATE::STAY ) )
 		{
-			if ( pParam.frame >= SUPPIN_FRAME::MAGICCHANT_END )
+			if (pParam.frame >= motionFrame[charType][FRAME_TYPE::MAGIC_CHANT_END])
 			{
 				SetMotion( PLAYER_MOTION::MAGIC_CHANT );
 				gameParam->GetAttackInfo( index ).timer.Start( CHANT_TIME );
@@ -351,7 +469,7 @@ namespace
 		gameParam->GetLifeInfo( index ).active = false;
 		SetMotion( PLAYER_MOTION::KNOCKBACK1 );
 
-		if ( pParam.frame >= SUPPIN_FRAME::KNOCKBACK1_END )
+		if (pParam.frame >= motionFrame[charType][FRAME_TYPE::DAMAGE1_END])
 		{
 			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
