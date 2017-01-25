@@ -8,16 +8,18 @@
 //****************************************************************
 
 //	include
-
+#include	"EnemyHp.h"
 //	class
 class NetEnemy
 {
 private:
 	iex3DObj*	obj;
 	Vector3	pos;
+	EnemyHpUI*	bar;
 	float			radius;
 	float			angle;
 	bool			isAlive;
+	int			life;
 
 public:
 	//	初期化・解放
@@ -28,7 +30,7 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
-
+	void	RenderHpBar( void );
 	//	動作関数
 
 	//	情報設定
@@ -40,4 +42,7 @@ public:
 	//	情報取得
 	Vector3	GetPos( void )const;
 	bool			GetIsAlive( void ){ return isAlive; }
+	int		GetLife( void )const{ return life; }
+	Vector3	GetUp( void )const;
+	Matrix	NetEnemy::GetMatrix( void )const;
 };

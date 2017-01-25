@@ -14,15 +14,16 @@
 //----------------------------------------------------------------------------------------------
 //	グローバル
 //----------------------------------------------------------------------------------------------
-
+#define INIT_LIFE	20
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	NetEnemy::NetEnemy( void ) : obj( nullptr ),
+NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		pos( 0.0f, 0.0f, 0.0f ), 
 		angle( 0.0f ),
+		life(0),
 		isAlive( false )
 	{
 	
@@ -32,17 +33,21 @@
 	NetEnemy::~NetEnemy( void )
 	{
 		//SafeDelete( obj );
+		SafeDelete(bar);
 	}
 
 	//	初期化
 	void	NetEnemy::Initialize( iex3DObj* org, const Vector3& Pos, float Angle )
 	{
+		life = INIT_LIFE;
 		this->pos = Pos;
 		this->angle = Angle;
 		obj = org;
 		obj->SetPos( pos );
 		obj->SetAngle( angle );
 		obj->Update();
+		bar = new EnemyHpUI();
+		bar->Initilaize(HPUI_TYPE::ENEMY, GetLife());
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -62,6 +67,12 @@
 	void	NetEnemy::Render( void )
 	{
 		obj->Render();
+	}
+
+	//	HPバー描画
+	void	NetEnemy::RenderHpBar(void)
+	{
+		bar->Render((float)GetLife(), GetPos(), GetUp());
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -109,3 +120,17 @@
 		return	pos;
 	}
 
+	//	上方取得
+	Vector3	NetEnemy::GetUp(void)const
+	{
+		Matrix mat = GetMatrix();
+		Vector3	up = Vector3(mat._21, mat._22, mat._23);
+		up.Normalize();
+		return	up;
+	}
+
+	//	行列取得
+	Matrix	NetEnemy::GetMatrix(void)const
+	{
+		return	obj->TransMatrix;
+	}

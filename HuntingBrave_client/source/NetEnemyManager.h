@@ -31,7 +31,8 @@ public:
 	//	XVE•`‰æ
 	void	Update( void );
 	void	Render( void );
-	//void	RenderHp(void);
+	void	RenderHp(void);
+	
 	//	“®ìŠÖ”
 	void	Erase( int index );
 	void	Append( const Vector3& pos, float angle );

@@ -90,13 +90,13 @@ namespace ENEMY_COMMAND
 	}
 
 	//	HP•`‰æ
-	//void	NetEnemyManager::RenderHp(void)
-	//{
-	//	for (auto it = enemyList.begin(); it != enemyList.end(); it++)
-	//	{
-	//		(*it)->BarRender();
-	//	}
-	//}
+	void	NetEnemyManager::RenderHp(void)
+	{
+		for (auto it = enemyList.begin(); it != enemyList.end(); it++)
+		{
+			(*it)->RenderHpBar();
+		}
+	}
 
 //----------------------------------------------------------------------------------------------
 //	“®ìŠÖ”
