@@ -20,7 +20,7 @@
 //	éûä‘
 #define	MINUTE		60
 #define	HOUR		MINUTE * 60
-#define	GRAVITY	-0.1f
+#define	GRAVITY	-0.2f
 
 //	ÉVÅ[Éì
 namespace SCENE

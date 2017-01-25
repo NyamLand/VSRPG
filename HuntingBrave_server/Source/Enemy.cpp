@@ -399,11 +399,6 @@ namespace
 		enemyInfo.pos = enemyParam.pos;
 		enemyInfo.angle = enemyParam.angle;
 
-		if ( index == -1 )
-		{
-			int a = 0;
-		}
-
 		//	‘—M
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
