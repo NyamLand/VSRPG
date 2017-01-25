@@ -39,6 +39,7 @@
 	PlayerParam::PlayerParam( const Vector3& pos, float angle, float cameraAngle, int motion, int frame )
 	{
 		move = Vector3( 0.0f, 0.0f, 0.0f );
+		charType = 0;
 		Set( pos,angle, cameraAngle, motion,  frame );
 	}
 
