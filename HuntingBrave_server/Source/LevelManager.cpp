@@ -176,6 +176,29 @@ LevelManager*	levelManager = nullptr;
 		//	送信
 		gameParam->send( id, ( LPSTR )&sendStatus, sizeof( sendStatus ) );
 	}
+	
+//----------------------------------------------------------------------------------------------
+//	受信
+//----------------------------------------------------------------------------------------------
+
+	//	討伐情報受信
+	void	LevelManager::ReceiveHuntInfo( int client, const LPSTR& data )
+	{
+		//	構造体宣言
+		static	struct HuntInfo
+		{
+			char com;
+			char infoType;
+			char enemyType;
+		} *huntInfo;
+
+		//	変換
+		huntInfo = ( HuntInfo* )data;
+
+		//	経験値計算
+		levelManager->CalcExp( client, huntInfo->enemyType );
+		levelManager->SendExp( client );
+	}
 
 //----------------------------------------------------------------------------------------------
 //	レベル毎のステータス計算

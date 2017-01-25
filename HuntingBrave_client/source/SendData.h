@@ -19,8 +19,20 @@
 				ATTACK_INFO,
 				INPUT_INFO,
 				LEVEL_INFO,
-				HUNT_INFO,
+				ENEMY_INFO,
 				ITEM_INFO
+			};
+		}
+
+		namespace SEND_ENEMY_COMMAND
+		{
+			enum
+			{
+				NO_COMMAND = -1,
+				BIG_ENEMY_HUNT = 1,
+				SMALL_ENEMY_HUNT,
+				ATTACK_END,
+				DEAD_END
 			};
 		}
 	}
@@ -33,9 +45,9 @@
 	struct SendPlayerData
 	{
 		char	com = SEND_COMMAND::PLAYER_INFO;	//1byte
-		float	axisX, axisY;	//	8byte
+		float	axisX, axisY;		//	8byte
 		float	cameraAngle;	//	4byte
-		int 	frame;			//	4byte
+		int 	frame;				//	4byte
 		//	13byte
 		SendPlayerData( float axisX, float axisY, float cameraAngle, int frame ) : 
 			axisX( axisX ), axisY( axisY ), cameraAngle( cameraAngle ), frame( frame ){}
@@ -75,7 +87,7 @@
 	//	åoå±ílèÓïÒ
 	struct SendHuntData
 	{
-		char com = SEND_COMMAND::HUNT_INFO;
+		char com = SEND_COMMAND::ENEMY_INFO;
 		char	enemyType;
 		SendHuntData( char enemyType ) : enemyType( enemyType ){}
 	};

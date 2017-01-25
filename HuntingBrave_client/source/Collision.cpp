@@ -5,6 +5,7 @@
 #include	<map>
 #include	"GameParam.h"
 #include	"EnemyManager.h"
+#include	"NetEnemyManager.h"
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
@@ -28,7 +29,8 @@
 //--------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Collision::Collision( void )
+	Collision::Collision( void ) : collisionMesh( nullptr ),
+		myIndex( -1 )
 	{
 
 	}
@@ -37,6 +39,19 @@
 	Collision::~Collision( void )
 	{
 
+	}
+
+	//	初期化
+	void	Collision::Initialize( int myIndex, LPSTR fileName )
+	{
+		collisionMesh = new iexMesh( fileName );
+		this->myIndex = myIndex;
+	}
+
+	//	解放
+	void	Collision::Release( void )
+	{
+		SafeDelete( collisionMesh );
 	}
 
 //--------------------------------------------------------------------------------------------
@@ -54,21 +69,19 @@
 
 			//	プレイヤー攻撃当たり判定
 			PlayerAttackCollision( player );
+
+			if ( player == myIndex )
+				EnemyAttackCollision( player );
 		}
 
 		//	魔法攻撃当たり判定
 		MagicCollision();
-
-
-		EnemyAttackCollision();
-		
-
 	}
 
 	//	プレイヤー攻撃当たり判定
 	void	Collision::PlayerAttackCollision( int player )
 	{
-		if (gameParam->GetMyIndex() != player)return;
+		if ( myIndex != player )return;
 		//	変数準備
 		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
@@ -108,15 +121,11 @@
 	}
 
 	//	敵攻撃当たり判定
-	void	Collision::EnemyAttackCollision( void )
+	void	Collision::EnemyAttackCollision( int player )
 	{
 		//	変数準備
 		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
-
-		int		id = gameParam->GetMyIndex();
-		//	条件が合わないものはスキップ
-		if (gameParam->GetPlayerActive(id) == false)		return;
 
 		//	全敵回す
 		for ( auto it = enemyList.begin(); it != enemyList.end(); it++ )
@@ -127,26 +136,61 @@
 
 			CollisionShape attackcollsion;
 			attackcollsion.shapeType = attackInfo.shape;
-			attackcollsion.sphere = Sphere(attackInfo.vec1,attackInfo.radius);
+			attackcollsion.sphere = Sphere( attackInfo.vec1,attackInfo.radius );
 			
 			CollisionShape playerCollision = 
-				playerManager->GetPlayer(id)->GetCollisionInfo().collisionShape;
-
+				playerManager->GetPlayer( player )->GetCollisionInfo().collisionShape;
 
 			//	当たり判定チェック
 			isHit = CheckCollision(
 				attackcollsion,
-				playerCollision);
+				playerCollision );
 
 			//	当たっていればライフ計算
 			if ( isHit == true )
 			{
-				if (playerManager->GetPlayer(id)->GetLifeInfo().active)
+				if ( playerManager->GetPlayer( player )->GetLifeInfo().active )
 				{
-					printf("当たりました\n");
+					//SendHitInfo( HIT_INFO::HIT_TO_PLAYER_S );
 				}
 			}
-			
+		}
+	}
+
+	//	大型敵攻撃当たり判定
+	void	Collision::BigEnemyAttackCollision( int player )
+	{
+		//	変数準備
+		auto	 enemyList = netEnemyManager->GetList();
+		bool	isHit = false;
+
+		//	全敵回す
+		for ( int i = 0; i < enemyList.size(); i++ )
+		{
+			//	攻撃情報取得、攻撃中でなければスキップ
+			AttackInfo	attackInfo = enemyList[i]->GetAttackInfo();
+			if ( attackInfo.attackParam == ATTACK_PARAM::NO_ATTACK )	continue;
+
+			CollisionShape attackcollsion;
+			attackcollsion.shapeType = attackInfo.shape;
+			attackcollsion.sphere = Sphere( attackInfo.vec1, attackInfo.radius );
+
+			CollisionShape playerCollision =
+				playerManager->GetPlayer( player )->GetCollisionInfo().collisionShape;
+
+			//	当たり判定チェック
+			isHit = CheckCollision(
+				attackcollsion,
+				playerCollision );
+
+			//	当たっていればライフ計算
+			if ( isHit == true )
+			{
+				if ( playerManager->GetPlayer( player )->GetLifeInfo().active )
+				{
+					//SendHitInfo( HIT_INFO::HIT_TO_PLAYER_L );
+				}
+			}
 		}
 	}
 
@@ -179,8 +223,14 @@
 				if ( isHit == true )
 				{
 					//	ライフ計算
-					( *enemyIt )->GetLifeInfo().CulcLife( -1 );
-					gameParam->SendHuntInfo( ( *enemyIt )->GetEnemyType() );
+					if ( ( *enemyIt )->GetLifeInfo().active )
+					{
+						//	ライフ計算
+						( *enemyIt )->SetMode( ( *enemyIt )->DAMAGE );
+						//	ライフ計算
+						( *enemyIt )->GetLifeInfo().CulcLife( -1 );
+						( *enemyIt )->LifeCheck();
+					}
 				}
 			}
 		}

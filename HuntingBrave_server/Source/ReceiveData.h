@@ -19,9 +19,25 @@
 				ATTACK_INFO,
 				INPUT_INFO,
 				LEVEL_INFO,
-				HUNT_INFO,
+				ENEMY_INFO,
 				ITEM_INFO,
 				COMMAND_MAX
+			};
+		}
+	}
+
+	//	敵情報受信コマンド
+	namespace 
+	{
+		namespace RECEIVE_ENEMY_COMMAND
+		{
+			enum 
+			{
+				NO_COMMAND = -1,
+				BIG_ENEMY_HUNT = 1,
+				SMALL_ENEMY_HUNT,
+				ATTACK_END,
+				DEAD_END
 			};
 		}
 	}
@@ -62,11 +78,4 @@
 	{
 		char	com = RECEIVE_COMMAND::LEVEL_INFO;
 		char levelType;
-	};
-
-	//	経験値情報
-	struct ReceiveHuntData
-	{
-		char com = RECEIVE_COMMAND::HUNT_INFO;
-		char	enemyType;
 	};

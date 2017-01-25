@@ -10,7 +10,7 @@
 //****************************************************************
 
 //----------------------------------------------------------------------------------------------
-//	グローバ	ル
+//	グローバル
 //----------------------------------------------------------------------------------------------
 
 //	実体
@@ -53,6 +53,25 @@ PointManager*	pointManager = nullptr;
 		{
 			gameParam->send( p, ( LPSTR )&sendPointData, sizeof( sendPointData ) );
 		}
+	}
+
+	//	討伐情報受信
+	void	PointManager::ReceiveHuntInfo( int client, const LPSTR& data )
+	{
+		//	構造体宣言
+		static	struct HuntInfo
+		{
+			char com;
+			char infoType;
+			char enemyType;
+		} *huntInfo;
+		
+		//	変換
+		huntInfo = (HuntInfo*)data;
+
+		//	計算、返信
+		CalcPoint( client, 50 );
+		SendPoint( client );
 	}
 
 //----------------------------------------------------------------------------------------------

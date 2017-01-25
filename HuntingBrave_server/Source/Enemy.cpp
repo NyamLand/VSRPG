@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GameParam.h"
 #include	"GlobalFunction.h"
+#include	"Random.h"
 
 #include	"Enemy.h"
 
@@ -30,8 +31,20 @@ namespace
 		enum
 		{
 			POSTURE,	//	待機モーション
-			MOVE,			//	移動モーション
+			MOVE = 2,	//	移動モーション
 			ATTACK,		//	攻撃モーション
+			ATTACK2 = 5	//	攻撃モーション
+		};
+	}
+
+	namespace SEND_INFO_TYPE
+	{
+		enum
+		{
+			MOVE,
+			MODE,
+			MOTION,
+			DEAD
 		};
 	}
 }
@@ -42,8 +55,11 @@ namespace
 
 	//	コンストラクタ
 	Enemy::Enemy( void ): timer( nullptr ),
+		target( 0.0f, 0.0f, 0.0f ),
 		deltaTime( 0.0f ),
-		searchDist( SEARCH_DIST ), alive( true )
+		searchDist( SEARCH_DIST ),
+		index( -1 ),
+		alive( true ), atkFlag( false ), allState( false )
 	{
 		//	構造体初期化
 		ZeroMemory( &lifeInfo, sizeof( lifeInfo ) );
@@ -54,6 +70,13 @@ namespace
 		
 		//	タイマー初期化
 		timer = new Timer();
+
+		//	関数ポインタ設定
+		ModeFunction[MODE::ENTRY] = &Enemy::EntryMode;
+		ModeFunction[MODE::MOVE] = &Enemy::MoveMode;
+		ModeFunction[MODE::ATTACK] = &Enemy::AttackMode;
+
+		mode = MODE::ENTRY;
 	}
 
 	//	デストラクタ
@@ -66,17 +89,27 @@ namespace
 		}
 	}
 
+	//	クライアント情報初期化
+	void	Enemy::ClientStateInitialize( void )
+	{
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			clientState[i] = false;
+		}
+	}
+
 //------------------------------------------------------------------------------------
 //	更新・描画
 //------------------------------------------------------------------------------------
 
 	//	更新
-	void	Enemy::Update( float deltaTime )
+	void	Enemy::Update( char index, float deltaTime )
 	{
+		this->index = index;
 		this->deltaTime = deltaTime;
 
-		//	通常移動
-		Move();
+		//	動作関数
+		( this->*ModeFunction[mode] )();
 	}
 
 //------------------------------------------------------------------------------------
@@ -86,9 +119,6 @@ namespace
 	//	移動
 	void	Enemy::Move( void )
 	{
-		Vector3	target = Vector3( 0.0f, 0.0f, 0.0f );
-		bool	atkFlag = false;
-
 		//	プレイヤーが感知範囲にいれば行動開始
 		if ( DistCheck( target, atkFlag ) )
 		{
@@ -100,6 +130,9 @@ namespace
 
 				//	向いてる方向に前進
 				Advance();
+
+				//	移動時のみ情報送信
+				SendEnemyInfo();
 			}
 			else
 			{
@@ -212,6 +245,171 @@ namespace
 	}
 
 //------------------------------------------------------------------------------------
+//	モード別動作関数
+//------------------------------------------------------------------------------------
+	
+	//	出現モード
+	void	Enemy::EntryMode( void )
+	{
+		if ( CheckState() )
+		{
+			//	クライアント情報初期化
+			ClientStateInitialize();
+			
+			//	移動モードに変更
+			SetMode( MODE::MOVE );
+		}
+	}
+	
+	//	移動モード
+	void	Enemy::MoveMode( void )
+	{
+		//	プレイヤーが感知範囲にいれば行動開始
+		if ( DistCheck( target, atkFlag ) )
+		{
+			if ( !atkFlag )
+			{
+				//	プレイヤーの方を向く
+				target.Normalize();
+				AngleAdjust( target, ANGLEADJUST_SPEED );
+
+				//	向いてる方向に前進
+				Advance();
+			}
+			else
+			{
+				//	攻撃時
+				if ( Random::PercentageRandom( 0.5f ) )	SetMotion( MOTION_NUM::ATTACK );
+				else																SetMotion( MOTION_NUM::ATTACK2 );
+
+				SetMode( MODE::ATTACK );
+			}
+		}
+		else
+		{
+			//	待機モーション
+			SetMotion( MOTION_NUM::POSTURE );
+		}
+	}
+
+	//	攻撃モード
+	void	Enemy::AttackMode( void )
+	{
+		if ( CheckState() )
+		{
+			//	クライアント情報初期化
+			ClientStateInitialize();
+
+			//	通常モードへ
+			SetMode( MODE::MOVE );
+		}
+	}
+
+//------------------------------------------------------------------------------------
+//	クライアント情報
+//------------------------------------------------------------------------------------
+
+	//	クライアント情報受信
+	void	Enemy::ReceiveClientState( int client )
+	{
+		clientState[client] = true;
+	}
+
+	//	クライアントの状態をチェック
+	bool	Enemy::CheckState( void )
+	{
+		allState = false;
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( !gameParam->GetPlayerActive( p ) )	continue;
+			else
+			{
+				allState = clientState[p];
+				if ( !allState ) 	break;
+			}
+		}
+
+		return	allState;
+	}
+
+	//	モード切り替え送信
+	void	Enemy::SendMode( char nextMode )
+	{
+		//	情報設定
+		static	struct
+		{
+			char com;
+			char infoType;
+			char enemyIndex;
+			char nextMode;
+		} sendInfo;
+
+		sendInfo.com = SEND_COMMAND::ENEMY_INFO;
+		sendInfo.infoType = SEND_INFO_TYPE::MODE;
+		sendInfo.enemyIndex = index;
+		sendInfo.nextMode = nextMode;
+
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( gameParam->GetPlayerActive( p ) == false )	continue;
+			gameParam->send( p, ( char* )&sendInfo, sizeof( sendInfo ) );
+		}
+	}
+
+	//	モーション切り替え送信
+	void	Enemy::SendMotion( int motion )
+	{
+		//	情報設定
+		static struct
+		{
+			char com;
+			char infoType;
+			char enemyIndex;
+			int motion;
+		} sendInfo;
+
+		sendInfo.com = SEND_COMMAND::ENEMY_INFO;
+		sendInfo.infoType = SEND_INFO_TYPE::MOTION;
+		sendInfo.enemyIndex = index;
+		sendInfo.motion = motion;
+		
+		//	送信
+		for ( int p = 0; p < PLAYER_MAX; p++ )
+		{
+			if ( gameParam->GetPlayerActive( p ) == false )	continue;
+			gameParam->send( p, ( char* )&sendInfo, sizeof( sendInfo ) );
+		}
+	}
+
+	//	通常敵情報送信
+	void	Enemy::SendEnemyInfo( void )
+	{
+		//	構造体宣言
+		static	struct
+		{
+			char com;
+			char infoType;
+			char enemyIndex;
+			Vector3	pos;
+			float			angle;
+		} enemyInfo;
+
+		//	情報設定
+		enemyInfo.com = SEND_COMMAND::ENEMY_INFO;
+		enemyInfo.infoType = SEND_INFO_TYPE::MOVE;
+		enemyInfo.enemyIndex = index;
+		enemyInfo.pos = enemyParam.pos;
+		enemyInfo.angle = enemyParam.angle;
+
+		//	送信
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( gameParam->GetPlayerActive( i ) == false )	continue;
+			gameParam->send( i, ( char* )&enemyInfo, sizeof( enemyInfo ) );
+		}
+	}
+
+//------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
 
@@ -233,6 +431,7 @@ namespace
 		if ( enemyParam.motion != motion )
 		{
 			enemyParam.motion = motion;
+			SendMotion( motion );
 		}
 	}
 

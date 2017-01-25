@@ -27,7 +27,6 @@ public:
 	
 	//	XV
 	void	Update( float deltaTime );
-	void	SendEnemyInfo( int index, const EnemyParam& enemyParam );
 	void	SendErase( int index );
 	void	SendAppend( const Vector3& pos, float angle );
 

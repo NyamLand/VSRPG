@@ -200,7 +200,7 @@ GameParam*	gameParam = nullptr;
 				break;
 
 			case RECEIVE_COMMAND::ENEMY_INFO:
-				netEnemyManager->Receive( data );
+				//netEnemyManager->Receive( data );
 				break;
 
 			case COMMANDS::MATCHING:
@@ -297,13 +297,6 @@ GameParam*	gameParam = nullptr;
 
 		//	メニューボタン入力
 		CheckInputData( KEY_TYPE::START );
-	}
-
-	//	討伐情報送信
-	void	GameParam::SendHuntInfo( char enemyType )
-	{
-		SendHuntData	sendHuntData( enemyType );
-		send( ( LPSTR )&sendHuntData, sizeof( sendHuntData ) );
 	}
 
 	//	サインアウト送信

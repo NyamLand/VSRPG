@@ -21,6 +21,7 @@ public:
 	//	“®ìŠÖ”
 	void	CalcPoint( int id, int point );
 	void	SendPoint( int id );
+	void	ReceiveHuntInfo( int client, const LPSTR& data );
 
 	//	î•ñİ’è
 };

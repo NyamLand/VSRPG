@@ -25,8 +25,7 @@ namespace
 	{
 		enum
 		{
-			ENEMY_INFO,
-			ERASE_INFO,
+			ERASE_INFO = 10,
 			APPEND_INFO
 		};
 	}
@@ -85,19 +84,15 @@ EnemyManager*	enemyManager = nullptr;
 		int	enemyNum = 0;
 		for ( auto it = enemyList.begin(); it != enemyList.end(); )
 		{
+			//	インデックス
+			char index = std::distance( enemyList.begin(), it );
+			
 			//	座標チェック
 			PosCheck( *it );
 			PlayerPosCheck( *it );
 
 			//	更新
-			( *it )->Update( deltaTime );
-
-			//	敵情報送信
-			if ( (*it)->GetAlive() )
-			{
-				int index = std::distance( enemyList.begin(), it );
-				SendEnemyInfo( index, ( *it )->GetEnemyParam() );
-			}
+			( *it )->Update( index, deltaTime );
 
 			enemyNum++;
 			it++;
@@ -127,42 +122,13 @@ EnemyManager*	enemyManager = nullptr;
 		Enemy*	enemy = new Enemy();
 		enemy->SetPos( pos );
 		enemy->SetAngle( angle );
-		enemy->Update( 1.0f );
+
 		
 		//	追加情報送信
 		SendAppend( pos, angle );
 		
 		//	リストに追加
 		enemyList.push_back( enemy );
-	}
-
-	//	敵情報送信
-	void	EnemyManager::SendEnemyInfo( int index, const EnemyParam& enemyParam )
-	{
-		//	構造体宣言
-		static	struct
-		{
-			char com;
-			char enemyCom;
-			int	index;
-			Vector3	pos;
-			float			angle;
-			int			motion;
-		} enemyInfo;
-
-		//	情報設定
-		enemyInfo.com = SEND_COMMAND::ENEMY_INFO;
-		enemyInfo.enemyCom = ENEMY_COMMAND::ENEMY_INFO;
-		enemyInfo.index = index;
-		enemyInfo.pos = enemyParam.pos;
-		enemyInfo.angle = enemyParam.angle;
-		enemyInfo.motion = enemyParam.motion;
-		
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			if( gameParam->GetPlayerActive( i ) == false )	continue;
-			gameParam->send( i, ( char* )&enemyInfo, sizeof( enemyInfo ) );
-		}
 	}
 
 	//	敵削除情報送信
@@ -232,6 +198,7 @@ EnemyManager*	enemyManager = nullptr;
 
 				//	離す
 				( *it )->SetPos( enemy->GetPos() - vec * collisionDist );
+				( *it )->SendEnemyInfo();
 			}
 		}
 
@@ -263,6 +230,7 @@ EnemyManager*	enemyManager = nullptr;
 
 				//	離す
 				enemy->SetPos( pPos - vec * collisionDist );
+				enemy->SendEnemyInfo();
 			}
 		}
 	}

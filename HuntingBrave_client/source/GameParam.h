@@ -47,7 +47,6 @@ public:
 	void	SendAttackParam( void );
 	void	SendMatching( void );
 	void	SendInputInfo( void );
-	void	SendHuntInfo( char enemyType );
 	void	SendSignOut( void );
 	void	SendResponseInfo( char com );
 

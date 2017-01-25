@@ -8,11 +8,13 @@
 //****************************************************************
 
 //	include
+#include	"CharaInfo.h"
 
 //	class
 class NetEnemy
 {
 private:
+	AttackInfo	attackInfo;
 	iex3DObj*	obj;
 	Vector3	pos;
 	float			radius;
@@ -30,14 +32,18 @@ public:
 	void	Render( void );
 
 	//	“®ìŠÖ”
+	void	Death( void );
+	void	CheckAttackInfo( void );
 
 	//	î•ñİ’è
 	void	SetPos( const Vector3& pos );
 	void	SetAngle( float angle );
 	void	SetMotion( int motion );
 	void	SetMesh( iex3DObj* mesh );
+	void	SetDeath( void );
 
 	//	î•ñæ“¾
+	AttackInfo&	GetAttackInfo( void ){ return attackInfo; }
 	Vector3	GetPos( void )const;
 	bool			GetIsAlive( void ){ return isAlive; }
 };

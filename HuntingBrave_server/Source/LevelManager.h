@@ -63,6 +63,9 @@ public:
 	void	SendAllStatus( int id );
 	void	SendStatus( int id, char statusType, float status );
 
+	//	受信関数
+	void	ReceiveHuntInfo( int client, const LPSTR& data );
+
 	//	レベル毎のステータス計算
 	void	CulcStatus( int id, char levelType );
 	void	CulcPower( int id, char levelType );

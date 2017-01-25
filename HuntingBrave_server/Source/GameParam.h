@@ -48,7 +48,7 @@ public:
 	int	ReceiveChara( int client, const LPSTR& data );
 	int	ReceiveAttackInfo( int client, const LPSTR& data );
 	int	ReceiveInput( int client, const LPSTR& data );
-	int	ReceiveHuntInfo( int client, const LPSTR& data );
+	int	ReceiveEnemyInfo( int client, const LPSTR& data );
 	int	ReceiveLevelInfo( int client, const LPSTR& data );
 	int	ReceiveItemInfo( int client, const LPSTR& data );
 

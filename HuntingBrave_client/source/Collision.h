@@ -25,21 +25,40 @@ public:
 		CAPSULEVSCAPSULE,
 	};
 
+	enum HIT_INFO
+	{
+		ENEMY_HIT,
+		HIT_TO_PLAYER_S,
+		HIT_TO_PLAYER_L,
+		HIT_TO_ENEMY
+	};
+
+	int myIndex;
+	
+	iexMesh*	collisionMesh;
+
 private:
 	Collision( void );
 	~Collision( void );
+	void Initialize( int myIndex, LPSTR fileName );
+	void	Release( void );
 
 public:
 	//	ìñÇΩÇËîªíË
 	void	AllCollision( void );
 	void	PlayerAttackCollision( int player );
-	void	EnemyAttackCollision( void );
+	void	EnemyAttackCollision( int player );
+	void	BigEnemyAttackCollision( int player );
 	void	MagicCollision( void );
 	bool	CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 );
 	COLLISION_PAIR	GetCollisionPair( char type1, char type2 );
 	CollisionShape	SetCollisionShape( char shapeType, const Vector3& vec1, const Vector3& vec2, float radius );
+	
 	//	çﬁéøîªíË
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );
+
+	//	ÉqÉbÉgèÓïÒëóêM
+	void		SendHitInfo( char hitInfo );
 
 	//	ìñÇΩÇËîªíË
 	bool	DistCheck( const Vector3& p1, const Vector3& p2, float dist );

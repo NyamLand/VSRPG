@@ -153,8 +153,8 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveLevelInfo( client, data );
 			break;
 
-		case RECEIVE_COMMAND::HUNT_INFO:
-			client = ReceiveHuntInfo( client, data );
+		case RECEIVE_COMMAND::ENEMY_INFO:
+			client = ReceiveEnemyInfo( client, data );
 			break;
 
 		case RECEIVE_COMMAND::ITEM_INFO:
@@ -289,20 +289,33 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	“¢”°î•ñæ“¾
-	int	GameParam::ReceiveHuntInfo( int client, const LPSTR& data )
+	int	GameParam::ReceiveEnemyInfo( int client, const LPSTR& data )
 	{
-		ReceiveHuntData*	receiveHuntData = ( ReceiveHuntData* )data;
-
-		//	‘åŒ^‚Ì“_”‚ğ‰ÁZ
-		if ( receiveHuntData->enemyType == ENEMY_EXP::BIG_ENEMY )
+		switch ( data[1] )
 		{
-			pointManager->CalcPoint( client, 50 );
-			pointManager->SendPoint( client );
+		case RECEIVE_ENEMY_COMMAND::BIG_ENEMY_HUNT:
+			//	“_”ŒvZ
+			pointManager->ReceiveHuntInfo( client, data );
+
+			//	ŒoŒ±’lŒvZ
+			levelManager->ReceiveHuntInfo( client, data );
+			break;
+
+		case RECEIVE_ENEMY_COMMAND::SMALL_ENEMY_HUNT:
+			//	ŒoŒ±’lŒvZ
+			levelManager->ReceiveHuntInfo( client, data );
+			break;
+
+		case RECEIVE_ENEMY_COMMAND::ATTACK_END:
+			break;
+
+		case RECEIVE_ENEMY_COMMAND::DEAD_END:
+			break;
+
+		default:
+			break;
 		}
 
-		//	ŒoŒ±’lŒvZ
-		levelManager->CalcExp( client, receiveHuntData->enemyType );
-		levelManager->SendExp( client );
 		return	-1;
 	}
 

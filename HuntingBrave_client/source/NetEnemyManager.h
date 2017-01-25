@@ -39,11 +39,15 @@ public:
 	//	óMŠÖ”
 	void	Receive( const LPSTR& data );
 	void	ReceiveEnemyInfo( const LPSTR& data );
+	void	ReceiveMoveInfo( const LPSTR& data );
+	void	ReceiveModeInfo( const LPSTR& data );
+	void	ReceiveMotionInfo( const LPSTR& data );
+	void	ReceiveDeadInfo( const LPSTR& data );
 	void	ReceiveEraseInfo( const LPSTR& data );
 	void	ReceiveAppendInfo( const LPSTR& data );
 
 	//	î•ñİ’è
-	void	SetInfo( int index, const Vector3& pos, float angle, int motion );
+	void	SetInfo( int index, const Vector3& pos, float angle );
 	
 
 	//	î•ñæ“¾
