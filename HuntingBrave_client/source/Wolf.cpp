@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
+#include	"Sound.h"
 #include	"Interpolation.h"
 #include	"Wolf.h"
 
@@ -176,6 +177,7 @@ namespace
 			if (alpha <= 0.0f)
 			{
 				lifeInfo.isAlive = false;
+				sound->PlaySE(SE::ENEMY_DEAD);
 			}
 		}
 	}

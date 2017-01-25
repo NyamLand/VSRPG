@@ -105,6 +105,7 @@ namespace
 				KEY( KEY_ENTER ) == 3 || 
 				KEY( KEY_A ) == 3 )
 			{
+				sound->PlaySE(SE::TITLE_OK);
 				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
 				step++;
 			}

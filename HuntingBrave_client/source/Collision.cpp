@@ -4,6 +4,7 @@
 #include	<vector>
 #include	<map>
 #include	"GameParam.h"
+#include	"Sound.h"
 #include	"EnemyManager.h"
 #include	"NetEnemyManager.h"
 #include	"PlayerManager.h"
@@ -78,7 +79,7 @@
 		MagicCollision();
 	}
 
-	//	プレイヤー攻撃当たり判定
+	//	「プレイヤー　→　敵」剣攻撃当たり判定
 	void	Collision::PlayerAttackCollision( int player )
 	{
 		if ( myIndex != player )return;
@@ -110,6 +111,7 @@
 			{
 				if ((*it)->GetLifeInfo().active)
 				{
+					sound->PlaySE(SE::ATTACK_HIT1);
 					//	ライフ計算
 					(*it)->SetMode((*it)->DAMAGE);
 					//	ライフ計算
@@ -194,7 +196,7 @@
 		}
 	}
 
-	//	魔法当たり判定
+	//	「プレイヤー　→　敵」魔法当たり判定
 	void	Collision::MagicCollision( void )
 	{
 		//	変数準備
@@ -222,6 +224,7 @@
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
+					sound->PlaySE(SE::ATTACK_HIT2);
 					//	ライフ計算
 					if ( ( *enemyIt )->GetLifeInfo().active )
 					{
