@@ -89,6 +89,9 @@ bool	sceneMain::Initialize( void )
 	//	Effect‰Šú‰»
 	effectManager->Initialize();
 
+	//	collision‰Šú‰»
+	collision->Initialize(gameParam->GetMyIndex(), "DATA/BG/stage_atari.IMO" );
+
 	//	‘—M
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
@@ -107,6 +110,7 @@ sceneMain::~sceneMain( void )
 	magicManager->Release();
 	playerManager->Release();
 	effectManager->Release();
+	collision->Release();
 	sound->StopBGM();
 }
 

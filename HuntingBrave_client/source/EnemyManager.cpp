@@ -188,6 +188,7 @@
 
 				//	自分→相手へのベクトル
 				Vector3	vec = enemy->GetPos() - (*it)->GetPos();
+				vec.y = 0.0f;
 				float		length = vec.Length();
 
 				float collisionDist = enemy->GetCollisionInfo().radius + (*it)->GetCollisionInfo().radius;
@@ -217,6 +218,7 @@
 			//	プレイヤーへのベクトルを求める
 			Vector3	pPos = playerManager->GetPlayer( p )->GetPos();
 			Vector3	vec = pPos - enemy->GetPos();
+			vec.y = 0.0f;
 			float		length = vec.Length();
 			
 			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer( p )->GetCollisionInfo().radius;

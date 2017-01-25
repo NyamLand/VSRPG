@@ -34,13 +34,16 @@ public:
 	void	Update( void );
 	void	Render( void );
 	void	RenderHpBar( void );
+	
 	//	“®ìŠÖ”
-
+	void	Death( void );
+	void	CheckAttackInfo( void );
 	//	î•ñİ’è
 	void	SetPos( const Vector3& pos );
 	void	SetAngle( float angle );
 	void	SetMotion( int motion );
 	void	SetMesh( iex3DObj* mesh );
+	void	SetDeath( void );
 
 	//	î•ñæ“¾
 	Vector3	GetPos( void )const;
