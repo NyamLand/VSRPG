@@ -26,7 +26,7 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		life(0),
 		isAlive( false )
 	{
-	
+		ZeroMemory( &attackInfo, sizeof( attackInfo ) );
 	}
 
 	//	デストラクタ

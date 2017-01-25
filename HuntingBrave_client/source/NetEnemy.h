@@ -9,6 +9,8 @@
 
 //	include
 #include	"EnemyHp.h"
+#include	"CharaInfo.h"
+
 //	class
 class NetEnemy
 {
@@ -16,6 +18,7 @@ private:
 	iex3DObj*	obj;
 	Vector3	pos;
 	EnemyHpUI*	bar;
+	AttackInfo	attackInfo;
 	float			radius;
 	float			angle;
 	bool			isAlive;
@@ -44,5 +47,6 @@ public:
 	bool			GetIsAlive( void ){ return isAlive; }
 	int		GetLife( void )const{ return life; }
 	Vector3	GetUp( void )const;
+	AttackInfo&	GetAttackInfo( void ){ return attackInfo;  }
 	Matrix	NetEnemy::GetMatrix( void )const;
 };

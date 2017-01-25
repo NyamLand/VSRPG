@@ -159,13 +159,11 @@ namespace ENEMY_COMMAND
 			int	index;
 			Vector3	pos;
 			float			angle;
-			int			motion;
 		}* enemyInfo = ( EnemyInfo* )data;
 
 		SetInfo( enemyInfo->index, 
 			enemyInfo->pos, 
-			enemyInfo->angle, 
-			enemyInfo->motion );
+			enemyInfo->angle );
 	}
 
 	//	“GÁ‹Žî•ñŽóM
@@ -203,11 +201,10 @@ namespace ENEMY_COMMAND
 //----------------------------------------------------------------------------------------------
 
 	//	ŽóMî•ñÝ’è
-	void	NetEnemyManager::SetInfo( int index, const Vector3& pos, float angle, int motion )
+	void	NetEnemyManager::SetInfo( int index, const Vector3& pos, float angle )
 	{
 		enemyList[index]->SetPos( pos );
 		enemyList[index]->SetAngle( angle );
-		enemyList[index]->SetMotion( motion );
 	}
 
 //----------------------------------------------------------------------------------------------
