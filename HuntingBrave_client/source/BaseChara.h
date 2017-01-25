@@ -52,7 +52,7 @@ public:
 	void	SetMove( const Vector3& Move );
 	void	SetAngle( float Angle );
 	void	SetScale( float Scale );
-	void	SetMotion( int motion );
+	virtual void	SetMotion( int motion );
 	bool	SetMode( int nextMode );
 	void	SetObj( iex3DObj* obj );
 

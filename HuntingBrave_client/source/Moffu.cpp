@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
 #include	"Interpolation.h"
+#include	"Sound.h"
 #include	"PlayerManager.h"
 #include	"Random.h"
 
@@ -226,6 +227,7 @@ namespace
 			if ( alpha <= 0.0f )
 			{
 				lifeInfo.isAlive = false;
+				sound->PlaySE(SE::ENEMY_DEAD);
 			}
 		}
 		

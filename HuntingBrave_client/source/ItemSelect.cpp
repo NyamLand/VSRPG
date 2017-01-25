@@ -4,6 +4,7 @@
 #include	"GlobalFunction.h"
 #include	"Interpolation.h"
 #include	"GameParam.h"
+#include	"Sound.h"
 #include	"InputManager.h"
 #include	"ItemManager.h"
 #include	"ItemSelect.h"
@@ -230,6 +231,8 @@ namespace
 
 			}
 			
+			sound->PlaySE(SE::MOVE_SELECT);
+
 			//	パラメータリセット
 			percentage1 = percentage2 = 0.0f;
 		}
@@ -253,9 +256,14 @@ namespace
 			itemManager->SendItemSet( 
 				selectItem[ITEM_POS::LEFT_ITEM], 
 				selectItem[ITEM_POS::RIGHT_ITEM] );
+
+			sound->PlaySE(SE::IM_OK);
+
 			return true;
 		}
+		else sound->PlaySE(SE::OK);
 
+		
 		//	カーソルずらし
 		before = select;
 		select++;

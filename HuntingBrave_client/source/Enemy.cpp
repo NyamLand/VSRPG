@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
 #include	"GameParam.h"
+#include	"Sound.h"
 #include	"PlayerManager.h"
 #include	"Collision.h"
 
@@ -109,6 +110,7 @@
 		if ( lifeInfo.life <= 0 )
 		{
 			lifeInfo.active = false;
+			sound->PlaySE(SE::ENEMY_DEAD);
 			SetMode( MODE::DEAD );
 		}
 	}

@@ -87,8 +87,11 @@ public:
 	//	“®ìŠÖ”
 	void	SetAttackShape( void );
 	virtual	void	ChangeTexture( int colorNum ) = 0;
+	void	PlaySE(int motion);
 
 	//	î•ñİ’è
 	void	SetPlayerParam( const PlayerParam& playerParam );
 	void	SetCollisionShape( const PlayerParam& playerParam );
+	void	SetMotion(int motion) override;
+
 };

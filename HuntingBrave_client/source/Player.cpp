@@ -6,6 +6,7 @@
 #include	"DrawShape.h"
 #include	"GameParam.h"
 #include	"CSVReader.h"
+#include	"Sound.h"
 #include	"BaseEquipment.h"
 #include	"Player.h"
 
@@ -166,6 +167,21 @@ namespace
 		gameParam->SendAttackParam();
 	}
 
+	void	Player::PlaySE(int motion)
+	{
+		switch (motion)
+		{
+			case MOTION_NUM::ATTACK1:
+				sound->PlaySE(SE::ATTACK);
+				//sound->PlaySE(SE::ATTACK_HIT1);
+				break;
+
+			default:
+				break;
+		}
+	
+	}
+
 //------------------------------------------------------------------------------------
 //	î•ñÝ’è
 //------------------------------------------------------------------------------------
@@ -186,6 +202,16 @@ namespace
 			Vector3( playerParam.pos.x, playerParam.pos.y + collisionInfo.radius, playerParam.pos.z ),
 			Vector3( playerParam.pos.x, playerParam.pos.y + collisionInfo.height + collisionInfo.radius, playerParam.pos.z ),
 			collisionInfo.radius );
+	}
+
+	//	ƒ‚[ƒVƒ‡ƒ“Ý’è
+	void	Player::SetMotion(int motion)
+	{
+		if (obj->GetMotion() != motion)
+		{
+			obj->SetMotion(motion);
+			PlaySE(motion);
+		}
 	}
 
 //------------------------------------------------------------------------------------

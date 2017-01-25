@@ -165,6 +165,9 @@ namespace
 		{
 			percentageY = 0.0f;
 			saveY = cursorY;
+
+			sound->PlaySE(SE::MOVE_SELECT);
+
 			if ( axisY > 0.0f )
 			{
 				if ( cursorY != 0 )		cursorY--;
@@ -242,6 +245,8 @@ namespace
 	{
 		if ( KEY( KEY_TYPE::B ) == 3 )
 		{
+			sound->PlaySE(SE::CANCEL);
+
 			if ( nameCursor != 0 )
 			{
 				if ( inputState )
