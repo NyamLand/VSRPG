@@ -50,7 +50,7 @@
       <Filter>IEX</Filter>
     </ClCompile>
     <ClCompile Include="source\system\WinMain.cpp">
-      <Filter>Source\Timer\SYSTEM</Filter>
+      <Filter>Source\SYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="source\BaseChara.cpp">
       <Filter>Source\BaseChara</Filter>
@@ -68,10 +68,10 @@
       <Filter>Source\Status</Filter>
     </ClCompile>
     <ClCompile Include="source\system\Framework.cpp">
-      <Filter>Source\Timer\SYSTEM\Framework</Filter>
+      <Filter>Source\SYSTEM\Framework</Filter>
     </ClCompile>
     <ClCompile Include="source\system\System.cpp">
-      <Filter>Source\Timer\SYSTEM\System</Filter>
+      <Filter>Source\SYSTEM\System</Filter>
     </ClCompile>
     <ClCompile Include="source\BaseEquipment.cpp">
       <Filter>Source\Equipment\BaseEquipment</Filter>
@@ -268,6 +268,9 @@
     <ClCompile Include="source\Wolf.cpp">
       <Filter>Source\Enemy\Wolf</Filter>
     </ClCompile>
+    <ClCompile Include="source\Circle.cpp">
+      <Filter>Source\Circle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -286,13 +289,13 @@
       <Filter>Source\Status</Filter>
     </ClInclude>
     <ClInclude Include="source\system\Framework.h">
-      <Filter>Source\Timer\SYSTEM\Framework</Filter>
+      <Filter>Source\SYSTEM\Framework</Filter>
     </ClInclude>
     <ClInclude Include="source\system\System.h">
-      <Filter>Source\Timer\SYSTEM\System</Filter>
+      <Filter>Source\SYSTEM\System</Filter>
     </ClInclude>
     <ClInclude Include="source\system\Scene.h">
-      <Filter>Source\Timer\SYSTEM\Scene</Filter>
+      <Filter>Source\SYSTEM\Scene</Filter>
     </ClInclude>
     <ClInclude Include="source\sceneMain.h">
       <Filter>Source\Scene\sceneMain</Filter>
@@ -500,6 +503,9 @@
     </ClInclude>
     <ClInclude Include="source\Wolf.h">
       <Filter>Source\Enemy\Wolf</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Circle.h">
+      <Filter>Source\Circle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -731,18 +737,6 @@
     <Filter Include="Source\Manager\ItemManager">
       <UniqueIdentifier>{aa088781-77bb-41a6-8c19-883ca4ca0980}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Timer\SYSTEM">
-      <UniqueIdentifier>{328e3617-650c-4c9b-b829-e38566478169}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Timer\SYSTEM\Framework">
-      <UniqueIdentifier>{8315e0c5-9963-4f16-86c1-24527c70122d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Timer\SYSTEM\System">
-      <UniqueIdentifier>{ced84632-0908-4540-971d-2443acd91156}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Timer\SYSTEM\Scene">
-      <UniqueIdentifier>{3632b4e4-aca5-4f58-8711-f15e77b476d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Stage">
       <UniqueIdentifier>{cd8c2e98-900d-4808-a4c2-990c0900a82b}</UniqueIdentifier>
     </Filter>
@@ -769,6 +763,21 @@
     </Filter>
     <Filter Include="Source\Enemy\Moffu">
       <UniqueIdentifier>{7ba92694-7e48-4b37-a7f8-8be58a288972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM">
+      <UniqueIdentifier>{328e3617-650c-4c9b-b829-e38566478169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM\Framework">
+      <UniqueIdentifier>{8315e0c5-9963-4f16-86c1-24527c70122d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM\System">
+      <UniqueIdentifier>{ced84632-0908-4540-971d-2443acd91156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SYSTEM\Scene">
+      <UniqueIdentifier>{3632b4e4-aca5-4f58-8711-f15e77b476d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Circle">
+      <UniqueIdentifier>{86c8e47a-5fdd-4e1c-90f9-408902dd9bba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

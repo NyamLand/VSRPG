@@ -107,7 +107,7 @@ namespace
 		typeIcon( nullptr ), levelIcon( nullptr ),
 		expUI( nullptr ), flavorText( nullptr ),
 		needExpUI( nullptr ),
-		select( 0 ), beforeSelect( 1 ),
+		select( 0 ), beforeSelect( 1 ), level( 0 ),
 		percentage( 0.0f ), percentage2( 1.0f )
 	{
 		//	ƒvƒŒƒCƒ„[”Ô†Žæ“¾
@@ -196,7 +196,7 @@ namespace
 		expUI->SetExp( levelManager->GetExp() );
 		expUI->Update();
 
-		needExpUI->SetExp( levelManager->GetExp() );
+		needExpUI->SetLevel( level );
 		needExpUI->Update();
 
 		//	Šg‘åk¬•âŠÔ
@@ -259,7 +259,11 @@ namespace
 	{
 		if ( levelManager->GetLevel( select ) != levelManager->LEVEL_MAX )
 		{
+			if (levelManager->GetExp() < (30 + level * 5)) return;
+
+
 			levelManager->SendLevel( select );
+			level++;
 		}
 	}
 

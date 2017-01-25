@@ -119,7 +119,7 @@ void	ExpUI::SetExp(int e)
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	NeedExpUI::NeedExpUI( int x, int y, int w, int h ) : ExpUI( x, y, w, h )
+	NeedExpUI::NeedExpUI( int x, int y, int w, int h ) : ExpUI( x, y, w, h ), level( 0 )
 	{
 		//	座標、サイズ情報格納
 		size = w;	posx = x;	posy = y;
@@ -137,4 +137,15 @@ void	ExpUI::SetExp(int e)
 	NeedExpUI::~NeedExpUI( void )
 	{
 
+	}
+
+	void	NeedExpUI::Update(void)
+	{
+		int exp = 0;
+
+		exp = 30 + level * 5;
+
+		number->SetNum(exp);
+		number->SetColor(NUM_COLOR::GREEN);
+		number->Update(icon);
 	}

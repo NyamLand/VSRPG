@@ -18,6 +18,7 @@
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
 #include	"MagicManager.h"
+#include	"EffectManager.h"
 #include	"LevelManager.h"
 #include	"NameManager.h"
 #include	"ItemManager.h"
@@ -85,6 +86,9 @@ bool	sceneMain::Initialize( void )
 	//	level‰Šú‰»
 	levelManager->Initialize();
 
+	//	Effect‰Šú‰»
+	effectManager->Initialize();
+
 	//	‘—M
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
@@ -102,6 +106,7 @@ sceneMain::~sceneMain( void )
 	uiManager->Release();
 	magicManager->Release();
 	playerManager->Release();
+	effectManager->Release();
 	sound->StopBGM();
 }
 
@@ -139,6 +144,9 @@ void	sceneMain::Update( void )
 	//	uiXV
 	uiManager->Update();
 
+	//	EffectXV
+	effectManager->Update();
+
 	//	cameraXV
 	int index = gameParam->GetMyIndex();
 	mainView->Update( playerManager->GetPlayer( index )->GetPos() );
@@ -175,6 +183,9 @@ void	sceneMain::Render( void )
 
 	//	magic•`‰æ
 	magicManager->Render();
+
+	//	effect•`‰æ
+	effectManager->Render();
 
 	//	ui•`‰æ
 	uiManager->Render();

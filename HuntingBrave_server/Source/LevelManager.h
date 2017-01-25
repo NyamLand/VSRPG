@@ -39,6 +39,7 @@ namespace
 struct LevelInfo
 {
 	int	exp;
+	int total_level;
 	char	level[LEVEL_TYPE::TYPE_MAX];
 };
 

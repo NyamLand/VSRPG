@@ -31,6 +31,7 @@ private:
 	char		beforeSelect;
 	LPSTR	text;
 
+	int level;
 	int id;
 
 public:

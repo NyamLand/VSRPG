@@ -4,6 +4,8 @@
 #include	<list>
 #include	"GlobalFunction.h"
 #include	"EffectManager.h"
+#include	"GameParam.h"
+
 
 //***************************************************************
 //
@@ -21,30 +23,33 @@
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	EffectManager::EffectManager( void )
+	EffectManager::EffectManager(void)
 	{
-		effectList.clear();
+		
 	}
 
 	//	デストラクタ
 	EffectManager::~EffectManager( void )
 	{
-		Release();
+
 	}
 
 	//	初期化
 	bool	EffectManager::Initialize( void )
 	{
-		effectList.clear();
+		for (int i = 0; i < PLAYER_MAX; i++){
+			circle[i] = new Circle(i);
+		}
+
 		return	true;
 	}
 
 	//	解放
 	void	EffectManager::Release( void )
 	{
-		for ( auto it = effectList.begin(); it != effectList.end(); )
-		{
-			it = effectList.erase( it );
+
+		for (int i = 0; i < PLAYER_MAX; i++){
+			SafeDelete(circle[i]);
 		}
 	}
 	
@@ -55,26 +60,16 @@
 	//	更新
 	void	EffectManager::Update( void )
 	{
-		for ( auto it = effectList.begin(); it != effectList.end(); )
-		{
-			( *it )->Update();
-
-			if ( ( *it )->GetEraseFlag() )
-			{
-				it = effectList.erase( it );
-				continue;
-			}
-
-			it++;
+		for (int i = 0; i < PLAYER_MAX; i++){
+			circle[i]->Update();
 		}
 	}
 
 	//	描画
 	void	EffectManager::Render( void )
 	{
-		for ( auto it = effectList.begin(); it != effectList.end(); it++ )
-		{
-			( *it )->Render();
+		for (int i = 0; i < PLAYER_MAX; i++){
+			circle[i]->Render();
 		}
 	}
 

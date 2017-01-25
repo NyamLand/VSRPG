@@ -113,6 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
+    <ClCompile Include="source\Circle.cpp" />
     <ClCompile Include="source\Wolf.cpp" />
     <ClCompile Include="source\CharaInfo.cpp" />
     <ClCompile Include="source\Collision.cpp" />
@@ -204,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
+    <ClInclude Include="source\Circle.h" />
     <ClInclude Include="source\Wolf.h" />
     <ClInclude Include="source\CharaInfo.h" />
     <ClInclude Include="source\Collision.h" />
