@@ -18,13 +18,16 @@ namespace ENEMY_COMMAND
 {
 	enum
 	{
-		ENEMY_INFO,
-		ERASE_INFO,
-		APPEND_INFO,
+		MOVE,
+		MODE,
+		MOTION,
+		DEAD,
+		ERASE = 10,
+		APPEND
 	};
 }
 
-#define	MINOTAURUS_SCALE	0.02f
+#define	MINOTAURUS_SCALE	0.15f
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -47,7 +50,7 @@ namespace ENEMY_COMMAND
 	{
 		if ( org == nullptr )
 		{
-			org = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
+			org = new iex3DObj( "DATA/CHR/Enemy/halk/halk.IEM" );
 			org->SetScale( MINOTAURUS_SCALE );
 			org->Update();
 		}
@@ -77,6 +80,11 @@ namespace ENEMY_COMMAND
 		for ( int i = 0; i < enemyList.size(); i++)
 		{
 			enemyList[i]->Update();
+			bool	isAlive = enemyList[i]->GetIsAlive();
+			if ( !isAlive )
+			{
+				enemyList.erase( enemyList.begin() + i );
+			}
 		}
 	}
 
@@ -130,17 +138,32 @@ namespace ENEMY_COMMAND
 	{
 		switch ( data[1] )
 		{
-		case ENEMY_COMMAND::ENEMY_INFO:
+		case ENEMY_COMMAND::MOVE:
 			if ( enemyList.empty() )	break;
 			ReceiveEnemyInfo( data );
 			break;
 
-		case ENEMY_COMMAND::ERASE_INFO:
+		case ENEMY_COMMAND::MODE:
+			if ( enemyList.empty() )	break;
+			ReceiveModeInfo( data );
+			break;
+
+		case ENEMY_COMMAND::MOTION:
+			if ( enemyList.empty() )	break;
+			ReceiveMotionInfo( data );
+			break;
+
+		case ENEMY_COMMAND::DEAD:
+			if ( enemyList.empty() )	break;
+			ReceiveDeadInfo( data );
+			break;
+
+		case ENEMY_COMMAND::ERASE:
 			if ( enemyList.empty() )	break;
 			ReceiveEraseInfo( data );
 			break;
 
-		case ENEMY_COMMAND::APPEND_INFO:
+		case ENEMY_COMMAND::APPEND:
 			ReceiveAppendInfo( data );
 			break;
 
@@ -164,6 +187,40 @@ namespace ENEMY_COMMAND
 		SetInfo( enemyInfo->index, 
 			enemyInfo->pos, 
 			enemyInfo->angle );
+	}
+
+	//	敵モード情報受信
+	void	NetEnemyManager::ReceiveModeInfo( const LPSTR& data )
+	{
+		//	情報設定
+		struct EnemyInfo
+		{
+			char com;
+			char infoType;
+			char enemyIndex;
+			char nextMode;
+		} *receiveInfo = ( EnemyInfo* )data;
+	}
+
+	//	敵モーション受信
+	void	NetEnemyManager::ReceiveMotionInfo( const LPSTR& data )
+	{
+		//	情報設定
+		struct EnemyInfo
+		{
+			char com;
+			char infoType;
+			char enemyIndex;
+			int motion;
+		} *receiveInfo = ( EnemyInfo* )data;
+
+		enemyList[receiveInfo->enemyIndex]->SetMotion( receiveInfo->motion );
+	}
+
+	//	敵死亡受信
+	void	NetEnemyManager::ReceiveDeadInfo( const LPSTR& data )
+	{
+
 	}
 
 	//	敵消去情報受信

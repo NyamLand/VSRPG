@@ -359,6 +359,48 @@
 	}
 
 //--------------------------------------------------------------------------------------------
+//	情報送信
+//--------------------------------------------------------------------------------------------
+
+	//	大型討伐情報送信
+	void	Collision::SendBigHuntInfo( char enemyType )
+	{
+		struct
+		{
+			char com;
+			char infoType;
+			char enemyType;
+		} huntInfo;
+		
+		//	情報設定
+		huntInfo.com = SEND_COMMAND::ENEMY_INFO;
+		huntInfo.infoType = SEND_ENEMY_COMMAND::BIG_ENEMY_HUNT;
+		huntInfo.enemyType = enemyType;
+
+		//	情報送信
+		gameParam->send( ( char* )&huntInfo, sizeof( huntInfo ) );
+	}
+
+	//	小型討伐情報送信
+	void	Collision::SendSmallHuntInfo( char enemyType )
+	{
+		struct HuntInfo
+		{
+			char com;
+			char infoType;
+			char enemyType;
+		} huntInfo;
+
+		//	情報設定
+		huntInfo.com = SEND_COMMAND::ENEMY_INFO;
+		huntInfo.infoType = SEND_ENEMY_COMMAND::SMALL_ENEMY_HUNT;
+		huntInfo.enemyType = enemyType;
+
+		//	送信
+		gameParam->send( ( char* )&huntInfo, sizeof( huntInfo ) );
+	}
+
+//--------------------------------------------------------------------------------------------
 //	当たり判定
 //--------------------------------------------------------------------------------------------
 

@@ -9,6 +9,7 @@
 #include	"LevelManager.h"
 #include	"ItemManager.h"
 #include	"PointManager.h"
+#include	"EnemyManager.h"
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -306,10 +307,7 @@ GameParam*	gameParam = nullptr;
 			levelManager->ReceiveHuntInfo( client, data );
 			break;
 
-		case RECEIVE_ENEMY_COMMAND::ATTACK_END:
-			break;
-
-		case RECEIVE_ENEMY_COMMAND::DEAD_END:
+		case RECEIVE_ENEMY_COMMAND::CLIENT_OK:
 			break;
 
 		default:

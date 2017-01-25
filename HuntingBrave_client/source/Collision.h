@@ -40,10 +40,10 @@ public:
 private:
 	Collision( void );
 	~Collision( void );
-	void Initialize( int myIndex, LPSTR fileName );
-	void	Release( void );
 
 public:
+	void Initialize( int myIndex, LPSTR fileName );
+	void	Release( void );
 	//	“–‚½‚è”»’è
 	void	AllCollision( void );
 	void	PlayerAttackCollision( int player );
@@ -58,7 +58,8 @@ public:
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );
 
 	//	ƒqƒbƒgî•ñ‘—M
-	void		SendHitInfo( char hitInfo );
+	void		SendBigHuntInfo( char enemyType );
+	void		SendSmallHuntInfo( char enemyType );
 
 	//	“–‚½‚è”»’è
 	bool	DistCheck( const Vector3& p1, const Vector3& p2, float dist );

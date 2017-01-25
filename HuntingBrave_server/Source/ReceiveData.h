@@ -36,8 +36,7 @@
 				NO_COMMAND = -1,
 				BIG_ENEMY_HUNT = 1,
 				SMALL_ENEMY_HUNT,
-				ATTACK_END,
-				DEAD_END
+				CLIENT_OK,
 			};
 		}
 	}
