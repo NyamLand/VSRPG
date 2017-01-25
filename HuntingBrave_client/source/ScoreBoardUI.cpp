@@ -30,7 +30,7 @@
 ScoreBoardUI::ScoreBoardUI(int x, int y, int w, int h)
 {
 	//	座標、サイズ情報格納
-	posx = x;	posy = y;	width = w / BOARD_PER;	height = h / BOARD_PER;
+	posx = x;	posy = y;	width = (double)w / BOARD_PER;	height = (double)h / BOARD_PER;
 
 	//	BOARD
 	board = new Image();
@@ -79,9 +79,9 @@ void	ScoreBoardUI::Update(void)
 		p_icon[i]->w = BOARD_MAX::ICON_SIZE;
 		p_icon[i]->h = BOARD_MAX::ICON_SIZE;
 		p_icon[i]->x = board->x - (board->w / 2) + p_icon[i]->w;	//	左端
-		p_icon[i]->y = board->y + (BOARD_MAX::BOARD_MARGIN / BOARD_PER)
-			- ((board->h - (BOARD_MAX::BOARD_MARGIN / BOARD_PER)) / 2)
-			+ ((board->h - (BOARD_MAX::BOARD_MARGIN / BOARD_PER)) / 4) * i;	//	上から順に配置
+		p_icon[i]->y = board->y + ((double)BOARD_MAX::BOARD_MARGIN / BOARD_PER)
+			- ((board->h - ((double)BOARD_MAX::BOARD_MARGIN / BOARD_PER)) / 2)
+			+ ((board->h - ((double)BOARD_MAX::BOARD_MARGIN / BOARD_PER)) / 4) * i;	//	上から順に配置
 
 		p_icon[i]->sx = 0; p_icon[i]->sy = 64 * i;
 		p_icon[i]->sw = BOARD_MAX::ICON_SIZE;

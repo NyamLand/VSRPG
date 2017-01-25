@@ -32,6 +32,7 @@ LevelManager*	levelManager = nullptr;
 		{
 			//	経験値初期化
 			levelInfo[p].exp = 0;
+			levelInfo[p].total_level = 0;
 
 			//	各レベル初期化
 			for ( int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++ )
@@ -72,6 +73,14 @@ LevelManager*	levelManager = nullptr;
 
 			//	クラスチェンジ
 			SendClassChange( id, levelType + 1 );
+		}
+
+		else
+		{
+			//	必要経験値分減算
+			levelInfo[id].exp -= 30 + levelInfo[id].total_level * 5;
+			levelInfo[id].total_level++;
+			SendExp(id);
 		}
 
 		//	ステータス計算

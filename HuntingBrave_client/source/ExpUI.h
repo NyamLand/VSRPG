@@ -34,7 +34,7 @@ public:
 	virtual	~ExpUI( void );
 
 	//	更新・描画
-	void	Update( void );
+	virtual void	Update( void );
 	void	ExpManager( void );
 	void	SetParam( int x, int y, int w, int h );
 	void	SetRenderFlag( bool c );
@@ -48,10 +48,17 @@ public:
 class NeedExpUI : public ExpUI
 {
 private:
+	int	level;
 public:
 	//	初期化・解放
 	NeedExpUI( int x, int y, int w, int h );
 	~NeedExpUI( void );
+
+	//	更新
+	void Update();
+
+	//	情報設定・取得
+	void	SetLevel( int level ){ this->level = level; }
 };
 
 
