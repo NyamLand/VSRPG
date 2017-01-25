@@ -103,13 +103,15 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	更新
-	void	Enemy::Update( char index, float deltaTime )
+	void	Enemy::Update( int index, float deltaTime )
 	{
 		this->index = index;
 		this->deltaTime = deltaTime;
 
 		//	動作関数
 		( this->*ModeFunction[mode] )();
+
+		SendEnemyInfo();
 	}
 
 //------------------------------------------------------------------------------------
@@ -130,9 +132,6 @@ namespace
 
 				//	向いてる方向に前進
 				Advance();
-
-				//	移動時のみ情報送信
-				SendEnemyInfo();
 			}
 			else
 			{
@@ -279,8 +278,7 @@ namespace
 			else
 			{
 				//	攻撃時
-				if ( Random::PercentageRandom( 0.5f ) )	SetMotion( MOTION_NUM::ATTACK );
-				else																SetMotion( MOTION_NUM::ATTACK2 );
+				SetMotion( MOTION_NUM::ATTACK );
 
 				SetMode( MODE::ATTACK );
 			}
@@ -389,7 +387,7 @@ namespace
 		{
 			char com;
 			char infoType;
-			char enemyIndex;
+			int enemyIndex;
 			Vector3	pos;
 			float			angle;
 		} enemyInfo;
@@ -400,6 +398,11 @@ namespace
 		enemyInfo.enemyIndex = index;
 		enemyInfo.pos = enemyParam.pos;
 		enemyInfo.angle = enemyParam.angle;
+
+		if ( index == -1 )
+		{
+			int a = 0;
+		}
 
 		//	送信
 		for ( int i = 0; i < PLAYER_MAX; i++ )

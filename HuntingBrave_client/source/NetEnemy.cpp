@@ -78,6 +78,7 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		obj = org;
 		obj->SetPos( pos );
 		obj->SetAngle( angle );
+		org->SetScale( 0.015f );
 		obj->Update();
 		bar = new EnemyHpUI();
 		bar->Initilaize(HPUI_TYPE::ENEMY, GetLife());
@@ -98,6 +99,8 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		obj->SetAngle( angle );
 		obj->Update();
 		obj->Animation();
+
+		CheckAttackInfo();
 	}
 
 	//	•`‰æ

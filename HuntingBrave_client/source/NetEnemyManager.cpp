@@ -51,7 +51,7 @@ namespace ENEMY_COMMAND
 		if ( org == nullptr )
 		{
 			org = new iex3DObj( "DATA/CHR/Enemy/halk/halk.IEM" );
-			org->SetScale( MINOTAURUS_SCALE );
+			org->SetScale( 0.015f );
 			org->Update();
 		}
 
