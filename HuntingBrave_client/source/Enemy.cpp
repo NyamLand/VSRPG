@@ -113,6 +113,18 @@
 		}
 	}
 
+	//	向き調整（ カメラ影響なし ）
+	void	Enemy::AngleAdjust( const Vector3& moveVec, float adjustSpeed )
+	{
+		//	移動方向を求める
+		float	moveAngle = atan2f( moveVec.x, moveVec.z );
+
+		//	親に投げる
+		AngleAdjustParent(
+			Vector3( sinf( moveAngle ), 0.0f, cosf( moveAngle ) ),
+			adjustSpeed);
+	}
+
 //------------------------------------------------------------------------------------
 //	動作関数
 //------------------------------------------------------------------------------------

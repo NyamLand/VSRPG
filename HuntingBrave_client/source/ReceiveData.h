@@ -27,6 +27,7 @@
 			EXP_INFO,
 			STATUS_INFO,
 			CLASS_CHANGE_INFO,
+			ENEMY_INFO,
 			COMMAND_MAX
 		};
 	}

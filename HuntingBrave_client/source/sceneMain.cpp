@@ -21,6 +21,7 @@
 #include	"LevelManager.h"
 #include	"NameManager.h"
 #include	"ItemManager.h"
+#include	"NetEnemyManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
 
@@ -69,6 +70,9 @@ bool	sceneMain::Initialize( void )
 	//	enemy初期化
 	enemyManager->Initialize();
 
+	//	netEnemy初期化
+	netEnemyManager->Initialize();
+
 	//	magic初期化
 	magicManager->Initialize();
 
@@ -94,6 +98,7 @@ sceneMain::~sceneMain( void )
 	SafeDelete( mainView );
 	SafeDelete( stage );
 	enemyManager->Release();
+	netEnemyManager->Release();
 	uiManager->Release();
 	magicManager->Release();
 	playerManager->Release();
@@ -107,6 +112,9 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
+	//	送信
+	gameParam->Send();
+
 	//	経過時間取得
 	float elapseTime = GetElapseTime();
 
@@ -118,6 +126,9 @@ void	sceneMain::Update( void )
 
 	//	enemy更新
 	enemyManager->Update();
+
+	//	netEnemy更新
+	netEnemyManager->Update();
 
 	//	magic更新
 	magicManager->Update();
@@ -134,10 +145,6 @@ void	sceneMain::Update( void )
 
 	//	collision
 	collision->AllCollision();
-
-	//	送信
-	gameParam->Send();
-
 	//	シーン切り替え
 	if ( threadState )
 		gameManager->ChangeScene( SCENE::RESULT );
@@ -162,6 +169,9 @@ void	sceneMain::Render( void )
 
 	//	enemy描画
 	enemyManager->Render();
+	
+	//	netEnemy描画
+	netEnemyManager->Render();
 
 	//	magic描画
 	magicManager->Render();

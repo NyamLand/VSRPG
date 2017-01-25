@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	<vector>
 #include	"Random.h"
 #include	"GameData.h"
 #include	"GlobalFunction.h"
@@ -78,7 +79,7 @@
 	//	オブジェクト読み込み
 	void	EnemyManager::Load( void )
 	{
-		org[ENEMY_TYPE::BIG_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/minotaurus.IEM" );
+		org[ENEMY_TYPE::BIG_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/wolf/wolf.IEM" );
 		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/mofumofu/moffu.IEM" );
 	}
 
@@ -152,12 +153,12 @@
 		switch ( type )
 		{
 		case BIG_ENEMY:
-			enemy = new BigEnemy();
+			enemy = new Wolf();
 			//enemy->GetLifeInfo().maxLife = 80.0f;
 			break;
 
 		case SMALL_ENEMY:
-			enemy = new SmallEnemy();
+			enemy = new Moffu();
 			//enemy->GetLifeInfo().maxLife = 20.0f;
 			break;
 

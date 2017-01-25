@@ -8,24 +8,38 @@
 //*****************************************************************************************************************************
 
 //	include
+#include	"Enemy.h"
+#include	"Timer.h"
 
 //	class
 class EnemyManager
 {
 private:
+	std::vector<Enemy*>		enemyList;
+	Timer*	timer;
+
 public:
 	//	‰Šú‰»E‰ğ•ú
 	EnemyManager( void );
 	~EnemyManager( void );
+	bool	Initialize( void );
+	void	Release( void );
 	
 	//	XV
-	void	Update( void );
+	void	Update( float deltaTime );
+	void	SendEnemyInfo( int index, const EnemyParam& enemyParam );
+	void	SendErase( int index );
+	void	SendAppend( const Vector3& pos, float angle );
 
 	//	“®ìŠÖ”
+	void	Append( const Vector3& pos, float angle );
+	void	PosCheck( Enemy*	enemy );
+	void	PlayerPosCheck( Enemy*	eneny );
 
 	//	î•ñİ’è
-	Vector3	GetPos( void )const;
+	void	TimerStart( void );
 
 	//	î•ñæ“¾
-
 };
+
+extern	EnemyManager* enemyManager;

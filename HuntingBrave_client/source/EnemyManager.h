@@ -10,8 +10,8 @@
 //	include
 #include	"Singleton.h"
 #include	<list>
-#include	"BigEnemy.h"
-#include	"SmallEnemy.h"
+#include	"Wolf.h"
+#include	"Moffu.h"
 
 //	class
 class EnemyManager : public Singleton<EnemyManager>
@@ -31,6 +31,8 @@ private:
 	std::list<Enemy*> enemylist;
 	iex3DObj*	org[ENEMY_TYPE::TYPE_MAX];
 	bool		appendOK;
+
+	std::vector<Enemy*>	netList;
 
 	//	‰Šú‰»E‰ğ•ú
 	EnemyManager( void );

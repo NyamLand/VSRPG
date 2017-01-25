@@ -61,11 +61,7 @@ namespace
 class BaseChara
 {
 protected:
-	Vector3	pos;
-	float			angle;
-	int			mode;
-	int			motion;
-
+	int mode;
 public:
 	//	‰Šú‰»E‰ğ•ú
 	BaseChara( void );
@@ -73,8 +69,4 @@ public:
 
 	//	î•ñİ’è
 	bool	SetMode( int nextMode );
-	void	SetAttackInfo( const AttackInfo& attackInfo );
-
-	//	î•ñæ“¾
-	Vector3	GetPos( void )const;
 };

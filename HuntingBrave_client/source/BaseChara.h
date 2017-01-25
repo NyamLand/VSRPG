@@ -43,7 +43,7 @@ public:
 	void	AddMove( void );
 
 	//	“®ìŠÖ”
-	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
+	virtual	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
 	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
 
 	//	î•ñİ’è

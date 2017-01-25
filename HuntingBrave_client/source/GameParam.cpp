@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"system/Framework.h"
 #include	<thread>
+#include	<vector>
 #include	"GlobalFunction.h"
 #include	"Random.h"
 #include	"Camera.h"
@@ -11,6 +12,8 @@
 #include	"InputManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"NetEnemyManager.h"
+#include	"UIManager.h"
 #include	"Sound.h"
 #include	"sceneTitle.h"
 #include	"sceneMatching.h"
@@ -194,6 +197,10 @@ GameParam*	gameParam = nullptr;
 
 			case RECEIVE_COMMAND::STATUS_INFO:
 				ReceiveStatusInfo( data );
+				break;
+
+			case RECEIVE_COMMAND::ENEMY_INFO:
+				netEnemyManager->Receive( data );
 				break;
 
 			case COMMANDS::MATCHING:
@@ -447,6 +454,13 @@ GameParam*	gameParam = nullptr;
 			break;
 
 		case RESPONSE_COMMAND::GAME_START:
+			break;
+
+		case RESPONSE_COMMAND::KILL_INFO:
+			{
+				KillInfo*	killInfo = ( KillInfo* )data;
+				uiManager->SetKillLog( killInfo->killer, killInfo->dead );
+			}
 			break;
 		}
 	}

@@ -5,16 +5,16 @@
 #include	<thread>
 #include	<map>
 #include	"iextreme.h"
-#include	"FrameWork.h"
-#include	"GlobalFunction.h"
 #include	"GameParam.h"
 #include	"GameManager.h"
+#include	"GlobalFunction.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
 #include	"PointManager.h"
 #include	"PlayerManager.h"
 #include	"InputManager.h"
 #include	"ItemManager.h"
+#include	"EnemyManager.h"
 #include	"Collision.h"
 
 
@@ -46,6 +46,7 @@ void main( void )
 	pointManager = new PointManager();
 	playerManager = new PlayerManager( gameParam );
 	itemManager = new ItemManager();
+	enemyManager = new EnemyManager();
 	collision = new Collision( gameParam );
 	gameParam->InitializeServer();
 	gameManager->Initialize();
@@ -87,6 +88,7 @@ void main( void )
 	delete levelManager;		levelManager = nullptr;
 	delete pointManager;		pointManager = nullptr;
 	delete playerManager;		playerManager = nullptr;
+	delete enemyManager;		enemyManager = nullptr;
 	delete collision;				collision = nullptr;
 }
 
@@ -97,15 +99,14 @@ void	MatchingUpdate( int client )
 	{
 		gameManager->ChangeScene( scene, SCENE::MAIN );
 		playerManager->Initialize();
+		enemyManager->Initialize();
 		gameManager->Initialize();	
 	}
 }
 
 void	MainUpdate( int client )
 {
-	
 	if ( client == -1 )	return;
-	
 	playerManager->Update( client );
 	collision->AllCollision();
 	if ( gameManager->GetTimeUp() )
@@ -113,6 +114,7 @@ void	MainUpdate( int client )
 		gameManager->ChangeScene( scene, SCENE::RESULT );
 		itemManager->Release();
 		playerManager->Release();
+		enemyManager->Release();
 	}
 }
 
@@ -127,6 +129,8 @@ void	ResultUpdate( int client )
 //	thread
 void	AlwaysUpdate( void )
 {
+	float deltaTime = GetElapseTime();
 	magicManager->Update();
+	enemyManager->Update( deltaTime );
 	itemManager->Update();
 }

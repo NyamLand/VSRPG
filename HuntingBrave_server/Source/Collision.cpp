@@ -31,7 +31,7 @@ Collision*	collision = nullptr;
 	Collision::Collision( GameParam* gameParam ) : 
 		gameParam( gameParam ), collisionMesh( nullptr )
 	{
-		collisionMesh = new iexRayMesh( "DATA/STAGE/collision.IMO" );
+		collisionMesh = new iexRayMesh( "DATA/STAGE/stage_atari.IMO" );
 	}
 
 	//	デストラクタ
@@ -80,6 +80,7 @@ Collision*	collision = nullptr;
 	{
 		//	自分→相手へのベクトル
 		Vector3	vec = gameParam->GetPlayerParam( player ).pos - gameParam->GetPlayerParam( target ).pos;
+		vec.y = 0.0f;
 		float		length = vec.Length();
 
 		float collisionDist = 3.0f;
@@ -122,7 +123,14 @@ Collision*	collision = nullptr;
 			//	ライフ計算
 			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( 1 );
 			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
-			else playerManager->GetPlayer( target )->SetDeath();
+			else
+			{
+				//	プレイヤーを死亡させる
+				playerManager->GetPlayer( target )->SetDeath();
+
+				//	キル情報を送信する
+				gameParam->SendKillInfo( player, target );
+			}
 		}
 	}
 
@@ -157,7 +165,14 @@ Collision*	collision = nullptr;
 				//	ライフ計算
 				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -gameParam->GetPlayerStatus( player ).power );
 				if ( isAlive )playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
-				else playerManager->GetPlayer( player )->SetDeath();
+				else 
+				{
+					//	プレイヤーを死亡させる
+					playerManager->GetPlayer( player )->SetDeath();
+
+					//	キル情報を送信
+					gameParam->SendKillInfo( ( *it )->GetID(), player );
+				}
 			}
 		}
 	}
@@ -266,7 +281,7 @@ Collision*	collision = nullptr;
 		const	float	DIST = 2.0f;	//	壁との距離
 
 		Vector3	givePos = pos;
-		Vector3	giveVec( move.x, 0.0f, move.z );
+		Vector3	giveVec( move.x, 0.5f, move.z );
 		giveVec.Normalize();
 		Vector3	takePos;
 		

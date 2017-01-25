@@ -222,6 +222,28 @@ GameParam*	gameParam = nullptr;
 		send( player, ( char* )&matching, sizeof( matching ) );
 	}
 
+	//	キル情報送信
+	void	GameParam::SendKillInfo( int killer, int dead )
+	{
+		struct
+		{
+			char com;
+			char responseCom;
+			int killer;
+			int dead;
+		} killInfo;
+		killInfo.com = COMMANDS::RESPONSE;
+		killInfo.responseCom = RESPONSE_COMMAND::KILL_INFO;
+		killInfo.killer = killer;
+		killInfo.dead = dead;
+
+		//	送信
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			send( i, ( char* )&killInfo, sizeof( killInfo ) );
+		}
+	}
+
 //----------------------------------------------------------------------------------------------
 //	受信処理
 //----------------------------------------------------------------------------------------------

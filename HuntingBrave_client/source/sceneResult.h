@@ -8,7 +8,10 @@
 //***************************************************************
 
 //	include
+#include	"NameUI.h"
+#include	"GameData.h"
 #include	"Result.h"
+
 
 //	class
 class sceneResult : public Scene
@@ -19,7 +22,7 @@ private:
 	Result*		result;
 
 	float	percentage;
-	float alpha;
+	float	alpha;
 	bool	pushState;
 
 public:

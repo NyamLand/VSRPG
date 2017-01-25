@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"Random.h"
 #include	"EnemyManager.h"
+#include	"PlayerManager.h"
 #include	"UIManager.h"
 #include	"GameParam.h"
 #include	"LevelManager.h"
@@ -21,13 +22,13 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-UIManager::UIManager(void)
+UIManager::UIManager( void )
 {
 
 }
 
 //	デストラクタ
-UIManager::~UIManager(void)
+UIManager::~UIManager( void )
 {
 	Release();
 }
@@ -76,10 +77,12 @@ bool	UIManager::Initialize( void )
 	Image* EXP = expUI->GetImageExp();					//	経験値のポジションを獲得
 	scoreUI = new ScoreUI(EXP->x, EXP->y - EXP->w / 2 - EXP->w / 6, EXP->w, EXP->h);
 
-	//---------------------------------------
-	//	マップのポジションをセット(右上）
-	//---------------------------------------
+
+	//	マップUI初期化
 	mapUI = new MapUI();
+
+	//	キルログ初期化
+	killLogUI = new KillLogUI();
 
 	//---------------------------------------
 	//	スコアボードのポジションをセット(中心）
@@ -114,6 +117,7 @@ void	UIManager::Release( void )
 	SafeDelete( scoreUI );
 	SafeDelete( boardUI );
 	SafeDelete( upGradeUI );
+	SafeDelete( killLogUI );
 }
 
 //---------------------------------------------------------------------------------------
@@ -131,6 +135,7 @@ void	UIManager::Update( void )
 	scoreUI->Update();
 	boardUI->Update();
 	upGradeUI->Update();
+	killLogUI->Update();
 	
 	
 	//	値セット
@@ -156,12 +161,14 @@ void	UIManager::Update( void )
 //	描画
 void	UIManager::Render( void )
 {
+	playerManager->RenderHp();
 	enemyManager->RenderHp();
 	timerUI->Render();
 	hpUI->Render();
 	expUI->Render();
 	itemUI->Render();
 	mapUI->Render();
+	killLogUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
 	upGradeUI->Render();
@@ -176,6 +183,11 @@ void	UIManager::Render( void )
 //	情報設定
 //---------------------------------------------------------------------------------------
 
+	//	キルログ設定
+	void	UIManager::SetKillLog( int killer, int dead )
+	{
+		killLogUI->SetKillLog( killer, dead );
+	}
 //---------------------------------------------------------------------------------------
 //	情報取得
 //---------------------------------------------------------------------------------------

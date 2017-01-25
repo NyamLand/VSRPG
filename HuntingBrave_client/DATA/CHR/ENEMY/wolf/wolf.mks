@@ -1,0 +1,11 @@
+Mikoto Scene Ver 1
+Character {
+	name = "wolf.mqo"
+	coordinate = "wolf.mqo"
+	fileName = "wolf.mks"
+	readOnly = 0
+	Import "C:\Users\2130024.MAETEL.000\Desktop\wolf\wolf.mqo" ro(1)
+	Import "C:\Users\2130024.MAETEL.000\Desktop\wolf\wolf.mkm" ro(0)
+}
+Current( "")
+Eof
