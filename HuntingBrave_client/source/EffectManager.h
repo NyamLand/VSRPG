@@ -8,15 +8,19 @@
 //************************************************************************
 
 //	include
-#include	"Effect.h"
 #include	"Singleton.h"
+#include	"Effect.h"
+#include	"Circle.h"
+#include	"GameData.h"
 
 //	class
-class EffectManager : Singleton<EffectManager>
+class EffectManager : public Singleton<EffectManager>
 {
 	friend	Singleton<EffectManager>;
 private:
-	std::list<Effect*>	effectList;
+	Circle* circle[PLAYER_MAX];
+
+private:
 
 	//	‰Šú‰»E‰ğ•ú
 	EffectManager( void );
@@ -30,3 +34,5 @@ public:
 	void	Update( void );
 	void	Render( void );
 };
+
+#define	effectManager ( EffectManager::GetInstance() )
