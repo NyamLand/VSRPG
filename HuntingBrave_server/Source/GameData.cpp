@@ -58,13 +58,14 @@
 //----------------------------------------------------------------------------------------------
 
 	//	‰Šú‰»
-	void	PlayerStatus::Initialize( int power, int defense, int magicAttack, int magicDefense, float speed )
+	void	PlayerStatus::Initialize( int power, int defense, int magicAttack, int magicDefense, int maxLife, float speed )
 	{
 		this->power = this->savePower = power;
 		this->defense = this->saveDefense = defense;
 		this->speed = this->saveSpeed = speed;
 		this->magicAttack = this->saveMagicAttack = magicAttack;
 		this->magicDefense = this->saveMagicDefense = magicDefense;
+		this->maxLife = maxLife;
 	}
 
 	//	UŒ‚—Íİ’è

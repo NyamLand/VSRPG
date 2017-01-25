@@ -77,10 +77,11 @@ namespace SCENE
 		int	defense, saveDefense;
 		int	magicAttack, saveMagicAttack;
 		int	magicDefense, saveMagicDefense;
+		int	maxLife;
 		float	speed, saveSpeed;
 
 		//	ŒvŽZ
-		void	Initialize( int power, int defense, int magicAttack, int magicDefense, float speed );
+		void	Initialize( int power, int defense, int magicAttack, int magicDefense, int maxLife, float speed );
 		void	CulcPower( int power );
 		void	CulcDefense( int defense );
 		void	CulcMagicAttack( int power );

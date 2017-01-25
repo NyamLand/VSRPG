@@ -205,13 +205,14 @@ void	sceneMain::DebugRender( void )
 {
 	PlayerStatus	playerStatus = gameParam->GetPlayerStatus();
 
+	int life = gameParam->GetPlayerParam( gameParam->GetMyIndex() ).life;
 	int atk = playerStatus.power;
 	int def = playerStatus.defense;
 	int mgcAtk = playerStatus.magicPower;
 	int mgcDef = playerStatus.magicDefense;
 
 	char str[256];
-	sprintf( str, "power = %d\ndefense = %d\nmagicAttack = %d\nmagicDefense = %d\n", atk, def, mgcAtk, mgcDef );
+	sprintf( str, "life = %d\npower = %d\ndefense = %d\nmagicAttack = %d\nmagicDefense = %d\n", life, atk, def, mgcAtk, mgcDef );
 	IEX_DrawText( str, 20, 300, 500, 500, 0xFFFFFF00 );
 }
 
