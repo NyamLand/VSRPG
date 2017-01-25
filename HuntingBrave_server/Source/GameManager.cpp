@@ -127,9 +127,10 @@ GameManager*	gameManager = nullptr;
 		int defense = GetInitStatus( UPGRADE_DATA::DEFENSE );
 		int magicAttack = GetInitStatus( UPGRADE_DATA::MAGIC_ATTACK );
 		int magicDefense = GetInitStatus( UPGRADE_DATA::MAGIC_DIFENSE );
+		int life = GetInitStatus( UPGRADE_DATA::HP );
 		float speed = GetUpGradeSpeed( 0, 0 );
 
-		playerStatus.Initialize( power, defense, magicAttack, magicDefense, speed );
+		playerStatus.Initialize( power, defense, magicAttack, magicDefense, life, speed );
 	}
 
 //----------------------------------------------------------------------------------------------

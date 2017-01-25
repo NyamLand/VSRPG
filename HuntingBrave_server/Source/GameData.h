@@ -20,7 +20,7 @@
 //	éûä‘
 #define	MINUTE		60
 #define	HOUR		MINUTE * 60
-#define	GRAVITY	-0.1f
+#define	GRAVITY	-0.2f
 
 //	ÉVÅ[Éì
 namespace SCENE
@@ -77,10 +77,11 @@ namespace SCENE
 		int	defense, saveDefense;
 		int	magicAttack, saveMagicAttack;
 		int	magicDefense, saveMagicDefense;
+		int	maxLife;
 		float	speed, saveSpeed;
 
 		//	åvéZ
-		void	Initialize( int power, int defense, int magicAttack, int magicDefense, float speed );
+		void	Initialize( int power, int defense, int magicAttack, int magicDefense, int maxLife, float speed );
 		void	CulcPower( int power );
 		void	CulcDefense( int defense );
 		void	CulcMagicAttack( int power );

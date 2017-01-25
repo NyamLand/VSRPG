@@ -237,6 +237,9 @@ namespace
 		//	移動
 		Move();
 
+		//	重力加算
+		AddMove( Vector3( 0.0f, GRAVITY, 0.0f ) );
+
 		//	入力チェック
 		CheckInput();
 	}
@@ -349,7 +352,7 @@ namespace
 				ANGLE_ADJUST_MOVE_SPEED );
 
 			//	移動
-			Vector3 move = Vector3( sinf( pParam.angle ), GRAVITY, cosf( pParam.angle ) ) * MOVE_SPEED;
+			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
 			AddMove( move );
 
 			SetMotion( PLAYER_MOTION::RUN );

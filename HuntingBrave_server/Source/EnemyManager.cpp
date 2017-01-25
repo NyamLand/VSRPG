@@ -85,7 +85,7 @@ EnemyManager*	enemyManager = nullptr;
 		for ( auto it = enemyList.begin(); it != enemyList.end(); )
 		{
 			//	インデックス
-			char index = std::distance( enemyList.begin(), it );
+			int index = std::distance( enemyList.begin(), it );
 			
 			//	座標チェック
 			PosCheck( *it );
@@ -198,7 +198,6 @@ EnemyManager*	enemyManager = nullptr;
 
 				//	離す
 				( *it )->SetPos( enemy->GetPos() - vec * collisionDist );
-				( *it )->SendEnemyInfo();
 			}
 		}
 
@@ -230,7 +229,6 @@ EnemyManager*	enemyManager = nullptr;
 
 				//	離す
 				enemy->SetPos( pPos - vec * collisionDist );
-				enemy->SendEnemyInfo();
 			}
 		}
 	}

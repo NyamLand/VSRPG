@@ -200,7 +200,7 @@ GameParam*	gameParam = nullptr;
 				break;
 
 			case RECEIVE_COMMAND::ENEMY_INFO:
-				//netEnemyManager->Receive( data );
+				netEnemyManager->Receive( data );
 				break;
 
 			case COMMANDS::MATCHING:

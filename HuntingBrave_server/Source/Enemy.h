@@ -40,7 +40,7 @@ protected:
 	bool		alive;
 	bool		atkFlag;
 	bool		allState;
-	char		index;
+	int		index;
 
 	AttackInfo		attackInfo;
 	EnemyParam	enemyParam;
@@ -60,7 +60,7 @@ public:
 	void	ClientStateInitialize( void );
 
 	//	XV
-	virtual void Update( char index, float deltaTime );
+	virtual void Update( int index, float deltaTime );
 
 	//	’ÊíˆÚ“®
 	void	Move( void ) ;

@@ -77,7 +77,7 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &playerStatus[id], sizeof( PlayerStatus ) );
 			ZeroMemory( &lifeInfo[id], sizeof( LifeInfo ) );
-			int initLife = gameManager->GetUpGrade( 0, UPGRADE_DATA::HP, 0 );
+			int initLife = gameManager->GetInitStatus( UPGRADE_DATA::HP );
 			lifeInfo[id].Initialize( initLife );
 			gameManager->InitializeStatus( playerStatus[id] );
 		}
