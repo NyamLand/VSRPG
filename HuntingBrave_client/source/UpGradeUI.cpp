@@ -270,7 +270,7 @@ namespace
 	//	ƒJ[ƒ\ƒ‹ˆÚ“®
 	void	UpGradeUI::MoveCursor( void )
 	{
-		if ( KEY( KEY_ENTER ) == 3 )
+		if ( KEY( KEY_TYPE::A ) == 3 )
 		{
 			Dicision();
 		}

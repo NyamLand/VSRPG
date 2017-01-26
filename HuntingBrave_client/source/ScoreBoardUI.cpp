@@ -6,6 +6,7 @@
 #include	"LevelManager.h"
 #include	"Image.h"
 #include	"NumberUI.h"
+#include	"InputManager.h"
 #include	"ExpUI.h"
 #include	"ScoreUI.h"
 #include	"ScoreBoardUI.h"
@@ -97,7 +98,7 @@ void	ScoreBoardUI::Update(void)
 		exp[i]->Update();
 
 		//	
-		if (KEY_Get(KEY_SPACE) == 1)
+		if (KEY(KEY_TYPE::R1) == 1)
 		{
 			board->renderflag = true;
 			for (int i = 0; i < PLAYER_MAX; i++)

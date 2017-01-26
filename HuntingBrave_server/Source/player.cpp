@@ -328,7 +328,7 @@ namespace
 	void	Player::ModeMenu( void )
 	{
 		if ( inputManager->GetInputState( index, KEY_TYPE::START, KEY_STATE::ENTER ) ||
-			inputManager->GetInputState( index, KEY_TYPE::A, KEY_STATE::ENTER ) )
+			inputManager->GetInputState( index, KEY_TYPE::START, KEY_STATE::ENTER ) )
 		{
 			SetMode( MODE::MOVE );
 		}
