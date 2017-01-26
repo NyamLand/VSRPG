@@ -39,17 +39,7 @@
 #define MAX_LIFE	5
 
 
-//	定数関連
-namespace
-{
-	//	ボーン番号
-	enum BONE_NUM
-	{
-		HAND = 27,
-		SWORD,
-		RIGHT_HAND = 35
-	};
-}
+
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
@@ -57,7 +47,7 @@ namespace
 
 	//	コンストラクタ
 	Player::Player( void ) : nextObj( nullptr ),
-		id( -1 )
+		id(-1), handType(-1)
 	{
 		
 	}
@@ -146,6 +136,7 @@ namespace
 	//	剣攻撃
 	void	Player::SetAttackShape( void )
 	{
+
 		//	仮、モーション番号でスキップ
 		switch ( playerParam.motion )
 		{
@@ -159,7 +150,7 @@ namespace
 		case MOTION_NUM::MAGIC_ACTUATION:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
 			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
-			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			gameParam->GetAttackInfo(id).vec1 = GetBonePos(handType);
 			gameParam->GetAttackInfo( id ).vec2 = GetFront();
 			break;
 

@@ -22,6 +22,10 @@ struct Status
 #include	"BaseEquipment.h"
 #include	"GameData.h"
 
+
+//	定数関連
+
+
 namespace
 {
 	//	モーション管理
@@ -53,6 +57,16 @@ namespace
 			CRY									//	泣き
 		};
 	}
+
+
+	//	ボーン番号
+	enum BONE_NUM
+	{
+		HAND = 27,
+		SWORD,
+		RIGHT_HAND = 35,
+		LEFT_HAND = 15
+	};
 }
 
 //	class
@@ -65,6 +79,7 @@ protected:
 	iex3DObj* org;
 	iex3DObj* nextObj;
 	char	fileName[256];
+	int		handType;
 	enum	MODE//	仮
 	{
 		MOVE,
