@@ -308,6 +308,7 @@ namespace
 		if ( lifeInfo.CulcLife( -gameParam->GetPlayerStatus( player ).magicAttack ) )
 		{
 			SetMode( MODE::DEAD );
+			SetMotion( MOTION_NUM::DEAD );
 			
 			//	“_”ŒvŽZ
 			pointManager->CalcPoint( player, 100 );
