@@ -125,7 +125,7 @@ Collision*	collision = nullptr;
 		if ( isHit == true )
 		{
 			//	ƒ‰ƒCƒtŒvŽZ
-			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( 1 );
+			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -gameParam->GetPlayerStatus( player ).power );
 			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
 			else
 			{
