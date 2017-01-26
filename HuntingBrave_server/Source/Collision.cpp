@@ -6,6 +6,7 @@
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
+#include	"LevelManager.h"
 
 #include	"Collision.h"
 
@@ -130,6 +131,10 @@ Collision*	collision = nullptr;
 			{
 				//	プレイヤーを死亡させる
 				playerManager->GetPlayer( target )->SetDeath();
+				
+				//	経験値加算
+				levelManager->CalcExpPlayer( player, target );
+				levelManager->SendExp( player );
 
 				//	キル情報を送信する
 				gameParam->SendKillInfo( player, target );

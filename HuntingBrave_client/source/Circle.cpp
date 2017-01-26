@@ -55,9 +55,9 @@ void	Circle::Update(void)
 	angle += D3DXToRadian(1);
 	if (!renderflag) return;
 
-	Interpolation::PercentageUpdate(percentage, 0.02);
+	Interpolation::PercentageUpdate(percentage, 0.02f);
 
-	PoligonSet(gameParam->GetPlayerParam(p_num).pos, size * percentage);
+	PoligonSet(gameParam->GetPlayerParam(p_num).pos, size/* * percentage*/);
 
 	
 }

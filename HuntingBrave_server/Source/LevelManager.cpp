@@ -98,6 +98,16 @@ LevelManager*	levelManager = nullptr;
 		if ( levelInfo[id].exp <= 0 )	levelInfo[id].exp = 0;
 	}
 
+	//	経験値計算
+	void	LevelManager::CalcExpPlayer( int killer, int dead )
+	{
+		//	経験値加算
+		levelInfo[killer].exp += levelInfo[dead].total_level * 10;
+
+		//	下限設定
+		if ( levelInfo[killer].exp <= 0 )	levelInfo[killer].exp = 0;
+	}
+
 	//	レベル送信
 	void	LevelManager::SendLevel( int id, char levelType )
 	{
@@ -307,6 +317,12 @@ LevelManager*	levelManager = nullptr;
 	int	LevelManager::GetExp( int id )const
 	{
 		return	levelInfo[id].exp;
+	}
+
+	//	合計レベル取得
+	int	LevelManager::GetTotalLevel( int id )const
+	{
+		return	levelInfo[id].total_level;
 	}
 
 

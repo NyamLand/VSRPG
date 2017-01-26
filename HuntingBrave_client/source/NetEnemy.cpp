@@ -110,16 +110,16 @@ namespace
 	{
 		this->index = index;
 
-		//	死亡モーション時
-		if ( obj->GetMotion() == MOTION_NUM::DEAD )
-			Death();
 
 		obj->SetPos( pos );
 		obj->SetAngle( angle );
 		obj->Update();
-		
-
+	
 		CheckAttackInfo();
+	
+		//	死亡モーション時
+		if ( obj->GetMotion() == MOTION_NUM::DEAD )
+			Death();
 	}
 
 	//	描画
@@ -148,10 +148,9 @@ namespace
 		//	フレーム制御
 		if ( frame >= DEAD_MOTION_END )
 		{
-			SendClientOK();
-
 			//	透過開始
 			isAlive = false;
+			SendClientOK();
 		}
 	}
 

@@ -515,9 +515,6 @@
     <Filter Include="Source">
       <UniqueIdentifier>{855d9f67-386f-4c86-af29-d8c36d77efc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Player">
-      <UniqueIdentifier>{c30ec995-bb6c-47f8-8758-b7160024baf8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Manager">
       <UniqueIdentifier>{eea7aadd-3b94-4b04-8dd3-7b2f4e147908}</UniqueIdentifier>
     </Filter>
@@ -719,18 +716,6 @@
     <Filter Include="Source\Effect\LightSphereEffect">
       <UniqueIdentifier>{7a56858e-23e6-4a94-a950-cd18a53405d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Player\Suppin">
-      <UniqueIdentifier>{d0a3e358-844f-4bd4-8e49-17944714b8f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Player\Player">
-      <UniqueIdentifier>{d702ce97-0fba-4944-a6e2-d94e58f2d584}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Player\Fighter">
-      <UniqueIdentifier>{f40cc6ae-c7da-4619-a610-b659684d1a7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Player\Magician">
-      <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Timer">
       <UniqueIdentifier>{98a372dc-ee41-4e49-827b-fc212fb975bc}</UniqueIdentifier>
     </Filter>
@@ -778,6 +763,21 @@
     </Filter>
     <Filter Include="Source\Circle">
       <UniqueIdentifier>{86c8e47a-5fdd-4e1c-90f9-408902dd9bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player">
+      <UniqueIdentifier>{c30ec995-bb6c-47f8-8758-b7160024baf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Suppin">
+      <UniqueIdentifier>{d0a3e358-844f-4bd4-8e49-17944714b8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Player">
+      <UniqueIdentifier>{d702ce97-0fba-4944-a6e2-d94e58f2d584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Fighter">
+      <UniqueIdentifier>{f40cc6ae-c7da-4619-a610-b659684d1a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Magician">
+      <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

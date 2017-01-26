@@ -8,6 +8,7 @@
 #include	"CSVReader.h"
 #include	"Sound.h"
 #include	"BaseEquipment.h"
+#include	"EffectManager.h"
 #include	"Player.h"
 
 //***************************************************************
@@ -122,6 +123,9 @@ namespace
 
 		//	サーバーからの情報を反映
 		SetPlayerParam( playerParam );
+
+		//	魔法詠唱中なら描画
+		if ( obj->GetMotion() == 7 )	effectManager->SetCircleRender( id );
 		
 		//	更新
 		BaseChara::Update();

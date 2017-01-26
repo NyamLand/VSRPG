@@ -80,14 +80,17 @@ namespace ENEMY_COMMAND
 	//	çXêV
 	void	NetEnemyManager::Update( void )
 	{
-		for ( int i = 0; i < enemyList.size(); i++)
+		for ( int i = 0; i < enemyList.size(); i++ )
 		{
-			enemyList[i]->Update( i );
 			bool	isAlive = enemyList[i]->GetIsAlive();
-			if ( !isAlive )
-			{
-				enemyList.erase( enemyList.begin() + i );
-			}
+			if( isAlive )enemyList[i]->Update( i );
+		//	if ( !isAlive )
+		//	{
+		//		enemyList.erase( enemyList.begin() + i );				
+		//		continue;
+		//	}
+
+		//	i++;
 		}
 	}
 
@@ -96,6 +99,7 @@ namespace ENEMY_COMMAND
 	{
 		for ( int i = 0; i < enemyList.size(); i++ )
 		{
+			if( !enemyList[i]->GetIsAlive() )	continue;
 			enemyList[i]->Render();
 		}
 	}

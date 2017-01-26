@@ -55,6 +55,7 @@ EnemyManager*	enemyManager = nullptr;
 		enemyList.clear();
 		if ( timer == nullptr )	timer = new Timer();
 		timer->Start( APPEND_INTERVAL );
+		Random::Initialize();
 		return	true;
 	}
 
@@ -71,6 +72,8 @@ EnemyManager*	enemyManager = nullptr;
 			delete timer;
 			timer = nullptr;
 		}
+
+		Random::Release();
 	}
 	
 //----------------------------------------------------------------------------------------------
@@ -93,6 +96,16 @@ EnemyManager*	enemyManager = nullptr;
 			//	更新
 			( *it )->Update( index, deltaTime );
 
+			//	生存チェック
+			bool	isAlive = ( *it )->GetAlive();
+			
+			//	死亡していたらリストから削除
+			//if ( !isAlive )
+			//{
+			//	it = enemyList.erase( it );
+			//	continue;
+			//}
+
 			enemyNum++;
 			it++;
 		}
@@ -104,7 +117,9 @@ EnemyManager*	enemyManager = nullptr;
 		{
 			//	追加
 			if ( enemyNum < ENEMY_MAX )
-				Append( Vector3( 0.0f, 0.0f, 50.0f ), 0.0f );
+			{
+				Append( Vector3( Random::GetFloat( -10.0f, 10.0f ), 0.0f, 50.0f ), 0.0f );
+			}
 
 			timer->Start( APPEND_INTERVAL );
 		}

@@ -30,6 +30,7 @@ namespace
 			WOLF,
 			MOFFU,
 			BIG,
+			PLAYER,
 			ENEMY_MAX
 		};
 	}
@@ -59,6 +60,7 @@ public:
 	//	“®ìŠÖ”
 	void	AddLevel( int id, char levelType );
 	void	CalcExp( int id, char enemyType );
+	void	CalcExpPlayer( int killer, int dead );
 	void	SendLevel( int id, char levelType );
 	void	SendExp( int id );
 	void	SendClassChange( int id, char nextClass );
@@ -82,6 +84,7 @@ public:
 	//	î•ñæ“¾
 	LevelInfo&	GetLevelInfo( int id );
 	char	GetLevel( int id, char levelType )const;
+	int	GetTotalLevel( int id )const;
 	int	GetExp( int id )const;
 };
 

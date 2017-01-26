@@ -33,6 +33,9 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
+
+	//	サークル描画
+	void	SetCircleRender( int player );
 };
 
 #define	effectManager ( EffectManager::GetInstance() )
