@@ -125,7 +125,9 @@ Collision*	collision = nullptr;
 		if ( isHit == true )
 		{
 			//	ライフ計算
-			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -gameParam->GetPlayerStatus( player ).power );
+			int damage = gameParam->GetPlayerStatus( player ).power - gameParam->GetPlayerStatus( target ).defense;
+			if ( damage <= 0 )	damage = 5;
+			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -damage );
 			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
 			else
 			{
@@ -207,7 +209,9 @@ Collision*	collision = nullptr;
 			if ( isHit == true )
 			{
 				//	ライフ計算
-				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -gameParam->GetPlayerStatus( player ).power );
+				int damage = gameParam->GetPlayerStatus( ( *it )->GetID() ).magicAttack - gameParam->GetPlayerStatus( player ).magicDefense;
+				if ( damage <= 0 )	damage = 5;
+				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -damage );
 				if ( isAlive )playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
 				else 
 				{
