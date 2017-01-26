@@ -35,10 +35,14 @@ public:
 	void	PosCheck( Enemy*	enemy );
 	void	PlayerPosCheck( Enemy*	eneny );
 
+	//	óM
+	void	Receive( int client, const LPSTR& data );
+
 	//	î•ñİ’è
 	void	TimerStart( void );
 
 	//	î•ñæ“¾
+	std::vector<Enemy*>		GetList( void ){ return enemyList; }
 };
 
 extern	EnemyManager* enemyManager;

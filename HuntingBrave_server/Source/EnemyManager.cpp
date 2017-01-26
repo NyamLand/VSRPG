@@ -29,7 +29,6 @@ namespace
 			APPEND_INFO
 		};
 	}
-
 }
 
 EnemyManager*	enemyManager = nullptr;
@@ -112,6 +111,25 @@ EnemyManager*	enemyManager = nullptr;
 	}
 
 //----------------------------------------------------------------------------------------------
+//	óM
+//----------------------------------------------------------------------------------------------
+
+	//	óM
+	void	EnemyManager::Receive( int client, const LPSTR& data )
+	{
+		//	•ÏŠ·
+		struct EnemyInfo
+		{
+			char com;
+			char infoType;
+			int enemyIndex;
+		} *receiveInfo = ( EnemyInfo* )data;
+
+		//	İ’è
+		enemyList[receiveInfo->enemyIndex]->ReceiveClientState( client );
+	}
+
+//----------------------------------------------------------------------------------------------
 //	“®ìŠÖ”
 //----------------------------------------------------------------------------------------------
 
@@ -122,8 +140,7 @@ EnemyManager*	enemyManager = nullptr;
 		Enemy*	enemy = new Enemy();
 		enemy->SetPos( pos );
 		enemy->SetAngle( angle );
-
-		
+	
 		//	’Ç‰Áî•ñ‘—M
 		SendAppend( pos, angle );
 		

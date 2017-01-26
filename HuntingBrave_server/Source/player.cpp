@@ -296,6 +296,7 @@ namespace
 			if ( timer->Update() )
 			{
 				gameParam->InitializePlayer( index );
+				pParam = gameManager->GetInitInfo( index );
 				SetMode( MODE::MOVE );
 			}
 		}

@@ -70,6 +70,9 @@ Collision*	collision = nullptr;
 				PlayerPosCheck( player, target );
 			}
 			
+			//	プレイヤーVS敵
+			PlayerToEnemyCollision( player );
+
 			//	魔法当たり判定
 			MagicCollision( player );
 		}
@@ -97,7 +100,7 @@ Collision*	collision = nullptr;
 		}
 	}
 
-	//	プレイヤー攻撃当たり判定
+	//	プレイヤーVSプレイヤー当たり判定
 	void	Collision::PlayerAttackCollision( int player, int target )
 	{
 		if ( gameParam->GetLifeInfo( target ).active == false )		return;
@@ -134,6 +137,39 @@ Collision*	collision = nullptr;
 		}
 	}
 
+	//	プレイヤーVS敵当たり判定
+	void	Collision::PlayerToEnemyCollision( int player )
+	{
+		//	変数準備
+		bool	isHit = false;
+		auto enemyList = enemyManager->GetList();
+
+		//	攻撃情報取得、攻撃中でなければスキップ
+		AttackInfo	attackInfo = gameParam->GetAttackInfo( player);
+		if ( attackInfo.attackParam == AttackInfo::NO_ATTACK )		return;
+		CollisionShape colShape1 = SetCollisionShape( attackInfo.shapeType, attackInfo.vec1, attackInfo.vec2, attackInfo.radius);
+
+		for ( int i = 0; i < enemyList.size(); i++ )
+		{
+			//	条件に合わないものはスキップ
+			if ( !enemyList[i]->GetLifeInfo().active )	continue;
+			if ( !enemyList[i]->GetHitEff( player ) )	continue;
+
+			//	形状取得
+			Vector3	pos = enemyList[i]->GetPos();
+			CollisionShape colShape2 = SetCollisionShape( CAPSULE, pos, pos + Vector3( 0.0f, 4.0f, 0.0f ), 1.5f );
+
+			//	当たり判定チェック
+			isHit = CheckCollision( colShape1, colShape2 );
+
+			if ( isHit )
+			{
+				enemyList[i]->SetHit( player );
+				enemyList[i]->CalcLife( player );
+			}
+		}
+	}
+
 	//	魔法当たり判定
 	void	Collision::MagicCollision( int player )
 	{
@@ -144,6 +180,7 @@ Collision*	collision = nullptr;
 		bool	isHit = false;
 		std::vector<Magic*>	magicList = magicManager->GetList();
 		Vector3	pos = gameParam->GetPlayerParam( player ).pos;
+		CollisionShape	colShape2 = SetCollisionShape( SHAPE_TYPE::CAPSULE, pos, pos + Vector3( 0.0f, 2.5f, 0.0f ), 1.5f );
 
 		//	全魔法回す
 		for ( auto it = magicList.begin(); it != magicList.end(); it++ )
@@ -152,9 +189,11 @@ Collision*	collision = nullptr;
 			if ( ( *it )->GetID() == player )	continue;
 
 			//	形状設定
-			CollisionShape	colShape1, colShape2;
+			CollisionShape	colShape1;
 			colShape1 = SetCollisionShape( SHAPE_TYPE::SPHERE, ( *it )->GetPos(), Vector3( 0.0f, 0.0f, 0.0f ), ( *it )->GetRadius() );
-			colShape2 = SetCollisionShape( SHAPE_TYPE::CAPSULE, pos, pos + Vector3( 0.0f, 2.5f, 0.0f ), 1.5f );
+
+			//	敵への魔法当たり判定
+			MagicCollisionToEnemy( player, colShape1 );
 
 			//	当たり判定チェック
 			isHit = CheckCollision( colShape1, colShape2 );
@@ -173,6 +212,34 @@ Collision*	collision = nullptr;
 					//	キル情報を送信
 					gameParam->SendKillInfo( ( *it )->GetID(), player );
 				}
+			}
+		}
+	}
+
+	//	魔法当たり判定（ 敵 ）
+	void	Collision::MagicCollisionToEnemy( int player, CollisionShape collisionShape1 )
+	{
+		//	変数準備
+		bool	isHit = false;
+		auto enemyList = enemyManager->GetList();
+
+		for (int i = 0; i < enemyList.size(); i++)
+		{
+			//	条件に合わないものはスキップ
+			if ( !enemyList[i]->GetLifeInfo().active )	continue;
+			if ( !enemyList[i]->GetHitEff( player ) )	continue;
+
+			//	形状取得
+			Vector3	pos = enemyList[i]->GetPos();
+			CollisionShape colShape2 = SetCollisionShape( CAPSULE, pos, pos + Vector3( 0.0f, 4.0f, 0.0f ), 1.5f );
+
+			//	当たり判定チェック
+			isHit = CheckCollision( collisionShape1, colShape2 );
+
+			if ( isHit )
+			{
+				enemyList[i]->SetHit( player );
+				enemyList[i]->CalcLife( player );
 			}
 		}
 	}

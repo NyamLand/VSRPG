@@ -112,6 +112,9 @@
 			lifeInfo.active = false;
 			sound->PlaySE(SE::ENEMY_DEAD);
 			SetMode( MODE::DEAD );
+
+			//	討伐情報送信
+			SendHuntInfo();
 		}
 	}
 
@@ -139,6 +142,26 @@
 	{
 
 	}
+
+	//	送信
+	void	Enemy::SendHuntInfo( void )
+	{
+		static	struct 
+		{
+			char com;
+			char infoType;
+			char enemyType;
+		} sendInfo;
+
+		//	情報設定
+		sendInfo.com = SEND_COMMAND::ENEMY_INFO;
+		sendInfo.infoType = SEND_ENEMY_COMMAND::SMALL_ENEMY_HUNT;
+		sendInfo.enemyType = enemyType;
+
+		//	送信
+		gameParam->send( ( char* )&sendInfo, sizeof( sendInfo ) );
+	}
+
 //------------------------------------------------------------------------------------
 //	モード関数
 //------------------------------------------------------------------------------------

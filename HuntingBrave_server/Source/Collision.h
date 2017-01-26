@@ -38,6 +38,8 @@ public:
 	void	AllCollision( void );
 	void	PlayerPosCheck( int player, int target );
 	void	PlayerAttackCollision( int player, int target );
+	void	PlayerToEnemyCollision( int player );
+	void	MagicCollisionToEnemy( int player, CollisionShape colShape );
 	void	MagicCollision( int player );
 
 	//	Œ`ó“–‚½‚è”»’è

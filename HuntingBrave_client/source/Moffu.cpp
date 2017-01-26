@@ -78,7 +78,7 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Moffu::Moffu(void)
+	Moffu::Moffu( void ) 
 	{
 		ModeFunction[MODE::ENTRY] = &Moffu::EntryMode;
 		ModeFunction[MODE::MOVE] = &Moffu::MoveMode;
@@ -92,6 +92,7 @@ namespace
 		attackDist = ATTACK_DIST;
 		lifeInfo.active = false;
 		lifeInfo.isAlive = true;
+		enemyType = ENEMY_TYPE::MOFFU;
 	}
 
 	//	デストラクタ

@@ -115,7 +115,7 @@
 					//	ライフ計算
 					(*it)->SetMode((*it)->DAMAGE);
 					//	ライフ計算
-					(*it)->GetLifeInfo().CulcLife(-1);
+					(*it)->GetLifeInfo().CulcLife( -gameParam->GetPlayerStatus().power );
 					(*it)->LifeCheck();
 				}
 			}
@@ -231,7 +231,7 @@
 						//	ライフ計算
 						( *enemyIt )->SetMode( ( *enemyIt )->DAMAGE );
 						//	ライフ計算
-						( *enemyIt )->GetLifeInfo().CulcLife( -1 );
+						( *enemyIt )->GetLifeInfo().CulcLife( -gameParam->GetPlayerStatus().magicPower );
 						( *enemyIt )->LifeCheck();
 					}
 				}

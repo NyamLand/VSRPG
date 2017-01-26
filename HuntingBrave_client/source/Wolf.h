@@ -12,9 +12,7 @@
 //	class
 class Wolf : public Enemy
 {
-
-	
-
+private:
 	//	モード別関数ポインタ
 	void(Wolf::*ModeFunction[MODE_MAX])(void);
 

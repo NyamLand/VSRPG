@@ -37,6 +37,8 @@ protected:
 	Vector3	target;
 	float		searchDist;
 	float		deltaTime;
+	float		effPercentage;
+	bool		hitEff[PLAYER_MAX];
 	bool		alive;
 	bool		atkFlag;
 	bool		allState;
@@ -46,7 +48,7 @@ protected:
 	EnemyParam	enemyParam;
 	CollisionInfo		collisionInfo;
 	LifeInfo				lifeInfo;
-	Timer*	timer;
+	Timer*				timer[PLAYER_MAX];
 
 	bool	clientState[PLAYER_MAX];
 
@@ -71,24 +73,29 @@ public:
 	void	EntryMode( void );
 	void	MoveMode( void );
 	void	AttackMode( void );
+	void	DeadMode( void );
 
 	//	動作関数
 	void	AddMove( const Vector3& move );
 	void	LifeCheck( void );
 	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );
 	void	AngleAdjustParent( const Vector3& direction, float adjustSpeed );
+	void	CalcLife( int player );
+	void	CalcLifeMagic( int player );
 
 	//	クライアント情報
 	bool	CheckState( void );
 	void	ReceiveClientState( int client );
 	void	SendMode( char nextMode );
 	void	SendMotion( int motion );
+	void	SendHit( void );
+	void	SendEnemyInfo( void );
 
 	//	情報設定
 	void	SetPos( const Vector3& pos );
 	void	SetAngle( float angle );
 	void	SetMotion( int motion );
-	void	SendEnemyInfo( void );
+	void	SetHit( int player );
 
 	//	情報取得
 	Vector3	GetPos( void )const;
@@ -96,7 +103,9 @@ public:
 	int		GetMotion( void )const;
 	int		GetMode( void )const;
 	bool		GetAlive( void )const;
+	bool		GetHitEff( int player )const{ return hitEff[player]; }
 	AttackInfo&	GetAttackInfo( void ){ return attackInfo; }
 	EnemyParam&	GetEnemyParam( void ){ return	enemyParam; }
 	CollisionInfo&	GetCollisionInfo( void ){ return collisionInfo; }
+	LifeInfo& GetLifeInfo( void ){ return lifeInfo; }
 };

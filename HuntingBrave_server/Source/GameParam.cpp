@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	INIT_LIFE		5
-#define	TIME_MAX	( 1.0f * MINUTE )
+#define	TIME_MAX	( 9.0f * MINUTE + 30.0f )
 GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -307,7 +307,11 @@ GameParam*	gameParam = nullptr;
 			levelManager->ReceiveHuntInfo( client, data );
 			break;
 
+		case RECEIVE_ENEMY_COMMAND::PLAYER_HIT:
+			break;
+
 		case RECEIVE_ENEMY_COMMAND::CLIENT_OK:
+			enemyManager->Receive( client, data );
 			break;
 
 		default:

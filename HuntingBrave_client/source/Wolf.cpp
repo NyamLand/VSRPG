@@ -60,6 +60,7 @@ namespace
 		attackDist = ATTACK_DIST;
 		lifeInfo.isAlive = true;
 		lifeInfo.active = false;
+		enemyType = ENEMY_TYPE::WOLF;
 	}
 
 	//	デストラクタ

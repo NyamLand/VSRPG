@@ -41,8 +41,9 @@ LevelManager*	levelManager = nullptr;
 			}
 		}
 
-		expData[ENEMY_EXP::BIG_ENEMY] = 50;
-		expData[ENEMY_EXP::SMALL_ENEMY] = 10;
+		expData[ENEMY_EXP::WOLF] = 10;
+		expData[ENEMY_EXP::MOFFU] = 5;
+		expData[ENEMY_EXP::BIG] = 40;
 	}
 
 	//	デストラクタ

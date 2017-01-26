@@ -26,6 +26,14 @@ protected:
 
 	int	count;		//仮多段ヒット用
 
+	enum ENEMY_TYPE
+	{
+		WOLF,
+		MOFFU,
+		BIG,
+		ENEMY_MAX
+	};
+
 public:
 
 	enum MODE	//	仮
@@ -61,7 +69,8 @@ public:
 	void	StageCheck( void );
 	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed )override;
 
-	//モード関数
+	//	送信
+	void	SendHuntInfo( void );
 
 	//	攻撃関数
 	virtual void	Attack( void )=0;

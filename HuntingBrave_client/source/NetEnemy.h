@@ -23,6 +23,7 @@ private:
 	float			angle;
 	bool			isAlive;
 	int			life;
+	int			index;
 
 public:
 	//	初期化・解放
@@ -31,9 +32,10 @@ public:
 	void	Initialize( iex3DObj* org, const Vector3& Pos, float Angle );
 	
 	//	更新・描画
-	void	Update( void );
+	void	Update( int index );
 	void	Render( void );
 	void	RenderHpBar( void );
+	void	SendClientOK( void );
 	
 	//	動作関数
 	void	Death( void );

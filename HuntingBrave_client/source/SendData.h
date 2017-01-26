@@ -31,7 +31,8 @@
 				NO_COMMAND = -1,
 				BIG_ENEMY_HUNT = 1,
 				SMALL_ENEMY_HUNT,
-				ATTACK_END,
+				PLAYER_HIT,
+				CLIENT_OK,
 				DEAD_END
 			};
 		}
@@ -82,14 +83,6 @@
 		char com = SEND_COMMAND::LEVEL_INFO;
 		char levelType;
 		SendLevelData( char levelType ) : levelType( levelType ){}
-	};
-
-	//	経験値情報
-	struct SendHuntData
-	{
-		char com = SEND_COMMAND::ENEMY_INFO;
-		char	enemyType;
-		SendHuntData( char enemyType ) : enemyType( enemyType ){}
 	};
 
 	//	アイテム使用情報

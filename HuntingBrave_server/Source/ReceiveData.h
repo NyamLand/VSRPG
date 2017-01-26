@@ -36,6 +36,7 @@
 				NO_COMMAND = -1,
 				BIG_ENEMY_HUNT = 1,
 				SMALL_ENEMY_HUNT,
+				PLAYER_HIT,
 				CLIENT_OK,
 			};
 		}

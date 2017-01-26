@@ -2,6 +2,8 @@
 #include	"iextreme.h"
 #include	"GameParam.h"
 #include	"GlobalFunction.h"
+#include	"PointManager.h"
+#include	"LevelManager.h"
 #include	"Random.h"
 
 #include	"Enemy.h"
@@ -23,17 +25,27 @@
 #define	MOVE_SPEED	10.0f
 #define	SEARCH_DIST	10.0f
 #define	ATTACK_DIST	5.0f
+#define	MAX_LIFE		100
+#define	UNRIVALED_TIME	1.0f
+
 
 namespace
 {
 	namespace MOTION_NUM
 	{
+		//enum
+		//{
+		//	POSTURE,	//	待機モーション
+		//	MOVE = 2,	//	移動モーション
+		//	ATTACK,		//	攻撃モーション
+		//	ATTACK2 = 5	//	攻撃モーション
+		//};
 		enum
 		{
-			POSTURE,	//	待機モーション
-			MOVE = 2,	//	移動モーション
-			ATTACK,		//	攻撃モーション
-			ATTACK2 = 5	//	攻撃モーション
+			POSTURE,
+			MOVE,
+			ATTACK,
+			DEAD
 		};
 	}
 
@@ -44,7 +56,8 @@ namespace
 			MOVE,
 			MODE,
 			MOTION,
-			DEAD
+			DEAD,
+			HIT
 		};
 	}
 }
@@ -54,9 +67,9 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Enemy::Enemy( void ): timer( nullptr ),
+	Enemy::Enemy( void ):
 		target( 0.0f, 0.0f, 0.0f ),
-		deltaTime( 0.0f ),
+		deltaTime( 0.0f ), effPercentage( 1.0f ),
 		searchDist( SEARCH_DIST ),
 		index( -1 ),
 		alive( true ), atkFlag( false ), allState( false )
@@ -68,24 +81,37 @@ namespace
 		//	コリジョン情報設定
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, MINOTAURUS_HEIGHT, MINOTAURUS_RADIUS );
 		
-		//	タイマー初期化
-		timer = new Timer();
+		//	配列初期化
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			hitEff[i] = true;
+			clientState[i] = false;
+			timer[i] = nullptr;
+			timer[i] = new Timer();
+		}
 
 		//	関数ポインタ設定
 		ModeFunction[MODE::ENTRY] = &Enemy::EntryMode;
 		ModeFunction[MODE::MOVE] = &Enemy::MoveMode;
 		ModeFunction[MODE::ATTACK] = &Enemy::AttackMode;
+		ModeFunction[MODE::DEAD] = &Enemy::DeadMode;
 
-		mode = MODE::ENTRY;
+		//	ライフ初期化
+		lifeInfo.Initialize( MAX_LIFE );
+
+		mode = MODE::MOVE;
 	}
 
 	//	デストラクタ
 	Enemy::~Enemy( void )
 	{
-		if ( timer != nullptr )
+		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
-			delete timer;
-			timer = nullptr;
+			if ( timer[i] != nullptr )
+			{
+				delete timer[i];
+				timer[i] = nullptr;
+			}
 		}
 	}
 
@@ -108,10 +134,23 @@ namespace
 		this->index = index;
 		this->deltaTime = deltaTime;
 
+		//	無敵情報設定
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( gameParam->GetPlayerActive( i ) == false )		continue;
+
+			//	タイマー更新
+			if ( timer[i]->Update() == true )
+			{
+				hitEff[i] = true;
+			}
+		}
+
 		//	動作関数
 		( this->*ModeFunction[mode] )();
 
-		SendEnemyInfo();
+		//	生存中の時のみ送信
+		if ( mode != DEAD )	SendEnemyInfo();
 	}
 
 //------------------------------------------------------------------------------------
@@ -243,6 +282,46 @@ namespace
 		if ( enemyParam.angle <= -1.0f * D3DX_PI )		enemyParam.angle += 2.0f * D3DX_PI;
 	}
 
+	//	ライフ計算
+	void	Enemy::CalcLife( int player )
+	{
+		if ( lifeInfo.CulcLife( -gameParam->GetPlayerStatus( player ).power ) )
+		{
+			SetMode( MODE::DEAD );
+			SetMotion( MOTION_NUM::DEAD );
+
+			//	点数計算
+			pointManager->CalcPoint( player, 100 );
+			pointManager->SendPoint( player );
+
+			//	経験値計算( マジックナンバーあとで直す )
+			levelManager->CalcExp( player, 2 );
+			levelManager->SendExp( player );
+
+			//gameParam->SendKillInfo( player, 5 );
+		}
+	}
+
+	//	ライフ計算(魔法)
+	void	Enemy::CalcLifeMagic( int player )
+	{
+		if ( lifeInfo.CulcLife( -gameParam->GetPlayerStatus( player ).magicAttack ) )
+		{
+			SetMode( MODE::DEAD );
+			
+			//	点数計算
+			pointManager->CalcPoint( player, 100 );
+			pointManager->SendPoint( player );
+
+			//	経験値計算( マジックナンバーあとで直す )
+			levelManager->CalcExp( player, 2 );
+			levelManager->SendExp( player );
+
+			//	キルログ送信
+			//gameParam->SendKillInfo( player, 5 );
+		}
+	}
+
 //------------------------------------------------------------------------------------
 //	モード別動作関数
 //------------------------------------------------------------------------------------
@@ -300,6 +379,20 @@ namespace
 
 			//	通常モードへ
 			SetMode( MODE::MOVE );
+		}
+	}
+
+	//	死亡モード
+	void	Enemy::DeadMode( void )
+	{
+		lifeInfo.active = false;
+
+		if ( CheckState() )
+		{
+			//	クライアント情報初期化
+			ClientStateInitialize();
+
+			alive = false;
 		}
 	}
 
@@ -407,6 +500,29 @@ namespace
 		}
 	}
 
+	//	ヒット情報送信
+	void	Enemy::SendHit( void )
+	{
+		static	struct
+		{
+			char com;
+			char infoType;
+			int	enemyIndex;
+		} sendInfo;
+
+		//	情報設定
+		sendInfo.com = SEND_COMMAND::ENEMY_INFO;
+		sendInfo.infoType = SEND_INFO_TYPE::HIT;
+		sendInfo.enemyIndex = index;
+
+		//	送信
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( gameParam->GetPlayerActive( i ) == false )	continue;
+			gameParam->send( i, ( char* )&sendInfo, sizeof( sendInfo ) );
+		}
+	}
+
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
@@ -431,6 +547,17 @@ namespace
 			enemyParam.motion = motion;
 			SendMotion( motion );
 		}
+	}
+
+	//	ヒット設定
+	void	Enemy::SetHit( int player )
+	{
+		//	無敵時間設定
+		hitEff[player] = false;
+		timer[player]->Start( UNRIVALED_TIME );
+
+		//	ヒット情報送信
+		SendHit();
 	}
 
 //------------------------------------------------------------------------------------

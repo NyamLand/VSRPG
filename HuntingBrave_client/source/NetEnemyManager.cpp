@@ -50,8 +50,11 @@ namespace ENEMY_COMMAND
 	{
 		if ( org == nullptr )
 		{
-			org = new iex3DObj( "DATA/CHR/Enemy/halk/halk.IEM" );
-			org->SetScale( 0.015f );
+			//org = new iex3DObj( "DATA/CHR/Enemy/halk/halk.IEM" );
+			org = new iex3DObj( "DATA/CHR/Enemy/mofumofu/moffu.IEM" );
+			org->SetScale( 0.5f );
+			org->SetTexture( 0, "DATA/CHR/Enemy/mofumofu/ao_mofoo.png" );
+			org->SetTexture( 1, "DATA/CHR/Enemy/mofumofu/ao_mofoo_trans.png" );
 			org->Update();
 		}
 
@@ -79,7 +82,7 @@ namespace ENEMY_COMMAND
 	{
 		for ( int i = 0; i < enemyList.size(); i++)
 		{
-			enemyList[i]->Update();
+			enemyList[i]->Update( i );
 			bool	isAlive = enemyList[i]->GetIsAlive();
 			if ( !isAlive )
 			{
@@ -100,6 +103,7 @@ namespace ENEMY_COMMAND
 	//	HP•`‰æ
 	void	NetEnemyManager::RenderHp(void)
 	{
+		return;
 		for (auto it = enemyList.begin(); it != enemyList.end(); it++)
 		{
 			(*it)->RenderHpBar();

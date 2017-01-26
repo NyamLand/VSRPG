@@ -17,34 +17,51 @@
 #define INIT_LIFE	20
 #define HALK_RADIUS	2.0f
 #define	HALK_HEIGHT	4.0f
-#define	DEAD_MOTION_END		960
+#define	DEAD_MOTION_END		250
 
 namespace
 {
 	namespace MOTION_NUM
 	{
+		//enum
+		//{
+		//	POSTURE,
+		//	POSTURE1,
+		//	MOVE,
+		//	ATTACK_1,
+		//	ATTACK_2,
+		//	ATTACK_3,
+		//	NAZO,
+		//	WAVE,
+		//	DEAD
+		//};
 		enum
 		{
 			POSTURE,
-			POSTURE1,
 			MOVE,
-			ATTACK_1,
-			ATTACK_2,
-			ATTACK_3,
-			NAZO,
-			WAVE,
-			DEAD
+			ATTACK,
+			DEAD,
+			DAMAGE
 		};
 	}
 
+	//namespace MOTION_FRAME
+	//{
+	//	const int ATTACK_ONE_START = 348;
+	//	const int ATTACK_ONE_END = 375;
+	//	const int ATTACK_TWO_START = 440;
+	//	const int ATTACK_TWO_END = 500;
+	//	const int ATTACK_THREE_START = 530;
+	//	const int ATTACK_THREE_END = 575;
+	//}
+
 	namespace MOTION_FRAME
 	{
-		const int ATTACK_ONE_START = 348;
-		const int ATTACK_ONE_END = 375;
-		const int ATTACK_TWO_START = 440;
-		const int ATTACK_TWO_END = 500;
-		const int ATTACK_THREE_START = 530;
-		const int ATTACK_THREE_END = 575;
+		const int ATTACK_HIT_START = 151;
+		const int ATTACK_HIT_END = 158;
+		const int ATTACK_END = 170;
+		const int DEAD_START = 225;
+		const int FALL_END = 493;
 	}
 }
 //----------------------------------------------------------------------------------------------
@@ -52,11 +69,11 @@ namespace
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
+	NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		pos( 0.0f, 0.0f, 0.0f ), 
 		angle( 0.0f ),
-		life(0),
-		isAlive( false )
+		life(0), index( -1 ),
+		isAlive( true )
 	{
 		ZeroMemory( &attackInfo, sizeof( attackInfo ) );
 	}
@@ -78,10 +95,10 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		obj = org;
 		obj->SetPos( pos );
 		obj->SetAngle( angle );
-		org->SetScale( 0.015f );
+		//org->SetScale( 0.5f );
 		obj->Update();
 		bar = new EnemyHpUI();
-		bar->Initilaize(HPUI_TYPE::ENEMY, GetLife());
+		bar->Initilaize( HPUI_TYPE::ENEMY, GetLife() );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -89,8 +106,10 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	void	NetEnemy::Update( void )
+	void	NetEnemy::Update( int index )
 	{
+		this->index = index;
+
 		//	死亡モーション時
 		if ( obj->GetMotion() == MOTION_NUM::DEAD )
 			Death();
@@ -98,7 +117,7 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		obj->SetPos( pos );
 		obj->SetAngle( angle );
 		obj->Update();
-		obj->Animation();
+		
 
 		CheckAttackInfo();
 	}
@@ -106,6 +125,7 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 	//	描画
 	void	NetEnemy::Render( void )
 	{
+		obj->Animation();
 		obj->Render();
 	}
 
@@ -128,6 +148,8 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 		//	フレーム制御
 		if ( frame >= DEAD_MOTION_END )
 		{
+			SendClientOK();
+
 			//	透過開始
 			isAlive = false;
 		}
@@ -137,13 +159,16 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 	void	NetEnemy::CheckAttackInfo( void )
 	{
 		int motion = obj->GetMotion();
+
 		int frame = obj->GetFrame();
-		if ( motion != MOTION_NUM::ATTACK_1 &&
-			motion != MOTION_NUM::ATTACK_2 &&
-			motion != MOTION_NUM::ATTACK_3 )	return;
+		if ( motion != MOTION_NUM::ATTACK )	return;
+		//if ( motion != MOTION_NUM::ATTACK_1 &&
+		//	motion != MOTION_NUM::ATTACK_2 &&
+		//	motion != MOTION_NUM::ATTACK_3 )	return;
 
 		//	攻撃モーション管理
-		if ( frame >= MOTION_FRAME::ATTACK_ONE_START && frame <= MOTION_FRAME::ATTACK_ONE_END )
+		if ( frame >= MOTION_FRAME::ATTACK_HIT_START && 
+			frame <= MOTION_FRAME::ATTACK_HIT_END )
 		{
 			//	攻撃状態を有効にする
 			attackInfo.Set( SHAPE_TYPE::CAPSULE, HALK_RADIUS, pos, pos + Vector3( 0.0f, HALK_HEIGHT, 0.0f ) );
@@ -155,11 +180,31 @@ NetEnemy::NetEnemy(void) : obj(nullptr), bar(nullptr),
 			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
-			if ( frame >= 420 )
+			if ( frame >= MOTION_FRAME::ATTACK_END )
 			{
 				SetMotion( MOTION_NUM::POSTURE );
+				SendClientOK();
 			}
 		}
+	}
+
+	//	モーション終了を返す
+	void	NetEnemy::SendClientOK( void )
+	{
+		static	struct
+		{
+			char com;
+			char infoType;
+			int	enemyIndex;
+		} sendInfo;
+
+		//	情報設定
+		sendInfo.com = SEND_COMMAND::ENEMY_INFO;
+		sendInfo.infoType = SEND_ENEMY_COMMAND::CLIENT_OK;
+		sendInfo.enemyIndex = index;
+
+		//	送信
+		gameParam->send( ( char* )&sendInfo, sizeof( sendInfo ) );
 	}
 
 //----------------------------------------------------------------------------------------------

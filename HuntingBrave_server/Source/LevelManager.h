@@ -27,8 +27,9 @@ namespace
 	{
 		enum
 		{
-			BIG_ENEMY,
-			SMALL_ENEMY,
+			WOLF,
+			MOFFU,
+			BIG,
 			ENEMY_MAX
 		};
 	}
