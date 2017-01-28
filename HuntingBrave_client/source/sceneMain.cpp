@@ -22,6 +22,7 @@
 #include	"LevelManager.h"
 #include	"NameManager.h"
 #include	"ItemManager.h"
+#include	"PointManager.h"
 #include	"NetEnemyManager.h"
 #include	"Collision.h"
 #include	"Sound.h"
@@ -80,20 +81,23 @@ bool	sceneMain::Initialize( void )
 	//	ui‚ÌÝ’è
 	uiManager->Initialize();
 
-	//	í“¬BGM
-	sound->PlayBGM( BGM::MAIN );
-
 	//	level‰Šú‰»
 	levelManager->Initialize();
 
 	//	Effect‰Šú‰»
 	effectManager->Initialize();
 
+	//	point‰Šú‰»
+	pointManager->Initialize();
+
 	//	collision‰Šú‰»
 	collision->Initialize(gameParam->GetMyIndex(), "DATA/BG/stage_atari.IMO" );
 
 	//	‘—M
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
+
+	//	í“¬BGM
+	sound->PlayBGM( BGM::MAIN );
 
 	_beginthread( ThreadFunction, 0, nullptr );
 	threadState = false;

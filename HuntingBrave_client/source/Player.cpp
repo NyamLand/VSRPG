@@ -38,7 +38,6 @@
 //	ライフ設定
 #define MAX_LIFE	5
 
-
 //	定数関連
 namespace
 {
@@ -49,6 +48,32 @@ namespace
 		SWORD,
 		RIGHT_HAND = 35
 	};
+
+	namespace
+	{
+		const LPSTR fileName[] =
+		{
+			"DATA/CHR/suppin/Suppin.IEM",
+			"DATA/CHR/Fighter/Fighter.IEM",
+			"DATA/CHR/Magician/Magician.IEM",
+			"DATA/CHR/suppin/Suppin.IEM",
+			"DATA/CHR/Prist/prist.IEM",
+			"DATA/CHR/suppin/Suppin.IEM"
+		};
+	}
+	
+	namespace 
+	{
+		const LPSTR bodyTexFileName[] =
+		{
+			"DATA/CHR/suppin/body_",
+			"DATA/CHR/Fighter/body_",
+			"DATA/CHR/Magician/body_",
+			"DATA/CHR/suppin/body_",
+			"DATA/CHR/Prist/body_",
+			"DATA/CHR/suppin/body_"
+		};
+	}
 }
 
 //------------------------------------------------------------------------------------
@@ -56,41 +81,52 @@ namespace
 //------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Player::Player( void ) : nextObj( nullptr ),
-		id( -1 )
+	Player::Player( void ) : id( -1 ), curClass( CLASS_TYPE::NORMAL )
 	{
-		
+		for ( int i = 0; i < CLASS_TYPE::CLASS_MAX; i++ )
+		{
+			org[i] = nullptr;
+		}
 	}
 
 	//	デストラクタ
 	Player::~Player( void )
 	{
-		SafeDelete( nextObj );
+		ZeroMemory( &playerParam, sizeof( PlayerParam ) );
+
+		for ( int i = 0; i < CLASS_TYPE::CLASS_MAX; i++ )
+		{
+			SafeDelete( org[i] );
+		}
+		
+		obj = nullptr;
 	}
 
 	//	初期化
 	bool	Player::Initialize( int id )
 	{
+		this->id = id;
+
+		//	モデル読み込み
+		Load();
+		obj = org[CLASS_TYPE::NORMAL];
+
 		//	情報設定
 		SetPos( Vector3( 0.0f, 0.0f, 0.0f ) );
 		SetAngle( 0.0f );
 		SetScale( PLAYER_SCALE );
-		SetMotion( MOTION_NUM::POSUTURE );
 		SetMode( MODE::MOVE );
+		SetMotion(MOTION_NUM::POSUTURE );
 		lifeInfo.Initialize( MAX_LIFE );
 
 		//	当たり判定形状設定
 		collisionInfo.Set( SHAPE_TYPE::CAPSULE, PLAYER_HEIGHT, PLAYER_RADIUS );
 
 		//	変数初期化
-		this->id = id;
 		speed = MOVE_SPEED;
 		lifeInfo.active = true;
 		lifeInfo.isAlive = true;
 
-		//	テクスチャ書き換え
-		ChangeTexture( id );
-		
 		//	情報更新
 		UpdateInfo();
 
@@ -103,7 +139,46 @@ namespace
 		return	true;
 	}
 
-	//	解放
+	//	読み込み
+	void	Player::Load( void )
+	{
+		for ( int i = 0; i < CLASS_TYPE::CLASS_MAX; i++ )
+		{
+			if ( org[i] == nullptr )
+			{ 
+				org[i] = new iex3DObj( fileName[i] );
+				org[i]->SetScale( PLAYER_SCALE );
+				org[i]->SetPos( 0.0f, 0.0f, 0.0f );
+				org[i]->SetAngle( 0.0f );
+				org[i]->SetMotion( MOTION_NUM::POSUTURE );
+				ChangeTexture( org[i], ( char)i, id );
+				org[i]->Update();
+			}
+		}
+	}
+
+	//	テクスチャ設定
+	void	Player::ChangeTexture( iex3DObj*& model, char classType, int id )
+	{
+		//	ファイル設定
+		char str[50] = "";
+		sprintf_s( str, bodyTexFileName[classType] );
+		
+		//	プレイヤー番号設定
+		char pNum[10] = "";
+		sprintf_s( pNum, "%d.png", id + 1 );
+
+		//	連結
+		strcat_s( str, pNum );
+		model->SetTexture(0, str);
+
+		if ( classType == CLASS_TYPE::FIGHTER )
+		{
+			sprintf_s( str, "" );
+			sprintf_s( str, "DATA/CHR/Fighter/toumeitachi_%d.png", id + 1 );
+			model->SetTexture( 3, str );
+		}
+	}
 
 //------------------------------------------------------------------------------------
 //	更新・描画
@@ -125,7 +200,8 @@ namespace
 		SetPlayerParam( playerParam );
 
 		//	魔法詠唱中なら描画
-		if ( obj->GetMotion() == 7 )	effectManager->SetCircleRender( id );
+		if ( obj->GetMotion() == MOTION_NUM::MAGIC_CHANT )	
+			effectManager->SetCircleRender( id );
 		
 		//	更新
 		BaseChara::Update();
@@ -134,8 +210,7 @@ namespace
 	//	描画
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
-		//	テクスチャ設定
-		ChangeTexture( id );
+		//	モデル描画
 		BaseChara::Render();	
 	}
 
@@ -171,19 +246,34 @@ namespace
 		gameParam->SendAttackParam();
 	}
 
-	void	Player::PlaySE(int motion)
+	//	モーション切り換え時のSE設定
+	void	Player::PlaySE( int motion )
 	{
-		switch (motion)
+		switch ( motion )
 		{
 			case MOTION_NUM::ATTACK1:
-				sound->PlaySE(SE::ATTACK);
-				//sound->PlaySE(SE::ATTACK_HIT1);
+				sound->PlaySE( SE::ATTACK );
 				break;
 
 			default:
 				break;
 		}
 	
+	}
+
+	//	モデルチェンジ
+	void	Player::ChangeModel( char nextClass )
+	{
+		//	クラス設定
+		curClass = nextClass;
+
+		//	情報移動
+		obj = org[curClass];
+		
+		SetPos( pos );
+		SetAngle( angle );
+		SetMotion( gameParam->GetPlayerParam( id ).motion );
+		obj->Update();
 	}
 
 //------------------------------------------------------------------------------------
@@ -209,12 +299,12 @@ namespace
 	}
 
 	//	モーション設定
-	void	Player::SetMotion(int motion)
+	void	Player::SetMotion( int motion )
 	{
-		if (obj->GetMotion() != motion)
+		if ( obj->GetMotion() != motion )
 		{
-			obj->SetMotion(motion);
-			PlaySE(motion);
+			obj->SetMotion( motion );
+			PlaySE( motion );
 		}
 	}
 

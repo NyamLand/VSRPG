@@ -34,6 +34,7 @@ public:
 	void	Render( void );
 
 	//	“®ìŠÖ”
+	void	Receive( const LPSTR& data );
 	void	Erase( int index );
 	void	Append( int id, const Vector3& pos, float angle );
 

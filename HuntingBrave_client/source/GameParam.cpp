@@ -12,6 +12,7 @@
 #include	"InputManager.h"
 #include	"MagicManager.h"
 #include	"LevelManager.h"
+#include	"PointManager.h"
 #include	"NetEnemyManager.h"
 #include	"UIManager.h"
 #include	"Sound.h"
@@ -50,7 +51,6 @@ GameParam*	gameParam = nullptr;
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerStatus ) );
-			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
 
@@ -74,7 +74,6 @@ GameParam*	gameParam = nullptr;
 		{
 			ZeroMemory( &playerInfo[id], sizeof( PlayerInfo ) );
 			ZeroMemory( &playerParam[id], sizeof( PlayerParam ) );
-			ZeroMemory( &pointInfo[id], sizeof( PointInfo ) );
 			ZeroMemory( &matchingInfo[id], sizeof( MatchingInfo ) );
 		}
 		ZeroMemory( &playerStatus, sizeof( PlayerStatus ) );
@@ -113,9 +112,9 @@ GameParam*	gameParam = nullptr;
 			receiveCharaData.motion, receiveCharaData.life );
 
 		//	初期パラメータ受信
-		ReceiveAllStatusData	receiveAllStatus;
-		if ( receive( ( LPSTR )&receiveAllStatus, sizeof( receiveAllStatus ) ) <= 0 )	return	false;
-		levelManager->CulcAllStatus( receiveAllStatus );
+		char	data[30];
+		if ( receive( data, sizeof( data ) ) <= 0 )	return	false;
+		levelManager->Receive( data );
 
 		return true;
 	}
@@ -164,7 +163,7 @@ GameParam*	gameParam = nullptr;
 				break;
 
 			case RECEIVE_COMMAND::POINT_INFO:
-				ReceivePointInfo( data );
+				pointManager->Receive( data );
 				break;
 
 			case RECEIVE_COMMAND::CHARA_INFO:
@@ -172,35 +171,19 @@ GameParam*	gameParam = nullptr;
 				break;
 
 			case RECEIVE_COMMAND::MAGIC_INFO:
-				ReceiveMagicInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_APPEND:
-				ReceiveMagicAppendInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::MAGIC_ERASE:
-				ReceiveMagicEraseInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::LEVEL_INFO:
-				ReceiveLevelInfo( data );
-				break;
-
-			case RECEIVE_COMMAND::EXP_INFO:
-				ReceiveExpInfo( data );
+				magicManager->Receive( data );
 				break;
 
 			case RECEIVE_COMMAND::CLASS_CHANGE_INFO:
-				ReceiveClassChangeInfo( data );
+				playerManager->Receive( data );
 				break;
 
 			case RECEIVE_COMMAND::STATUS_INFO:
-				ReceiveStatusInfo( data );
+				levelManager->Receive( data );
 				break;
 
 			case RECEIVE_COMMAND::ENEMY_INFO:
-				netEnemyManager->Receive( data );
+				//netEnemyManager->Receive( data );
 				break;
 
 			case COMMANDS::MATCHING:
@@ -251,7 +234,11 @@ GameParam*	gameParam = nullptr;
 		inputManager->GetStickInputLeft( axisX, axisY );
 
 		//	フレーム情報取得
-		int frame = playerManager->GetPlayer( myIndex )->GetFrame();
+		int frame = 0;
+		if ( playerManager->GetPlayer( myIndex ) != nullptr )
+		{
+			frame =playerManager->GetPlayer( myIndex )->GetFrame();
+		}
 
 		//	カメラ方向設定
 		Vector3	vEye( mainView->GetTarget() - mainView->GetPos() );
@@ -341,64 +328,6 @@ GameParam*	gameParam = nullptr;
 		gameManager->SetTimer( receiveGameData->limitTimer );
 	}
 
-	//	点数情報受信
-	void	GameParam::ReceivePointInfo( const LPSTR& data )
-	{
-		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
-		SetPointInfo( receivePointData->id, receivePointData->point );
-	}
-	
-	//	魔法情報受信
-	void	GameParam::ReceiveMagicInfo( const LPSTR& data )
-	{
-		ReceiveMagicData	* receiveMagicData = ( ReceiveMagicData* )data;
-		magicManager->SetPos( receiveMagicData->index, receiveMagicData->pos );
-	}
-
-	//	魔法追加情報受信
-	void	GameParam::ReceiveMagicAppendInfo( const LPSTR& data )
-	{
-		ReceiveMagicAppend*	receiveMagicAppend = ( ReceiveMagicAppend* )data;
-		magicManager->Append( 
-			receiveMagicAppend->id,
-			receiveMagicAppend->pos, 
-			receiveMagicAppend->angle );
-	}
-
-	//	魔法消去情報受信
-	void	GameParam::ReceiveMagicEraseInfo( const LPSTR& data )
-	{
-		ReceiveMagicErase*	receiveMagicErase = ( ReceiveMagicErase* )data;
-		magicManager->Erase( receiveMagicErase->index );
-	}
-
-	//	レベル情報受信
-	void	GameParam::ReceiveLevelInfo( const LPSTR& data )
-	{
-		ReceiveLevelData* receiveLevelData = ( ReceiveLevelData* )data;
-		levelManager->SetLevelInfo( receiveLevelData->levelType, receiveLevelData->level );
-	}
-
-	//	経験値情報受信
-	void	GameParam::ReceiveExpInfo( const LPSTR& data )
-	{
-		ReceiveExpData*	receiveExpdata = ( ReceiveExpData* )data;
-		levelManager->SetExp( receiveExpdata->exp );
-	}
-
-	//	クラスチェンジ情報受信
-	void	GameParam::ReceiveClassChangeInfo( const LPSTR& data )
-	{
-		ReceiveClassChangeData* receiveData = ( ReceiveClassChangeData* )data;
-		playerManager->ClassChange( receiveData->id, receiveData->nextClass );
-	}
-
-	//	ステータス受信
-	void	GameParam::ReceiveStatusInfo( const LPSTR& data )
-	{
-		levelManager->CulcStatus( data );
-	}
-
 //----------------------------------------------------------------------------------------------
 //	ログイン関連受信
 //----------------------------------------------------------------------------------------------
@@ -408,10 +337,6 @@ GameParam*	gameParam = nullptr;
 	{
 		Matching*	matching = ( Matching* )data;
 		SetMatchingInfo( matching->id, matching->isComplete );
-		if ( matching->isComplete == false )
-		{
-			int a = 0;
-		}
 	}
 
 	//	サインアップ情報受信
@@ -487,22 +412,10 @@ GameParam*	gameParam = nullptr;
 		playerInfo[id].backTitle = backTitle;
 	}
 
-	//	点数情報設定
-	void	GameParam::SetPointInfo( int id, int point )
-	{
-		pointInfo[id].point = point;
-	}
-
 	//	マッチング情報設定
 	void	GameParam::SetMatchingInfo( int id, bool isComplete )
 	{
 		matchingInfo[id].isComplete = isComplete;
-	}
-
-	//	加算情報設定
-	void	GameParam::AddPoint( int id, int addPoint )
-	{
-		pointInfo[id].addPoint += addPoint;
 	}
 
 	//	プレイヤー脱退

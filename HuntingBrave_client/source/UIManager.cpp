@@ -7,6 +7,7 @@
 #include	"UIManager.h"
 #include	"NetEnemyManager.h"
 #include	"GameParam.h"
+#include	"PointManager.h"
 #include	"LevelManager.h"
 //***************************************************************
 //
@@ -140,7 +141,7 @@ void	UIManager::Update( void )
 	
 	
 	//	値セット
-	scoreUI->SetScore(gameParam->GetPointInfo(p_num).point);
+	scoreUI->SetScore( pointManager->GetPoint( p_num ) );
 	expUI->SetExp(levelManager->GetExp());
 	hpUI->SetMaxHp(gameParam->GetPlayerStatus().maxLife);
 	hpUI->SetHp(gameParam->GetPlayerParam(p_num).life);

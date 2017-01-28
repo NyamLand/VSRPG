@@ -53,6 +53,21 @@ namespace
 			CRY									//	泣き
 		};
 	}
+
+	//	クラスタイプ
+	namespace CLASS_TYPE
+	{
+		enum
+		{
+			NORMAL,
+			FIGHTER,
+			MAGICIAN,
+			KNIGHT,
+			PRIEST,
+			ASSASSIN,
+			CLASS_MAX
+		};
+	}
 }
 
 //	class
@@ -62,9 +77,7 @@ protected:
 	//	パラメータ
 	int	id;
 	PlayerParam		playerParam;
-	iex3DObj* org;
-	iex3DObj* nextObj;
-	char	fileName[256];
+	iex3DObj* org[CLASS_TYPE::CLASS_MAX];
 	enum	MODE//	仮
 	{
 		MOVE,
@@ -74,24 +87,27 @@ protected:
 		MODE_MAX
 	};
 
+	char curClass;
+
 public:
 	//	初期化・解放
 	Player( void );
 	~Player( void );
 	virtual	bool	Initialize( int id );
-	
+	void	Load( void );
+
 	//	更新・描画
 	void	Update( void );
 	void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr )override;
 
 	//	動作関数
 	void	SetAttackShape( void );
-	virtual	void	ChangeTexture( int colorNum ) = 0;
-	void	PlaySE(int motion);
+	void	ChangeTexture( iex3DObj*& model, char classType, int id );
+	void	ChangeModel( char nextClass );
+	void	PlaySE( int motion );
 
 	//	情報設定
 	void	SetPlayerParam( const PlayerParam& playerParam );
 	void	SetCollisionShape( const PlayerParam& playerParam );
-	void	SetMotion(int motion) override;
-
+	void	SetMotion( int motion ) override;
 };

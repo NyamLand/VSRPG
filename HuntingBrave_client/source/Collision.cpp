@@ -167,7 +167,7 @@
 		bool	isHit = false;
 
 		//	‘S“G‰ñ‚·
-		for ( int i = 0; i < enemyList.size(); i++ )
+		for ( int i = 0; i < ( int )enemyList.size(); i++ )
 		{
 			//	UŒ‚î•ñŽæ“¾AUŒ‚’†‚Å‚È‚¯‚ê‚ÎƒXƒLƒbƒv
 			AttackInfo	attackInfo = enemyList[i]->GetAttackInfo();

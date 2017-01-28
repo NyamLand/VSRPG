@@ -16,6 +16,52 @@
 
 MagicManager*	magicManager = nullptr;
 
+namespace
+{
+	namespace MAGIC_INFO
+	{
+		enum
+		{
+			POS,
+			APPEND,
+			ERASE
+		};
+	}
+
+	//	魔法攻撃情報
+	struct SendMagicData
+	{
+		char	com = SEND_COMMAND::MAGIC_INFO;
+		char infoType = MAGIC_INFO::POS;
+		int	index;
+		Vector3	pos;
+		SendMagicData( int index, const Vector3& pos ) :
+			index( index ), pos( pos ) {}
+	};
+
+	//	魔法発動情報
+	struct SendMagicAppend
+	{
+		char	com = SEND_COMMAND::MAGIC_INFO;
+		char infoType = MAGIC_INFO::APPEND;
+		int	id;
+		Vector3	pos;
+		float			angle;
+
+		SendMagicAppend( int id, const Vector3& pos, float angle ) :
+			id( id ), pos( pos ), angle( angle ) {}
+	};
+
+	//	魔法消去情報
+	struct SendMagicErase
+	{
+		char	com = SEND_COMMAND::MAGIC_INFO;
+		char infoType = MAGIC_INFO::ERASE;
+		int	index;
+		SendMagicErase( int index ) : index( index ){}
+	};
+}
+
 //------------------------------------------------------------------------------------------
 //	初期化・解放
 //------------------------------------------------------------------------------------------

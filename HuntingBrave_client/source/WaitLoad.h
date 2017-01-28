@@ -15,6 +15,7 @@
 class WaitLoad
 {
 private:
+	iex2DObj*	back;
 	Font*	font;
 	Timer*	timer;
 	char		text[256];

@@ -83,6 +83,9 @@ bool	sceneMatching::threadState;
 		//	GameParam初期化
 		gameParam = new GameParam();
 
+		//	WaitLoad初期化
+		waitLoad = new WaitLoad();
+
 		//	PlayerManager初期化
 		playerManager->Initialize();
 	
@@ -113,6 +116,7 @@ bool	sceneMatching::threadState;
 		SafeDelete( nameInput );
 		SafeDelete( itemSelect );
 		SafeDelete( gameWait );
+		SafeDelete( waitLoad );
 		sound->StopBGM();
 	}
 
@@ -125,6 +129,8 @@ bool	sceneMatching::threadState;
 	//	全体更新
 	void	sceneMatching::Update( void )
 	{
+		waitLoad->Update();
+
 		//	テスト
 		switch ( step )
 		{
@@ -197,6 +203,8 @@ bool	sceneMatching::threadState;
 		//	画面クリア
 		mainView->Activate();
 		mainView->Clear();
+
+		waitLoad->Render();
 
 		switch ( step )
 		{

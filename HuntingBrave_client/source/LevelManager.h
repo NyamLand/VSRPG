@@ -34,8 +34,6 @@ namespace
 			BIG_ENEMY
 		};
 	}
-
-
 }
 
 //	struct
@@ -63,6 +61,7 @@ public:
 	bool	Initialize( void );
 
 	//	動作関数
+	void	Receive( const LPSTR& data );
 	void	SendLevel( char levelType );
 
 	//	情報設定
@@ -71,7 +70,6 @@ public:
 
 	//	ステータス設定
 	void	CulcAllStatus( const LPSTR& data );
-	void	CulcAllStatus( const ReceiveAllStatusData& statusData );
 	void	CulcStatus( const LPSTR& data );
 	void	CulcPower( const LPSTR& data );
 	void	CulcDefense( const LPSTR& data );
@@ -79,7 +77,7 @@ public:
 	void	CulcMagicDefense( const LPSTR& data );
 	void	CulcMaxLife( const LPSTR& data );
 	void	CulcSpeed( const LPSTR& data );
-
+	
 	//	情報取得
 	LevelInfo&	GetLevelInfo( void );
 	char	GetLevel( char levelType )const;

@@ -49,12 +49,12 @@
 //------------------------------------------------------------------------------------
 
 	//	テクスチャ設定
-	void	Suppin::ChangeTexture( int colorNum )
-	{
-		//	ファイル設定
-		char	fileName[256] = "DATA/CHR/suppin/s_body_";
-		char playerNum[8] = "";
-		sprintf_s( playerNum, "%d.png", colorNum );
-		strcat_s( fileName, playerNum );
-		obj->SetTexture( 0, fileName );
-	}
+	//void	Suppin::ChangeTexture( int colorNum )
+	//{
+	//	//	ファイル設定
+	//	char	fileName[256] = "DATA/CHR/suppin/s_body_";
+	//	char playerNum[8] = "";
+	//	sprintf_s( playerNum, "%d.png", colorNum );
+	//	strcat_s( fileName, playerNum );
+	//	obj->SetTexture( 0, fileName );
+	//}
