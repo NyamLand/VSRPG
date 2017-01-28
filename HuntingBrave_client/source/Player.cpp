@@ -44,6 +44,7 @@ namespace
 	//	ƒ{[ƒ“”Ô†
 	enum BONE_NUM
 	{
+		LEFT_HAND = 15,
 		HAND = 27,
 		SWORD,
 		RIGHT_HAND = 35
@@ -72,6 +73,19 @@ namespace
 			"DATA/CHR/suppin/body_",
 			"DATA/CHR/Prist/body_",
 			"DATA/CHR/suppin/body_"
+		};
+	}
+
+	namespace
+	{
+		int shotBone[] =
+		{
+			BONE_NUM::RIGHT_HAND,
+			BONE_NUM::LEFT_HAND,
+			BONE_NUM::LEFT_HAND,
+			BONE_NUM::RIGHT_HAND,
+			BONE_NUM::RIGHT_HAND,
+			BONE_NUM::RIGHT_HAND,
 		};
 	}
 }
@@ -234,7 +248,7 @@ namespace
 		case MOTION_NUM::MAGIC_ACTUATION:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
 			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
-			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( shotBone[curClass] );
 			gameParam->GetAttackInfo( id ).vec2 = GetFront();
 			break;
 

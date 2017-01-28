@@ -22,7 +22,7 @@
 	//	コンストラクタ
 	Fighter::Fighter( void )
 	{
-		handType = BONE_NUM::LEFT_HAND;
+		
 	}
 
 	//	デストラクタ

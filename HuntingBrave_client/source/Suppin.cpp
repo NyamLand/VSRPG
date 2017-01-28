@@ -22,7 +22,7 @@
 	//	コンストラクタ
 	Suppin::Suppin( void )
 	{
-		handType = BONE_NUM::RIGHT_HAND;
+		
 	}
 
 	//	デストラクタ
