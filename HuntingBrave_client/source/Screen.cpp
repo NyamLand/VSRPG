@@ -23,6 +23,7 @@
 		{
 			const Vector3 WHITE( 1.0f, 1.0f, 1.0f );
 			const Vector3 BLACK( 0.0f, 0.0f, 0.0f );
+			const Vector3 GRAY( 0.5f, 0.5f, 0.5f );
 		}
 	}
 
@@ -41,6 +42,8 @@
 		startParam[SCREEN_MODE::FADE_OUT]	=		startParam[SCREEN_MODE::WHITE_OUT]	= 0.0f;
 		endParam[SCREEN_MODE::FADE_OUT]		=		endParam[SCREEN_MODE::WHITE_OUT]	= 1.0f;
 		endParam[SCREEN_MODE::FADE_IN]			=		endParam[SCREEN_MODE::WHITE_IN]		= 0.0f;
+		startParam[SCREEN_MODE::GRAY] = 0.0f;
+		endParam[SCREEN_MODE::GRAY] = 0.5f;
 	}
 
 	//	デストラクタ
@@ -86,6 +89,15 @@
 
 		return	isEnd;
 	}
+	
+	//	灰色処理
+	bool	Screen::Gray( void )
+	{
+		//	補間
+		bool	isEnd = Interpolation::CubicFunctionInterpolation( alpha, startParam[mode], endParam[mode], param );
+
+		return	isEnd;
+	}
 
 //-----------------------------------------------------------------------------------
 //	情報設定
@@ -110,6 +122,9 @@
 			color = Color::WHITE;
 			break;
 
+		case SCREEN_MODE::GRAY:
+			color = Color::GRAY;
+			break;
 		default:
 			break;
 		}
