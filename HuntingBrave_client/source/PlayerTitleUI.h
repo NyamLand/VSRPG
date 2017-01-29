@@ -19,6 +19,7 @@ private:
 	int front, back;
 	int posx, posy;
 	Image*	 frontTitleImage;
+	Image*	 frontTitleImage2;
 	Image*	 backTitleImage;
 
 public:

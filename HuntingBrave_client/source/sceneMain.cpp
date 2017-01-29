@@ -7,7 +7,9 @@
 #include	<thread>
 #include	<map>
 #include	<process.h>
+#include	"Screen.h"
 #include	"GlobalFunction.h"
+#include	"Interpolation.h"
 #include	"Image.h"
 #include	"DrawShape.h"
 #include	"GameData.h"
@@ -34,6 +36,8 @@
 //	グローバル変数
 //
 //*****************************************************************************************************************************
+
+#define	BLACK_WHITE_SPEED		0.01f
 
 bool	sceneMain::threadState;
 
@@ -99,6 +103,14 @@ bool	sceneMain::Initialize( void )
 	//	戦闘BGM
 	sound->PlayBGM( BGM::MAIN );
 
+	//	バックバッファポインタ退避
+	iexSystem::GetDevice()->GetRenderTarget( 0, &backBuffer );
+	mainScreen = new iex2DObj( iexSystem::ScreenWidth, iexSystem::ScreenHeight, IEX2D_RENDERTARGET );
+
+	screen->SetScreenMode( SCREEN_MODE::FADE_IN, 0.01f );
+
+	blackWhitePercentage = 0.0f;
+
 	_beginthread( ThreadFunction, 0, nullptr );
 	threadState = false;
 	return true;
@@ -108,6 +120,8 @@ sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
+	SafeDelete( mainScreen );
+	backBuffer->Release();
 	enemyManager->Release();
 	netEnemyManager->Release();
 	uiManager->Release();
@@ -161,6 +175,11 @@ void	sceneMain::Update( void )
 
 	//	collision
 	collision->AllCollision();
+
+	//	スクリーン制御
+	screen->Update();
+	DeadScreen();
+
 	//	シーン切り替え
 	if ( threadState )
 		gameManager->ChangeScene( SCENE::RESULT );
@@ -173,6 +192,9 @@ void	sceneMain::Update( void )
 //*****************************************************************************************************************************
 void	sceneMain::Render( void )
 {
+	//	レンダーターゲット設定
+	mainScreen->RenderTarget( 0 );
+
 	//	画面クリア
 	mainView->Activate();
 	mainView->Clear();
@@ -198,10 +220,18 @@ void	sceneMain::Render( void )
 	//	ui描画
 	uiManager->Render();
 
+	screen->Render();
+
 	//	各プレイヤー座標表示
 	DebugRender();
 
 	MyInfoRender();
+
+	//	フレームバッファへ切り替え
+	iexSystem::GetDevice()->SetRenderTarget( 0, backBuffer );
+
+	shader2D->SetValue( "percentage", blackWhitePercentage );
+	mainScreen->Render( 0, 0, 1280, 720, 0, 0, 1280, 720, shader2D, "blackWhiteOutSet" );
 }
 
 //	debug用描画
@@ -242,6 +272,22 @@ void	sceneMain::MyInfoRender( void )
 	char	str[256];
 	sprintf_s( str, "id : %d\n\nname : %s\n\npos : Vector3( %.2f, %.2f, %.2f )\n\nexp : %d\n\nlength : %.2f", id + 1, name, pos.x, pos.y, pos.z, exp, length );
 	IEX_DrawText( str, 20, 50, 500, 500, 0xFFFFFF00 );
+}
+
+//	生存チェック
+void	sceneMain::DeadScreen( void )
+{
+	int index = gameParam->GetMyIndex();
+	
+	//	生存していたらスキップ
+	if ( gameParam->GetPlayerParam( index ).motion != MOTION_NUM::DEAD )
+	{
+		blackWhitePercentage = 0.0f;
+		return;
+	}
+
+	//	補間処理
+	Interpolation::PercentageUpdate( blackWhitePercentage, BLACK_WHITE_SPEED );
 }
 
 //	受信送信

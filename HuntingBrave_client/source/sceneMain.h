@@ -12,6 +12,12 @@ class	sceneMain : public Scene
 {
 private:
 	Stage*	stage;
+	
+	//	バックバッファ
+	Surface*	backBuffer;
+	iex2DObj*	mainScreen;
+
+	float	blackWhitePercentage;
 	static	bool	threadState;
 
 public:
@@ -25,6 +31,7 @@ public:
 	//	動作関数
 	void	DebugRender( void );
 	void	MyInfoRender( void );
+	void	DeadScreen( void );
 	static void	ThreadFunction( void* ptr );
 };
 

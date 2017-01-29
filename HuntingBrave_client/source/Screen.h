@@ -17,6 +17,7 @@ namespace
 			FADE_OUT,
 			WHITE_IN,
 			WHITE_OUT,
+			GRAY,
 			MAX,
 		};
 	}
@@ -52,6 +53,7 @@ public:
 	//	“®ìŠÖ”
 	bool	Fade( void );
 	bool	Wipe( void );
+	bool	Gray( void );
 
 	//	î•ñİ’è
 	void	SetScreenMode( int mode, float speed );

@@ -24,7 +24,7 @@
 //----------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	PlayerTitleUI::PlayerTitleUI( void ) : frontTitleImage( nullptr ), backTitleImage( nullptr ),
+	PlayerTitleUI::PlayerTitleUI( void ) : frontTitleImage( nullptr ), frontTitleImage2( nullptr ), backTitleImage( nullptr ),
 		index( - 1 ), posx( 0 ), posy( 0 )
 	{
 
@@ -34,6 +34,7 @@
 	PlayerTitleUI::~PlayerTitleUI( void )
 	{
 		SafeDelete( frontTitleImage );
+		SafeDelete( frontTitleImage2 );
 		SafeDelete( backTitleImage );
 	}
 
@@ -45,24 +46,20 @@
 
 		//	前称号初期化
 		frontTitleImage = new Image();
+		frontTitleImage2 = new Image();
 		
-		//	frontTitle初期化
-		if ( front >= FRONT_MAX )
-		{
-			frontTitleImage->Initialize( "DATA/UI/menu_UI/PlTitle_front01.png", 
-				x - w / 2, y, w, h, 
-				( ( front - FRONT_MAX ) % 2 ) * SRC_W,
-				( ( front - FRONT_MAX ) / 2 )	 * SRC_H,
-				SRC_W, SRC_H );
-		}
-		else
-		{
-			frontTitleImage->Initialize( "DATA/UI/menu_UI/PlTitle_front02.png",
+		//	frontTitle初期化				
+		frontTitleImage->Initialize( "DATA/UI/menu_UI/PlTitle_front01.png",
 				x - w / 2, y, w, h,
 				( front % 2 ) * SRC_W,
 				( front / 2 )	 * SRC_H,
 				SRC_W, SRC_H );
-		}
+
+		frontTitleImage2->Initialize( "DATA/UI/menu_UI/PlTitle_front02.png", 
+			x - w / 2, y, w, h, 
+			( ( front - FRONT_MAX ) % 2 ) * SRC_W,
+			( ( front - FRONT_MAX ) / 2 )	 * SRC_H,
+			SRC_W, SRC_H );
 
 		//	backTitle初期化
 		backTitleImage = new Image();
@@ -90,7 +87,11 @@
 	//	描画
 	void	PlayerTitleUI::Render( void )
 	{
-		frontTitleImage->Render( IMAGE_MODE::NORMAL );
+		if ( front < FRONT_MAX )
+			frontTitleImage->Render(IMAGE_MODE::NORMAL);
+		else
+			frontTitleImage2->Render( IMAGE_MODE::NORMAL );
+
 		backTitleImage->Render( IMAGE_MODE::NORMAL );
 	}
 
@@ -116,13 +117,13 @@
 		//	frontTitle初期化
 		if ( front >= FRONT_MAX )
 		{
-				frontTitleImage->sx = ( ( front - FRONT_MAX ) % 2 ) * SRC_W;
-				frontTitleImage->sy = ( ( front - FRONT_MAX ) / 2 )	 * SRC_H;
+			frontTitleImage2->sx = ( ( front - FRONT_MAX ) % 2 ) * SRC_W;
+			frontTitleImage2->sy = ( ( front - FRONT_MAX ) / 2 )	 * SRC_H;
 		}
 		else
 		{
-				frontTitleImage->sx = ( front % 2 ) * SRC_W;
-				frontTitleImage->sy = ( front / 2 )	 * SRC_H;
+			frontTitleImage->sx = ( front % 2 ) * SRC_W;
+			frontTitleImage->sy = ( front / 2 )	 * SRC_H;
 		}
 
 		//	backTitle初期化
