@@ -50,6 +50,17 @@ namespace
 		RIGHT_HAND = 35
 	};
 
+	//	表情
+	namespace FACE_TYPE
+	{
+		enum
+		{
+			NORMAL,
+			DAMAGE,
+			ATTACK
+		};
+	}
+
 	namespace
 	{
 		const LPSTR fileName[] =
@@ -60,6 +71,36 @@ namespace
 			"DATA/CHR/suppin/Suppin.IEM",
 			"DATA/CHR/Prist/prist.IEM",
 			"DATA/CHR/suppin/Suppin.IEM"
+		};
+
+		//	通常顔
+		const LPSTR	normalFaceFile[] =
+		{
+			"DATA/CHR/suppin/face.png",
+			"DATA/CHR/Fighter/face.png",
+			"DATA/CHR/Magician/face.png",
+			"DATA/CHR/Knight/face.png",
+			"DATA/CHR/Prist/face2.png"
+		};
+
+		//	ダメージ顔
+		const LPSTR	damageFaceFile[] =
+		{
+			"DATA/CHR/suppin/face_damage.png",
+			"DATA/CHR/Fighter/face_damage.png",
+			"DATA/CHR/Magician/face_damage.png",
+			"DATA/CHR/Knight/face_damage.png",
+			"DATA/CHR/Prist/face_damage.png"
+		};
+
+		//	攻撃顔
+		const LPSTR attackFaceFile[] = 
+		{
+			"DATA/CHR/suppin/face_koueki.png",
+			"DATA/CHR/Fighter/face_koueki.png",
+			"DATA/CHR/Magician/face_koueki.png",
+			"DATA/CHR/Knight/face_koueki.png",
+			"DATA/CHR/Prist/face_koueki.png"
 		};
 	}
 	
@@ -290,6 +331,54 @@ namespace
 		obj->Update();
 	}
 
+	//	表情変更
+	void	Player::ChangeFaceTexture( char faceType )
+	{
+		switch ( faceType )
+		{
+		case FACE_TYPE::NORMAL:
+			obj->SetTexture( 1, normalFaceFile[curClass] );
+			break;
+
+		case FACE_TYPE::DAMAGE:
+			obj->SetTexture( 1, damageFaceFile[curClass] );
+			break;
+
+		case FACE_TYPE::ATTACK:
+			obj->SetTexture( 1, attackFaceFile[curClass] );
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	//	モーションに対応した表情変更
+	void	Player::ChangeFaceType( int motion )
+	{
+		switch ( motion )
+		{
+			//	ダメージ顔
+		case MOTION_NUM::KNOCKBACK1:
+		case MOTION_NUM::KNOCKBACK2:
+		case MOTION_NUM::DEAD:
+		case MOTION_NUM::FALL:
+			ChangeFaceTexture( FACE_TYPE::DAMAGE );
+			break;
+
+			//	攻撃顔
+		case MOTION_NUM::ATTACK1:
+		case MOTION_NUM::ATTACK2:
+		case MOTION_NUM::MAGIC_ACTUATION:
+			ChangeFaceTexture( FACE_TYPE::ATTACK );
+			break;
+
+		default:
+			ChangeFaceTexture( FACE_TYPE::NORMAL );
+			break;
+		}
+	}
+
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------
@@ -319,6 +408,7 @@ namespace
 		{
 			obj->SetMotion( motion );
 			PlaySE( motion );
+			ChangeFaceType( motion );
 		}
 	}
 

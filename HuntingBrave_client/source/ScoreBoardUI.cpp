@@ -29,7 +29,7 @@
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-ScoreBoardUI::ScoreBoardUI(int x, int y, int w, int h)
+ScoreBoardUI::ScoreBoardUI(int x, int y, int w, int h) : boardState( false )
 {
 	//	座標、サイズ情報格納
 	posx = x;	posy = y;	width = (double)w / BOARD_PER;	height = (double)h / BOARD_PER;
@@ -73,6 +73,12 @@ ScoreBoardUI::~ScoreBoardUI(void)
 //	更新
 void	ScoreBoardUI::Update(void)
 {
+	if ( KEY( KEY_TYPE::R1 ) != 0 )	boardState = true;
+	else
+	{
+		boardState = false;
+		return;
+	}
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
 		score[i]->SetScore( pointManager->GetPoint( i ) );
@@ -98,27 +104,27 @@ void	ScoreBoardUI::Update(void)
 		exp[i]->SetParam(x, p_icon[i]->y, p_icon[i]->w, p_icon[i]->h);
 		exp[i]->Update();
 
-		//	
-		if (KEY(KEY_TYPE::R1) == 1)
-		{
-			board->renderflag = true;
-			for (int i = 0; i < PLAYER_MAX; i++)
-			{
-				p_icon[i]->renderflag = true;
-				score[i]->SetRenderFlag(true);
-				exp[i]->SetRenderFlag(true);
-			}
-		}
-		else
-		{
-			board->renderflag = false;
-			for (int i = 0; i < PLAYER_MAX; i++)
-			{
-				p_icon[i]->renderflag = false;
-				score[i]->SetRenderFlag(false);
-				exp[i]->SetRenderFlag(false);
-			}
-		}
+		////	
+		//if (KEY(KEY_TYPE::R1) == 1)
+		//{
+		//	board->renderflag = true;
+		//	for (int i = 0; i < PLAYER_MAX; i++)
+		//	{
+		//		p_icon[i]->renderflag = true;
+		//		score[i]->SetRenderFlag(true);
+		//		exp[i]->SetRenderFlag(true);
+		//	}
+		//}
+		//else
+		//{
+		//	board->renderflag = false;
+		//	for (int i = 0; i < PLAYER_MAX; i++)
+		//	{
+		//		p_icon[i]->renderflag = false;
+		//		score[i]->SetRenderFlag(false);
+		//		exp[i]->SetRenderFlag(false);
+		//	}
+		//}
 
 	}
 }
@@ -127,6 +133,8 @@ void	ScoreBoardUI::Update(void)
 //	描画
 void	ScoreBoardUI::Render(void)
 {
+	if ( boardState == false )	return;
+
 	board->Render(IMAGE_MODE::ADOPTPARAM);
 
 	for (int i = 0; i < PLAYER_MAX; i++)
