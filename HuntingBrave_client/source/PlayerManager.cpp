@@ -16,21 +16,6 @@
 //	グローバル
 //-------------------------------------------------------------------------------------
 
-namespace
-{
-#define	PLAYER_SCALE	0.2f
-
-	const LPSTR fileName[] = 
-	{
-		"DATA/CHR/suppin/Suppin.IEM",
-		"DATA/CHR/Fighter/Fighter.IEM",
-		"DATA/CHR/Magician/Magician.IEM",
-		"DATA/CHR/suppin/Suppin.IEM",
-		"DATA/CHR/suppin/Suppin.IEM",
-		"DATA/CHR/suppin/Suppin.IEM"
-	};
-}
-
 //-------------------------------------------------------------------------------------
 //	初期化・解放
 //-------------------------------------------------------------------------------------
@@ -38,11 +23,10 @@ namespace
 	//	コンストラクタ
 	PlayerManager::PlayerManager( void )
 	{
-		for ( int i = 0; i < PLAYER_TYPE::MODEL_MAX; i++ )
+		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			obj[i] = nullptr;
+			player[p] = nullptr;
 		}
-		playerList.clear();
 	}
 		
 	//	デストラクタ
@@ -54,20 +38,11 @@ namespace
 	//	初期化
 	bool	PlayerManager::Initialize( void )
 	{
-		//	リスト初期化
-		playerList.clear();
-
-		for ( int i = 0; i < PLAYER_MAX; i++ )
-		{
-			obj[i] = new iex3DObj( fileName[i] );
-			obj[i]->SetAngle( 0.0f );
-			obj[i]->SetScale( PLAYER_SCALE );
-			obj[i]->SetPos( 0.0f, 0.0f, 0.0f );
-			obj[i]->Update();
-		}
-
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
+			if( gameParam->GetPlayerActive( p ) == false )	continue;
+			
+			player[p] = nullptr;
 			SetPlayer( p );
 		}
 
@@ -77,14 +52,9 @@ namespace
 	//	解放
 	void	PlayerManager::Release( void )
 	{
-		for ( auto it = playerList.begin(); it != playerList.end(); )
+		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
-			it = playerList.erase( it );
-		}
-
-		for ( int i = 0; i < PLAYER_TYPE::MODEL_MAX; i++ )
-		{
-			SafeDelete( obj[i] );
+			SafeDelete( player[i] );
 		}
 	}
 
@@ -98,8 +68,10 @@ namespace
 		//	全プレイヤー更新
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			if ( gameParam->GetPlayerActive( p ) )
-				playerList[p]->Update();
+			if ( gameParam->GetPlayerActive( p ) == false )		continue;
+			
+			//	更新
+			player[p]->Update();
 		}
 	}
 
@@ -108,8 +80,10 @@ namespace
 	{
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			if ( gameParam->GetPlayerActive( p ) )
-				playerList[p]->Render();
+			if ( gameParam->GetPlayerActive( p ) == false )		continue;
+			
+			//	描画
+			player[p]->Render();
 		}
 	}
 
@@ -119,8 +93,10 @@ namespace
 		return;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
-			if ( gameParam->GetPlayerActive( p ) )
-				playerList[p]->BarRender();
+			if ( gameParam->GetPlayerActive( p ) == false )	continue;
+			
+			//	バー描画
+			player[p]->BarRender();
 		}
 	}
 
@@ -131,32 +107,18 @@ namespace
 	//	クラスチェンジ
 	void	PlayerManager::ClassChange( int id, char nextClass )
 	{
-		Player*	 player = nullptr;
+		if ( gameParam->GetPlayerActive( id ) == false )	return;
 
-		switch ( nextClass )
-		{
-		case PLAYER_TYPE::NORMAL:
-			player = new Suppin();
-			break;
+		//	クラスチェンジ
+		player[id]->ChangeModel( nextClass );
+	}
 
-		case PLAYER_TYPE::FIGHTER:
-			player = new Fighter();
-			break;
-
-		case PLAYER_TYPE::MAGICIAN:
-			player = new Magician();
-			break;
-
-		default:
-			player = new Suppin();
-		}
-
-		//	モデルセット、初期化
-		player->SetObj( obj[nextClass]->Clone() );
-		player->Initialize( id );
-
-		//	リストに追加
-		playerList.insert( playerList.begin() + id, player );
+	//	受信
+	void	PlayerManager::Receive( const LPSTR& data )
+	{
+		ReceiveClassChangeData* receiveData = 
+			( ReceiveClassChangeData* )data;
+		ClassChange( receiveData->id, receiveData->nextClass );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -166,8 +128,8 @@ namespace
 	//	プレイヤー生成
 	void	PlayerManager::SetPlayer( int id )
 	{
-		//	プレイヤー生成
-		ClassChange( id, PLAYER_TYPE::NORMAL );
+		player[id] = new Player();
+		player[id]->Initialize( id );
 	}
 
 //-------------------------------------------------------------------------------------
@@ -177,5 +139,5 @@ namespace
 	//	Player情報取得
 	Player*&	PlayerManager::GetPlayer( int id )
 	{
-		return	playerList[id];
+		return	player[id];
 	}

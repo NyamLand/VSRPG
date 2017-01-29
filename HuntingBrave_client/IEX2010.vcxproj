@@ -21,7 +21,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -114,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="source\BaseChara.cpp" />
     <ClCompile Include="source\Circle.cpp" />
+    <ClCompile Include="source\PointManager.cpp" />
     <ClCompile Include="source\Wolf.cpp" />
     <ClCompile Include="source\CharaInfo.cpp" />
     <ClCompile Include="source\Collision.cpp" />
@@ -206,6 +207,7 @@
   <ItemGroup>
     <ClInclude Include="source\BaseChara.h" />
     <ClInclude Include="source\Circle.h" />
+    <ClInclude Include="source\PointManager.h" />
     <ClInclude Include="source\Wolf.h" />
     <ClInclude Include="source\CharaInfo.h" />
     <ClInclude Include="source\Collision.h" />

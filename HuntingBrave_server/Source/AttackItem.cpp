@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameParam.h"
+#include	"LevelManager.h"
 #include	"AttackItem.h"
 
 //**************************************************************************
@@ -51,10 +52,6 @@
 				
 				//	ステータスを無効
 				state = false;
-
-				//	送信
-				SendStatusData sendData( SEND_STATUS::ATTACK, ( float )gameParam->GetPlayerStatus( id ).power );
-				gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 			}
 		}
 		else
@@ -62,11 +59,10 @@
 			//	有効中処理
 			gameParam->GetPlayerStatus( id ).power = 
 				( int )( gameParam->GetPlayerStatus( id ).savePower * DOUBLE_PARAM );
-
-			//	送信
-			SendStatusData sendData( SEND_STATUS::ATTACK, ( float )gameParam->GetPlayerStatus( id ).power );
-			gameParam->send( id, ( LPSTR )&sendData, sizeof( sendData ) );
 		}
+
+		//	送信
+		levelManager->SendStatus( id, SEND_STATUS::ATTACK, ( float )gameParam->GetPlayerStatus( id ).power );
 	}
 
 //----------------------------------------------------------------------------------------------

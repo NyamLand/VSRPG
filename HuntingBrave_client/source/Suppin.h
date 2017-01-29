@@ -24,7 +24,7 @@ public:
 	//	XVE•`‰æ
 
 	//	“®ìŠÖ”
-	void	ChangeTexture( int colorNum )override;
+	//void	ChangeTexture( int colorNum )override;
 
 	//	î•ñİ’è
 	

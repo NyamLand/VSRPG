@@ -7,6 +7,7 @@
 #include	"Image.h"
 #include	"NumberUI.h"
 #include	"InputManager.h"
+#include	"PointManager.h"
 #include	"ExpUI.h"
 #include	"ScoreUI.h"
 #include	"ScoreBoardUI.h"
@@ -74,8 +75,8 @@ void	ScoreBoardUI::Update(void)
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		score[i]->SetScore(gameParam->GetPointInfo(i).point);
-		exp[i]->SetExp(levelManager->GetExp());
+		score[i]->SetScore( pointManager->GetPoint( i ) );
+		exp[i]->SetExp( levelManager->GetExp() );
 		
 		p_icon[i]->w = BOARD_MAX::ICON_SIZE;
 		p_icon[i]->h = BOARD_MAX::ICON_SIZE;

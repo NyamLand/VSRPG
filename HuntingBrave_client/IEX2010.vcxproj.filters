@@ -271,6 +271,9 @@
     <ClCompile Include="source\Circle.cpp">
       <Filter>Source\Circle</Filter>
     </ClCompile>
+    <ClCompile Include="source\PointManager.cpp">
+      <Filter>Source\Manager\PointManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -506,6 +509,9 @@
     </ClInclude>
     <ClInclude Include="source\Circle.h">
       <Filter>Source\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PointManager.h">
+      <Filter>Source\Manager\PointManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -778,6 +784,9 @@
     </Filter>
     <Filter Include="Source\Player\Magician">
       <UniqueIdentifier>{cac342fc-2d59-450c-beb5-f34c403a21d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager\PointManager">
+      <UniqueIdentifier>{73999bfa-1b03-49ff-b82a-907a6a05b375}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

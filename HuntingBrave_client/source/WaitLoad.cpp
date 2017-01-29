@@ -20,10 +20,11 @@
 //--------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	WaitLoad::WaitLoad( void ) : font( nullptr ), timer( nullptr ),
+	WaitLoad::WaitLoad( void ) : font( nullptr ), timer( nullptr ), back( nullptr ),
 		count( 0 )
 	{
-		font = new Font( "HG行書体", 50 );
+		back = new iex2DObj( "DATA/UI/BackGround/loading.png" );
+		font = new Font( "HG行書体", 30 );
 		timer = new Timer();
 		sprintf_s( text, "NowLoading" );
 		timer->Start( 0.5f );
@@ -32,6 +33,7 @@
 	//	デストラクタ
 	WaitLoad::~WaitLoad( void )
 	{
+		SafeDelete( back );
 		SafeDelete( font );
 		SafeDelete( timer );
 	}
@@ -60,7 +62,8 @@
 	//	描画
 	void	WaitLoad::Render( void )
 	{
-		font->DrawFont( text, 900, 650, 1280, 720, 0xFFFFFFFF );
+		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+		font->DrawFont( text, 1050, 650, 1280, 720, 0xFFFFFFFF );
 	}
 
 //--------------------------------------------------------------------------------------------

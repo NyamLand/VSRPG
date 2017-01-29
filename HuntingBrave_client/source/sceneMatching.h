@@ -20,6 +20,7 @@ private:
 	char	nextScene;
 	char name[17];
 	char	addr[64];
+	WaitLoad*	waitLoad;
 	NameInput*	nameInput;
 	ItemSelect*	itemSelect;
 	GameWait*	gameWait;
@@ -42,6 +43,8 @@ public:
 
 	//	thread
 	static	void	ThreadFunc( void* ptr );
+	static	void	WaitThread( void );
+	static	void	ServerInitThread( bool& out, char* addr, int* name );
 };
 
 

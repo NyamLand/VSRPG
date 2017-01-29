@@ -66,14 +66,6 @@
 		void	DoubleSpeed( float param );
 	};
 
-	//	点数、順位情報
-	struct PointInfo
-	{
-		//	変数
-		int		point;
-		int		addPoint;
-	};
-
 	//	マッチング用
 	struct MatchingInfo
 	{

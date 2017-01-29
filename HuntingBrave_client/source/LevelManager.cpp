@@ -12,6 +12,75 @@
 //----------------------------------------------------------------------------------------------
 //	グローバル
 //----------------------------------------------------------------------------------------------
+	
+	//	レベル情報
+	struct ReceiveLevelData
+	{
+		char com = RECEIVE_COMMAND::STATUS_INFO;
+		char statusType;
+		char levelType;
+		char level;
+	};
+
+	//	経験値情報
+	struct ReceiveExpData
+	{
+		char com = RECEIVE_COMMAND::STATUS_INFO;
+		char statusType;
+		int exp;
+	};
+
+	//	全ステータス情報
+	struct ReceiveAllStatusData
+	{
+		char com = RECEIVE_COMMAND::STATUS_INFO;	//	1byte
+		char statusType;	//	1byte
+		char paramType;	//	1byte
+		int attack;		//	4byte
+		int defense;	//	4byte
+		int magicAttack;	//	4byte
+		int magicDefense;	//	4byte
+		int life;	//	4byte
+		float speed;	//	4byte
+	};
+
+	//	各ステータス情報
+	struct ReceiveStatusData
+	{
+		char		com = RECEIVE_COMMAND::STATUS_INFO;
+		char		statusType;
+		char		paramType;
+		float		status;
+	};
+
+	namespace
+	{
+		//	ステータス送信
+		namespace RECEIVE_STATUS
+		{
+			enum
+			{
+				ATTACK,
+				DEFENSE,
+				MAGIC_ATTACK,
+				MAGIC_DEFENSE,
+				SPEED,
+				LIFE,
+				ALL
+			};
+		}
+
+		//	
+		namespace STATUS_TYPE
+		{
+			enum
+			{
+				LEVEL,
+				EXP,
+				STATUS
+			};
+		}
+	}
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -55,6 +124,35 @@
 //	動作関数
 //----------------------------------------------------------------------------------------------
 
+	//	受信処理
+	void	LevelManager::Receive( const LPSTR& data )
+	{
+		switch ( data[1] )
+		{
+		case STATUS_TYPE::EXP:
+			{
+				ReceiveExpData*	receiveExpdata = ( ReceiveExpData* )data;
+				levelManager->SetExp( receiveExpdata->exp );
+			}
+			break;
+
+		case STATUS_TYPE::LEVEL:
+			{
+				ReceiveLevelData* receiveLevelData = ( ReceiveLevelData* )data;
+				levelManager->SetLevelInfo( receiveLevelData->levelType, receiveLevelData->level );
+			}
+			break;
+
+		case STATUS_TYPE::STATUS:
+			levelManager->CulcStatus( data );
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
 	//	レベル送信
 	void	LevelManager::SendLevel( char levelType )
 	{
@@ -88,7 +186,7 @@
 	//	ステータス計算
 	void	LevelManager::CulcStatus( const LPSTR& data )
 	{
-		switch ( data[1] )
+		switch ( data[2] )
 		{
 		case RECEIVE_STATUS::ATTACK:
 			CulcPower( data );
@@ -123,23 +221,13 @@
 	//	全ステータス計算
 	void	LevelManager::CulcAllStatus( const LPSTR& data )
 	{
-		ReceiveAllStatusData*	allStatusData = ( ReceiveAllStatusData* )data;
-		gameParam->GetPlayerStatus().power = allStatusData->attack;
-		gameParam->GetPlayerStatus().defense = allStatusData->defense;
-		gameParam->GetPlayerStatus().magicPower = allStatusData->magicAttack;
-		gameParam->GetPlayerStatus().magicDefense = allStatusData->magicDefense;
-		gameParam->GetPlayerStatus().speed = allStatusData->speed;
-	}
-
-	//	全ステータス計算
-	void	LevelManager::CulcAllStatus( const ReceiveAllStatusData& statusData )
-	{
-		gameParam->GetPlayerStatus().power = statusData.attack;
-		gameParam->GetPlayerStatus().defense = statusData.defense;
-		gameParam->GetPlayerStatus().magicPower = statusData.magicAttack;
-		gameParam->GetPlayerStatus().magicDefense = statusData.magicDefense;
-		gameParam->GetPlayerStatus().maxLife = statusData.life;
-		gameParam->GetPlayerStatus().speed = statusData.speed;
+		ReceiveAllStatusData*	statusData = ( ReceiveAllStatusData* )data;
+		gameParam->GetPlayerStatus().power = statusData->attack;
+		gameParam->GetPlayerStatus().defense = statusData->defense;
+		gameParam->GetPlayerStatus().magicPower = statusData->magicAttack;
+		gameParam->GetPlayerStatus().magicDefense = statusData->magicDefense;
+		gameParam->GetPlayerStatus().maxLife = statusData->life;
+		gameParam->GetPlayerStatus().speed = statusData->speed;
 	}
 
 	//	攻撃力計算

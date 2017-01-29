@@ -22,7 +22,7 @@
 	//	コンストラクタ
 	Magician::Magician( void )
 	{
-
+		
 	}
 
 	//	デストラクタ
@@ -49,10 +49,10 @@
 //------------------------------------------------------------------------------------
 
 	//	テクスチャ設定
-	void	Magician::ChangeTexture( int colorNum )
-	{
-		//	ファイル設定
-		char	fileName[256] = "";
-		sprintf_s( fileName, "DATA/CHR/Magician/%dbody.png", colorNum + 1 );
-		obj->SetTexture( 0, fileName );
-	}
+	//void	Magician::ChangeTexture( int colorNum )
+	//{
+	//	//	ファイル設定
+	//	char	fileName[256] = "";
+	//	sprintf_s( fileName, "DATA/CHR/Magician/%dbody.png", colorNum + 1 );
+	//	obj->SetTexture( 0, fileName );
+	//}

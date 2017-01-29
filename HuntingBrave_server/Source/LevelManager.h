@@ -65,7 +65,7 @@ public:
 	void	SendExp( int id );
 	void	SendClassChange( int id, char nextClass );
 	void	SendAllStatus( int id );
-	void	SendStatus( int id, char statusType, float status );
+	void	SendStatus( int id, char paramType, float status );
 
 	//	óMŠÖ”
 	void	ReceiveHuntInfo( int client, const LPSTR& data );

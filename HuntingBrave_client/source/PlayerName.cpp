@@ -16,6 +16,8 @@
 //	•¶Žš”z—ñ
 namespace
 {
+#define	NAME_MAX	4
+
 	const	char*	nameChar[] =
 	{
 		"‚ ", "‚¢", "‚¤", "‚¦", "‚¨", "‚©", "‚«", "‚­", "‚¯", "‚±",
@@ -64,7 +66,7 @@ namespace
 	char*	PlayerName::SrcCharFromIndex( int id, int* nameIndex )
 	{
 		char	out[17] = "";
-		for ( int i = 0; i < 4; i++ )
+		for ( int i = 0; i < NAME_MAX; i++ )
 		{
 			nameInfo[id].nameIndex[i] = nameIndex[i];
 			strcat( out, nameChar[nameIndex[i]] );
@@ -79,7 +81,7 @@ namespace
 		char*	name = SrcCharFromIndex( id, nameIndex );
 		strcpy( nameInfo[id].name, name );
 
-		for ( int i = 0; i < 4; i++ )
+		for ( int i = 0; i < NAME_MAX; i++ )
 		{
 			nameInfo[id].nameIndex[i] = nameIndex[i];
 		}

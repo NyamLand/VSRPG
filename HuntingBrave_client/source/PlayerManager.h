@@ -14,37 +14,13 @@
 #include	"Magician.h"
 #include	"Player.h"
 
-
-namespace
-{
-	namespace PLAYER_TYPE
-	{
-		enum
-		{
-			NORMAL,
-			FIGHTER,		//	ファイター
-			MAGICIAN,	//	マジシャン
-			KNIGHT,		//	ナイト
-			PRIEST,		//	プリースト
-			ASSASSIN,	//	アサシン
-			MODEL_MAX
-		};
-	}
-}
-
 //	class
 class PlayerManager : public Singleton<PlayerManager>
 {
 	friend class Singleton<PlayerManager>;
-public:
-
 
 private:
-	//	元モデル
-	iex3DObj*	obj[PLAYER_TYPE::MODEL_MAX];
-
-	//	パラメータ
-	std::vector<Player*>	playerList;
+	Player*		player[PLAYER_MAX];
 
 	//	初期化・解放
 	PlayerManager( void );
@@ -62,6 +38,7 @@ public:
 
 	//	動作関数
 	void	ClassChange( int id, char nextClass );
+	void	Receive( const LPSTR& data );
 	
 	//	情報設定
 	void	SetPlayer( int id );

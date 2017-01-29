@@ -20,6 +20,87 @@ LevelManager*	levelManager = nullptr;
 
 #define	LEVEL_MAX	6
 
+namespace
+{
+	//	ステータス送信
+	namespace RECEIVE_STATUS
+	{
+		enum
+		{
+			ATTACK,
+			DEFENSE,
+			MAGIC_ATTACK,
+			MAGIC_DEFENSE,
+			SPEED,
+			LIFE,
+			ALL
+		};
+	}
+
+	//	ステータスタイプ
+	namespace STATUS_TYPE
+	{
+		enum
+		{
+			LEVEL,
+			EXP,
+			STATUS
+		};
+	}
+	
+	//	レベル情報
+	struct SendLevelData
+	{
+		char com = SEND_COMMAND::STATUS_INFO;
+		char statusType = STATUS_TYPE::LEVEL;
+		char levelType;
+		char level;
+
+		SendLevelData( char levelType, char level ) :
+			levelType( levelType ), level( level ){}
+	};
+
+	//	経験値情報
+	struct SendExpData
+	{
+		char com = SEND_COMMAND::STATUS_INFO;
+		char statusType = STATUS_TYPE::EXP;
+		int	exp;
+
+		SendExpData( int exp ) : exp(exp){}
+	};
+
+	//	全パラメータ情報
+	struct SendAllStatusData
+	{
+		char com = SEND_COMMAND::STATUS_INFO;
+		char statusType = STATUS_TYPE::STATUS;
+		char paramType = SEND_STATUS::ALL;
+		int attack;
+		int defense;
+		int magicAttack;
+		int magicDefense;
+		int life;
+		float speed;
+		SendAllStatusData(int attack, int defense, int magicAttack, int magicDefense, int life, float speed) :
+			attack(attack), defense(defense),
+			magicAttack(magicAttack), magicDefense(magicDefense), life(life), speed(speed) {}
+	};
+
+	//	各パラメータ情報
+	struct SendStatusData
+	{
+		char com = SEND_COMMAND::STATUS_INFO;
+		char statusType = STATUS_TYPE::STATUS;
+		char paramType;
+		float status;
+		SendStatusData( char paramType, float status ) :
+			paramType( paramType), status( status ){}
+		SendStatusData( void ){}
+	};
+}
+
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -155,16 +236,16 @@ LevelManager*	levelManager = nullptr;
 	}
 
 	//	各ステータス送信
-	void	LevelManager::SendStatus( int id, char statusType, float status )
+	void	LevelManager::SendStatus( int id, char paramType, float status )
 	{
 		//	情報取得
 		PlayerStatus		playerStatus = gameParam->GetPlayerStatus( id );
 
 		//	宣言
 		SendStatusData	sendStatus;
-		sendStatus.statusType = statusType;
+		sendStatus.paramType = paramType;
 
-		switch ( statusType )
+		switch ( paramType )
 		{
 		case SEND_STATUS::ATTACK:
 			sendStatus.status = ( float )playerStatus.power;

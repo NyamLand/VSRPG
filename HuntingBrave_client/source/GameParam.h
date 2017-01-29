@@ -25,7 +25,6 @@ private:
 	PlayerParam	playerParam[PLAYER_MAX];
 	PlayerStatus	playerStatus;
 	AttackInfo	attackInfo[PLAYER_MAX];
-	PointInfo		pointInfo[PLAYER_MAX];
 	MatchingInfo	matchingInfo[PLAYER_MAX];
 	PlayerName*	playerName;
 
@@ -55,12 +54,7 @@ public:
 	void	ReceivePointInfo( const LPSTR& data );
 	void	ReceiveGameInfo( const LPSTR& data );
 	void	ReceiveMagicInfo( const LPSTR& data );
-	void	ReceiveMagicAppendInfo( const LPSTR& data );
-	void	ReceiveMagicEraseInfo( const LPSTR& data );
-	void	ReceiveLevelInfo( const LPSTR& data );
-	void	ReceiveExpInfo( const LPSTR& data );
 	void	ReceiveClassChangeInfo( const LPSTR& data );
-	void	ReceiveStatusInfo( const LPSTR& data );
 
 	//	ÉçÉOÉCÉìèÓïÒéÛêM
 	void	ReceiveSignUpInfo( const LPSTR& data );
@@ -85,7 +79,6 @@ public:
 	PlayerInfo	GetPlayerInfo( int id )const{ return playerInfo[id]; }
 	PlayerStatus&	GetPlayerStatus( void ){ return playerStatus; }
 	AttackInfo&	GetAttackInfo( int id ){ return	attackInfo[id]; }
-	PointInfo&	GetPointInfo( int id ){ return	pointInfo[id]; }
 	MatchingInfo&	GetMatchingInfo( int id ){ return	matchingInfo[id]; }
 	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }

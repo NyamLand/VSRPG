@@ -107,9 +107,9 @@
 		obj[index] = new iex3DObj( "DATA/CHR/suppin/suppin.IEM" );
 
 		//	テクスチャ差替え
-		char	fileName[256] = "DATA/CHR/suppin/s_body_";
+		char	fileName[256] = "DATA/CHR/suppin/body_";
 		char playerNum[8] = "";
-		sprintf_s( playerNum, "%d.png", index );
+		sprintf_s( playerNum, "%d.png", index + 1 );
 		strcat_s( fileName, playerNum );
 		obj[index]->SetTexture( 0, fileName );
 
