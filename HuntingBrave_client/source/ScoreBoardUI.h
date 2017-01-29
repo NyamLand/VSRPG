@@ -34,6 +34,7 @@ private:
 	ScoreUI*	score[PLAYER_MAX];
 	ExpUI*		exp[PLAYER_MAX];
 	int	posx, posy, width,	height;
+	bool	boardState;
 
 public:
 	//	‰Šú‰»E‰ğ•ú

@@ -105,6 +105,8 @@ public:
 	void	ChangeTexture( iex3DObj*& model, char classType, int id );
 	void	ChangeModel( char nextClass );
 	void	PlaySE( int motion );
+	void	ChangeFaceTexture( char faceType );
+	void	ChangeFaceType( int motion );
 
 	//	î•ñİ’è
 	void	SetPlayerParam( const PlayerParam& playerParam );
