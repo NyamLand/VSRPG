@@ -337,15 +337,24 @@ namespace
 		switch ( faceType )
 		{
 		case FACE_TYPE::NORMAL:
-			obj->SetTexture( 1, normalFaceFile[curClass] );
+			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+				obj->SetTexture( 2, normalFaceFile[curClass] );
+			else
+				obj->SetTexture( 1, normalFaceFile[curClass] );
 			break;
 
 		case FACE_TYPE::DAMAGE:
-			obj->SetTexture( 1, damageFaceFile[curClass] );
+			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+				obj->SetTexture( 2, damageFaceFile[curClass] );
+			else
+				obj->SetTexture( 1, damageFaceFile[curClass] );
 			break;
 
 		case FACE_TYPE::ATTACK:
-			obj->SetTexture( 1, attackFaceFile[curClass] );
+			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+				obj->SetTexture( 2, attackFaceFile[curClass] );
+			else
+				obj->SetTexture( 1, attackFaceFile[curClass] );
 			break;
 
 		default:
