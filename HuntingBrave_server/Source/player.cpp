@@ -21,7 +21,7 @@
 
 //	’è”
 #define	CHANT_TIME	1.0f
-#define	DEATH_TIME	3.0f
+#define	DEATH_TIME	8.0f
 #define	STEP_DRAG		0.97f
 
 //	“ü—Íî•ñ

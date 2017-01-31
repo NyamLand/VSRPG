@@ -365,6 +365,7 @@ namespace
 			UPGRADE_DATA::HP,
 			levelInfo[id].level[levelType] );
 		gameParam->GetLifeInfo( id ).AddMaxLife( addParam );
+		gameParam->GetLifeInfo( id ).CulcLife( addParam );
 	}
 
 	//	スピード計算

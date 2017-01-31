@@ -52,7 +52,9 @@ namespace
 			MENU,
 			MAIN,
 			IIWAKE,
-			RESULT
+			RESULT,
+			DEAD,
+			BGM_MAX
 		};
 	}
 }
@@ -61,8 +63,9 @@ namespace
 class Sound
 {
 private:
-	LPDSSTREAM		stream;
-	bool						isPlay;
+	LPDSSTREAM		stream[BGM::BGM_MAX];
+	bool						isPlay[BGM::BGM_MAX];
+	int	volume;
 
 private:
 	//	‰Šú‰»E‰ğ•ú
@@ -70,6 +73,7 @@ private:
 	~Sound( void );
 
 public:
+
 	//	SEÄ¶
 	void	PlaySE( int type );
 	void	StopSE( int type );
@@ -78,6 +82,11 @@ public:
 	void	PlayBGM( int type );
 	void	StopBGM( void );
 	void	AllStop( void );
+
+	//	î•ñİ’è
+	void	SetVolume( int bgmType, int volume );
+	void	ResetVolume( int bgmType );
+	void	MuteVolume( int bgmType );
 
 	//	î•ñæ“¾
 	bool	GetSEState( int type );
