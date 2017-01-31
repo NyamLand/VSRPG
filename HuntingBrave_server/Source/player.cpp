@@ -20,7 +20,7 @@
 //----------------------------------------------------------------------------------------------
 
 //	íËêî
-#define	CHANT_TIME	1.0f
+#define	CHANT_TIME	0.5f
 #define	DEATH_TIME	8.0f
 #define	STEP_DRAG		0.97f
 
