@@ -65,7 +65,7 @@ GameParam*	gameParam = nullptr;
 	{
 		lifeInfo[id].life = lifeInfo[id].maxLife;
 		playerParam[id].pos = gameManager->GetInitInfo( id ).pos;
-		playerParam[id] = gameManager->GetInitInfo( id );
+		//playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
 	//	ƒQ[ƒ€‰Šú‰»

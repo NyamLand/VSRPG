@@ -326,6 +326,7 @@ namespace
 			{
 				gameParam->InitializePlayer( index );
 				pParam = gameManager->GetInitInfo( index );
+				pParam.charType = gameParam->GetPlayerParam( index ).charType;
 				SetMode( MODE::MOVE );
 			}
 		}
