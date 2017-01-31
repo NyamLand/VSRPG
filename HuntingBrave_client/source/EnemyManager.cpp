@@ -209,28 +209,33 @@
 	void	EnemyManager::PlayerPosCheck( Enemy* enemy )
 	{
 		//	自分→相手へのベクトル
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for (int p = 0; p < PLAYER_MAX; p++)
 		{
 			//	存在チェック
-			if( !gameParam->GetPlayerActive( p ) )	continue;
+			if (!gameParam->GetPlayerActive(p))	continue;
 			if (enemy->GetMode() == enemy->MODE::DEAD)continue;
 
 			//	プレイヤーへのベクトルを求める
-			Vector3	pPos = playerManager->GetPlayer( p )->GetPos();
+			Vector3	pPos = playerManager->GetPlayer(p)->GetPos();
 			Vector3	vec = pPos - enemy->GetPos();
 			vec.y = 0.0f;
 			float		length = vec.Length();
-			
-			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer( p )->GetCollisionInfo().radius;
+
+			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer(p)->GetCollisionInfo().radius;
 			//	近い場合は離す
-			if ( length <  collisionDist )
+			if (length <  collisionDist)
 			{
 				//	ベクトル正規化
 				vec.Normalize();
 
 				//	離す
-				enemy->SetPos( pPos - vec * collisionDist );
+				enemy->SetPos(pPos - vec * collisionDist);
 			}
+			if (length>50.0f)
+			{
+				enemy->SetMode(enemy->MODE::DEAD);
+			}
+		
 		}
 	}
 
