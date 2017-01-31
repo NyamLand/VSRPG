@@ -90,7 +90,7 @@
 	//	プレイヤーとの距離チェック
 	bool	Enemy::DistCheck( float& length )
 	{
-		Vector3	vec = playerManager->GetPlayer( 0 )->GetPos() - pos;
+		Vector3	vec = playerManager->GetPlayer( gameParam->GetMyIndex() )->GetPos() - pos;
 		length = vec.Length();
 
 		//	一定の距離まで近づくと攻撃
