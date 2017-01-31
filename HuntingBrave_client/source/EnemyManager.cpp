@@ -25,7 +25,7 @@
 #define APPEND_RADIUS		15.0f
 
 #define	MOFFU_INIT_LIFE	10
-#define	WOLF_INIT_LIFE		25
+#define	WOLF_INIT_LIFE		20
 #define	MOFFU_LIFE_UP_PARAM		20
 #define	WOLF_LIFE_UP_PARAM	25
 
