@@ -257,6 +257,9 @@ namespace
 		//	魔法詠唱中なら描画
 		if ( obj->GetMotion() == MOTION_NUM::MAGIC_CHANT )	
 			effectManager->SetCircleRender( id );
+
+		//	無敵状態チェック
+		CheckUnrivaled();
 		
 		//	更新
 		BaseChara::Update();
@@ -393,6 +396,16 @@ namespace
 			ChangeFaceTexture( FACE_TYPE::NORMAL );
 			break;
 		}
+	}
+
+	//	無敵状態チェック
+	void	Player::CheckUnrivaled( void )
+	{
+		if ( obj->GetMotion() == MOTION_NUM::KNOCKBACK1 )
+		{
+			lifeInfo.active = false;
+		}
+		else lifeInfo.active = true;
 	}
 
 //------------------------------------------------------------------------------------
