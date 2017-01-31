@@ -401,11 +401,17 @@ namespace
 	//	無敵状態チェック
 	void	Player::CheckUnrivaled( void )
 	{
-		if ( obj->GetMotion() == MOTION_NUM::KNOCKBACK1 )
+		switch ( obj->GetMotion() )
 		{
+		case MOTION_NUM::KNOCKBACK1:
+		case MOTION_NUM::FALL:
+		case MOTION_NUM::DEAD:
 			lifeInfo.active = false;
+			break;
+
+		default:
+			lifeInfo.active = true;
 		}
-		else lifeInfo.active = true;
 	}
 
 //------------------------------------------------------------------------------------
