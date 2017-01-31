@@ -187,7 +187,7 @@ namespace
 
 		//	ƒo[‰Šú‰»
 		bar = new EnemyHpUI();
-		bar->Initilaize( HPUI_TYPE::PLAYER, GetLifeInfo().maxLife );
+		bar->Initilaize( HPUI_TYPE::PLAYER, gameParam->GetPlayerStatus().maxLife );
 		bar->SetId( id );
 
 		if ( obj == nullptr )	return	false;
