@@ -93,15 +93,11 @@ namespace
 	//	XV
 	void	sceneTitle::Update( void )
 	{
-		circleGage += 0.01f;
-		if ( circleGage >= PI )	circleGage = -PI;
-
 		switch ( step )
 		{
 		case TITLE_STEP::FADE_IN:
 			if ( !screen->Update() )	break;
-			if ( KEY( KEY_B ) == 3 || 
-				KEY( KEY_SPACE ) == 3 || 
+			if ( KEY( KEY_SPACE ) == 3 || 
 				KEY( KEY_ENTER ) == 3 || 
 				KEY( KEY_A ) == 3 )
 			{

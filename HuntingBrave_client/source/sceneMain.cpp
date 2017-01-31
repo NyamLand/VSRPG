@@ -287,7 +287,7 @@ void	sceneMain::DeadScreen( void )
 	}
 
 	//	•âŠÔˆ—
-	Interpolation::PercentageUpdate( blackWhitePercentage, BLACK_WHITE_SPEED );
+	bool state = Interpolation::PercentageUpdate( blackWhitePercentage, BLACK_WHITE_SPEED );
 }
 
 //	óM‘—M

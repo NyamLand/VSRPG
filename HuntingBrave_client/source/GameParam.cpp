@@ -43,7 +43,7 @@ GameParam*	gameParam = nullptr;
 
 	//	コンストラクタ
 	GameParam::GameParam( void ) : playerName( nullptr ),
-		myIndex( -1 ), inputAcceptance( true )
+		myIndex( -1 ), inputAcceptance( true ), deathFlag( false )
 	{
 		//	プレイヤーデータ初期化
 		for ( int id = 0; id < PLAYER_MAX; id++ )
@@ -314,6 +314,32 @@ GameParam*	gameParam = nullptr;
 	{
 		//	受信情報
 		ReceiveCharaData*	receiveCharaData = ( ReceiveCharaData* )data;
+
+		if ( receiveCharaData->id == myIndex )
+		{
+			if ( !deathFlag )
+			{
+				if ( receiveCharaData->motion == MOTION_NUM::FALL )
+				{
+					sound->MuteVolume( BGM::MAIN );
+				}
+
+				if ( receiveCharaData->motion == MOTION_NUM::DEAD )
+				{
+					deathFlag = true;
+					sound->PlayBGM( BGM::DEAD );
+				}
+			}
+			else
+			{
+				if ( receiveCharaData->motion != MOTION_NUM::DEAD )
+				{
+					sound->MuteVolume( BGM::DEAD );
+					sound->ResetVolume( BGM::MAIN );
+					deathFlag = false;
+				}
+			}
+		}
 
 		//	情報設定
 		attackInfo[receiveCharaData->id].attackParam = 

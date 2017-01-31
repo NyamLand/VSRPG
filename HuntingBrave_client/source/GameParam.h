@@ -20,6 +20,7 @@ private:
 	//	プレイヤー番号
 	int		myIndex;
 	bool		inputAcceptance;	//	入力受付
+	bool		deathFlag;
 
 	PlayerInfo		playerInfo[PLAYER_MAX];
 	PlayerParam	playerParam[PLAYER_MAX];
@@ -83,6 +84,7 @@ public:
 	bool		GetPlayerActive( int id ){ return playerInfo[id].active; }
 	int		GetMyIndex( void ){ return myIndex; }
 	PlayerName*&	GetPlayerName( void ){ return playerName; }
+	bool&		GetDeathFlag( void ){ return deathFlag; }
 };
 
 extern	GameParam*	gameParam;
