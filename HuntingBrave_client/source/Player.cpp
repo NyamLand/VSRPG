@@ -68,7 +68,7 @@ namespace
 			"DATA/CHR/suppin/Suppin.IEM",
 			"DATA/CHR/Fighter/Fighter.IEM",
 			"DATA/CHR/Magician/Magician.IEM",
-			"DATA/CHR/suppin/Suppin.IEM",
+			"DATA/CHR/Knight/Knight.IEM",
 			"DATA/CHR/Prist/prist.IEM",
 			"DATA/CHR/suppin/Suppin.IEM"
 		};
@@ -111,7 +111,7 @@ namespace
 			"DATA/CHR/suppin/body_",
 			"DATA/CHR/Fighter/body_",
 			"DATA/CHR/Magician/body_",
-			"DATA/CHR/suppin/body_",
+			"DATA/CHR/Knight/body_",
 			"DATA/CHR/Prist/body_",
 			"DATA/CHR/suppin/body_"
 		};
@@ -338,6 +338,7 @@ namespace
 		SetPos( pos );
 		SetAngle( angle );
 		SetMotion( gameParam->GetPlayerParam( id ).motion );
+		SetScale( PLAYER_SCALE );
 		obj->Update();
 	}
 

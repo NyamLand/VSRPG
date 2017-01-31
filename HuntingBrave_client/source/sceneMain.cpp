@@ -219,7 +219,7 @@ void	sceneMain::Render( void )
 
 	//	ui描画
 	uiManager->Render();
-
+	
 	screen->Render();
 
 	//	各プレイヤー座標表示

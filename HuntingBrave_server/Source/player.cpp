@@ -216,7 +216,6 @@ namespace
 		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
 		ModeFunction[MODE::STEP] = &Player::ModeStep;
 		ModeFunction[MODE::MENU] = &Player::ModeMenu;
-
 		
 		timer = new Timer();
 	}
@@ -383,7 +382,8 @@ namespace
 				ANGLE_ADJUST_MOVE_SPEED );
 
 			//	ˆÚ“®
-			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
+			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) 
+				* ( MOVE_SPEED * gameParam->GetPlayerStatus( index ).speed );
 			AddMove( move );
 
 			SetMotion( PLAYER_MOTION::RUN );
@@ -420,7 +420,7 @@ namespace
 	void	Player::SwordAttackSecond(void)
 	{
 		//	ƒtƒŒ[ƒ€ŠÇ—
-		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
+		if ( pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
 			pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_END])
 		{
 			gameParam->GetAttackInfo(index).attackParam = AttackInfo::ATTACK2;

@@ -14,7 +14,7 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	HEAL_PARAM	30
+#define	HEAL_PARAM	0.3f
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -49,7 +49,9 @@
 	//	アイテム使用
 	void	HealItem::UseItem( void )
 	{
-		gameParam->GetLifeInfo( id ).CulcLife( HEAL_PARAM );
+		float curLife = ( float )gameParam->GetPlayerStatus( id ).maxLife;
+		curLife *= HEAL_PARAM;
+		gameParam->GetLifeInfo( id ).CulcLife( ( int )curLife );
 	}
 
 //----------------------------------------------------------------------------------------------

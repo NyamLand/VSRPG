@@ -10,6 +10,7 @@
 #include	"ItemManager.h"
 #include	"PointManager.h"
 #include	"EnemyManager.h"
+#include	"Collision.h"
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -180,6 +181,7 @@ GameParam*	gameParam = nullptr;
 
 		case COMMANDS::DEBUG:
 		{
+								collision->SendHitSE( 0 );
 								//	ƒ‰ƒCƒtŒvZ
 								int damage = 50;
 								if (damage <= 0)	damage = 5;

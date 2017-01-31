@@ -37,7 +37,7 @@ namespace
 			HEAL,
 			ATK,
 			DEF,
-			LED,
+			SPEED,
 			TYPE_MAX,
 			SET_ITEM
 		};

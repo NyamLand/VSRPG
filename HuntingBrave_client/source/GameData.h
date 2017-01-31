@@ -121,7 +121,8 @@
 				SIGN_UP,
 				GAME_START,
 				CHANGE_SCENE,
-				KILL_INFO
+				KILL_INFO,
+				HIT_SE_TYPE
 			};
 		}
 	}

@@ -37,6 +37,15 @@ GameParam*	gameParam = nullptr;
 //	“ü—Íî•ñ
 #define	MIN_INPUT_STICK		0.3f
 
+namespace SE_TYPE
+{
+	enum 
+	{
+		ATTACK_SE,
+		MAGIC_SE,
+	};
+}
+
 //----------------------------------------------------------------------------------------------
 //	‰Šú‰»E‰ð•ú
 //----------------------------------------------------------------------------------------------
@@ -410,6 +419,21 @@ GameParam*	gameParam = nullptr;
 			{
 				KillInfo*	killInfo = ( KillInfo* )data;
 				uiManager->SetKillLog( killInfo->killer, killInfo->dead );
+			}
+			break;
+			
+		case RESPONSE_COMMAND::HIT_SE_TYPE:
+			{
+				switch ( data[2] )
+				{
+				case SE_TYPE::ATTACK_SE:
+					sound->PlaySE( SE::ATTACK_HIT1 );
+					break;
+
+				case SE_TYPE::MAGIC_SE:
+					sound->PlaySE( SE::MAGIC_HIT );
+					break;
+				}
 			}
 			break;
 		}

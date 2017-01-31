@@ -11,14 +11,14 @@
 #include	"Item.h"
 
 //	class
-class LedItem : public Item
+class SpeedItem : public Item
 {
 private:
 
 public:
 	//	‰Šú‰»E‰ğ•ú
-	LedItem( int id );
-	~LedItem( void )override;
+	SpeedItem( int id );
+	~SpeedItem( void )override;
 
 	//	XV
 	void	Update( void )override;

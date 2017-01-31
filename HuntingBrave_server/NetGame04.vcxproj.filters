@@ -118,9 +118,6 @@
     <Filter Include="ソース ファイル\Item\HealItem">
       <UniqueIdentifier>{7571904f-8e83-4436-afe8-f71e9205f6b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Item\LedItem">
-      <UniqueIdentifier>{b10e9747-5b7d-44fa-9bfb-f991f68299fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\GameParam">
       <UniqueIdentifier>{19cbf92a-7306-4720-ab04-c4468f11332c}</UniqueIdentifier>
     </Filter>
@@ -144,6 +141,9 @@
     </Filter>
     <Filter Include="ソース ファイル\GlobalFunction">
       <UniqueIdentifier>{7716bc88-4c94-4d9e-97b1-eac1753e6b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item\SpeedItem">
+      <UniqueIdentifier>{b10e9747-5b7d-44fa-9bfb-f991f68299fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -234,9 +234,6 @@
     <ClCompile Include="Source\HealItem.cpp">
       <Filter>ソース ファイル\Item\HealItem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LedItem.cpp">
-      <Filter>ソース ファイル\Item\LedItem</Filter>
-    </ClCompile>
     <ClCompile Include="Source\IEX_RayMesh.cpp">
       <Filter>ソース ファイル\RayMesh</Filter>
     </ClCompile>
@@ -248,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Source\GlobalFunction.cpp">
       <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpeedItem.cpp">
+      <Filter>ソース ファイル\Item\SpeedItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +344,6 @@
     <ClInclude Include="Source\HealItem.h">
       <Filter>ソース ファイル\Item\HealItem</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LedItem.h">
-      <Filter>ソース ファイル\Item\LedItem</Filter>
-    </ClInclude>
     <ClInclude Include="IEX\iextreme.h">
       <Filter>IEX</Filter>
     </ClInclude>
@@ -361,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Source\GlobalFunction.h">
       <Filter>ソース ファイル\GlobalFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpeedItem.h">
+      <Filter>ソース ファイル\Item\SpeedItem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

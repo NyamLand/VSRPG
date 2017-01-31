@@ -115,7 +115,7 @@
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\ItemManager.cpp" />
-    <ClCompile Include="Source\LedItem.cpp" />
+    <ClCompile Include="Source\SpeedItem.cpp" />
     <ClCompile Include="Source\LevelManager.cpp" />
     <ClCompile Include="Source\Magic.cpp" />
     <ClCompile Include="Source\MagicManager.cpp" />
@@ -152,7 +152,7 @@
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ItemManager.h" />
-    <ClInclude Include="Source\LedItem.h" />
+    <ClInclude Include="Source\SpeedItem.h" />
     <ClInclude Include="Source\LevelManager.h" />
     <ClInclude Include="Source\Magic.h" />
     <ClInclude Include="Source\MagicManager.h" />

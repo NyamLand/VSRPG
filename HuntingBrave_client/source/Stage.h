@@ -8,6 +8,7 @@
 //*************************************************************************
 
 //	include
+#include	"Image.h"
 
 //	class
 class Stage
@@ -24,8 +25,11 @@ private:
 		MOUNTAIN,
 		PARTS_MAX
 	};
-	iexMesh*	collisionMesh;
 	iexMesh*	stage[PARTS_MAX];
+	Image*			viewTex;
+	iexView*		view;
+	Surface*	backBuffer;
+	bool				initState;
 
 public:
 	//	初期化・解放
@@ -35,4 +39,8 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
+	void	RenderTexture( void );
+
+	//	マップテクスチャ取得
+	Image*&	GetTexture( void );
 };

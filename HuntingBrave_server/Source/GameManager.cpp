@@ -128,7 +128,7 @@ GameManager*	gameManager = nullptr;
 		int magicAttack = GetInitStatus( UPGRADE_DATA::MAGIC_ATTACK );
 		int magicDefense = GetInitStatus( UPGRADE_DATA::MAGIC_DIFENSE );
 		int life = GetInitStatus( UPGRADE_DATA::HP );
-		float speed = GetUpGradeSpeed( 0, 0 );
+		float speed = GetInitSpeed();
 
 		playerStatus.Initialize( power, defense, magicAttack, magicDefense, life, speed );
 	}
@@ -242,6 +242,12 @@ GameManager*	gameManager = nullptr;
 	int	GameManager::GetInitStatus( char upGradeData )
 	{
 		return	std::stoi( playerData[1][upGradeData] );
+	}
+
+	//	スピード初期値取得
+	float	GameManager::GetInitSpeed( void )
+	{
+		return	std::stof( playerData[1][UPGRADE_DATA::SPEED] );
 	}
 
 	//	スピードアップグレードデータ取得
