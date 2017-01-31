@@ -178,6 +178,21 @@ GameParam*	gameParam = nullptr;
 			client = ReceiveResponse( client, data );
 			break;
 
+		case COMMANDS::DEBUG:
+		{
+								//	ライフ計算
+								int damage = 50;
+								if (damage <= 0)	damage = 5;
+								bool isAlive = gameParam->GetLifeInfo(0).CulcLife(-damage);
+								if (isAlive)playerManager->GetPlayer(0)->SetMode(MODE::DAMAGE);
+								else
+								{
+									//	プレイヤーを死亡させる
+									playerManager->GetPlayer(0)->SetDeath();
+								}
+		}
+			break;
+
 		default:	//	ゲーム情報処理
 			client = -1;
 		}

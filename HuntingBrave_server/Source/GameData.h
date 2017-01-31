@@ -126,7 +126,8 @@ namespace SCENE
 				MATCHING = 12,
 				SIGN_UP,
 				SIGN_OUT,
-				RESPONSE
+				RESPONSE,
+				DEBUG
 			};
 		}
 
