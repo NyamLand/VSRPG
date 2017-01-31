@@ -10,6 +10,7 @@
 #include	"Camera.h"
 #include	"InputManager.h"
 #include	"sceneMatching.h"
+#include	"PointManager.h"
 #include	"Sound.h"
 #include	"sceneTitle.h"
 #include	"sceneResult.h"
@@ -62,6 +63,8 @@
 		result = new Result();
 		result->Initialize(gameParam->GetMyIndex());
 
+		pointManager->Sort();
+
 		return	true;
 	}
 
@@ -84,14 +87,10 @@
 	//	XV
 	void	sceneResult::Update( void )
 	{
-		Interpolation::PercentageUpdate( percentage, 0.03f );
-		bool	state = Interpolation::LinearInterpolation( alpha, 1.0f, 0.0f, percentage );
-
-		result->Update();
+		//result->Update();
 		if ( !pushState )
 		{
-			if ( KEY( KEY_B ) == 3 ||
-				KEY( KEY_SPACE ) == 3 ||
+			if ( KEY( KEY_SPACE ) == 3 ||
 				KEY( KEY_ENTER ) == 3 ||
 				KEY( KEY_A ) == 3 )	pushState = true;
 		}
@@ -106,7 +105,19 @@
 	//	•`‰æ
 	void	sceneResult::Render( void )
 	{
-		back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
-		lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
-		result->Render();
+		mainView->Activate();
+		mainView->Clear();
+
+		char str[256];
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			int player = pointManager->GetPlayer( i );
+			sprintf(str, "%dˆÊ	    %dP	   score : %d", i + 1, player + 1, pointManager->GetPoint( player ) );
+			IEX_DrawText( str, 600, 300 + i * 50, 200, 200, 0xFFFFFFFF );
+		}
+
+		//back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
+		//lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
+		//result->Render();
 	}
