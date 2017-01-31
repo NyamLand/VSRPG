@@ -36,7 +36,8 @@ public:
 
 	//	ÉÇÅ[Éhï ìÆçÏä÷êî
 	void	ModeMove( void );
-	void	ModeSwordAttack( void );
+	void	ModeSwordAttackFirst(void);
+	void	ModeSwordAttackSecond(void);
 	void	ModeMagicAttack( void );
 	void	ModeDamage( void );
 	void	ModeDeath( void );
@@ -45,7 +46,8 @@ public:
 
 	//	ìÆçÏä÷êî
 	void	Move( void );
-	void	SwordAttack( void );
+	void	SwordAttackFirst(void);
+	void	SwordAttackSecond(void);
 	void	Damage( void );
 	void	CheckInput( void );
 	void	AddMove( Vector3& move );
