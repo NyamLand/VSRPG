@@ -65,7 +65,7 @@ GameParam*	gameParam = nullptr;
 	{
 		lifeInfo[id].life = lifeInfo[id].maxLife;
 		playerParam[id].pos = gameManager->GetInitInfo( id ).pos;
-		playerParam[id] = gameManager->GetInitInfo( id );
+		//playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
 	//	ゲーム初期化
@@ -323,6 +323,17 @@ GameParam*	gameParam = nullptr;
 			break;
 
 		case RECEIVE_ENEMY_COMMAND::PLAYER_HIT:
+			{
+				//	ライフ計算
+				int damage = 5;
+				bool isAlive = gameParam->GetLifeInfo( client ).CulcLife( -damage );
+				if ( isAlive )playerManager->GetPlayer( client )->SetMode( MODE::DAMAGE );
+				else
+				{
+					//	プレイヤーを死亡させる
+					playerManager->GetPlayer( client )->SetDeath();
+				}
+			}
 			break;
 
 		case RECEIVE_ENEMY_COMMAND::CLIENT_OK:

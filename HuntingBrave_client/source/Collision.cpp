@@ -125,6 +125,9 @@
 	//	敵攻撃当たり判定
 	void	Collision::EnemyAttackCollision( int player )
 	{
+		//	プレイヤーがアクティブでないときスキップ
+		if ( playerManager->GetPlayer( player )->GetLifeInfo().active == false )	return;
+
 		//	変数準備
 		list<Enemy*>	 enemyList = enemyManager->GetList();
 		bool	isHit = false;
@@ -151,10 +154,7 @@
 			//	当たっていればライフ計算
 			if ( isHit == true )
 			{
-				if ( playerManager->GetPlayer( player )->GetLifeInfo().active )
-				{
-					//SendHitInfo( HIT_INFO::HIT_TO_PLAYER_S );
-				}
+				//SendSmallEnemyAttackHit( ( *it )->GetEnemyType() );
 			}
 		}
 	}
@@ -190,7 +190,7 @@
 			{
 				if ( playerManager->GetPlayer( player )->GetLifeInfo().active )
 				{
-					//SendHitInfo( HIT_INFO::HIT_TO_PLAYER_L );
+					//SendSmallEnemyAttackHit( );
 				}
 			}
 		}
@@ -394,6 +394,25 @@
 		//	情報設定
 		huntInfo.com = SEND_COMMAND::ENEMY_INFO;
 		huntInfo.infoType = SEND_ENEMY_COMMAND::SMALL_ENEMY_HUNT;
+		huntInfo.enemyType = enemyType;
+
+		//	送信
+		gameParam->send( ( char* )&huntInfo, sizeof( huntInfo ) );
+	}
+
+	//	小型攻撃ヒット情報送信
+	void	Collision::SendSmallEnemyAttackHit( char enemyType )
+	{
+		struct HuntInfo
+		{
+			char com;
+			char infoType;
+			char enemyType;
+		} huntInfo;
+
+		//	情報設定
+		huntInfo.com = SEND_COMMAND::ENEMY_INFO;
+		huntInfo.infoType = SEND_ENEMY_COMMAND::PLAYER_HIT;
 		huntInfo.enemyType = enemyType;
 
 		//	送信
