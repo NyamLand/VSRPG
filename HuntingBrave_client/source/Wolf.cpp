@@ -20,7 +20,6 @@
 #define	WOLF_SCALE	0.1f
 #define	WOLF_HEIGHT	2.0f
 #define	WOLF_RADIUS	2.0f
-#define	INIT_LIFE	 4
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -70,14 +69,14 @@ namespace
 	}
 
 	//	初期化
-	bool	Wolf::Initialize(void)
+	bool	Wolf::Initialize( int life )
 	{
 		SetMode( MODE::ENTRY );
 		SetAngle( 0.0f );
 		SetScale( 0.0f );
 		SetMotion( 1 );	//	数値仮
 		
-		lifeInfo.Initialize( INIT_LIFE );
+		lifeInfo.Initialize( life );
 		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
 		collisionInfo.Set(SHAPE_TYPE::CAPSULE, WOLF_HEIGHT, WOLF_RADIUS);
 

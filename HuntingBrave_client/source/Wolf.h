@@ -20,7 +20,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	Wolf(void);
 	~Wolf(void)override;
-	bool	Initialize( void )override;
+	bool	Initialize( int life );
 
 	//	XV
 	void	Update( void );

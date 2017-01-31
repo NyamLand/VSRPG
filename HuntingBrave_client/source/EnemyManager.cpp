@@ -22,7 +22,15 @@
 //	定数
 #define	APPEND_INTERVAL		3
 #define	ENEMY_MAX			5
-#define APPEND_RADIUS		15.0f	
+#define APPEND_RADIUS		15.0f
+
+#define	MOFFU_INIT_LIFE	10
+#define	WOLF_INIT_LIFE		25
+#define	MOFFU_LIFE_UP_PARAM		20
+#define	WOLF_LIFE_UP_PARAM	25
+
+#define	TIMER_RESET	10.0f
+#define	MINUTE	60
 
 
 //-------------------------------------------------------------------------------------
@@ -30,7 +38,8 @@
 //-------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	EnemyManager::EnemyManager( void ) : appendOK( true )
+	EnemyManager::EnemyManager( void ):
+		appendOK( true )
 	{
 		//リスト初期化
 		enemylist.clear();
@@ -57,8 +66,13 @@
 		//	モデル読み込み
 		Load();
 		
-		
+		//	ライフ初期化
+		lifeUpParam[ENEMY_TYPE::SMALL_ENEMY] = MOFFU_INIT_LIFE;
+		lifeUpParam[ENEMY_TYPE::BIG_ENEMY] = WOLF_INIT_LIFE;
 
+		timer = new Timer();
+		timer->Start( TIMER_RESET );
+	
 		return	true;
 	}
 
@@ -74,6 +88,8 @@
 		{
 			SafeDelete( org[i] );
 		}
+
+		SafeDelete( timer );
 	}
 
 	//	オブジェクト読み込み
@@ -90,6 +106,14 @@
 	//	更新
 	void	EnemyManager::Update( void )
 	{
+		if ( timer->Update() )
+		{
+			if ( ( int )gameManager->GetTime() % MINUTE == 0 )
+			{
+				LifeUP();
+			}
+		}
+
 		int		enemyNum = 0;
 
 		for ( auto it = enemylist.begin(); it != enemylist.end(); )
@@ -169,7 +193,7 @@
 		//	初期化
 		enemy->SetEnemyType( type );
 		enemy->SetObj( org[type]->Clone() );
-		enemy->Initialize();
+		enemy->Initialize( lifeUpParam[type] );
 		enemy->SetPos( pos );
 		
 
@@ -184,7 +208,6 @@
 		{
 			//	自分VS自分は除外
 			if ( ( *it ) == enemy )	continue;
-			
 
 				//	自分→相手へのベクトル
 				Vector3	vec = enemy->GetPos() - (*it)->GetPos();
@@ -264,6 +287,14 @@
 		
 		//	生成フラグをfalseにする
 		appendOK = false;
+	}
+
+	//	ライフ上昇
+	void	EnemyManager::LifeUP( void )
+	{
+		timer->Start( TIMER_RESET );
+		lifeUpParam[ENEMY_TYPE::SMALL_ENEMY] += MOFFU_LIFE_UP_PARAM;
+		lifeUpParam[ENEMY_TYPE::BIG_ENEMY] += WOLF_LIFE_UP_PARAM;
 	}
 
 //-------------------------------------------------------------------------------------

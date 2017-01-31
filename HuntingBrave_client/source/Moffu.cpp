@@ -24,8 +24,6 @@
 #define	MOFFU_HEIGHT	0.125f
 #define	MOFFU_RADIUS	1.0f
 
-#define	INIT_LIFE	 2
-
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
 #define	MOVE_SPEED		0.2f
@@ -102,7 +100,7 @@ namespace
 	}
 
 	//	初期化
-	bool	Moffu::Initialize(void)
+	bool	Moffu::Initialize( int life )
 	{
 		SetMode( MODE::ENTRY );
 		SetAngle( 0.0f );
@@ -110,7 +108,7 @@ namespace
 		SetMotion( 1 );	//	数値仮
 
 		//	ライフ初期化
-		lifeInfo.Initialize( INIT_LIFE );
+		lifeInfo.Initialize( life );
 
 		//	攻撃情報初期化
 		ZeroMemory( &attackInfo, sizeof( AttackInfo ) );
