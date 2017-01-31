@@ -21,7 +21,7 @@
 
 //	’è”
 #define	CHANT_TIME	1.0f
-#define	DEATH_TIME	3.0f
+#define	DEATH_TIME	8.0f
 #define	STEP_DRAG		0.97f
 
 //	“ü—Íî•ñ
@@ -65,6 +65,9 @@ namespace
 				ATTACK_HIT_START,
 				ATTACK_HIT_END,
 				ATTACK_END,
+				ATTACK_SECOND_HIT_START,
+				ATTACK_SECOND_HIT_END,
+				ATTACK_SECOND_END,
 				STEP_END,
 				MAGIC_CHANT_END,
 				MAGIC_ATTACK_START,
@@ -98,6 +101,9 @@ namespace
 				140,// UŒ‚”»’èŠJŽn
 				150,// UŒ‚”»’èI—¹
 				160,// UŒ‚I—¹
+				173,// UŒ‚‚Q”»’èŠJŽn
+				180,// UŒ‚‚Q”»’èI—¹
+				199,// UŒ‚‚QI—¹
 				260,// ƒXƒeƒbƒvI—¹
 				290,// –‚–@‰r¥I—¹
 				340,// –‚–@UŒ‚ŠJŽn
@@ -111,6 +117,9 @@ namespace
 				115,// UŒ‚”»’èŠJŽn
 				128,// UŒ‚”»’èI—¹
 				130,// UŒ‚I—¹
+				158,// UŒ‚‚Q”»’èŠJŽn
+				165,// UŒ‚‚Q”»’èI—¹
+				179,// UŒ‚‚QI—¹
 				238,// ƒXƒeƒbƒvI—¹
 				270,// –‚–@‰r¥I—¹
 				335,// –‚–@UŒ‚ŠJŽn
@@ -124,6 +133,9 @@ namespace
 				118,// UŒ‚”»’èŠJŽn
 				125,// UŒ‚”»’èI—¹
 				132,// UŒ‚I—¹
+				160,// UŒ‚‚Q”»’èŠJŽn
+				168,// UŒ‚‚Q”»’èI—¹
+				179,// UŒ‚‚QI—¹
 				240,// ƒXƒeƒbƒvI—¹
 				296,// –‚–@‰r¥I—¹
 				330,// –‚–@UŒ‚ŠJŽn
@@ -137,6 +149,9 @@ namespace
 				139,// UŒ‚”»’èŠJŽn
 				147,// UŒ‚”»’èI—¹
 				152,// UŒ‚I—¹
+				179,// UŒ‚‚Q”»’èŠJŽn
+				188,// UŒ‚‚Q”»’èI—¹
+				204,// UŒ‚‚QI—¹
 				260,// ƒXƒeƒbƒvI—¹
 				316,// –‚–@‰r¥I—¹
 				342,// –‚–@UŒ‚ŠJŽn
@@ -150,6 +165,9 @@ namespace
 				137,// UŒ‚”»’èŠJŽn
 				145,// UŒ‚”»’èI—¹
 				160,// UŒ‚I—¹
+				180,// UŒ‚‚Q”»’èŠJŽn
+				185,// UŒ‚‚Q”»’èI—¹
+				204,// UŒ‚‚QI—¹
 				260,// ƒXƒeƒbƒvI—¹
 				317,// –‚–@‰r¥I—¹
 				340,// –‚–@UŒ‚ŠJŽn
@@ -163,6 +181,9 @@ namespace
 				127,// UŒ‚”»’èŠJŽn
 				140,// UŒ‚”»’èI—¹
 				155,// UŒ‚I—¹
+				173,// UŒ‚‚Q”»’èŠJŽn
+				180,// UŒ‚‚Q”»’èI—¹
+				199,// UŒ‚‚QI—¹
 				260,// ƒXƒeƒbƒvI—¹
 				281,// –‚–@‰r¥I—¹
 				333,// –‚–@UŒ‚ŠJŽn
@@ -188,7 +209,8 @@ namespace
 
 		//	ŠÖ”ƒ|ƒCƒ“ƒ^Ý’è
 		ModeFunction[MODE::MOVE] = &Player::ModeMove;
-		ModeFunction[MODE::SWOADATTACK] = &Player::ModeSwordAttack;
+		ModeFunction[MODE::SWOADATTACKFIRST] = &Player::ModeSwordAttackFirst;
+		ModeFunction[MODE::SWOADATTACKSECOND] = &Player::ModeSwordAttackSecond;
 		ModeFunction[MODE::DAMAGE] = &Player::ModeDamage;
 		ModeFunction[MODE::MAGICATTACK] = &Player::ModeMagicAttack;
 		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
@@ -245,10 +267,16 @@ namespace
 		CheckInput();
 	}
 
-	//	Œ•UŒ‚
-	void	Player::ModeSwordAttack( void )
+	//	Œ•UŒ‚‚»‚Ì1
+	void	Player::ModeSwordAttackFirst( void )
 	{
-		SwordAttack();
+		SwordAttackFirst();
+	}
+
+	//	Œ•UŒ‚‚»‚Ì2
+	void	Player::ModeSwordAttackSecond(void)
+	{
+		SwordAttackSecond();
 	}
 
 	//	–‚–@UŒ‚
@@ -365,8 +393,8 @@ namespace
 		}
 	}
 
-	//	Œ•UŒ‚
-	void	Player::SwordAttack( void )
+	//	Œ•UŒ‚‚»‚Ì1
+	void	Player::SwordAttackFirst( void )
 	{
 		//	ƒtƒŒ[ƒ€ŠÇ—
 		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_HIT_START] &&
@@ -384,6 +412,28 @@ namespace
 		{
 			SetMode( MODE::MOVE );
 			gameParam->GetAttackInfo( index ).Reset();
+		}
+	}
+
+	//	Œ•UŒ‚‚»‚Ì2
+	void	Player::SwordAttackSecond(void)
+	{
+		//	ƒtƒŒ[ƒ€ŠÇ—
+		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
+			pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_END])
+		{
+			gameParam->GetAttackInfo(index).attackParam = AttackInfo::ATTACK2;
+		}
+		else
+		{
+			gameParam->GetAttackInfo(index).attackParam = AttackInfo::NO_ATTACK;
+		}
+
+		// ˆê’èˆÈã‚ÌƒtƒŒ[ƒ€‚É’B‚·‚é‚ÆˆÚ“®‚É–ß‚·
+		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_END])
+		{
+			SetMode(MODE::MOVE);
+			gameParam->GetAttackInfo(index).Reset();
 		}
 	}
 
@@ -487,12 +537,22 @@ namespace
 	//	“ü—Íƒ`ƒFƒbƒN
 	void	Player::CheckInput( void )
 	{
-		//	Œ•UŒ‚“ü—ÍŽó•t
+		//	Œ•UŒ‚1“ü—ÍŽó•t
 		if ( inputManager->GetInputState( index, KEY_TYPE::B, KEY_STATE::ENTER ) )
 		{
-			if ( SetMode( MODE::SWOADATTACK ) )
+			if ( SetMode( MODE::SWOADATTACKFIRST ) )
 			{
 				SetMotion( PLAYER_MOTION::ATTACK1 );
+				return;
+			}
+		}
+
+		//	Œ•UŒ‚“ü—ÍŽó•t
+		if (inputManager->GetInputState(index, KEY_TYPE::Y, KEY_STATE::ENTER))
+		{
+			if (SetMode(MODE::SWOADATTACKSECOND))
+			{
+				SetMotion(PLAYER_MOTION::ATTACK2);
 				return;
 			}
 		}
