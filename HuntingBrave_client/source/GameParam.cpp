@@ -139,6 +139,12 @@ GameParam*	gameParam = nullptr;
 
 		//	入力情報送信
 		SendInputInfo();
+
+		//	debug用
+		if (KEY(KEY_TYPE::SELECT) == 3){
+			char debug = COMMANDS::DEBUG;
+			send(&debug, 1);
+		}
 	}
 
 	//	データ受信

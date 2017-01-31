@@ -13,6 +13,7 @@ namespace HP_MAX
 	{
 		WIDTH = 1024,				//	画像横幅
 		HEIGHT = 256,				//	画像縦幅
+		SIZE = 32					//	数値サイズ
 	};
 }
 
@@ -25,11 +26,15 @@ private:
 	iex2DObj* hpDamage_obj;
 	iex2DObj* hp_obj;
 	Image* hpBack_obj;
+	NumberUI* maxHpUI;
+	NumberUI* nowHpUI;
+	Image* period;
+
 	int	posx, posy, width, height;
 	int hp,max_hp,damage,damage_width,keep_width;
 	float damage_volume;
 
-	int hp_damage_x, hp_damage_sx, hp_damage_sw;
+	int hp_damage_sw;
 	int hp_w,hp_sw;
 	bool damage_state;
 
