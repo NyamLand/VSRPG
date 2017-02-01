@@ -23,6 +23,7 @@ private:
 	Vector3	viewPos;
 	Vector3	playerPos[PLAYER_MAX];
 	int	index;
+	iex3DObj*	obj[PLAYER_MAX];
 
 public:
 	//	初期化・開放
@@ -32,6 +33,4 @@ public:
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
-
-
 };
