@@ -87,6 +87,7 @@ namespace SCENE
 		void	CulcDefense( int defense );
 		void	CulcMagicAttack( int power );
 		void	CulcMagicDefense( int defense );
+		void	CulcMaxLife( int maxLife );
 		void	DoubleSpeed( float param );
 	};
 
