@@ -229,20 +229,17 @@ namespace
 
 		//	˜AŒ‹
 		strcat_s( str, pNum );
-		model->SetTexture(0, str);
+		if ( classType == CLASS_TYPE::ASSASSIN )
+		{
+			model->SetTexture( 1, str );
+		}
+		else model->SetTexture( 0, str );
 
 		if ( classType == CLASS_TYPE::FIGHTER )
 		{
 			sprintf_s( str, "" );
 			sprintf_s( str, "DATA/CHR/Fighter/toumeitachi_%d.png", id + 1 );
 			model->SetTexture( 3, str );
-		}
-
-		if (classType == CLASS_TYPE::ASSASSIN)
-		{
-			sprintf_s(str, "");
-			sprintf_s(str, bodyTexFileName[classType]);
-			model->SetTexture(1, str);
 		}
 	}
 
@@ -387,30 +384,39 @@ namespace
 		switch ( faceType )
 		{
 		case FACE_TYPE::NORMAL:
-			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+			if (curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN)
 				obj->SetTexture( 2, normalFaceFile[curClass] );
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				obj->SetTexture( 2, normalFaceFile[curClass] );
+				obj->SetTexture( 0, normalFaceFile[curClass] );
+			}
 			else
 				obj->SetTexture( 1, normalFaceFile[curClass] );
-			if ( curClass == CLASS_TYPE::ASSASSIN)
-				obj->SetTexture(0, normalFaceFile[curClass]);
 			break;
 
 		case FACE_TYPE::DAMAGE:
-			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+			if (curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN)
 				obj->SetTexture( 2, damageFaceFile[curClass] );
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				obj->SetTexture( 2, damageFaceFile[curClass] );
+				obj->SetTexture( 0, damageFaceFile[curClass]);
+			}
 			else
 				obj->SetTexture( 1, damageFaceFile[curClass] );
-			if (curClass == CLASS_TYPE::ASSASSIN)
-				obj->SetTexture(0, damageFaceFile[curClass]);
 			break;
 
 		case FACE_TYPE::ATTACK:
 			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
 				obj->SetTexture( 2, attackFaceFile[curClass] );
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				obj->SetTexture( 2, attackFaceFile[curClass] );
+				obj->SetTexture( 0, attackFaceFile[curClass] );
+			}
 			else
 				obj->SetTexture(1, attackFaceFile[curClass]);
-			if (curClass == CLASS_TYPE::ASSASSIN)
-				obj->SetTexture(0, attackFaceFile[curClass]);
 			break;
 
 		default:
