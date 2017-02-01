@@ -32,16 +32,18 @@ TimerUI::TimerUI(int x, int y, int w, int h)
 	color = NUM_COLOR::WHITE;
 
 	//	タイマーの値
-	number[TIME::MIN] = new NumberUI(x - (size * 1.5f), y, w, h, TIME_DIGIT);
+	number[TIME::MIN] = new NumberUI(x - (size * 2.5f), y, w, h, TIME_DIGIT);
 	number[TIME::SECOND] = new NumberUI(x + (size * 0.5f) , y, w, h, TIME_DIGIT);
+	number[TIME::MIN]->SetSlide(false);
 	number[TIME::SECOND]->SetSlide(false);
 
 	period = new Image();
 	period->Initialize("DATA/UI/main_UI/Number.png", posx, posy, size, size, 64 * 10, 64 * color , 64, 64);
 
 	//	演出用タイマー
-	number_wave[TIME::MIN] = new NumberUI(x - (size * 1.5f), y, w, h, TIME_DIGIT);
+	number_wave[TIME::MIN] = new NumberUI(x - (size * 2.5f), y, w, h, TIME_DIGIT);
 	number_wave[TIME::SECOND] = new NumberUI(x + (size * 0.5f), y, w, h, TIME_DIGIT);
+	number_wave[TIME::MIN]->SetSlide(false);
 	number_wave[TIME::SECOND]->SetSlide(false);
 
 	period_wave = new Image();
