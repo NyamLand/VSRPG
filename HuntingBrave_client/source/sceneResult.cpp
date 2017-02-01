@@ -35,7 +35,6 @@
 #define	SCORE_DIST		100
 #define	SCORE_SIZE		100
 
-
 //----------------------------------------------------------------------------------------------
 //	‰Šú‰»E‰ð•ú
 //----------------------------------------------------------------------------------------------
@@ -55,8 +54,8 @@
 		//	ƒJƒƒ‰‰Šú‰»
 		mainView = new Camera();
 		mainView->Initialize( Camera::VIEW_MODE::FIX_VIEW,
-			Vector3( 0.0f, 20.0f, 180.0f ),
-			Vector3( 0.0f, 3.0f, 220.0f ) );
+			Vector3( 6.0f, 10.0f, 205.0f ),
+			Vector3( 6.0f, 3.0f, 220.0f ) );
 
 		//	‰æ‘œ“Ç‚Ýž‚Ý
 		back = new iex2DObj( "DATA/UI/BackGround/result_UI.png" );
@@ -88,7 +87,7 @@
 		obj[pointManager->GetPlayer(0)]->SetPos( 0.0f, 0.0f, 220.0f );
 		obj[pointManager->GetPlayer(1)]->SetPos( 6.0f, 0.0f, 225.0f );
 		obj[pointManager->GetPlayer(2)]->SetPos( -5.0f, 0.0f, 230.0f );
-		obj[pointManager->GetPlayer(3)]->SetPos( -15.0f, 0.0f, 235.0f );
+		obj[pointManager->GetPlayer(3)]->SetPos( -10.0f, 0.0f, 235.0f );
 		obj[0]->Update();
 		obj[1]->Update();
 		obj[2]->Update();
