@@ -283,6 +283,9 @@
     <ClCompile Include="source\TestResult.cpp">
       <Filter>Source\Scene\sceneResult</Filter>
     </ClCompile>
+    <ClCompile Include="source\RankUI.cpp">
+      <Filter>Source\UI\RankUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -530,6 +533,9 @@
     </ClInclude>
     <ClInclude Include="source\TestResult.h">
       <Filter>Source\Scene\sceneResult</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RankUI.h">
+      <Filter>Source\UI\RankUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -811,6 +817,9 @@
     </Filter>
     <Filter Include="Source\Enemy\Shadow">
       <UniqueIdentifier>{b82150f9-d918-47b6-b285-20ef0a12ea36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\RankUI">
+      <UniqueIdentifier>{962b5083-a12b-412f-9a2a-07c2f63929da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

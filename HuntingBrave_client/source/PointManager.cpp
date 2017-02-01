@@ -75,6 +75,7 @@
 	{
 		ReceivePointData*	receivePointData = ( ReceivePointData* )data;
 
+		Sort();
 		int index = GetRank( receivePointData->id );
 		pointList[index].point = receivePointData->point;
 	}
