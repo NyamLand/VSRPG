@@ -37,6 +37,10 @@ public:
 
 	//	î•ñæ“¾
 	Vector3	GetPos( void )const;
+	Vector3	GetFront( void )const;
+	Vector3	GetRight( void )const;
+	Vector3	GetUp( void )const;
+	Matrix	GetMatrix( void )const;
 	float			GetRadius( void )const;
 	int			GetID( void )const;
 };

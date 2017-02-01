@@ -4,6 +4,8 @@
 #include	"GameParam.h"
 #include	<vector>
 #include	"MagicManager.h"
+#include	"Particle.h"
+
 
 //***************************************************************
 //
@@ -78,7 +80,7 @@ namespace
 	{
 		if ( org == nullptr )
 			org = new iexMesh( "DATA/Effect/magic/MagicBullet/magic-Bullet.IMO" );
-		org->SetScale( 0.01f );
+		org->SetScale( 0.02f );
 		org->Update();
 		magicList.clear();
 		return	true;
@@ -105,6 +107,7 @@ namespace
 		for ( int i = 0; i < ( int )magicList.size(); i++ )
 		{
 			magicList[i]->Update();
+			particle->Semicircle(magicList[i]->GetPos(), magicList[i]->GetFront(), magicList[i]->GetRight(), magicList[i]->GetUp(), magicList[i]->GetRadius(), 0.4f);
 		}
 	}
 

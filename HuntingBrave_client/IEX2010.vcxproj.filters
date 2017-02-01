@@ -274,6 +274,9 @@
     <ClCompile Include="source\PointManager.cpp">
       <Filter>Source\Manager\PointManager</Filter>
     </ClCompile>
+    <ClCompile Include="source\Particle.cpp">
+      <Filter>Source\Effect\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -512,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="source\PointManager.h">
       <Filter>Source\Manager\PointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Particle.h">
+      <Filter>Source\Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -787,6 +793,9 @@
     </Filter>
     <Filter Include="Source\Manager\PointManager">
       <UniqueIdentifier>{73999bfa-1b03-49ff-b82a-907a6a05b375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Effect\Particle">
+      <UniqueIdentifier>{1c5bc496-b735-4aea-ad9e-87e19dfc3d44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

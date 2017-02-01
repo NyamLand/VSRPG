@@ -97,6 +97,9 @@ bool	sceneMain::Initialize( void )
 	//	collision‰Šú‰»
 	collision->Initialize(gameParam->GetMyIndex(), "DATA/BG/stage_atari.IMO" );
 
+	//	particle‰Šú‰»
+	particle->Initialize();
+
 	//	‘—M
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
@@ -128,6 +131,7 @@ sceneMain::~sceneMain( void )
 	magicManager->Release();
 	playerManager->Release();
 	effectManager->Release();
+	particle->Release();
 	collision->Release();
 	sound->StopBGM();
 }
@@ -176,6 +180,9 @@ void	sceneMain::Update( void )
 	//	collision
 	collision->AllCollision();
 
+	//	particle
+	particle->Update();
+
 	//	ƒXƒNƒŠ[ƒ“§Œä
 	screen->Update();
 	DeadScreen();
@@ -216,6 +223,9 @@ void	sceneMain::Render( void )
 
 	//	effect•`‰æ
 	effectManager->Render();
+
+	//	particle•`‰æ
+	particle->Render();
 
 	//	ui•`‰æ
 	uiManager->Render();

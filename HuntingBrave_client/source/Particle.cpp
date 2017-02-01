@@ -53,22 +53,147 @@
 //	動作関数
 //------------------------------------------------------------------------
 
+
+	//	魔法ダメージ
+	void	Particle::MagicDamage(const Vector3& pos, const Vector3& back, const Vector3& side, const float& scale, const int& time)
+	{
+		Vector3	Pos, Move, Power;
+		timer++;
+		if (timer % time != 0) return;
+		for (int j = 0; j < Par4; j++)
+		{
+			Pos = pos;
+
+
+			Vector3 ideal_pos, ran_pos;
+
+			//	背後の理想ポジション
+			ideal_pos = pos + back * 1.0f;
+
+			//	ランダムで法線用ポジションをとる
+			ran_pos = ideal_pos + side * (random->GetFloat(-2.0f, 2.0f));
+
+			//	法線をセット
+			Move = ran_pos - pos;
+			Move.Normalize();
+
+			Move *= (random->GetFloat(0.2, 0.3f) * scale);
+
+			Move += Vector3(0.0f, 1.0f, 0.0f) * (random->GetFloat(-0.3f, 0.3f));
+
+
+			Power = Move * (random->GetFloat(0.01f, 0.1f));
+			Power.y = 0.0f;
+
+
+			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
+			pt->Set(SPARK, 0, 1.0f, 25, 0.0f, 10, 1.0f, &Pos, &Move, &Power, 0.3f, 0.3f, 1.0f, scale, RS_COPY);
+		}
+	}
+
+	//	剣ダメージ
+	void	Particle::SwordDamage(const Vector3& pos, const float& scale)
+	{
+		Vector3	Pos, Move, Power;
+		for (int j = 0; j<Par3; j++)
+		{
+			Pos.x = pos.x + sinf(random->GetFloat(0.0f, 2.0f * D3DX_PI)) * 2.0f * scale;
+			Pos.y = pos.y;
+			Pos.z = pos.z + cosf(random->GetFloat(0.0f, 2.0f * D3DX_PI)) * 2.0f * scale;
+
+			Move.x = random->GetFloat(-150.0f, 150.0f) *(0.003f * scale);
+			Move.y = 1.0f * scale;
+			Move.z = random->GetFloat(-150.0f, 150.0f) * (0.003f * scale);
+
+			Power.x = 0.0f;
+			Power.y = random->GetFloat(-100.0f, -50.0f) * (scale * 0.001f);
+			Power.z = 0.0f;
+
+			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
+			pt->Set(SPARK, 0, 1.0f, 30, 0.0f, 20, 1.0f, &Pos, &Move, &Power, 1.0f, 0.0f, 0.0f, scale * 2.0f, RS_COPY);
+		}
+	}
+
+	//	変身時の煙
+	void	Particle::Smoke(const Vector3& pos, const float& scale, const int& time)
+	{
+		Vector3	Pos, Move, Power;
+		for (int j = 0; j<Par2; j++){
+			Pos.x = pos.x;
+			Pos.y = pos.y;
+			Pos.z = pos.z;
+
+			Move.x = random->GetFloat(-50.0f, 50.0f)* (scale * 0.0015f);
+			Move.y = 0;
+			Move.z = random->GetFloat(-50.0f, 50.0f)* (scale * 0.0015f);
+
+			Power.x = 0.0f;
+			Power.y = random->GetFloat(0.0f, 100.0f)* (scale * 0.000075f);
+			Power.z = 0.0f;
+
+
+			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
+			pt->Set(SMOG, 0, 0.0f, 60, 0.0f, 40, 1.0f, &Pos, &Move, &Power, 1.0f, 1.0f, 1.0f, scale, RS_COPY);
+		}
+	}
+
+
+	//	突進時の風を切る
+	void	Particle::Semicircle(const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float radius, const float& scale)
+	{
+		Vector3	Pos, Move, Power;
+		for (int j = 0; j <Par3; j++)
+		{
+			Vector3 direction;
+
+			//	前方半円
+			direction = front	* (random->GetFloat(0.0f, 1.0f));			//	前
+			direction += right	* (random->GetFloat(-1.0f, 1.0f));		//	左右
+			direction += up		* (random->GetFloat(-1.0f, 1.0f));			//	上下
+
+			direction.Normalize();
+
+			//	半径離れた位置にセット
+			Pos =  pos + direction * radius;
+
+			//	後ろ向き
+			Move = -front * (random->GetFloat(0.0f, 5.0f)) * 0.1f * scale;
+
+
+			Power = Vector3(0.0f, 0.0f, 0.0f);
+
+			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
+			pt->Set(SPARK, 0, 0.0f, 40, 0.0f, 20, 1.0f, &Pos, &Move, &Power, 0.2f, 0.2f, 1.0f, scale, RS_COPY);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	//	青炎
 	void	Particle::BlueFlame( const Vector3& pos, const float& scale )
 	{
 		Vector3	Pos, Move, Power;
 		for ( int j = 0; j<Par2; j++ )
 		{
-			Pos.x = pos.x + ( Random::GetFloat( -1000.0f, 0.0f )	 * ( 0.001f * scale ) );
-			Pos.y = pos.y + ( Random::GetFloat( -500.0f, 0.0f )	 * ( 0.001f * scale ) );
-			Pos.z = pos.z + ( Random::GetFloat( -1000.0f, 0.0f )		* ( 0.001f * scale ) );
+			Pos.x = pos.x + ( random->GetFloat( -1000.0f, 0.0f )	 * ( 0.001f * scale ) );
+			Pos.y = pos.y + ( random->GetFloat( -500.0f, 0.0f )	 * ( 0.001f * scale ) );
+			Pos.z = pos.z + ( random->GetFloat( -1000.0f, 0.0f )		* ( 0.001f * scale ) );
 
 			Move.x = 0.0f;
 			Move.y = 0.0f;
 			Move.z = 0.0f;
 
 			Power.x = 0.0f;
-			Power.y = Random::GetFloat( 0.0f,100.0f ) * ( scale * 0.00015f );
+			Power.y = random->GetFloat( 0.0f,100.0f ) * ( scale * 0.00015f );
 			Power.z = 0.0f;
 
 			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
@@ -76,28 +201,7 @@
 		}
 	}
 
-	//	火花
-	void	Particle::Spark( const Vector3& pos, const float& scale )
-	{
-		Vector3	Pos, Move, Power;
-		for ( int j = 0; j<Par3; j++ )
-		{
-			Pos.x = pos.x + sinf( Random::GetFloat( 0.0f, 2.0f * D3DX_PI ) ) * 2.0f * scale;
-			Pos.y = pos.y;
-			Pos.z = pos.z + cosf( Random::GetFloat( 0.0f, 2.0f * D3DX_PI ) ) * 2.0f * scale;
-
-			Move.x = Random::GetFloat( -100.0f, 100.0f ) *( 0.002f * scale );
-			Move.y = 1.0f * scale;
-			Move.z = Random::GetFloat( -100.0f, 100.0f ) * ( 0.002f * scale );
-
-			Power.x = 0.0f;
-			Power.y = Random::GetFloat( -100.0f, 0.0f ) * ( scale * 0.001f );
-			Power.z = 0.0f;
-
-			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
-			pt->Set( STAR, 0, 0.0f, 30, 0.0f, 20, 1.0f, &Pos, &Move, &Power, 0.8f, 0.8f, 0.0f, scale * 2.0f, RS_COPY );
-		}
-	}
+	
 
 	//	星
 	void	Particle::Hit( const Vector3& pos, const float& scale,const int& time )
@@ -112,9 +216,9 @@
 			Pos.y = pos.y;
 			Pos.z = pos.z;
 
-			Move.x = Random::GetFloat( -50.0f, 50.0f ) * ( 0.005f * scale );
+			Move.x = random->GetFloat( -50.0f, 50.0f ) * ( 0.005f * scale );
 			Move.y = 0.8f * scale + ( 0.2f * scale * ( j % 2 ) );
-			Move.z = Random::GetFloat( -20.0f, 20.0f ) * ( 0.02f * scale );
+			Move.z = random->GetFloat( -20.0f, 20.0f ) * ( 0.02f * scale );
 
 			Power.x = 0.0f;
 			Power.y = -( scale * 0.05f );
@@ -125,30 +229,30 @@
 		}
 	}
 
-	//	煙
-	void	Particle::Smoke( const Vector3& pos, const float& scale, const int& time )
-	{
-		Vector3	Pos, Move, Power;
-		timer++;
-		if ( timer % time != 0 ) return;
-		for ( int j = 0; j<Par1; j++ )
-		{
-			Pos.x = pos.x;
-			Pos.y = pos.y;
-			Pos.z = pos.z;
+	////	煙
+	//void	Particle::Smoke( const Vector3& pos, const float& scale, const int& time )
+	//{
+	//	Vector3	Pos, Move, Power;
+	//	timer++;
+	//	if ( timer % time != 0 ) return;
+	//	for ( int j = 0; j<Par1; j++ )
+	//	{
+	//		Pos.x = pos.x;
+	//		Pos.y = pos.y;
+	//		Pos.z = pos.z;
 
-			Move.x = -0.1f * scale;
-			Move.y = 0.08f * scale;
-			Move.z = 0.0f;
+	//		Move.x = -0.1f * scale;
+	//		Move.y = 0.08f * scale;
+	//		Move.z = 0.0f;
 
-			Power.x = 0.0f;
-			Power.y = 0.0f;
-			Power.z = 0.0f;
+	//		Power.x = 0.0f;
+	//		Power.y = 0.0f;
+	//		Power.z = 0.0f;
 
-			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
-			pt->Set( SMOKE, 0, 1.0f, 30, 1.0f, 15, 1.0f, &Pos, &Move, &Power, 1.0f, 1.0f, 1.0f, scale, RS_COPY );
-		}
-	}
+	//		//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
+	//		pt->Set( SMOKE, 0, 1.0f, 30, 1.0f, 15, 1.0f, &Pos, &Move, &Power, 1.0f, 1.0f, 1.0f, scale, RS_COPY );
+	//	}
+	//}
 
 
 	//		パワーアップ
@@ -159,12 +263,12 @@
 		if ( timer % time != 0 ) return;
 		for ( int j = 0; j<Par1; j++ )
 		{
-			Pos.x = pos.x + ( Random::GetInt( -move, move )	 * ( 0.01f * scale ) );
+			Pos.x = pos.x + ( random->GetInt( -move, move )	 * ( 0.01f * scale ) );
 			Pos.y = pos.y;
-			Pos.z = pos.z + ( Random::GetInt( -move, move )	 * ( 0.01f * scale ) );
+			Pos.z = pos.z + ( random->GetInt( -move, move )	 * ( 0.01f * scale ) );
 
 			Move.x = 0.0f;
-			Move.y = Random::GetFloat(50.0f, 100.0f)	 * ( 0.001f * scale );
+			Move.y = random->GetFloat(50.0f, 100.0f)	 * ( 0.001f * scale );
 			Move.z = 0.0f;
 
 			Power.x = 0.0f;
@@ -185,12 +289,12 @@
 		if ( timer % time != 0 ) return;
 		for ( int j = 0; j<Par1; j++ )
 		{
-			Pos.x = pos.x + (Random::GetInt( -move, move )	 * ( 0.01f * scale ) );
+			Pos.x = pos.x + (random->GetInt( -move, move )	 * ( 0.01f * scale ) );
 			Pos.y = pos.y;
-			Pos.z = pos.z + (Random::GetInt( -move, move )	 * ( 0.01f * scale ) );
+			Pos.z = pos.z + (random->GetInt( -move, move )	 * ( 0.01f * scale ) );
 
 			Move.x = 0.0f;
-			Move.y = Random::GetFloat( 50.0f, 100.0f )	 * ( 0.001f * scale );
+			Move.y = random->GetFloat( 50.0f, 100.0f )	 * ( 0.001f * scale );
 			Move.z = 0.0f;
 
 			Power.x = 0.0f;
@@ -222,7 +326,7 @@
 			center = target + v1 * ( t_len / 2 );
 
 			//	ランダムで法線用ポジションをとる
-			ran_pos = center + side * ( Random::GetFloat( -( t_len / 2 ) , t_len / 2 ) );
+			ran_pos = center + side * ( random->GetFloat( -( t_len / 2 ) , t_len / 2 ) );
 
 			//	法線を使って最終的発生位置を決める
 			v1 = ran_pos - pos;
@@ -233,57 +337,13 @@
 			//Move = -v1 * scale;
 			Move = -v1 * length / ( speed * length );
 
-			Power = Move * ( Random::GetFloat( 0.0001f, 0.001f ) );
+			Power = Move * ( random->GetFloat( 0.0001f, 0.001f ) );
 
 			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
 			pt->Set( SUCK, 0, 1.0f, speed * ( int )length, 1.0f, 0, 1.0f, &Pos, &Move, &Power, 1.0f, 1.0f, 1.0f, scale, RS_COPY );
 		}
 	}
 
-	//	砂埃
-	void	Particle::Dust( const Vector3& pos, const Vector3& back, const Vector3& side, const float& scale, const int& time )
-	{
-		Vector3	Pos, Move, Power;
-		timer++;
-		if ( timer % time != 0 ) return;
-		for ( int j = 0; j < Par1; j++ )
-		{
-			Pos = pos;
-
-
-			Vector3 ideal_pos,ran_pos;
-			
-			//	背後の理想ポジション
-			ideal_pos = pos + back * 1.0f;
-
-			//	ランダムで法線用ポジションをとる
-			ran_pos = ideal_pos + side * ( Random::GetFloat( -1.0f, 1.0f ) );
-			
-			//	法線をセット
-			Move = ran_pos - pos;
-			Move.Normalize();
-
-			Move *= ( Random::GetFloat( 0.05f, 0.2f ) * scale );
-
-
-			Power = Move * ( Random::GetFloat( 0.00001f, 0.0001f ) ) + Vector3( 0.0f, 1.0f, 0.0f ) * ( Random::GetFloat( 0.0001f, 0.001f ) );
-
-
-			////	法線を使って最終的発生位置を決める
-			//v1 = ran_pos - pos;
-			//v1.Normalize();
-			//Pos = pos + v1 * t_len;
-
-			////	向きを逆に
-			//Move = -v1;
-
-			//Power = Move * (Random::GetFloat(0.0001f, 0.001f));
-
-
-			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
-			pt->Set( DUST, 0, 0.0f, 60, 0.0f, 20, 1.0f, &Pos, &Move, &Power, 1.0f, 1.0f, 1.0f, scale, RS_COPY );
-		}
-	}
 
 	//	爆発
 	void	Particle::Bom( const Vector3& pos, const float& move, const float& scale, const int& time )
@@ -294,9 +354,9 @@
 
 		for ( int j = 0; j<Par3; j++ )
 		{
-			Pos.x = pos.x + ( Random::GetFloat( -move, move ) * ( 0.2f * scale ) );
-			Pos.y = pos.y + ( Random::GetFloat( 0.0f, move ) * ( 0.2f * scale ) );
-			Pos.z = pos.z + ( Random::GetFloat( -move, move ) * ( 0.2f * scale ) );
+			Pos.x = pos.x + ( random->GetFloat( -move, move ) * ( 0.2f * scale ) );
+			Pos.y = pos.y + ( random->GetFloat( 0.0f, move ) * ( 0.2f * scale ) );
+			Pos.z = pos.z + ( random->GetFloat( -move, move ) * ( 0.2f * scale ) );
 
 			Move.x = 0.0f;
 			Move.y = 0.0f;
@@ -312,9 +372,9 @@
 			//	炎の灰をイメージ
 			if ( j <= Par3 - 2 ) continue;
 
-			Pos.x = pos.x + ( Random::GetFloat( -move, move ) * (0.2f * scale ) );
-			Pos.y = pos.y + ( Random::GetFloat( 0.0f, move ) * (0.2f * scale ) );
-			Pos.z = pos.z + ( Random::GetFloat( -move, move ) * (0.2f * scale ) );
+			Pos.x = pos.x + ( random->GetFloat( -move, move ) * (0.2f * scale ) );
+			Pos.y = pos.y + ( random->GetFloat( 0.0f, move ) * (0.2f * scale ) );
+			Pos.z = pos.z + ( random->GetFloat( -move, move ) * (0.2f * scale ) );
 
 			Move.x = 0.0f;
 			Move.y = 0.0f;
@@ -336,9 +396,9 @@
 
 		for ( int i = 0; i < Par3; i++ )
 		{
-			Pos.x = pos.x + sinf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
-			Pos.y = pos.y + ( Random::GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
-			Pos.z = pos.z + cosf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
+			Pos.x = pos.x + sinf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
+			Pos.y = pos.y + ( random->GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
+			Pos.z = pos.z + cosf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
 
 			Move.x = 0.0f;
 			Move.y = 0.0f;
@@ -359,9 +419,9 @@
 
 		for ( int i = 0; i < Par3; i++ )
 		{
-			Pos.x = pos.x + sinf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
+			Pos.x = pos.x + sinf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
 			Pos.y = pos.y;
-			Pos.z = pos.z + cosf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
+			Pos.z = pos.z + cosf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.007f * scale;
 
 			Move.x = 0.0f;
 			Move.y = -0.1f;
@@ -382,9 +442,9 @@
 		Vector3	Pos, Move, Power;
 		for ( int j = 0; j<Par3; j++ )
 		{
-			Pos.x = pos.x + sinf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 100 ) - 50 ) * 0.001f * scale;
-			Pos.y = pos.y + sinf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 100 ) - 50 ) * 0.001f * scale;
-			Pos.z = pos.z + cosf( Random::GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( Random::GetInt( 0, 100 ) - 50 ) * 0.001f * scale;
+			Pos.x = pos.x + sinf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 100 ) - 50 ) * 0.001f * scale;
+			Pos.y = pos.y + sinf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 100 ) - 50 ) * 0.001f * scale;
+			Pos.z = pos.z + cosf( random->GetFloat( 0.0f, 2 * D3DX_PI ) ) * ( random->GetInt( 0, 100 ) - 50 ) * 0.001f * scale;
 
 			Move.x = 0.0f;
 			Move.y = 0.0f;
@@ -407,9 +467,9 @@
 		{
 			Pos = pos;
 
-			Move.x = Random::GetFloat( -50.0f, 50.0f ) * ( 0.005f * scale );
+			Move.x = random->GetFloat( -50.0f, 50.0f ) * ( 0.005f * scale );
 			Move.y = 0.8f * scale + ( 0.2f * scale * ( j % 2 ) );
-			Move.z = Random::GetFloat( -20.0f, 20.0f ) * ( 0.02f * scale );
+			Move.z = random->GetFloat( -20.0f, 20.0f ) * ( 0.02f * scale );
 
 			Power.x = 0.0f;
 			Power.y = -( scale * 0.05f );
@@ -450,9 +510,9 @@
 		{
 			Vector3 ran_pos, direction;
 
-			direction.x = Random::GetFloat( -1.0f, 1.0f );
-			direction.y = Random::GetFloat( 0.0f, 1.0f );
-			direction.z = Random::GetFloat( -1.0f, 1.0f );
+			direction.x = random->GetFloat( -1.0f, 1.0f );
+			direction.y = random->GetFloat( 0.0f, 1.0f );
+			direction.z = random->GetFloat( -1.0f, 1.0f );
 
 			direction.Normalize();
 			
@@ -461,7 +521,7 @@
 			Move = -direction * length / ( speed * length );
 
 			Power = Vector3( 0.0f, 0.0f, 0.0f );
-			//Power = Move * (Random::GetFloat(0.0001f, 0.001f));
+			//Power = Move * (random->GetFloat(0.0001f, 0.001f));
 
 			//	
 
@@ -476,9 +536,9 @@
 	{
 		Vector3	Pos, Move, Power;
 		for ( int j = 0; j<Par2; j++ ){
-			Pos.x = pos.x + sinf( Random::GetFloat( 0.0f, D3DX_PI * 2 ) ) * Random::GetInt( -50, 50 ) * 0.01f * scale;
-			Pos.y = pos.y + ( Random::GetInt( 0, 10 ) - 5 ) * 0.1f * scale;
-			Pos.z = pos.z + cosf( Random::GetFloat( 0.0f, D3DX_PI * 2 ) ) * Random::GetInt( -50, 50 ) * 0.01f * scale;
+			Pos.x = pos.x + sinf( random->GetFloat( 0.0f, D3DX_PI * 2 ) ) * random->GetInt( -50, 50 ) * 0.01f * scale;
+			Pos.y = pos.y + ( random->GetInt( 0, 10 ) - 5 ) * 0.1f * scale;
+			Pos.z = pos.z + cosf( random->GetFloat( 0.0f, D3DX_PI * 2 ) ) * random->GetInt( -50, 50 ) * 0.01f * scale;
 
 			Move = Pos - pos;
 			Move.Normalize();
@@ -501,9 +561,9 @@
 		Vector3	Pos, Move, Power;
 		for ( int j = 0; j<Par3; j++ )
 		{
-			Pos.x = pos.x + sinf( Random::GetFloat( 0.0f, D3DX_PI * 2 ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
-			Pos.y = pos.y + ( Random::GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
-			Pos.z = pos.z + cosf( Random::GetFloat( 0.0f, D3DX_PI * 2 ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
+			Pos.x = pos.x + sinf( random->GetFloat( 0.0f, D3DX_PI * 2 ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
+			Pos.y = pos.y + ( random->GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
+			Pos.z = pos.z + cosf( random->GetFloat( 0.0f, D3DX_PI * 2 ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
 
 			Move.x = 0.0f;
 			Move.y = 0.0f;
@@ -522,9 +582,9 @@
 	{
 		Vector3	Pos, Move, Power;
 		for ( int j = 0; j<Par4; j++ ){
-			Pos.x = pos.x + sinf( Random::GetFloat(0.0f, D3DX_PI * 2 ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
-			Pos.y = pos.y + ( Random::GetInt(0, 200) - 100) * 0.01f * scale;
-			Pos.z = pos.z + cosf( Random::GetFloat(0.0f, D3DX_PI * 2 ) ) * ( Random::GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
+			Pos.x = pos.x + sinf( random->GetFloat(0.0f, D3DX_PI * 2 ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
+			Pos.y = pos.y + ( random->GetInt(0, 200) - 100) * 0.01f * scale;
+			Pos.z = pos.z + cosf( random->GetFloat(0.0f, D3DX_PI * 2 ) ) * ( random->GetInt( 0, 200 ) - 100 ) * 0.01f * scale;
 
 			Move = Pos - pos;
 			Move.Normalize();
@@ -539,35 +599,7 @@
 			pt->Set( SPARK, 0, 0.3f, 30, 1.0f, 60, 1.0f, &Pos, &Move, &Power, color.x, color.y, color.z, scale * 20.0f, RS_COPY );
 		}
 	}
-	
-		//	突進時の風を切る
-	void	Particle::Semicircle( const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float& scale )
-	{
-		Vector3	Pos, Move, Power;
-		for ( int j = 0; j <Par3; j++ )
-		{
-			Vector3 direction;
 
-			//	前方半円
-			direction = front	* ( Random::GetFloat( 0.0f, 1.0f ) );			//	前
-			direction += right	* ( Random::GetFloat( -1.0f, 1.0f ) );		//	左右
-			direction += up		* ( Random::GetFloat( -1.0f, 1.0f ) );			//	上下
-
-			direction.Normalize();
-
-			//	半径10離れた位置にセット
-			Pos = ( pos + Vector3(0.0f, 3.0f, 0.0f ) ) + direction * 5.0f;
-
-			//	後ろ向き
-			Move = -front * ( Random::GetFloat( 0.0f, 5.0f ) ) * 0.1f * scale;
-
-
-			Power = Vector3( 0.0f, 0.0f, 0.0f );
-
-			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
-			pt->Set( SPARK, 0, 0.0f, 40, 0.0f, 20, 1.0f, &Pos, &Move, &Power, 1.0f, 1.0f, 0.0f, scale, RS_COPY );
-		}
-	}
 
 	//	大砲打った時の煙
 	void	Particle::CannonSmoke( const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float& scale )
@@ -578,9 +610,9 @@
 			Vector3 direction;
 
 			//	前方半円
-			direction = front	* ( Random::GetFloat( 0.0f, 1.0f ) );			//	前
-			direction += right	* ( Random::GetFloat( -1.0f, 1.0f ) );		//	左右
-			direction += up		* ( Random::GetFloat( -1.0f, 1.0f ) );			//	上下
+			direction = front	* ( random->GetFloat( 0.0f, 1.0f ) );			//	前
+			direction += right	* ( random->GetFloat( -1.0f, 1.0f ) );		//	左右
+			direction += up		* ( random->GetFloat( -1.0f, 1.0f ) );			//	上下
 			direction.Normalize();
 
 			Pos = pos + direction * 1.0f;
