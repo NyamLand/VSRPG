@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameParam.h"
+#include	"Sound.h"
 #include	<vector>
 #include	"MagicManager.h"
 
@@ -137,6 +138,8 @@ namespace
 			{
 				ReceiveMagicAppend*	receiveData = ( ReceiveMagicAppend* )data;
 				Append( receiveData->id, receiveData->pos, receiveData->angle );
+				sound->StopSE(SE::MAGIC_CHARGE);
+				sound->PlaySE(SE::MAGIC_SHOT);
 			}
 			break;
 
