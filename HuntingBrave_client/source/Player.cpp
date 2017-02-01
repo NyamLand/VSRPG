@@ -279,8 +279,10 @@ namespace
 	//	•`‰æ
 	void	Player::Render( iexShader* shader, LPSTR technique )
 	{
+		shader->SetValue( "effParam", 1.0f - gameParam->GetPlayerParam( id ).effParam );
+
 		//	ƒ‚ƒfƒ‹•`‰æ
-		BaseChara::Render();	
+		BaseChara::Render( shader, technique );	
 	}
 
 //------------------------------------------------------------------------------------

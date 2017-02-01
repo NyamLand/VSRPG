@@ -836,5 +836,8 @@
     <FxCompile Include="DATA\Shader\CircleGage.fx">
       <Filter>Shader\shader2D</Filter>
     </FxCompile>
+    <FxCompile Include="DATA\Shader\DamageEff.fx">
+      <Filter>Shader\shader3D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

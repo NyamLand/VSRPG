@@ -332,7 +332,7 @@ GameParam*	gameParam = nullptr;
 				//	ライフ計算
 				int damage = 5;
 				bool isAlive = gameParam->GetLifeInfo( client ).CulcLife( -damage );
-				if ( isAlive )playerManager->GetPlayer( client )->SetMode( MODE::DAMAGE );
+				if (isAlive) gameParam->GetPlayerParam( client ).effParam = 0.0f;
 				else
 				{
 					//	プレイヤーを死亡させる
@@ -550,9 +550,10 @@ GameParam*	gameParam = nullptr;
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, float effParam, int motion )
 	{
 		playerParam[id].pos    = pos;
 		playerParam[id].angle  = angle;
 		playerParam[id].motion = motion;
+		playerParam[id].effParam = effParam;
 	}

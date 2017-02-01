@@ -64,7 +64,7 @@ public:
 
 	//	î•ñİ’è
 	void SetPlayer( int id, char* name );
-	void SetPlayerParam( int id, const Vector3& pos, float angle, int motion );
+	void SetPlayerParam( int id, const Vector3& pos, float angle, float eddParam, int motion );
 
 	//	î•ñæ“¾
 	bool GetPlayerActive( int id ){ return playerInfo[id].active; }

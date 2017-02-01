@@ -32,7 +32,7 @@
 #define	ANGLE_ADJUST_MOVE_SPEED		0.3f
 #define	MOVE_SPEED		0.2f
 #define	STEP_SPEED		0.5f
-#define	EFF_SPEED		0.05f
+#define	EFF_SPEED			0.05f
 
 namespace
 {
@@ -242,10 +242,10 @@ namespace
 		//	î•ñó‚¯æ‚è
 		pParam = param;
 
-		EffectUpdate();
-
 		//	ƒ‚[ƒh•Ê“®ìŠÖ”
 		( this->*ModeFunction[mode] )();
+
+		EffectUpdate();
 
 		//	ŒvZŒãî•ñ”½‰f
 		param = pParam;

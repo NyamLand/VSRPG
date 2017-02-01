@@ -73,6 +73,7 @@ float4 PS_Basic( VS_OUTPUT In) : COLOR
 }
 
 #include	"colorChange.fx"
+#include	"DamageEff.fx"
 
 //------------------------------------------------------
 //		通常描画テクニック

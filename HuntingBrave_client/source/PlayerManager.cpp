@@ -1,5 +1,6 @@
 
 #include	"iextreme.h"
+#include	"system/System.h"
 #include	"GlobalFunction.h"
 #include	<vector>
 #include	"UIManager.h"
@@ -83,7 +84,7 @@
 			if ( gameParam->GetPlayerActive( p ) == false )		continue;
 			
 			//	•`‰æ
-			player[p]->Render();
+			player[p]->Render( shader, "damageEffect" );
 		}
 	}
 
