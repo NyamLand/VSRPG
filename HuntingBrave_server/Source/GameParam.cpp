@@ -24,7 +24,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	INIT_LIFE		5
-#define	TIME_MAX	( 9.0f * MINUTE + 30.0f )
+#define	TIME_MAX	MINUTE//( 9.0f * MINUTE + 30.0f )
 GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -320,6 +320,9 @@ GameParam*	gameParam = nullptr;
 			break;
 
 		case RECEIVE_ENEMY_COMMAND::SMALL_ENEMY_HUNT:
+			//	点数計算
+			pointManager->ReceiveHuntInfo( client, data );
+
 			//	経験値計算
 			levelManager->ReceiveHuntInfo( client, data );
 			break;

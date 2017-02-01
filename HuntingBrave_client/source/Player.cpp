@@ -23,6 +23,7 @@
 
 //	ƒ‚ƒfƒ‹î•ñ
 #define	PLAYER_SCALE	0.2f
+#define	KNIGHT_SCALE	0.08f
 #define	PLAYER_HEIGHT		2.5f
 #define	PLAYER_RADIUS		1.5f
 #define	ATTACK_RADIUS		0.5f
@@ -124,7 +125,7 @@ namespace
 			BONE_NUM::RIGHT_HAND,
 			BONE_NUM::LEFT_HAND,
 			BONE_NUM::LEFT_HAND,
-			BONE_NUM::RIGHT_HAND,
+			BONE_NUM::LEFT_HAND,
 			BONE_NUM::RIGHT_HAND,
 			BONE_NUM::RIGHT_HAND,
 		};
@@ -339,6 +340,7 @@ namespace
 		SetAngle( angle );
 		SetMotion( gameParam->GetPlayerParam( id ).motion );
 		SetScale( PLAYER_SCALE );
+		if ( curClass == CLASS_TYPE::KNIGHT )	SetScale( KNIGHT_SCALE );
 		obj->Update();
 	}
 
