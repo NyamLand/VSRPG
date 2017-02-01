@@ -20,7 +20,7 @@
 //------------------------------------------------------------------------------------
 
 #define	ANGLEADJUST_SPEED 1.0f
-#define	DEAD_LENGTH	30.0f
+#define	DEAD_LENGTH	50.0f
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
@@ -29,7 +29,9 @@
 	//	コンストラクタ
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
-		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), count(40)
+		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), 
+		count(40), 
+		cooltime(40)
 	{
 	}
 
@@ -96,8 +98,10 @@
 		//	一定の距離まで近づくと攻撃
 		if ( length <= attackDist )
 		{
-			SetMode( MODE::ATTACK );
-			return	true;
+			if (mode != MODE::WAIT){
+				SetMode(MODE::ATTACK);
+				return	true;
+			}
 		}
 
 		else if (length>DEAD_LENGTH)
@@ -182,6 +186,16 @@
 			SetMode(MODE::MOVE);
 		}
 
+	}
+
+	//　待機時モード動作
+	void	Enemy::WaitMode(void)
+	{
+		SetMotion(0);
+		cooltime--;
+		if (cooltime >= 0)return;
+		cooltime = 40;
+		SetMode(MODE::MOVE);
 	}
 
 //------------------------------------------------------------------------------------
