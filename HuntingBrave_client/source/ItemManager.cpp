@@ -4,6 +4,7 @@
 #include	"Interpolation.h"
 #include	"InputManager.h"
 #include	"GameParam.h"
+#include	"Sound.h"
 #include	"ItemManager.h"
 
 //**********************************************************************
@@ -64,14 +65,20 @@
 		//	左右キーで使用
 		if ( item[ITEM_POS::LEFT_ITEM].state )
 		{
-			if ( KEY( KEY_LEFT ) == 3 )	
-				UseItem( ITEM_POS::LEFT_ITEM );
+			if (KEY(KEY_LEFT) == 3)
+			{
+				UseItem(ITEM_POS::LEFT_ITEM);
+				sound->PlaySE(SE::USE_ITEM);
+			}
 		}
 		
 		if ( item[ITEM_POS::RIGHT_ITEM].state )
 		{
-			if ( KEY( KEY_RIGHT ) == 3 )	
-				UseItem( ITEM_POS::RIGHT_ITEM );
+			if (KEY(KEY_RIGHT) == 3)
+			{
+				UseItem(ITEM_POS::RIGHT_ITEM);
+				sound->PlaySE(SE::USE_ITEM);
+			}
 		}
 	}
 

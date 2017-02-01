@@ -224,10 +224,10 @@
 				//	当たっていればライフ計算
 				if ( isHit == true )
 				{
-					sound->PlaySE(SE::ATTACK_HIT2);
 					//	ライフ計算
 					if ( ( *enemyIt )->GetLifeInfo().active )
 					{
+						sound->PlaySE(SE::ATTACK_HIT2);
 						//	ライフ計算
 						( *enemyIt )->SetMode( ( *enemyIt )->DAMAGE );
 						//	ライフ計算

@@ -2,6 +2,7 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"Random.h"
+#include	"Sound.h"
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
 #include	"UIManager.h"
@@ -190,6 +191,7 @@ void	UIManager::Render( void )
 	void	UIManager::SetKillLog( int killer, int dead )
 	{
 		killLogUI->SetKillLog( killer, dead );
+		sound->PlaySE(SE::KILL);
 	}
 //---------------------------------------------------------------------------------------
 //	î•ñŽæ“¾

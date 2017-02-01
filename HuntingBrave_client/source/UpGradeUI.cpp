@@ -5,6 +5,7 @@
 #include	"Interpolation.h"
 #include	"GameManager.h"
 #include	"GameParam.h"
+#include	"Sound.h"
 #include	"PlayerManager.h"
 #include	"LevelManager.h"
 #include	"InputManager.h"
@@ -263,6 +264,7 @@ namespace
 
 			levelManager->SendLevel( select );
 			level++;
+			sound->PlaySE(SE::LVUP);
 		}
 	}
 
@@ -284,6 +286,8 @@ namespace
 			beforeSelect = select;
 			if ( axisX > 0.0f )	select++;
 			else select--;
+
+			sound->PlaySE(SE::MOVE_SELECT);
 
 			//	パラメータリセット
 			percentage = percentage2 = 0.0f;

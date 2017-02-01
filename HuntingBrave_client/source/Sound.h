@@ -15,30 +15,36 @@ namespace
 	{
 		enum SE_TYPE
 		{
+			//　プレイヤー・敵関連
 			ATTACK,
 			ATTACK_HIT1,
 			ATTACK_HIT2,
-			CANCEL,
-			ENEMY_DEAD,
-			BIG_ENEMY_DEAD,		//　まだ
-			IM_OK,
-			JOIN,
-
+			STEP,
 			KILL,
 			LVUP,
 			MAGIC_CHARGE,
 			MAGIC_HIT,
 			MAGIC_SHOT,
 			MAX_UPGRADE,
-			MOVE_SELECT,
-			OK,
 			PLAYER_DEAD,
-			RESULT,
-			STEP,
-			TIME_END,
-			TITLE_OK,
 			UPGRADE_OPEN,
 			USE_ITEM,
+
+			ENEMY_DEAD,
+			BIG_ENEMY_DEAD,		//　まだ
+			
+
+			//　名前・メニュ－等
+			MOVE_SELECT,
+			OK,
+			CANCEL,
+			IM_OK,
+			JOIN,
+
+			TITLE_OK,
+			RESULT,
+
+			TIME_END,	//　まだ
 
 			END		//	終端
 		};

@@ -255,9 +255,12 @@ namespace
 		//	サーバーからの情報を反映
 		SetPlayerParam( playerParam );
 
+
 		//	魔法詠唱中なら描画
-		if ( obj->GetMotion() == MOTION_NUM::MAGIC_CHANT )	
-			effectManager->SetCircleRender( id );
+		if (obj->GetMotion() == MOTION_NUM::MAGIC_CHANT)
+		{
+			effectManager->SetCircleRender(id);
+		}
 
 		//	無敵状態チェック
 		CheckUnrivaled();
@@ -318,7 +321,29 @@ namespace
 		switch ( motion )
 		{
 			case MOTION_NUM::ATTACK1:
+			case MOTION_NUM::ATTACK2:
 				sound->PlaySE( SE::ATTACK );
+				break;
+
+			case MOTION_NUM::STEP:
+				sound->PlaySE(SE::STEP);
+				break;
+
+			/*case MOTION_NUM::LEVEL_UP:
+				sound->PlaySE(SE::LVUP);
+				break;*/
+
+			case MOTION_NUM::DEAD:
+				sound->PlaySE(SE::PLAYER_DEAD);
+				break;
+
+			case MOTION_NUM::MAGIC_CHANT:
+				sound->PlaySE(SE::MAGIC_CHARGE);
+				break;
+
+			//　メニュー開く音源がない　
+			case MOTION_NUM::MENU:
+				sound->PlaySE(SE::OK);
 				break;
 
 			default:
@@ -340,6 +365,7 @@ namespace
 		SetAngle( angle );
 		SetMotion( gameParam->GetPlayerParam( id ).motion );
 		SetScale( PLAYER_SCALE );
+		sound->PlaySE(SE::MAX_UPGRADE);
 		if ( curClass == CLASS_TYPE::KNIGHT )	SetScale( KNIGHT_SCALE );
 		obj->Update();
 	}
