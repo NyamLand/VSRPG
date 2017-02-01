@@ -259,8 +259,7 @@ namespace
 	{
 		if ( levelManager->GetLevel( select ) != levelManager->LEVEL_MAX )
 		{
-			if (levelManager->GetExp() < (30 + level * 5)) return;
-
+			if ( levelManager->GetExp() < ( 30 + level * 5 ) ) return;
 
 			levelManager->SendLevel( select );
 			level++;

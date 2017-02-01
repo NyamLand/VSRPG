@@ -107,6 +107,7 @@ public:
 	void	PlaySE( int motion );
 	void	ChangeFaceTexture( char faceType );
 	void	ChangeFaceType( int motion );
+	void	CheckUnrivaled( void );
 
 	//	î•ñİ’è
 	void	SetPlayerParam( const PlayerParam& playerParam );

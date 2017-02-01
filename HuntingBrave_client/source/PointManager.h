@@ -16,7 +16,7 @@ struct PointInfo
 	int	point;
 	bool	operator<( const PointInfo& another )const
 	{
-		return ( id < another.id );
+		return ( another.point < point );
 	}
 	bool	operator==( int another )const
 	{

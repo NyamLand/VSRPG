@@ -20,8 +20,8 @@
 //----------------------------------------------------------------------------------------------
 
 //	定数
-#define	CHANT_TIME	1.0f
-#define	DEATH_TIME	3.0f
+#define	CHANT_TIME	0.5f
+#define	DEATH_TIME	8.0f
 #define	STEP_DRAG		0.97f
 
 //	入力情報
@@ -137,7 +137,7 @@ namespace
 				168,// 攻撃２判定終了
 				179,// 攻撃２終了
 				240,// ステップ終了
-				296,// 魔法詠唱終了
+				270,// 魔法詠唱終了
 				330,// 魔法攻撃開始
 				355,// 魔法攻撃終章
 				384,// ノックバック(ダメージ)1
@@ -153,7 +153,7 @@ namespace
 				188,// 攻撃２判定終了
 				204,// 攻撃２終了
 				260,// ステップ終了
-				316,// 魔法詠唱終了
+				290,// 魔法詠唱終了
 				342,// 魔法攻撃開始
 				355,// 魔法攻撃終章
 				404,// ノックバック(ダメージ)1
@@ -169,7 +169,7 @@ namespace
 				185,// 攻撃２判定終了
 				204,// 攻撃２終了
 				260,// ステップ終了
-				317,// 魔法詠唱終了
+				290,// 魔法詠唱終了
 				340,// 魔法攻撃開始
 				355,// 魔法攻撃終章
 				404,// ノックバック(ダメージ)1
@@ -216,7 +216,6 @@ namespace
 		ModeFunction[MODE::DEATH] = &Player::ModeDeath;
 		ModeFunction[MODE::STEP] = &Player::ModeStep;
 		ModeFunction[MODE::MENU] = &Player::ModeMenu;
-
 		
 		timer = new Timer();
 	}
@@ -326,6 +325,7 @@ namespace
 			{
 				gameParam->InitializePlayer( index );
 				pParam = gameManager->GetInitInfo( index );
+				pParam.charType = gameParam->GetPlayerParam( index ).charType;
 				SetMode( MODE::MOVE );
 			}
 		}
@@ -382,7 +382,8 @@ namespace
 				ANGLE_ADJUST_MOVE_SPEED );
 
 			//	移動
-			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * MOVE_SPEED;
+			Vector3 move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) 
+				* ( MOVE_SPEED * gameParam->GetPlayerStatus( index ).speed );
 			AddMove( move );
 
 			SetMotion( PLAYER_MOTION::RUN );
@@ -419,7 +420,7 @@ namespace
 	void	Player::SwordAttackSecond(void)
 	{
 		//	フレーム管理
-		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
+		if ( pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
 			pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_END])
 		{
 			gameParam->GetAttackInfo(index).attackParam = AttackInfo::ATTACK2;

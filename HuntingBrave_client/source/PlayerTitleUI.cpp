@@ -104,6 +104,8 @@
 	{
 		frontTitleImage->x = x - frontTitleImage->w / 2;
 		frontTitleImage->y = y;
+		frontTitleImage2->x = x - frontTitleImage2->w / 2;
+		frontTitleImage2->y = y;
 		backTitleImage->x = x + frontTitleImage->w / 2;
 		backTitleImage->y = y;
 	}

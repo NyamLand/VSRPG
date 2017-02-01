@@ -60,6 +60,7 @@ public:
 	//	ƒqƒbƒgî•ñ‘—M
 	void		SendBigHuntInfo( char enemyType );
 	void		SendSmallHuntInfo( char enemyType );
+	void		SendSmallEnemyAttackHit( char enemyType );
 
 	//	“–‚½‚è”»’è
 	bool	DistCheck( const Vector3& p1, const Vector3& p2, float dist );

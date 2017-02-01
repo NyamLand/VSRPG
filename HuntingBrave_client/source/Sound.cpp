@@ -22,9 +22,12 @@
 				"DATA/Sound/BGM/menu.ogg",
 				"DATA/Sound/BGM/fight.ogg",
 				"DATA/Sound/BGM/iiwake.ogg",
-				"DATA/Sound/BGM/Result.ogg"
+				"DATA/Sound/BGM/Result.ogg",
+				"DATA/Sound/BGM/dead.ogg"
 			};
 		}
+
+#define	VOLUME_MAX	200
 	}
 
 //---------------------------------------------------------------------------
@@ -34,8 +37,6 @@
 	//	コンストラクタ
 	Sound::Sound( void )
 	{
-		isPlay = false;
-
 		//	SEセット
 		IEX_SetWAV( SE::ATTACK, "DATA/Sound/SE/attack.wav" );
 		IEX_SetWAV( SE::ATTACK_HIT1, "DATA/Sound/SE/attack01_hit.wav" );
@@ -61,7 +62,11 @@
 		IEX_SetWAV( SE::UPGRADE_OPEN, "DATA/Sound/SE/UpgradeOpen.wav" );
 		IEX_SetWAV( SE::USE_ITEM, "DATA/Sound/SE/Useitem.wav" );
 
-
+		for ( int i = 0; i < BGM::BGM_MAX; i++ )
+		{
+			isPlay[i] = false;
+			stream[i] = nullptr;
+		}
 	}
 
 	//	デストラクタ
@@ -69,6 +74,10 @@
 	{
 
 	}
+
+//---------------------------------------------------------------------------
+//	更新
+//---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
 //	動作関数
@@ -89,18 +98,18 @@
 	//	BGM再生
 	void	Sound::PlayBGM( int type )
 	{
-		stream = IEX_PlayStreamSound( bgmfile[ type ] );
-		isPlay = true;
+		stream[type] = IEX_PlayStreamSound( bgmfile[ type ] );
+		isPlay[type] = true;	
 	}
 
 	//	BGM停止
 	void	Sound::StopBGM( void )
 	{
-		if ( isPlay )
+		for ( int i = 0; i < BGM::BGM_MAX; i++ )
 		{
-			IEX_StopStreamSound( stream );
-			isPlay = false;
-			
+			if ( !isPlay[i] )	continue;
+			IEX_StopStreamSound( stream[i] );
+			isPlay[i] = false;
 		}
 	}
 
@@ -112,6 +121,28 @@
 		
 		//	BGM停止
 		StopBGM();
+	}
+
+//---------------------------------------------------------------------------
+//	情報設定
+//---------------------------------------------------------------------------
+
+	//	ボリューム設定
+	void	Sound::SetVolume( int type, int volume )
+	{
+		IEX_SetStreamSoundVolume( stream[type], volume );
+	}
+
+	//	ボリュームリセット
+	void	Sound::ResetVolume( int type )
+	{
+		IEX_SetStreamSoundVolume( stream[type], VOLUME_MAX );
+	}
+
+	//	ミュート
+	void	Sound::MuteVolume( int type )
+	{
+		IEX_SetStreamSoundVolume( stream[type], 0 );
 	}
 
 //---------------------------------------------------------------------------
@@ -130,7 +161,7 @@
 	//	BGM再生状態取得
 	bool	Sound::GetBGMState( void )
 	{
-		bool	out = isPlay;
+		bool	out = isPlay[0];
 		return	out;
 	}
 

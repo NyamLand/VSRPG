@@ -68,6 +68,7 @@ public:
 
 	//	アップグレードデータ取得
 	int	GetInitStatus( char upGradeData );
+	float	GetInitSpeed( void );
 	int	GetUpGrade( char levelType, char upGradeData, char level );
 	float GetUpGradeSpeed( char levelType, char level );
 };

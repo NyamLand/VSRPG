@@ -42,6 +42,9 @@ public:
 	void	MagicCollisionToEnemy( int player, CollisionShape colShape );
 	void	MagicCollision( int player );
 
+	//	‘—M
+	void	SendHitSE( char seType );
+
 	//	Œ`ó“–‚½‚è”»’è
 	bool	CheckCollision( const CollisionShape& shape1, const CollisionShape& shape2 );
 	COLLISION_PAIR	GetCollisionPair( SHAPE_TYPE type1, SHAPE_TYPE type2 );

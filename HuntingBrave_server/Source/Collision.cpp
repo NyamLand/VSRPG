@@ -24,6 +24,15 @@
 
 Collision*	collision = nullptr;
 
+namespace SE_TYPE
+{
+	enum
+	{
+		ATTACK_SE,
+		MAGIC_SE
+	};
+}
+
 //--------------------------------------------------------------------------------------------
 //	初期化・解放
 //--------------------------------------------------------------------------------------------
@@ -124,9 +133,18 @@ Collision*	collision = nullptr;
 		//	当たっていればライフ計算
 		if ( isHit == true )
 		{
-			//	ライフ計算
-			int damage = gameParam->GetPlayerStatus( player ).power - gameParam->GetPlayerStatus( target ).defense;
+			//	ヒットSE送信
+			SendHitSE( SE_TYPE::ATTACK_SE );
+
+			//	パワー計算
+			int power = gameParam->GetPlayerStatus( player ).power;
+			if ( attackInfo.attackParam == ATTACK2 )	power = ( int )( ( float )power * 1.2f );
+
+			//	ダメージ計算
+			int damage = power - gameParam->GetPlayerStatus( target ).defense;
 			if ( damage <= 0 )	damage = 5;
+
+			//	ライフ計算
 			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -damage );
 			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
 			else
@@ -208,6 +226,9 @@ Collision*	collision = nullptr;
 			//	当たっていればライフ計算
 			if ( isHit == true )
 			{
+				//	ヒットSE送信
+				SendHitSE( SE_TYPE::MAGIC_SE );
+
 				//	ライフ計算
 				int damage = gameParam->GetPlayerStatus( ( *it )->GetID() ).magicAttack - gameParam->GetPlayerStatus( player ).magicDefense;
 				if ( damage <= 0 )	damage = 5;
@@ -250,6 +271,32 @@ Collision*	collision = nullptr;
 				enemyList[i]->SetHit( player );
 				enemyList[i]->CalcLife( player );
 			}
+		}
+	}
+
+//--------------------------------------------------------------------------------------------
+//	送信
+//--------------------------------------------------------------------------------------------
+
+	//	ヒット時SE種類送信
+	void	Collision::SendHitSE( char seType )
+	{
+		static	struct
+		{
+			char com;
+			char responseCom;
+			char hitType;
+		} sendInfo;
+
+		sendInfo.com = COMMANDS::RESPONSE;
+		sendInfo.responseCom = RESPONSE_COMMAND::HIT_SE_TYPE;
+		sendInfo.hitType = seType;
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( gameParam->GetPlayerActive( i ) == false )		continue;
+
+			gameParam->send( i, ( LPSTR )&sendInfo, sizeof( sendInfo ) );
 		}
 	}
 

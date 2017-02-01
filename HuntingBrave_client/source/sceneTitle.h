@@ -15,7 +15,6 @@ class sceneTitle : public Scene
 private:
 	iex2DObj*	bg;
 	int		step;
-	float		circleGage;
 
 public:
 	//	‰Šú‰»E‰ğ•ú

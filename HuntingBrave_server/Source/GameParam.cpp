@@ -10,6 +10,7 @@
 #include	"ItemManager.h"
 #include	"PointManager.h"
 #include	"EnemyManager.h"
+#include	"Collision.h"
 #include	"GameParam.h"
 
 //*****************************************************************************************************************************
@@ -23,7 +24,7 @@
 //----------------------------------------------------------------------------------------------
 
 #define	INIT_LIFE		5
-#define	TIME_MAX	( 9.0f * MINUTE + 30.0f )
+#define	TIME_MAX	10*MINUTE//( 9.0f * MINUTE + 30.0f )
 GameParam*	gameParam = nullptr;
 
 //----------------------------------------------------------------------------------------------
@@ -65,7 +66,7 @@ GameParam*	gameParam = nullptr;
 	{
 		lifeInfo[id].life = lifeInfo[id].maxLife;
 		playerParam[id].pos = gameManager->GetInitInfo( id ).pos;
-		playerParam[id] = gameManager->GetInitInfo( id );
+		//playerParam[id] = gameManager->GetInitInfo( id );
 	}
 
 	//	ゲーム初期化
@@ -180,6 +181,7 @@ GameParam*	gameParam = nullptr;
 
 		case COMMANDS::DEBUG:
 		{
+								collision->SendHitSE( 0 );
 								//	ライフ計算
 								int damage = 50;
 								if (damage <= 0)	damage = 5;
@@ -318,11 +320,25 @@ GameParam*	gameParam = nullptr;
 			break;
 
 		case RECEIVE_ENEMY_COMMAND::SMALL_ENEMY_HUNT:
+			//	点数計算
+			pointManager->ReceiveHuntInfo( client, data );
+
 			//	経験値計算
 			levelManager->ReceiveHuntInfo( client, data );
 			break;
 
 		case RECEIVE_ENEMY_COMMAND::PLAYER_HIT:
+			{
+				//	ライフ計算
+				int damage = 5;
+				bool isAlive = gameParam->GetLifeInfo( client ).CulcLife( -damage );
+				if ( isAlive )playerManager->GetPlayer( client )->SetMode( MODE::DAMAGE );
+				else
+				{
+					//	プレイヤーを死亡させる
+					playerManager->GetPlayer( client )->SetDeath();
+				}
+			}
 			break;
 
 		case RECEIVE_ENEMY_COMMAND::CLIENT_OK:

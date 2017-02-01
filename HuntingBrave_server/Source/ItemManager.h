@@ -9,7 +9,7 @@
 
 //	include
 #include	"HealItem.h"
-#include	"LedItem.h"
+#include	"SpeedItem.h"
 #include	"AttackItem.h"
 #include	"DefenseItem.h"
 
@@ -28,7 +28,7 @@ public:
 		HEAL,
 		ATK,
 		DEF,
-		LED,
+		SPEED,
 		TYPE_MAX,
 		SET_ITEM
 	};

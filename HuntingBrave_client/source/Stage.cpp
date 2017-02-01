@@ -20,12 +20,12 @@ namespace
 {
 	const LPSTR fileName[] =
 	{
-		"DATA/BG/stage.IMO",
 		"DATA/BG/soto.IMO",
 		"DATA/BG/tree.IMO",
 		"DATA/BG/toride.IMO",
 		"DATA/BG/depari.IMO",
 		"DATA/BG/hei.IMO",
+		"DATA/BG/stage.IMO",
 		"DATA/BG/mountain.IMO"
 	};
 }
@@ -35,14 +35,8 @@ namespace
 //----------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Stage::Stage( void ) : collisionMesh( nullptr )
+	Stage::Stage( void ) : view( nullptr ), viewTex( nullptr )
 	{
-		//	stage初期化
-		collisionMesh = new iexMesh( "DATA/BG/stage_atari.IMO" );
-		//collisionMesh->SetScale(STAGE_SCALE);
-		//collisionMesh->SetPos(STAGE_DOWN);
-		collisionMesh->Update();
-
 		//	各モデル調整
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
@@ -52,16 +46,37 @@ namespace
 			stage[i]->SetPos( STAGE_DOWN );
 			stage[i]->Update();
 		}
+		view = new iexView();
+		view->Set( Vector3( 0.0f, 650.0f, 0.0f ), Vector3( 0.0f, 0.0f, 0.1f ) );
+
+		//	テクスチャ初期化
+		viewTex = new Image();
+		viewTex->obj = new iex2DObj( 1280, 720, IEX2D_RENDERTARGET );
+		viewTex->x = 0;
+		viewTex->y = 0;
+		viewTex->w= 0;
+		viewTex->h = 0;
+		viewTex->sx = 280;
+		viewTex->sy = 0;
+		viewTex->sw = 1280 - 560;
+		viewTex->sh = 720;
+		initState = false;
+
+		//	バックバッファポインタ退避
+		iexSystem::GetDevice()->GetRenderTarget( 0, &backBuffer );
 	}
 
 	//	デストラクタ
 	Stage::~Stage( void )
 	{
-		SafeDelete( collisionMesh );
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
 			SafeDelete( stage[i] );
 		}
+
+		SafeDelete( view );
+		SafeDelete( viewTex );
+		backBuffer->Release();
 	}
 	
 //----------------------------------------------------------------------------------------
@@ -71,17 +86,42 @@ namespace
 	//	描画
 	void	Stage::Render( void )
 	{
-		//collisionMesh->Render();
+		RenderTexture();
+
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
 			stage[i]->Render();
 		}
 	}
+
+	//	テクスチャ描画
+	void	Stage::RenderTexture( void )
+	{
+		if ( initState == true )	return;
+		viewTex->obj->RenderTarget( 0 );
+		view->Activate();
+		view->Clear();
+
+		for ( int i = 0; i < PARTS_MAX; i++ )
+		{
+			stage[i]->Render();
+		}
+
+		//	フレームバッファへ切り替え
+		iexSystem::GetDevice()->SetRenderTarget( 0, backBuffer );
+
+		initState = true;
+	}
 	
 //----------------------------------------------------------------------------------------
-//	グローバル
+//	情報取得
 //----------------------------------------------------------------------------------------
 
+	//	テクスチャ取得
+	Image*&	Stage::GetTexture( void )
+	{
+		return	viewTex;
+	}
 
 
 

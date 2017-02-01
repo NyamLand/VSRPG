@@ -219,7 +219,7 @@ void	sceneMain::Render( void )
 
 	//	ui描画
 	uiManager->Render();
-
+	
 	screen->Render();
 
 	//	各プレイヤー座標表示
@@ -287,7 +287,7 @@ void	sceneMain::DeadScreen( void )
 	}
 
 	//	補間処理
-	Interpolation::PercentageUpdate( blackWhitePercentage, BLACK_WHITE_SPEED );
+	bool state = Interpolation::PercentageUpdate( blackWhitePercentage, BLACK_WHITE_SPEED );
 }
 
 //	受信送信

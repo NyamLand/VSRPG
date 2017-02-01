@@ -2,11 +2,12 @@
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
 #include	"GameParam.h"
-#include	"LedItem.h"
+#include	"LevelManager.h"
+#include	"SpeedItem.h"
 
 //**************************************************************************
 //
-//	LedItemクラス
+//	SpeedItemクラス
 //
 //**************************************************************************
 
@@ -22,13 +23,13 @@
 //----------------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	LedItem::LedItem( int id ) : Item( id )
+	SpeedItem::SpeedItem( int id ) : Item( id )
 	{
 	
 	}
 
 	//	デストラクタ
-	LedItem::~LedItem( void )
+	SpeedItem::~SpeedItem( void )
 	{
 
 	}
@@ -38,25 +39,30 @@
 //----------------------------------------------------------------------------------------------
 
 	//	更新
-	void	LedItem::Update( void )
+	void	SpeedItem::Update( void )
 	{
 		if ( timer->Update() )
 		{
 			//	無効中処理
 			if ( state )
 			{
+				//	有効中処理
+				gameParam->GetPlayerStatus( id ).speed =
+					gameParam->GetPlayerStatus( id ).saveSpeed;
+
 				//	ステータスを無効
 				state = false;
-
-				//	送信
-				
 			}
 		}
 		else
 		{
 			//	有効中処理
-
+			gameParam->GetPlayerStatus( id ).speed =
+				gameParam->GetPlayerStatus( id ).saveSpeed * DOUBLE_PARAM;
 		}
+
+		//	送信
+		levelManager->SendStatus( id, SEND_STATUS::SPEED, gameParam->GetPlayerStatus( id ).speed );
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -64,7 +70,7 @@
 //----------------------------------------------------------------------------------------------
 
 	//	アイテム使用
-	void	LedItem::UseItem( void )
+	void	SpeedItem::UseItem( void )
 	{
 		timer->Start( EFFECTIVE_TIME );
 		state = true;

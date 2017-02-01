@@ -23,7 +23,7 @@ public:
 	//	‰Šú‰»E‰ğ•ú
 	Moffu(void);
 	~Moffu(void)override;
-	bool	Initialize( void )override;
+	bool	Initialize( int life );
 
 	//	XV
 	void	Update( void )override;

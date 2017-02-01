@@ -23,6 +23,7 @@
 
 //	モデル情報
 #define	PLAYER_SCALE	0.2f
+#define	KNIGHT_SCALE	0.08f
 #define	PLAYER_HEIGHT		2.5f
 #define	PLAYER_RADIUS		1.5f
 #define	ATTACK_RADIUS		0.5f
@@ -68,7 +69,7 @@ namespace
 			"DATA/CHR/suppin/Suppin.IEM",
 			"DATA/CHR/Fighter/Fighter.IEM",
 			"DATA/CHR/Magician/Magician.IEM",
-			"DATA/CHR/suppin/Suppin.IEM",
+			"DATA/CHR/Knight/Knight.IEM",
 			"DATA/CHR/Prist/prist.IEM",
 			"DATA/CHR/suppin/Suppin.IEM"
 		};
@@ -111,7 +112,7 @@ namespace
 			"DATA/CHR/suppin/body_",
 			"DATA/CHR/Fighter/body_",
 			"DATA/CHR/Magician/body_",
-			"DATA/CHR/suppin/body_",
+			"DATA/CHR/Knight/body_",
 			"DATA/CHR/Prist/body_",
 			"DATA/CHR/suppin/body_"
 		};
@@ -124,7 +125,7 @@ namespace
 			BONE_NUM::RIGHT_HAND,
 			BONE_NUM::LEFT_HAND,
 			BONE_NUM::LEFT_HAND,
-			BONE_NUM::RIGHT_HAND,
+			BONE_NUM::LEFT_HAND,
 			BONE_NUM::RIGHT_HAND,
 			BONE_NUM::RIGHT_HAND,
 		};
@@ -187,7 +188,7 @@ namespace
 
 		//	バー初期化
 		bar = new EnemyHpUI();
-		bar->Initilaize( HPUI_TYPE::PLAYER, GetLifeInfo().maxLife );
+		bar->Initilaize( HPUI_TYPE::PLAYER, gameParam->GetPlayerStatus().maxLife );
 		bar->SetId( id );
 
 		if ( obj == nullptr )	return	false;
@@ -257,6 +258,9 @@ namespace
 		//	魔法詠唱中なら描画
 		if ( obj->GetMotion() == MOTION_NUM::MAGIC_CHANT )	
 			effectManager->SetCircleRender( id );
+
+		//	無敵状態チェック
+		CheckUnrivaled();
 		
 		//	更新
 		BaseChara::Update();
@@ -335,6 +339,8 @@ namespace
 		SetPos( pos );
 		SetAngle( angle );
 		SetMotion( gameParam->GetPlayerParam( id ).motion );
+		SetScale( PLAYER_SCALE );
+		if ( curClass == CLASS_TYPE::KNIGHT )	SetScale( KNIGHT_SCALE );
 		obj->Update();
 	}
 
@@ -392,6 +398,22 @@ namespace
 		default:
 			ChangeFaceTexture( FACE_TYPE::NORMAL );
 			break;
+		}
+	}
+
+	//	無敵状態チェック
+	void	Player::CheckUnrivaled( void )
+	{
+		switch ( obj->GetMotion() )
+		{
+		case MOTION_NUM::KNOCKBACK1:
+		case MOTION_NUM::FALL:
+		case MOTION_NUM::DEAD:
+			lifeInfo.active = false;
+			break;
+
+		default:
+			lifeInfo.active = true;
 		}
 	}
 

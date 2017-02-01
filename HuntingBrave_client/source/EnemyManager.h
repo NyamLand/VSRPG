@@ -10,6 +10,7 @@
 //	include
 #include	"Singleton.h"
 #include	<list>
+#include	"Timer.h"
 #include	"Wolf.h"
 #include	"Moffu.h"
 
@@ -34,6 +35,10 @@ private:
 
 	std::vector<Enemy*>	netList;
 
+	int lifeUpParam[ENEMY_TYPE::TYPE_MAX];
+
+	Timer*	timer;
+
 	//	‰Šú‰»E‰ğ•ú
 	EnemyManager( void );
 	~EnemyManager( void )override;
@@ -54,6 +59,7 @@ public:
 	void	PosCheck( Enemy*	enemy );
 	void	PlayerPosCheck( Enemy*	eneny );
 	void	AddRegularTimeIntervals( void );
+	void	LifeUP( void );
 
 	//	î•ñİ’è
 

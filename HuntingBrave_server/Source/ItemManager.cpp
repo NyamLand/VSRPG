@@ -143,8 +143,8 @@ ItemManager*	itemManager = nullptr;
 			item = new HealItem( id );
 			break;
 
-		case ITEM_TYPE::LED:
-			item = new LedItem( id );
+		case ITEM_TYPE::SPEED:
+			item = new SpeedItem( id );
 			break;
 
 		default:

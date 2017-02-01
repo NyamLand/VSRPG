@@ -22,7 +22,16 @@
 //	定数
 #define	APPEND_INTERVAL		3
 #define	ENEMY_MAX			5
-#define APPEND_RADIUS		15.0f	
+#define APPEND_RADIUS		15.0f
+#define APPEND_RADIUS_		220.0f		//自陣以外
+
+#define	MOFFU_INIT_LIFE	10
+#define	WOLF_INIT_LIFE		20
+#define	MOFFU_LIFE_UP_PARAM		20
+#define	WOLF_LIFE_UP_PARAM	25
+
+#define	TIMER_RESET	10.0f
+#define	MINUTE	60
 
 
 //-------------------------------------------------------------------------------------
@@ -30,7 +39,8 @@
 //-------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	EnemyManager::EnemyManager( void ) : appendOK( true )
+	EnemyManager::EnemyManager( void ):
+		appendOK( true )
 	{
 		//リスト初期化
 		enemylist.clear();
@@ -57,8 +67,13 @@
 		//	モデル読み込み
 		Load();
 		
-		
+		//	ライフ初期化
+		lifeUpParam[ENEMY_TYPE::SMALL_ENEMY] = MOFFU_INIT_LIFE;
+		lifeUpParam[ENEMY_TYPE::BIG_ENEMY] = WOLF_INIT_LIFE;
 
+		timer = new Timer();
+		timer->Start( TIMER_RESET );
+	
 		return	true;
 	}
 
@@ -74,6 +89,8 @@
 		{
 			SafeDelete( org[i] );
 		}
+
+		SafeDelete( timer );
 	}
 
 	//	オブジェクト読み込み
@@ -90,6 +107,14 @@
 	//	更新
 	void	EnemyManager::Update( void )
 	{
+		if ( timer->Update() )
+		{
+			if ( ( int )gameManager->GetTime() % MINUTE == 0 )
+			{
+				LifeUP();
+			}
+		}
+
 		int		enemyNum = 0;
 
 		for ( auto it = enemylist.begin(); it != enemylist.end(); )
@@ -169,7 +194,7 @@
 		//	初期化
 		enemy->SetEnemyType( type );
 		enemy->SetObj( org[type]->Clone() );
-		enemy->Initialize();
+		enemy->Initialize( lifeUpParam[type] );
 		enemy->SetPos( pos );
 		
 
@@ -184,7 +209,6 @@
 		{
 			//	自分VS自分は除外
 			if ( ( *it ) == enemy )	continue;
-			
 
 				//	自分→相手へのベクトル
 				Vector3	vec = enemy->GetPos() - (*it)->GetPos();
@@ -209,28 +233,30 @@
 	void	EnemyManager::PlayerPosCheck( Enemy* enemy )
 	{
 		//	自分→相手へのベクトル
-		for ( int p = 0; p < PLAYER_MAX; p++ )
+		for (int p = 0; p < PLAYER_MAX; p++)
 		{
 			//	存在チェック
-			if( !gameParam->GetPlayerActive( p ) )	continue;
+			if (!gameParam->GetPlayerActive(p))	continue;
 			if (enemy->GetMode() == enemy->MODE::DEAD)continue;
 
 			//	プレイヤーへのベクトルを求める
-			Vector3	pPos = playerManager->GetPlayer( p )->GetPos();
+			Vector3	pPos = playerManager->GetPlayer(p)->GetPos();
 			Vector3	vec = pPos - enemy->GetPos();
 			vec.y = 0.0f;
 			float		length = vec.Length();
-			
-			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer( p )->GetCollisionInfo().radius;
+
+			float collisionDist = enemy->GetCollisionInfo().radius + playerManager->GetPlayer(p)->GetCollisionInfo().radius;
 			//	近い場合は離す
-			if ( length <  collisionDist )
+			if (length <  collisionDist)
 			{
 				//	ベクトル正規化
 				vec.Normalize();
 
 				//	離す
-				enemy->SetPos( pPos - vec * collisionDist );
+				enemy->SetPos(pPos - vec * collisionDist);
 			}
+			
+		
 		}
 	}
 
@@ -248,17 +274,29 @@
 		}
 
 		if ( !appendOK )	return;
-
-		//	出現座標の設定
-		float randX = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
-		float randZ = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
-		Vector3	appendPos = gameParam->GetPlayerParam(id).pos + Vector3( randX, 0.0f, randZ );
-			
-		//	リストに追加
-		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
 		
+		//	出現座標の設定
+		float randX = random->GetFloat(-APPEND_RADIUS, APPEND_RADIUS);
+		float randZ = random->GetFloat(-APPEND_RADIUS, APPEND_RADIUS);
+		Vector3	appendPos = gameParam->GetPlayerParam(id).pos + Vector3(randX, 0.0f, randZ);
+
+		float	length = Vector3(Vector3(0.0f, 0.0f, 0.0f) - appendPos).Length();
+		if (length > APPEND_RADIUS_)	return;
+
+		//	リストに追加
+		Append(appendPos, random->GetInt(BIG_ENEMY, SMALL_ENEMY));
+
 		//	生成フラグをfalseにする
 		appendOK = false;
+		
+	}
+
+	//	ライフ上昇
+	void	EnemyManager::LifeUP( void )
+	{
+		timer->Start( TIMER_RESET );
+		lifeUpParam[ENEMY_TYPE::SMALL_ENEMY] += MOFFU_LIFE_UP_PARAM;
+		lifeUpParam[ENEMY_TYPE::BIG_ENEMY] += WOLF_LIFE_UP_PARAM;
 	}
 
 //-------------------------------------------------------------------------------------

@@ -50,6 +50,7 @@ public:
 	//	初期化・解放
 	Enemy( void );
 	~Enemy( void )override;
+	virtual bool	Initialize( int life ) = 0;
 
 	//	各モード動作関数
 	virtual void	EntryMode( void ) = 0;

@@ -20,7 +20,7 @@
 //------------------------------------------------------------------------------------
 
 #define	ANGLEADJUST_SPEED 1.0f
-
+#define	DEAD_LENGTH	30.0f
 
 //------------------------------------------------------------------------------------
 //	初期化・解放
@@ -90,7 +90,7 @@
 	//	プレイヤーとの距離チェック
 	bool	Enemy::DistCheck( float& length )
 	{
-		Vector3	vec = playerManager->GetPlayer( 0 )->GetPos() - pos;
+		Vector3	vec = playerManager->GetPlayer( gameParam->GetMyIndex() )->GetPos() - pos;
 		length = vec.Length();
 
 		//	一定の距離まで近づくと攻撃
@@ -98,6 +98,11 @@
 		{
 			SetMode( MODE::ATTACK );
 			return	true;
+		}
+
+		else if (length>DEAD_LENGTH)
+		{
+			SetMode(MODE::DEAD);
 		}
 		return false;
 	}
