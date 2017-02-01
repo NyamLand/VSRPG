@@ -33,6 +33,11 @@ class TimerUI
 private:
 	Image*	period;
 	NumberUI*	number[2];	//	min、second
+
+	//	残り時間ラスト演出用
+	Image*	period_wave;
+	NumberUI*	number_wave[2];	//	min、second
+
 	float	timer;
 	int		color;
 	int		posx, posy, size;

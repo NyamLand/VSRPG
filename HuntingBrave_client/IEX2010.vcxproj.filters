@@ -283,11 +283,8 @@
     <ClCompile Include="source\TestResult.cpp">
       <Filter>Source\Scene\sceneResult</Filter>
     </ClCompile>
-    <ClCompile Include="source\RankUI.cpp">
-      <Filter>Source\UI\RankUI</Filter>
-    </ClCompile>
-    <ClCompile Include="source\PlayerNumUI.cpp">
-      <Filter>Source\UI\PlayerNumUI</Filter>
+    <ClCompile Include="source\TimeUpUI.cpp">
+      <Filter>Source\UI\TimeUpUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -537,11 +534,8 @@
     <ClInclude Include="source\TestResult.h">
       <Filter>Source\Scene\sceneResult</Filter>
     </ClInclude>
-    <ClInclude Include="source\RankUI.h">
-      <Filter>Source\UI\RankUI</Filter>
-    </ClInclude>
-    <ClInclude Include="source\PlayerNumUI.h">
-      <Filter>Source\UI\PlayerNumUI</Filter>
+    <ClInclude Include="source\TimeUpUI.h">
+      <Filter>Source\UI\TimeUpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -824,14 +818,8 @@
     <Filter Include="Source\Enemy\Shadow">
       <UniqueIdentifier>{b82150f9-d918-47b6-b285-20ef0a12ea36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\UI\RankUI">
-      <UniqueIdentifier>{962b5083-a12b-412f-9a2a-07c2f63929da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene\sceneResult\ResultUI">
-      <UniqueIdentifier>{42b45aca-a6e0-4e30-8b03-d676884d1785}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\UI\PlayerNumUI">
-      <UniqueIdentifier>{257c98c0-9075-47af-bbe5-826ea002efd9}</UniqueIdentifier>
+    <Filter Include="Source\UI\TimeUpUI">
+      <UniqueIdentifier>{a145281b-a6cd-4705-a05d-5b0b21934e93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

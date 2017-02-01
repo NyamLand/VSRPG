@@ -118,7 +118,7 @@
 	void	Particle::Smoke(const Vector3& pos, const float& scale, const int& time)
 	{
 		Vector3	Pos, Move, Power;
-		for (int j = 0; j<Par2; j++){
+		for (int j = 0; j<Par5; j++){
 			Pos.x = pos.x;
 			Pos.y = pos.y;
 			Pos.z = pos.z;

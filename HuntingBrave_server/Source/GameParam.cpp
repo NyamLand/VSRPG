@@ -528,7 +528,7 @@ GameParam*	gameParam = nullptr;
 		{
 			gameManager->MatchingInfoInitialize();
 			gameManager->SetGameState( true );
-			gameManager->GetTimer()->Start( TIME_MAX );
+			gameManager->GetTimer()->Start( TIME_MAX * 3 );
 		}
 
 		return	-1;

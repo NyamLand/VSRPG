@@ -120,6 +120,7 @@
     <ClCompile Include="source\RankUI.cpp" />
     <ClCompile Include="source\shadow.cpp" />
     <ClCompile Include="source\TestResult.cpp" />
+    <ClCompile Include="source\TimeUpUI.cpp" />
     <ClCompile Include="source\Wolf.cpp" />
     <ClCompile Include="source\CharaInfo.cpp" />
     <ClCompile Include="source\Collision.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="source\RankUI.h" />
     <ClInclude Include="source\shadow.h" />
     <ClInclude Include="source\TestResult.h" />
+    <ClInclude Include="source\TimeUpUI.h" />
     <ClInclude Include="source\Wolf.h" />
     <ClInclude Include="source\CharaInfo.h" />
     <ClInclude Include="source\Collision.h" />

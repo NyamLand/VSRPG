@@ -100,7 +100,7 @@ public:
 	//--------------------------------
 
 	//	点滅更新（）
-	void	FlashUpdate();
+	bool	FlashUpdate();
 
 	//	点滅の設定(点滅スピード)
 	void	SetFlash(float speed);
@@ -110,8 +110,11 @@ public:
 	//--------------------------------
 
 	//	拡大縮小用設定(拡大スピード)
-	void	SetScaling(float speed);
+	void	SetScaling(float speed, int mode = IMAGE_SCALING::BIG);
 
 	//	拡大縮小更新(最大サイズ)
-	void	ScalingUpdate(int max_scale);
+	bool	ScalingUpdate(int max_scale);
+	//	拡大
+	bool	ScalingBigUpdate(int max_scale);
+	bool	ScalingMinUpdate(int max_scale);
 };

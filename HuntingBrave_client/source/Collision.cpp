@@ -12,6 +12,7 @@
 #include	"LevelManager.h"
 #include	"DrawShape.h"
 #include	"Collision.h"
+#include	"Particle.h"
 
 //****************************************************************************************
 //
@@ -111,6 +112,7 @@
 			{
 				if ((*it)->GetLifeInfo().active)
 				{
+					particle->SwordDamage((*it)->GetPos() + Vector3(0.0f, 2.0f, 0.0f) , 0.3f);
 					sound->PlaySE(SE::ATTACK_HIT1);
 					//	ライフ計算
 					(*it)->SetMode((*it)->DAMAGE);
@@ -227,6 +229,8 @@
 					//	ライフ計算
 					if ( ( *enemyIt )->GetLifeInfo().active )
 					{
+						particle->MagicDamage((*enemyIt)->GetPos() + Vector3(0.0f, 2.0f, 0.0f), -((*enemyIt)->GetFront()), (*enemyIt)->GetRight(), 1.0f);
+
 						sound->PlaySE(SE::ATTACK_HIT2);
 						//	ライフ計算
 						( *enemyIt )->SetMode( ( *enemyIt )->DAMAGE );

@@ -6,6 +6,7 @@
 
 //	class前方宣言
 #include	"Stage.h"
+class TimeUpUI;
 
 //	class
 class	sceneMain : public Scene
@@ -16,6 +17,9 @@ private:
 	//	バックバッファ
 	Surface*	backBuffer;
 	iex2DObj*	mainScreen;
+
+	//	タイムアップ用
+	TimeUpUI*	timeUp;
 
 	float	blackWhitePercentage;
 	static	bool	threadState;
