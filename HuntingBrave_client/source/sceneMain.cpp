@@ -198,7 +198,8 @@ void	sceneMain::Update( void )
 
 	//	ƒV[ƒ“Ø‚è‘Ö‚¦
 	if ( threadState ){
-		if (timeUp->Update())	gameManager->ChangeScene( SCENE::RESULT );
+		sound->PlaySE(SE::TIME_END);
+		if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	gameManager->ChangeScene(SCENE::RESULT);
 	}
 }
 
