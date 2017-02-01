@@ -254,10 +254,7 @@
 				//	—£‚·
 				enemy->SetPos(pPos - vec * collisionDist);
 			}
-			if (length>50.0f)
-			{
-				enemy->SetMode(enemy->MODE::DEAD);
-			}
+			
 		
 		}
 	}
