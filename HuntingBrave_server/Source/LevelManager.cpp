@@ -364,6 +364,7 @@ namespace
 			levelType,
 			UPGRADE_DATA::HP,
 			levelInfo[id].level[levelType] );
+		gameParam->GetPlayerStatus( id ).CulcMaxLife( addParam );
 		gameParam->GetLifeInfo( id ).AddMaxLife( addParam );
 		gameParam->GetLifeInfo( id ).CulcLife( addParam );
 	}

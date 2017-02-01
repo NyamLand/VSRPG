@@ -106,6 +106,12 @@
 		saveMagicDefense = this->magicDefense;
 	}
 
+	//	最大ライフ
+	void	PlayerStatus::CulcMaxLife( int maxLife )
+	{
+		this->maxLife += maxLife;
+	}
+
 	//	スピード設定
 	void	PlayerStatus::DoubleSpeed( float param )
 	{

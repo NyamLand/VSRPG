@@ -25,6 +25,16 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
+#define	RESULT_POS_X	800
+#define	RESULT_POS_Y	200
+#define	RESULT_DIST_HEIGHT	100
+#define	RANK_SIZE_X		100
+#define	RANK_SIZE_Y		80
+#define	PLAYER_NUM_DIST	100
+#define	SCORE_DIST		100
+#define	SCORE_SIZE		100
+
+
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
 //----------------------------------------------------------------------------------------------
@@ -70,6 +80,9 @@
 			obj[i]->SetScale( 0.2f );
 			obj[i]->SetPos( 0.0f, 0.0f, 250.0f );
 			obj[i]->Update();
+
+			rankUI[i] = new RankUI( RESULT_POS_X, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), RANK_SIZE_X, RANK_SIZE_Y );
+			scoreUI[i] = new ScoreUI( RESULT_POS_X + SCORE_DIST, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), SCORE_SIZE, RANK_SIZE_Y ) ;
 		}
 
 		return	true;
@@ -82,6 +95,12 @@
 		SafeDelete( back );
 		SafeDelete( gameParam );
 		SafeDelete( testResult );
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			SafeDelete( rankUI[i] );
+			SafeDelete( scoreUI[i] );
+		}
 		sound->StopBGM();
 	}
 
@@ -112,6 +131,11 @@
 			index++;
 			if ( index >= PLAYER_MAX )	index = 0;	
 		}
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			rankUI[i]->Update( pointManager->GetPlayer( i ) );
+		}
 	}
 
 	//	描画
@@ -132,6 +156,9 @@
 			IEX_DrawText( str, 600, 300 + i * 50, 200, 200, 0xFFFFFFFF );
 
 			obj[i]->Render();
+
+			rankUI[i]->Render();
+			scoreUI[i]->Render();
 		}
 
 		//	座標表示

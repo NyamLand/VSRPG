@@ -821,6 +821,9 @@
     <Filter Include="Source\UI\RankUI">
       <UniqueIdentifier>{962b5083-a12b-412f-9a2a-07c2f63929da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene\sceneResult\ResultUI">
+      <UniqueIdentifier>{42b45aca-a6e0-4e30-8b03-d676884d1785}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DATA\Shader\2D.fx">
