@@ -30,7 +30,8 @@
 #define	RESULT_DIST_HEIGHT	100
 #define	RANK_SIZE_X		100
 #define	RANK_SIZE_Y		80
-#define	PLAYER_NUM_DIST	100
+#define	PLAYER_NUM_DIST	120
+#define	PLAYER_NUM_SIZE	70
 #define	SCORE_DIST		100
 #define	SCORE_SIZE		100
 
@@ -54,8 +55,8 @@
 		//	ÉJÉÅÉâèâä˙âª
 		mainView = new Camera();
 		mainView->Initialize( Camera::VIEW_MODE::FIX_VIEW,
-			Vector3( 0.0f, 50.0f, 200.0f ),
-			Vector3( 0.0f, 3.0f, 300.0f ) );
+			Vector3( 0.0f, 20.0f, 180.0f ),
+			Vector3( 0.0f, 3.0f, 220.0f ) );
 
 		//	âÊëúì«Ç›çûÇ›
 		back = new iex2DObj( "DATA/UI/BackGround/result_UI.png" );
@@ -71,19 +72,27 @@
 		pointManager->Sort();
 
 		index = 0;
-		viewPos = Vector3( 0.0f, 50.0f, 200.0f );
+		viewPos = Vector3( 0.0f, 20.0f, 200.0f );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			playerPos[i] = Vector3( 0.0f, 0.0f, 250.0f );
 			obj[i] = new iex3DObj( "DATA/CHR/Suppin/suppin.IEM" );
 			obj[i]->SetScale( 0.2f );
-			obj[i]->SetPos( 0.0f, 0.0f, 250.0f );
-			obj[i]->Update();
-
+			obj[i]->SetAngle( PI );
 			rankUI[i] = new RankUI( RESULT_POS_X, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), RANK_SIZE_X, RANK_SIZE_Y );
-			scoreUI[i] = new ScoreUI( RESULT_POS_X + SCORE_DIST, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), SCORE_SIZE, RANK_SIZE_Y ) ;
+			playerNumUI[i] = new PlayerNumUI( pointManager->GetPlayer(i), RESULT_POS_X + PLAYER_NUM_DIST, RESULT_POS_Y + (RESULT_DIST_HEIGHT * i ), PLAYER_NUM_SIZE, PLAYER_NUM_SIZE );
+			scoreUI[i] = new ScoreUI( RESULT_POS_X + PLAYER_NUM_DIST + SCORE_DIST, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), SCORE_SIZE, RANK_SIZE_Y ) ;
 		}
+
+		obj[pointManager->GetPlayer(0)]->SetPos( 0.0f, 0.0f, 220.0f );
+		obj[pointManager->GetPlayer(1)]->SetPos( 6.0f, 0.0f, 225.0f );
+		obj[pointManager->GetPlayer(2)]->SetPos( -5.0f, 0.0f, 230.0f );
+		obj[pointManager->GetPlayer(3)]->SetPos( -15.0f, 0.0f, 235.0f );
+		obj[0]->Update();
+		obj[1]->Update();
+		obj[2]->Update();
+		obj[3]->Update();
 
 		return	true;
 	}
@@ -100,6 +109,7 @@
 		{
 			SafeDelete( rankUI[i] );
 			SafeDelete( scoreUI[i] );
+			SafeDelete( playerNumUI[i] );
 		}
 		sound->StopBGM();
 	}
@@ -111,20 +121,7 @@
 	//	çXêV
 	void	sceneResult::Update( void )
 	{
-		//if ( KEY( KEY_RIGHT ) == 1 )	viewPos.x += 10.0f;
-		//if ( KEY( KEY_LEFT ) == 1 )		viewPos.x -= 10.0f;
-		if ( KEY( KEY_UP ) == 1 )		viewPos.z += 10.0f;
-		if ( KEY( KEY_DOWN ) == 1 )	viewPos.z -= 10.0f;
-
-		if ( KEY( KEY_AXISX ) < 0 )		playerPos[index].x -= 1.0f;
-		if ( KEY( KEY_AXISX ) > 0 )		playerPos[index].x += 1.0f;
-		if ( KEY( KEY_AXISY ) < 0 )		playerPos[index].z += 1.0f;
-		if ( KEY( KEY_AXISY ) > 0 )		playerPos[index].z -= 1.0f;
-
-		obj[index]->SetPos( playerPos[index] );
 		obj[index]->Update();
-		
-		mainView->Set( viewPos, Vector3( 0.0f, 3.0f, 300.0f ) );
 
 		if ( KEY( KEY_ENTER ) == 3 )
 		{
@@ -134,7 +131,9 @@
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
-			rankUI[i]->Update( pointManager->GetPlayer( i ) );
+			rankUI[i]->Update( i );
+			scoreUI[i]->SetScore( pointManager->GetPoint( i ) );
+			scoreUI[i]->Update();
 		}
 	}
 
@@ -158,6 +157,7 @@
 			obj[i]->Render();
 
 			rankUI[i]->Render();
+			playerNumUI[i]->Render();
 			scoreUI[i]->Render();
 		}
 

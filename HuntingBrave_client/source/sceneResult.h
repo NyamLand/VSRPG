@@ -16,6 +16,7 @@
 #include	"ScoreUI.h"
 #include	"RankUI.h"
 #include	"Result.h"
+#include	"PlayerNumUI.h"
 
 
 //	class
@@ -30,6 +31,7 @@ private:
 	iex3DObj*	obj[PLAYER_MAX];
 	ScoreUI*	scoreUI[PLAYER_MAX];
 	RankUI*	rankUI[PLAYER_MAX];
+	PlayerNumUI*	playerNumUI[PLAYER_MAX];
 
 public:
 	//	‰Šú‰»EŠJ•ú

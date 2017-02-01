@@ -115,6 +115,7 @@
     <ClCompile Include="source\BaseChara.cpp" />
     <ClCompile Include="source\Circle.cpp" />
     <ClCompile Include="source\Particle.cpp" />
+    <ClCompile Include="source\PlayerNumUI.cpp" />
     <ClCompile Include="source\PointManager.cpp" />
     <ClCompile Include="source\RankUI.cpp" />
     <ClCompile Include="source\shadow.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="source\BaseChara.h" />
     <ClInclude Include="source\Circle.h" />
     <ClInclude Include="source\Particle.h" />
+    <ClInclude Include="source\PlayerNumUI.h" />
     <ClInclude Include="source\PointManager.h" />
     <ClInclude Include="source\RankUI.h" />
     <ClInclude Include="source\shadow.h" />
