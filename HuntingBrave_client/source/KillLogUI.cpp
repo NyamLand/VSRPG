@@ -110,6 +110,80 @@ namespace
 		killLogImage->sx = killInfo[killer][dead] % 2;
 		killLogImage->sy = SRC_POS_PLAYER * killer + SRC_HEIGHT * ( killInfo[killer][dead] / 2 );
 
+		if ( killer == 0 )
+		{
+			switch ( dead )
+			{
+			case 1:
+				killLogImage->sx = 0;
+				killLogImage->sy = 0;
+				break;
+			case 2:
+				killLogImage->sx = SRC_WIDTH;
+				killLogImage->sy = 0;
+				break;
+			case 3:
+				killLogImage->sx = 0;
+				killLogImage->sy = SRC_HEIGHT;
+				break;
+			}
+		}
+		else if ( killer == 1 )
+		{
+			switch ( dead )
+			{
+			case 0:
+				killLogImage->sx = 0;
+				killLogImage->sy = (SRC_HEIGHT * killer);
+				break;
+			case 2:
+				killLogImage->sx = SRC_WIDTH;
+				killLogImage->sy = (SRC_HEIGHT * killer);
+				break;
+			case 3:
+				killLogImage->sx = 0;
+				killLogImage->sy = ( SRC_HEIGHT * killer ) + SRC_HEIGHT;
+				break;
+			}
+		}
+		else if ( killer == 2 )
+		{
+			switch ( dead )
+			{
+			case 0:
+				killLogImage->sx = 0;
+				killLogImage->sy = ( SRC_HEIGHT * killer );
+				break;
+			case 1:
+				killLogImage->sx = SRC_WIDTH;
+				killLogImage->sy = ( SRC_HEIGHT * killer );
+				break;
+			case 3:
+				killLogImage->sx = 0;
+				killLogImage->sy = ( SRC_HEIGHT * killer ) + SRC_HEIGHT;
+				break;
+			}
+		}
+		else if ( killer == 3 )
+		{
+			switch ( dead )
+			{
+			case 0:
+				killLogImage->sx = 0;
+				killLogImage->sy = ( SRC_HEIGHT * killer );
+				break;
+			case 1:
+				killLogImage->sx = SRC_WIDTH;
+				killLogImage->sy = ( SRC_HEIGHT * killer );
+				break;
+			case 2:
+				killLogImage->sx = 0;
+				killLogImage->sy = ( SRC_HEIGHT * killer ) + SRC_HEIGHT;
+				break;
+			} 
+		}
+
+
 		killLogImage->renderflag = true;
 	}
 

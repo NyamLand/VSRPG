@@ -185,6 +185,12 @@ Vector3	pos[] =
 			if( scoreUI[i] != nullptr )scoreUI[i]->SetScore( pointManager->GetPoint( i ) );
 			if( scoreUI[i] != nullptr )scoreUI[i]->Update();
 		}
+
+		if ( KEY( KEY_TYPE::START ) == 3 || KEY( KEY_TYPE::A ) == 3 )
+		{
+			MainFrame->ChangeScene( new sceneTitle() );
+			return;
+		}
 	}
 
 	//	•`‰æ
