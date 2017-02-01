@@ -284,7 +284,7 @@ namespace
 
 		//	ƒ‚ƒfƒ‹•`‰æ
 		BaseChara::Render( shader, technique );	
-		//drawShape->DrawCapsule(GetBonePos(BONE_NUM::RIGHT_HAND)+GetFront(), GetBonePos(BONE_NUM::RIGHT_HAND), ATTACK_RADIUS, 0xFF000000);
+		//drawShape->DrawCapsule(GetBonePos(15), GetBonePos(16), ATTACK_RADIUS_, 0xFF000000);
 
 	}
 
@@ -337,6 +337,14 @@ namespace
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::SPHERE;
 				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
 				gameParam->GetAttackInfo(id).vec2 = GetFront();
+				break;
+			}
+			else if (curClass == CLASS_TYPE::PRIEST)
+			{
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(16);
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos(15);
 				break;
 			}
 			else{
