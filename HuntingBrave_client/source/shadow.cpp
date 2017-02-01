@@ -38,10 +38,10 @@ namespace
 {
 	namespace MOTION_FRAME
 	{
-		const int ATTACK_HIT_START = 176;
-		const int ATTACK_HIT_END = 138;
-		const int DEAD_START = 236;
-		const int FALL_END = 294;
+		const int ATTACK_HIT_START = 140;
+		const int ATTACK_HIT_END = 161;
+		const int DEAD_START = 240;
+		const int FALL_END = 291;
 	}
 
 }
@@ -175,7 +175,7 @@ void	Shadow::AttackMode(void)
 
 void	Shadow::DeadMode(void)
 {
-	SetMotion(3);
+	SetMotion(4);
 	static float alpha = 1.0f;
 
 	//	フレーム取得
@@ -186,8 +186,9 @@ void	Shadow::DeadMode(void)
 	{
 		//	透過開始
 		alpha -= 0.1f;
-		if (alpha <= 0.0f)
+		if (frame>MOTION_FRAME::FALL_END)
 		{
+			alpha = 1.0f;
 			lifeInfo.isAlive = false;
 			sound->PlaySE(SE::ENEMY_DEAD);
 		}
