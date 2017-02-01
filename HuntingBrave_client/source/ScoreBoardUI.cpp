@@ -47,6 +47,7 @@ ScoreBoardUI::ScoreBoardUI(int x, int y, int w, int h) : boardState( false )
 
 		score[i] = new ScoreUI(0, 0, 0, 0);
 		exp[i] = new ExpUI(0, 0, 0, 0);
+		rankUI[i] = new RankUI( 0, 0, 0, 0 );
 
 		//p_icon[i]->alpha = 0.6f;
 		
@@ -104,6 +105,9 @@ void	ScoreBoardUI::Update(void)
 		exp[i]->SetParam(x, p_icon[i]->y, p_icon[i]->w, p_icon[i]->h);
 		exp[i]->Update();
 
+		rankUI[i]->Update( i );
+		rankUI[i]->Update( x, p_icon[i]->y + 10, p_icon[i]->w + 50, p_icon[i]->h + 10 );
+
 		////	
 		//if (KEY(KEY_TYPE::R1) == 1)
 		//{
@@ -141,7 +145,8 @@ void	ScoreBoardUI::Render(void)
 	{
 		p_icon[i]->Render(IMAGE_MODE::ADOPTPARAM);
 		score[i]->Render();
-		exp[i]->Render();
+		//exp[i]->Render();
+		rankUI[i]->Render();
 	}
 }
 

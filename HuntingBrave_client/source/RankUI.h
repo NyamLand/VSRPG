@@ -3,27 +3,24 @@
 
 //***************************************************************
 //
-//	Resultクラス
+//	RankUIクラス
 //
 //***************************************************************
 
-//	include
-#include	"NameUI.h"
-#include	"PlayerTitleUI.h"
-#include	"GameData.h"
-#include	"Stage.h"
-
 //	class
-class TestResult
+class RankUI
 {
-private:
-	Stage*	stage;
+protected:
+	Image* rankImage;
+
 public:
 	//	初期化・解放
-	TestResult( void );
-	~TestResult( void );
+	RankUI( int x, int y, int w, int h );
+	~RankUI( void );
 
 	//	更新・描画
-	void	Update( void );
+	void	Update( int player );
+	void	Update( int x, int y, int w, int h );
 	void	Render( void );
 };
+

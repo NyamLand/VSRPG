@@ -20,7 +20,7 @@
 //----------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	TestResult::TestResult( void ) : stage( nullptr ) 
+	TestResult::TestResult( void ) : stage( nullptr )
 	{
 		stage = new Stage();
 	}

@@ -11,6 +11,7 @@
 
 #include	"GameData.h"
 #include	"ScoreUI.h"
+#include	"RankUI.h"
 #include	"ExpUI.h"
 
 namespace BOARD_MAX
@@ -33,6 +34,7 @@ private:
 	Image*		p_icon[PLAYER_MAX];
 	ScoreUI*	score[PLAYER_MAX];
 	ExpUI*		exp[PLAYER_MAX];
+	RankUI*	rankUI[PLAYER_MAX];
 	int	posx, posy, width,	height;
 	bool	boardState;
 
