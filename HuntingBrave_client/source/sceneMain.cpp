@@ -138,7 +138,7 @@ sceneMain::~sceneMain( void )
 	netEnemyManager->Release();
 	uiManager->Release();
 	magicManager->Release();
-	playerManager->Release();
+	//playerManager->Release();
 	effectManager->Release();
 	particle->Release();
 	collision->Release();

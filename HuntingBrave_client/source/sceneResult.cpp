@@ -11,6 +11,7 @@
 #include	"InputManager.h"
 #include	"sceneMatching.h"
 #include	"PointManager.h"
+#include	"PlayerManager.h"
 #include	"Sound.h"
 #include	"sceneTitle.h"
 #include	"sceneResult.h"
@@ -34,6 +35,59 @@
 #define	PLAYER_NUM_SIZE	70
 #define	SCORE_DIST		100
 #define	SCORE_SIZE		100
+
+const LPSTR fileName[] =
+{
+	"DATA/CHR/suppin/Suppin.IEM",
+	"DATA/CHR/Fighter/Fighter.IEM",
+	"DATA/CHR/Magician/Magician.IEM",
+	"DATA/CHR/Knight/Knight.IEM",
+	"DATA/CHR/Prist/prist.IEM",
+	"DATA/CHR/Assasin/assasin.IEM"
+};
+
+const LPSTR bodyTexFileName[] =
+{
+	"DATA/CHR/suppin/body_",
+	"DATA/CHR/Fighter/body_",
+	"DATA/CHR/Magician/body_",
+	"DATA/CHR/Knight/body_",
+	"DATA/CHR/Prist/body_",
+	"DATA/CHR/Assasin/body_"
+};
+
+float	scale[] =
+{
+	0.2f,
+	0.2f,
+	0.2f,
+	0.08f,
+	0.08f
+};
+
+float	angle[] = 
+{
+	PI * 0.95f,
+	PI * 0.95f,
+	0.0f,
+	-PI * 0.3f
+};
+
+int	motion[] =
+{
+	18,
+	18,
+	20,
+	20
+};
+
+Vector3	pos[] =
+{
+	Vector3(0.0f, 0.0f, 220.0f),
+	Vector3(6.0f, 0.0f, 225.0f),
+	Vector3(-5.0f, 0.0f, 230.0f),
+	Vector3(-10.0f, 0.0f, 235.0f),
+};
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -62,9 +116,6 @@
 
 		testResult = new TestResult();
 
-		//	サインアウト
-		gameParam->CloseClient();
-
 		//	BGM再生
 		sound->PlayBGM( BGM::RESULT );
 
@@ -75,23 +126,27 @@
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
+			obj[i] = nullptr;
+			rankUI[i] = nullptr;
+			scoreUI[i] = nullptr;
+			playerNumUI[i] = nullptr;
+			if ( gameParam->GetPlayerActive( i ) == false )	continue;
+			char classType = playerManager->GetPlayer( i )->GetCurClass();
 			playerPos[i] = Vector3( 0.0f, 0.0f, 250.0f );
-			obj[i] = new iex3DObj( "DATA/CHR/Suppin/suppin.IEM" );
-			obj[i]->SetScale( 0.2f );
-			obj[i]->SetAngle( PI );
+			obj[i] = new iex3DObj( fileName[classType] );
+			obj[i]->SetScale( scale[classType] );
+			playerManager->GetPlayer( i )->ChangeTexture( obj[i], classType, i );
+			obj[pointManager->GetPlayer(i)]->SetAngle(angle[i]);
+			obj[pointManager->GetPlayer(i)]->SetMotion(motion[i]);
+			obj[pointManager->GetPlayer(i)]->SetPos(pos[i]);
+			obj[i]->Update();
 			rankUI[i] = new RankUI( RESULT_POS_X, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), RANK_SIZE_X, RANK_SIZE_Y );
 			playerNumUI[i] = new PlayerNumUI( pointManager->GetPlayer(i), RESULT_POS_X + PLAYER_NUM_DIST, RESULT_POS_Y + (RESULT_DIST_HEIGHT * i ), PLAYER_NUM_SIZE, PLAYER_NUM_SIZE );
 			scoreUI[i] = new ScoreUI( RESULT_POS_X + PLAYER_NUM_DIST + SCORE_DIST, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), SCORE_SIZE, RANK_SIZE_Y ) ;
 		}
 
-		obj[pointManager->GetPlayer(0)]->SetPos( 0.0f, 0.0f, 220.0f );
-		obj[pointManager->GetPlayer(1)]->SetPos( 6.0f, 0.0f, 225.0f );
-		obj[pointManager->GetPlayer(2)]->SetPos( -5.0f, 0.0f, 230.0f );
-		obj[pointManager->GetPlayer(3)]->SetPos( -10.0f, 0.0f, 235.0f );
-		obj[0]->Update();
-		obj[1]->Update();
-		obj[2]->Update();
-		obj[3]->Update();
+		//	サインアウト
+		gameParam->CloseClient();
 
 		return	true;
 	}
@@ -110,6 +165,7 @@
 			SafeDelete( scoreUI[i] );
 			SafeDelete( playerNumUI[i] );
 		}
+		playerManager->Release();
 		sound->StopBGM();
 	}
 
@@ -120,19 +176,14 @@
 	//	更新
 	void	sceneResult::Update( void )
 	{
-		obj[index]->Update();
-
-		if ( KEY( KEY_ENTER ) == 3 )
-		{
-			index++;
-			if ( index >= PLAYER_MAX )	index = 0;	
-		}
-
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
-			rankUI[i]->Update( i );
-			scoreUI[i]->SetScore( pointManager->GetPoint( i ) );
-			scoreUI[i]->Update();
+			if ( obj[i] == nullptr )	continue;
+			obj[i]->Animation();
+			obj[i]->Update();
+			if( rankUI[i] != nullptr )rankUI[i]->Update( i );
+			if( scoreUI[i] != nullptr )scoreUI[i]->SetScore( pointManager->GetPoint( i ) );
+			if( scoreUI[i] != nullptr )scoreUI[i]->Update();
 		}
 	}
 
@@ -150,20 +201,19 @@
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			int player = pointManager->GetPlayer( i );
-			sprintf(str, "%d位	    %dP	   score : %d", i + 1, player + 1, pointManager->GetPoint( player ) );
-			IEX_DrawText( str, 600, 300 + i * 50, 200, 200, 0xFFFFFFFF );
+			//sprintf(str, "%d位	    %dP	   score : %d", i + 1, player + 1, pointManager->GetPoint( player ) );
+			//IEX_DrawText( str, 600, 300 + i * 50, 200, 200, 0xFFFFFFFF );
+			if ( obj[i] != nullptr )	obj[i]->Render();
 
-			obj[i]->Render();
-
-			rankUI[i]->Render();
-			playerNumUI[i]->Render();
-			scoreUI[i]->Render();
+			if( rankUI[i] != nullptr )rankUI[i]->Render();
+			if( playerNumUI[i] != nullptr )playerNumUI[i]->Render();
+			if( scoreUI[i] != nullptr )scoreUI[i]->Render();
 		}
 
-		//	座標表示
-		sprintf( str, "pos.x = %2f\npos.y = %2f\npos.z = %2f", playerPos[index].x, playerPos[index].y, playerPos[index].z );
-		IEX_DrawText( str, 20, 600, 200, 200, 0xFFFFFF00 );
+		////	座標表示
+		//sprintf( str, "pos.x = %2f\npos.y = %2f\npos.z = %2f", playerPos[index].x, playerPos[index].y, playerPos[index].z );
+		//IEX_DrawText( str, 20, 600, 200, 200, 0xFFFFFF00 );
 
-		sprintf( str, "viewPos.x = %2f\nviewPos.y = %2f\nviewPos.z = %2f", viewPos.x, viewPos.y, viewPos.z );
-		IEX_DrawText( str, 20, 200, 200, 200, 0xFFFFFF00 );
+		//sprintf( str, "viewPos.x = %2f\nviewPos.y = %2f\nviewPos.z = %2f", viewPos.x, viewPos.y, viewPos.z );
+		//IEX_DrawText( str, 20, 200, 200, 200, 0xFFFFFF00 );
 	}

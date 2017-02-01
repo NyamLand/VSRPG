@@ -234,6 +234,10 @@ namespace
 		{
 			model->SetTexture( 1, str );
 		}
+		else if ( classType == CLASS_TYPE::KNIGHT )
+		{
+			model->SetTexture( 2, str );
+		}
 		else model->SetTexture( 0, str );
 
 		if ( classType == CLASS_TYPE::FIGHTER )
