@@ -327,6 +327,8 @@ namespace
 	//	モーション切り換え時のSE設定
 	void	Player::PlaySE( int motion )
 	{
+		if ( motion != MOTION_NUM::MAGIC_CHANT )	sound->StopSE( SE::MAGIC_CHARGE );
+
 		switch ( motion )
 		{
 			case MOTION_NUM::ATTACK1:
@@ -347,12 +349,12 @@ namespace
 				break;
 
 			case MOTION_NUM::MAGIC_CHANT:
-				sound->PlaySE(SE::MAGIC_CHARGE);
+				sound->PlaySE( SE::MAGIC_CHARGE );
 				break;
 
 			//　メニュー開く音源がない　
 			case MOTION_NUM::MENU:
-				sound->PlaySE(SE::OK);
+				sound->PlaySE( SE::OK );
 				break;
 
 			default:
