@@ -20,7 +20,7 @@
 //------------------------------------------------------------------------------------
 
 #define	ANGLEADJUST_SPEED 1.0f
-
+#define	DEAD_LENGTH	30.0f
 
 //------------------------------------------------------------------------------------
 //	‰Šú‰»E‰ð•ú
@@ -98,6 +98,11 @@
 		{
 			SetMode( MODE::ATTACK );
 			return	true;
+		}
+
+		else if (length>DEAD_LENGTH)
+		{
+			SetMode(MODE::DEAD);
 		}
 		return false;
 	}
