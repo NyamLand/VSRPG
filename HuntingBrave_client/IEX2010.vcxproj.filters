@@ -277,6 +277,9 @@
     <ClCompile Include="source\TestResult.cpp">
       <Filter>Source\Scene\sceneResult\Result</Filter>
     </ClCompile>
+    <ClCompile Include="source\shadow.cpp">
+      <Filter>Source\Enemy\Shadow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -518,6 +521,9 @@
     </ClInclude>
     <ClInclude Include="source\TestResult.h">
       <Filter>Source\Scene\sceneResult\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow.h">
+      <Filter>Source\Enemy\Shadow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -796,6 +802,9 @@
     </Filter>
     <Filter Include="Source\Scene\sceneResult\Result">
       <UniqueIdentifier>{d918ca72-e1a6-4b16-95ca-330a212e8380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\Shadow">
+      <UniqueIdentifier>{3a0e2510-e686-4b06-be78-452c9d082da8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
