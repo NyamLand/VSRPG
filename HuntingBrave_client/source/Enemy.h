@@ -31,7 +31,7 @@ protected:
 	{
 		WOLF,
 		MOFFU,
-		BIG,
+		SHADOW,
 		ENEMY_MAX
 	};
 

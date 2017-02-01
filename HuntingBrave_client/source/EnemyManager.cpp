@@ -27,8 +27,12 @@
 
 #define	MOFFU_INIT_LIFE	10
 #define	WOLF_INIT_LIFE		20
+#define SHADOW_INIT_LIFE	30
+
 #define	MOFFU_LIFE_UP_PARAM		20
 #define	WOLF_LIFE_UP_PARAM	25
+#define	SHADOW_LIFE_UP_PARAM	40
+
 
 #define	TIMER_RESET	10.0f
 #define	MINUTE	60
@@ -68,9 +72,9 @@
 		Load();
 		
 		//	ライフ初期化
-		lifeUpParam[ENEMY_TYPE::SMALL_ENEMY] = MOFFU_INIT_LIFE;
-		lifeUpParam[ENEMY_TYPE::BIG_ENEMY] = WOLF_INIT_LIFE;
-
+		lifeUpParam[ENEMY_TYPE::MOFFU] = MOFFU_INIT_LIFE;
+		lifeUpParam[ENEMY_TYPE::WOLF] = WOLF_INIT_LIFE;
+		lifeUpParam[ENEMY_TYPE::SHADOW] = SHADOW_INIT_LIFE;
 		timer = new Timer();
 		timer->Start( TIMER_RESET );
 	
@@ -96,8 +100,9 @@
 	//	オブジェクト読み込み
 	void	EnemyManager::Load( void )
 	{
-		org[ENEMY_TYPE::BIG_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/wolf/wolf.IEM" );
-		org[ENEMY_TYPE::SMALL_ENEMY] = new iex3DObj( "DATA/CHR/Enemy/mofumofu/moffu.IEM" );
+		org[ENEMY_TYPE::WOLF] = new iex3DObj( "DATA/CHR/Enemy/wolf/wolf.IEM" );
+		org[ENEMY_TYPE::MOFFU] = new iex3DObj( "DATA/CHR/Enemy/mofumofu/moffu.IEM" );
+		org[ENEMY_TYPE::SHADOW] = new iex3DObj("DATA/CHR/Enemy/shadow/shadow.IEM");
 	}
 
 //-------------------------------------------------------------------------------------
@@ -177,14 +182,18 @@
 
 		switch ( type )
 		{
-		case BIG_ENEMY:
+		case WOLF:
 			enemy = new Wolf();
 			//enemy->GetLifeInfo().maxLife = 80.0f;
 			break;
 
-		case SMALL_ENEMY:
+		case MOFFU:
 			enemy = new Moffu();
 			//enemy->GetLifeInfo().maxLife = 20.0f;
+			break;
+
+		case SHADOW:
+			enemy = new Shadow();
 			break;
 
 		default:
@@ -284,7 +293,7 @@
 		if (length > APPEND_RADIUS_)	return;
 
 		//	リストに追加
-		Append(appendPos, random->GetInt(BIG_ENEMY, SMALL_ENEMY));
+		Append(appendPos, random->GetInt(WOLF, SHADOW));
 
 		//	生成フラグをfalseにする
 		appendOK = false;
@@ -295,8 +304,9 @@
 	void	EnemyManager::LifeUP( void )
 	{
 		timer->Start( TIMER_RESET );
-		lifeUpParam[ENEMY_TYPE::SMALL_ENEMY] += MOFFU_LIFE_UP_PARAM;
-		lifeUpParam[ENEMY_TYPE::BIG_ENEMY] += WOLF_LIFE_UP_PARAM;
+		lifeUpParam[ENEMY_TYPE::MOFFU] += MOFFU_LIFE_UP_PARAM;
+		lifeUpParam[ENEMY_TYPE::WOLF] += WOLF_LIFE_UP_PARAM;
+		lifeUpParam[ENEMY_TYPE::SHADOW] += SHADOW_LIFE_UP_PARAM;
 	}
 
 //-------------------------------------------------------------------------------------
