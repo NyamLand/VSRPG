@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------------------
 
 //	マップ、レーダー距離
-#define	MAP_MAX_LENGTH		400.0f
+#define	MAP_MAX_LENGTH		265.0f
 #define	RADER_LENGTH		50.0f
 
 //	マップUIサイズ
@@ -104,6 +104,8 @@
 			Vector3 vec = playerParam.pos - Vector3(0, 0, 0);
 			float length = vec.Length();
 			length /= MAP_MAX_LENGTH;
+			if (length >= 1.0f) length = 1.0f;
+			if (length <= -1.0f) length = -1.0f;
 			vec.Normalize();
 			vec *= length * (MAP_SIZE / 2);
 
@@ -121,7 +123,7 @@
 	//	描画
 	void	MapUI::Render( void )
 	{
-		back->Render( IMAGE_MODE::ADOPTPARAM );
+		//back->Render( IMAGE_MODE::ADOPTPARAM );
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{

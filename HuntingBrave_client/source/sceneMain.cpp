@@ -39,6 +39,11 @@
 
 #define	BLACK_WHITE_SPEED		0.01f
 
+#define	MAP_SIZE		250
+#define	MAP_POS_X		1150
+#define	MAP_POS_Y		130
+#define	MAP_SRC_SIZE	720
+
 bool	sceneMain::threadState;
 
 //*****************************************************************************************************************************
@@ -217,10 +222,14 @@ void	sceneMain::Render( void )
 	//	effect•`‰æ
 	effectManager->Render();
 
+
+	stage->GetTexture()->Render(IMAGE_MODE::NORMAL,MAP_POS_X, MAP_POS_Y, MAP_SIZE, MAP_SIZE,
+		280, 0, MAP_SRC_SIZE, MAP_SRC_SIZE);
+
 	//	ui•`‰æ
 	uiManager->Render();
 	
-	stage->GetTexture()->Render( IMAGE_MODE::NORMAL );
+
 
 	screen->Render();
 
