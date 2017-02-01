@@ -114,6 +114,7 @@ namespace SE_TYPE
 	void	Collision::PlayerAttackCollision( int player, int target )
 	{
 		if ( gameParam->GetLifeInfo( target ).active == false )		return;
+		if ( gameParam->GetAttackInfo( target ).attackParam != AttackInfo::NO_ATTACK )	return;
 
 		//	•Ï”€”õ
 		bool	isHit = false;

@@ -220,6 +220,8 @@ void	sceneMain::Render( void )
 	//	ui描画
 	uiManager->Render();
 	
+	stage->GetTexture()->Render( IMAGE_MODE::NORMAL );
+
 	screen->Render();
 
 	//	各プレイヤー座標表示

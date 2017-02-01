@@ -154,7 +154,7 @@
 			//	“–‚½‚Á‚Ä‚¢‚ê‚Îƒ‰ƒCƒtŒvŽZ
 			if ( isHit == true )
 			{
-				//SendSmallEnemyAttackHit( ( *it )->GetEnemyType() );
+				SendSmallEnemyAttackHit( ( *it )->GetEnemyType() );
 			}
 		}
 	}

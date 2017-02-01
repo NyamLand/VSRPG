@@ -52,10 +52,10 @@ namespace
 		//	テクスチャ初期化
 		viewTex = new Image();
 		viewTex->obj = new iex2DObj( 1280, 720, IEX2D_RENDERTARGET );
-		viewTex->x = 0;
-		viewTex->y = 0;
-		viewTex->w= 0;
-		viewTex->h = 0;
+		viewTex->x = 500;
+		viewTex->y = 300;
+		viewTex->w= 200;
+		viewTex->h = 200;
 		viewTex->sx = 280;
 		viewTex->sy = 0;
 		viewTex->sw = 1280 - 560;
