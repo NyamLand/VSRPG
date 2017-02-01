@@ -48,6 +48,7 @@ namespace
 	Wolf::Wolf(void)
 	{
 		ModeFunction[MODE::ENTRY] = &Wolf::EntryMode;
+		ModeFunction[MODE::WAIT] = &Wolf::WaitMode;
 		ModeFunction[MODE::MOVE] = &Wolf::MoveMode;
 		ModeFunction[MODE::ATTACK] = &Wolf::AttackMode;
 		ModeFunction[MODE::DAMAGE] = &Wolf::DamageMode;
@@ -143,7 +144,8 @@ namespace
 		int frame = obj->GetFrame();
 
 		//	フレーム制御
-		if ( frame >= MOTION_FRAME::ATTACK_HIT_START && frame <= MOTION_FRAME::ATTACK_HIT_END )
+		if ( frame >= MOTION_FRAME::ATTACK_HIT_START 
+			&& frame <= MOTION_FRAME::ATTACK_HIT_END )
 		{
 			//	攻撃状態を有効にする
 			attackInfo.Set(SHAPE_TYPE::SPHERE, WOLF_RADIUS, pos + (GetFront() * WOLF_RADIUS), Vector3(0, 0, 0));
@@ -155,8 +157,9 @@ namespace
 			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	通常モードへ移行
-			if ( frame >= 170 )
-				SetMode( MODE::MOVE );
+			if (frame >= 245)
+				
+				SetMode( MODE::WAIT );
 		}
 	}
 

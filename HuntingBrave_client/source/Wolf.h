@@ -29,9 +29,7 @@ public:
 	void	EntryMode( void )override;
 	void	MoveMode( void )override;
 	void	AttackMode( void )override;
-	void	DeadMode(void)override;
-	//void	DamageMode( void );
-	//bool	DamageFlgCheck( void )override;
+	void	DeadMode( void )override;
 	//	“®ìŠÖ”
 
 	//	UŒ‚ŠÖ”

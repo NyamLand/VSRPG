@@ -22,6 +22,7 @@ protected:
 	float		searchDist;
 	float		attackDist;
 	char		enemyType;
+	int			cooltime;
 	AttackInfo	attackInfo;
 
 	int	count;		//仮多段ヒット用
@@ -39,6 +40,7 @@ public:
 	enum MODE	//	仮
 	{
 		ENTRY,
+		WAIT,
 		MOVE,
 		ATTACK,
 		DAMAGE,
@@ -57,6 +59,8 @@ public:
 	virtual void	MoveMode( void ) = 0;
 	virtual void	AttackMode( void ) = 0;
 	virtual	void	DeadMode( void ) = 0;
+
+	void	WaitMode(void);
 	void	DamageMode( void );
 	
 

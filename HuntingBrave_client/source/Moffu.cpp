@@ -79,6 +79,7 @@ namespace
 	Moffu::Moffu( void ) 
 	{
 		ModeFunction[MODE::ENTRY] = &Moffu::EntryMode;
+		ModeFunction[MODE::WAIT] = &Moffu::WaitMode;
 		ModeFunction[MODE::MOVE] = &Moffu::MoveMode;
 		ModeFunction[MODE::ATTACK] = &Moffu::AttackMode;
 		ModeFunction[MODE::DAMAGE] = &Moffu::DamageMode;
@@ -205,8 +206,8 @@ namespace
 			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	’Êíƒ‚[ƒh‚ÖˆÚs
-			if ( frame >= 170 )
-				SetMode( MODE::MOVE );
+			if (frame >= 170)
+				SetMode( MODE::WAIT );
 		}
 	}
 
