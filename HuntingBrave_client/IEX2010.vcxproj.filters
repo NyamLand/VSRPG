@@ -274,6 +274,9 @@
     <ClCompile Include="source\PointManager.cpp">
       <Filter>Source\Manager\PointManager</Filter>
     </ClCompile>
+    <ClCompile Include="source\TestResult.cpp">
+      <Filter>Source\Scene\sceneResult\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -512,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="source\PointManager.h">
       <Filter>Source\Manager\PointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TestResult.h">
+      <Filter>Source\Scene\sceneResult\Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -787,6 +793,9 @@
     </Filter>
     <Filter Include="Source\Manager\PointManager">
       <UniqueIdentifier>{73999bfa-1b03-49ff-b82a-907a6a05b375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\sceneResult\Result">
+      <UniqueIdentifier>{d918ca72-e1a6-4b16-95ca-330a212e8380}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

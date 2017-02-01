@@ -43,27 +43,25 @@
 		
 		//	カメラ初期化
 		mainView = new Camera();
+		mainView->Initialize( Camera::VIEW_MODE::FIX_VIEW,
+			Vector3( 0.0f, 50.0f, 200.0f ),
+			Vector3( 0.0f, 3.0f, 300.0f ) );
 
 		//	画像読み込み
 		back = new iex2DObj( "DATA/UI/BackGround/result_UI.png" );
-		lovelive = new iex2DObj( "DATA/UI/BackGround/lovelive.png" );
+
+		testResult = new TestResult();
 
 		//	サインアウト
 		gameParam->CloseClient();
 
-		//	変数初期化
-		alpha = 0.0f;
-		percentage = 0.0f;
-		pushState = false;
-
 		//	BGM再生
 		sound->PlayBGM( BGM::RESULT );
 
-		//	リザルト初期化
-		result = new Result();
-		result->Initialize(gameParam->GetMyIndex());
-
 		pointManager->Sort();
+
+		int index = 0;
+		viewPos = Vector3( 0.0f, 50.0f, 200.0f );
 
 		return	true;
 	}
@@ -73,10 +71,8 @@
 	{
 		SafeDelete( mainView );
 		SafeDelete( back );
-		SafeDelete( lovelive );
 		SafeDelete( gameParam );
-		//gameManager->Release();
-		SafeDelete( result );
+		SafeDelete( testResult );
 		sound->StopBGM();
 	}
 
@@ -87,15 +83,7 @@
 	//	更新
 	void	sceneResult::Update( void )
 	{
-		//result->Update();
-		if ( !pushState )
-		{
-			if ( KEY( KEY_SPACE ) == 3 ||
-				KEY( KEY_ENTER ) == 3 ||
-				KEY( KEY_A ) == 3 )	pushState = true;
-		}
-
-		if ( pushState )
+		if ( KEY( KEY_TYPE::A ) == 3 )
 		{
 			MainFrame->ChangeScene( new sceneTitle() );
 			return;
@@ -108,6 +96,9 @@
 		mainView->Activate();
 		mainView->Clear();
 
+		//	リザルト描画
+		testResult->Render();
+
 		char str[256];
 
 		for ( int i = 0; i < PLAYER_MAX; i++ )
@@ -116,8 +107,4 @@
 			sprintf(str, "%d位	    %dP	   score : %d", i + 1, player + 1, pointManager->GetPoint( player ) );
 			IEX_DrawText( str, 600, 300 + i * 50, 200, 200, 0xFFFFFFFF );
 		}
-
-		//back->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 1280, 720 );
-		//lovelive->Render( 0, 0, iexSystem::ScreenWidth, iexSystem::ScreenHeight, 0, 0, 2048, 1024, RS_COPY, GetColor( 1.0f, 1.0f, 1.0f, alpha ) );
-		//result->Render();
 	}

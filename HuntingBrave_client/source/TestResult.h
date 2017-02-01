@@ -3,35 +3,28 @@
 
 //***************************************************************
 //
-//	sceneResultクラス
+//	Resultクラス
 //
 //***************************************************************
 
 //	include
 #include	"NameUI.h"
+#include	"PlayerTitleUI.h"
 #include	"GameData.h"
-#include	"TestResult.h"
-#include	"Result.h"
-
+#include	"Stage.h"
 
 //	class
-class sceneResult : public Scene
+class TestResult
 {
 private:
-	iex2DObj*	back;
-	TestResult*	testResult;
-	Vector3	viewPos;
-	Vector3	playerPos[PLAYER_MAX];
-	int	index;
+	Stage*	stage;
 
 public:
-	//	初期化・開放
-	bool	Initialize( void );
-	~sceneResult( void );
+	//	初期化・解放
+	TestResult( void );
+	~TestResult( void );
 
 	//	更新・描画
 	void	Update( void );
 	void	Render( void );
-
-
 };
