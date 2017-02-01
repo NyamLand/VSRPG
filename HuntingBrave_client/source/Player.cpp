@@ -71,7 +71,7 @@ namespace
 			"DATA/CHR/Magician/Magician.IEM",
 			"DATA/CHR/Knight/Knight.IEM",
 			"DATA/CHR/Prist/prist.IEM",
-			"DATA/CHR/suppin/Suppin.IEM"
+			"DATA/CHR/Assasin/assasin.IEM"
 		};
 
 		//	’ÊíŠç
@@ -82,6 +82,7 @@ namespace
 			"DATA/CHR/Magician/face.png",
 			"DATA/CHR/Knight/face.png",
 			"DATA/CHR/Prist/face2.png"
+			"DATA/CHR/Assasin/face.png"
 		};
 
 		//	ƒ_ƒ[ƒWŠç
@@ -92,6 +93,7 @@ namespace
 			"DATA/CHR/Magician/face_damage.png",
 			"DATA/CHR/Knight/face_damage.png",
 			"DATA/CHR/Prist/face_damage.png"
+			"DATA/CHR/Assasin/face_damage.png"
 		};
 
 		//	UŒ‚Šç
@@ -102,6 +104,7 @@ namespace
 			"DATA/CHR/Magician/face_koueki.png",
 			"DATA/CHR/Knight/face_koueki.png",
 			"DATA/CHR/Prist/face_koueki.png"
+			"DATA/CHR/Assasin/face_koueki.png"
 		};
 	}
 	
@@ -114,7 +117,7 @@ namespace
 			"DATA/CHR/Magician/body_",
 			"DATA/CHR/Knight/body_",
 			"DATA/CHR/Prist/body_",
-			"DATA/CHR/suppin/body_"
+			"DATA/CHR/Assasin/body_"
 		};
 	}
 
@@ -233,6 +236,13 @@ namespace
 			sprintf_s( str, "" );
 			sprintf_s( str, "DATA/CHR/Fighter/toumeitachi_%d.png", id + 1 );
 			model->SetTexture( 3, str );
+		}
+
+		if (classType == CLASS_TYPE::ASSASSIN)
+		{
+			sprintf_s(str, "");
+			sprintf_s(str, bodyTexFileName[classType]);
+			model->SetTexture(1, str);
 		}
 	}
 
@@ -366,7 +376,8 @@ namespace
 		SetMotion( gameParam->GetPlayerParam( id ).motion );
 		SetScale( PLAYER_SCALE );
 		sound->PlaySE(SE::MAX_UPGRADE);
-		if ( curClass == CLASS_TYPE::KNIGHT )	SetScale( KNIGHT_SCALE );
+		if (curClass == CLASS_TYPE::KNIGHT)	SetScale(KNIGHT_SCALE);
+		if (curClass == CLASS_TYPE::ASSASSIN)	SetScale(KNIGHT_SCALE);
 		obj->Update();
 	}
 
@@ -380,6 +391,8 @@ namespace
 				obj->SetTexture( 2, normalFaceFile[curClass] );
 			else
 				obj->SetTexture( 1, normalFaceFile[curClass] );
+			if ( curClass == CLASS_TYPE::ASSASSIN)
+				obj->SetTexture(0, normalFaceFile[curClass]);
 			break;
 
 		case FACE_TYPE::DAMAGE:
@@ -387,13 +400,17 @@ namespace
 				obj->SetTexture( 2, damageFaceFile[curClass] );
 			else
 				obj->SetTexture( 1, damageFaceFile[curClass] );
+			if (curClass == CLASS_TYPE::ASSASSIN)
+				obj->SetTexture(0, damageFaceFile[curClass]);
 			break;
 
 		case FACE_TYPE::ATTACK:
 			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
 				obj->SetTexture( 2, attackFaceFile[curClass] );
 			else
-				obj->SetTexture( 1, attackFaceFile[curClass] );
+				obj->SetTexture(1, attackFaceFile[curClass]);
+			if (curClass == CLASS_TYPE::ASSASSIN)
+				obj->SetTexture(0, attackFaceFile[curClass]);
 			break;
 
 		default:

@@ -112,7 +112,7 @@ namespace
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			//	経験値初期化
-			levelInfo[p].exp = 0;
+			levelInfo[p].exp = 1000;
 			levelInfo[p].total_level = 0;
 
 			//	各レベル初期化
