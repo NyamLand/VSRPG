@@ -37,7 +37,7 @@ namespace
 		const int ATTACK_HIT_START = 195;
 		const int ATTACK_HIT_END = 240;
 		const int DEAD_START = 321;
-		const int FALL_END = 1000;
+		const int FALL_END = 335;
 	}
 }
 //------------------------------------------------------------------------------------
@@ -177,8 +177,9 @@ namespace
 		{
 			//	“§‰ßŠJŽn
 			alpha -= 0.1f;
-			if (alpha <= 0.0f)
+			if ( frame >= MOTION_FRAME::FALL_END )
 			{
+				alpha = 1.0f;
 				lifeInfo.isAlive = false;
 				sound->PlaySE(SE::ENEMY_DEAD);
 			}

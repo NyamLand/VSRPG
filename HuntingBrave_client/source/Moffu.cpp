@@ -39,7 +39,7 @@ namespace
 		const int ATTACK_HIT_START = 138;
 		const int ATTACK_HIT_END = 150;
 		const int DEAD_START = 225;
-		const int FALL_END = 493;
+		const int FALL_END = 252;
 	}
 
 	namespace MOFUMOFU
@@ -224,8 +224,9 @@ namespace
 		{
 			//	“§‰ßŠJŽn
 			alpha -= 0.1f;
-			if ( alpha <= 0.0f )
+			if ( frame >= MOTION_FRAME::FALL_END )
 			{
+				alpha = 1.0f;
 				lifeInfo.isAlive = false;
 				sound->PlaySE(SE::ENEMY_DEAD);
 			}
