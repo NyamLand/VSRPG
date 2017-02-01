@@ -23,6 +23,7 @@
 #define	APPEND_INTERVAL		3
 #define	ENEMY_MAX			5
 #define APPEND_RADIUS		15.0f
+#define APPEND_RADIUS_		220.0f		//自陣以外
 
 #define	MOFFU_INIT_LIFE	10
 #define	WOLF_INIT_LIFE		20
@@ -273,17 +274,21 @@
 		}
 
 		if ( !appendOK )	return;
-
-		//	出現座標の設定
-		float randX = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
-		float randZ = random->GetFloat( -APPEND_RADIUS, APPEND_RADIUS );
-		Vector3	appendPos = gameParam->GetPlayerParam(id).pos + Vector3( randX, 0.0f, randZ );
-			
-		//	リストに追加
-		Append( appendPos, random->GetInt( BIG_ENEMY, SMALL_ENEMY ) );
 		
+		//	出現座標の設定
+		float randX = random->GetFloat(-APPEND_RADIUS, APPEND_RADIUS);
+		float randZ = random->GetFloat(-APPEND_RADIUS, APPEND_RADIUS);
+		Vector3	appendPos = gameParam->GetPlayerParam(id).pos + Vector3(randX, 0.0f, randZ);
+
+		float	length = Vector3(Vector3(0.0f, 0.0f, 0.0f) - appendPos).Length();
+		if (length > APPEND_RADIUS_)	return;
+
+		//	リストに追加
+		Append(appendPos, random->GetInt(BIG_ENEMY, SMALL_ENEMY));
+
 		//	生成フラグをfalseにする
 		appendOK = false;
+		
 	}
 
 	//	ライフ上昇
