@@ -13,6 +13,7 @@
 #include	"Timer.h"
 #include	"Wolf.h"
 #include	"Moffu.h"
+#include	"shadow.h"
 
 //	class
 class EnemyManager : public Singleton<EnemyManager>
@@ -22,8 +23,9 @@ class EnemyManager : public Singleton<EnemyManager>
 public:
 	enum ENEMY_TYPE
 	{
-		BIG_ENEMY,
-		SMALL_ENEMY,
+		WOLF,
+		MOFFU,
+		SHADOW,
 		TYPE_MAX,
 	};
 
