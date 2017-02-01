@@ -71,7 +71,7 @@ namespace
 			"DATA/CHR/Magician/Magician.IEM",
 			"DATA/CHR/Knight/Knight.IEM",
 			"DATA/CHR/Prist/prist.IEM",
-			"DATA/CHR/suppin/Suppin.IEM"
+			"DATA/CHR/Assasin/assasin.IEM"
 		};
 
 		//	通常顔
@@ -82,6 +82,7 @@ namespace
 			"DATA/CHR/Magician/face.png",
 			"DATA/CHR/Knight/face.png",
 			"DATA/CHR/Prist/face2.png"
+			"DATA/CHR/Assasin/face.png"
 		};
 
 		//	ダメージ顔
@@ -92,6 +93,7 @@ namespace
 			"DATA/CHR/Magician/face_damage.png",
 			"DATA/CHR/Knight/face_damage.png",
 			"DATA/CHR/Prist/face_damage.png"
+			"DATA/CHR/Assasin/face_damage.png"
 		};
 
 		//	攻撃顔
@@ -102,6 +104,7 @@ namespace
 			"DATA/CHR/Magician/face_koueki.png",
 			"DATA/CHR/Knight/face_koueki.png",
 			"DATA/CHR/Prist/face_koueki.png"
+			"DATA/CHR/Assasin/face_koueki.png"
 		};
 	}
 	
@@ -114,7 +117,7 @@ namespace
 			"DATA/CHR/Magician/body_",
 			"DATA/CHR/Knight/body_",
 			"DATA/CHR/Prist/body_",
-			"DATA/CHR/suppin/body_"
+			"DATA/CHR/Assasin/body_"
 		};
 	}
 
@@ -226,7 +229,11 @@ namespace
 
 		//	連結
 		strcat_s( str, pNum );
-		model->SetTexture(0, str);
+		if ( classType == CLASS_TYPE::ASSASSIN )
+		{
+			model->SetTexture( 1, str );
+		}
+		else model->SetTexture( 0, str );
 
 		if ( classType == CLASS_TYPE::FIGHTER )
 		{
@@ -366,7 +373,8 @@ namespace
 		SetMotion( gameParam->GetPlayerParam( id ).motion );
 		SetScale( PLAYER_SCALE );
 		sound->PlaySE(SE::MAX_UPGRADE);
-		if ( curClass == CLASS_TYPE::KNIGHT )	SetScale( KNIGHT_SCALE );
+		if (curClass == CLASS_TYPE::KNIGHT)	SetScale(KNIGHT_SCALE);
+		if (curClass == CLASS_TYPE::ASSASSIN)	SetScale(KNIGHT_SCALE);
 		obj->Update();
 	}
 
@@ -376,15 +384,25 @@ namespace
 		switch ( faceType )
 		{
 		case FACE_TYPE::NORMAL:
-			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+			if (curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN)
 				obj->SetTexture( 2, normalFaceFile[curClass] );
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				obj->SetTexture( 2, normalFaceFile[curClass] );
+				obj->SetTexture( 0, normalFaceFile[curClass] );
+			}
 			else
 				obj->SetTexture( 1, normalFaceFile[curClass] );
 			break;
 
 		case FACE_TYPE::DAMAGE:
-			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
+			if (curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN)
 				obj->SetTexture( 2, damageFaceFile[curClass] );
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				obj->SetTexture( 2, damageFaceFile[curClass] );
+				obj->SetTexture( 0, damageFaceFile[curClass]);
+			}
 			else
 				obj->SetTexture( 1, damageFaceFile[curClass] );
 			break;
@@ -392,8 +410,13 @@ namespace
 		case FACE_TYPE::ATTACK:
 			if ( curClass == CLASS_TYPE::FIGHTER || curClass == CLASS_TYPE::MAGICIAN )
 				obj->SetTexture( 2, attackFaceFile[curClass] );
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				obj->SetTexture( 2, attackFaceFile[curClass] );
+				obj->SetTexture( 0, attackFaceFile[curClass] );
+			}
 			else
-				obj->SetTexture( 1, attackFaceFile[curClass] );
+				obj->SetTexture(1, attackFaceFile[curClass]);
 			break;
 
 		default:

@@ -59,6 +59,7 @@ public:
 
 	//	î•ñİ’è
 	void	SetRotateAngle( float rotateAngle );
+	void	SetPos( const Vector3& pos );
 
 	//	î•ñæ“¾
 	static Camera* GetInstance( void );

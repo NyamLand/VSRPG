@@ -90,7 +90,7 @@
 	LevelManager::LevelManager( void )
 	{
 		//	経験値初期化
-		levelInfo.exp = 0;
+		levelInfo.exp = 1000;
 
 		//	各レベル初期化
 		for ( int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++ )
@@ -109,7 +109,7 @@
 	bool	LevelManager::Initialize( void )
 	{
 		//	経験値初期化
-		levelInfo.exp = 0;
+		levelInfo.exp = 1000;
 
 		//	各レベル初期化
 		for (int i = 0; i < LEVEL_TYPE::TYPE_MAX; i++)

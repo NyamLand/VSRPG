@@ -19,7 +19,7 @@
 
 #define	SECOND	60
 #define	MINUTE	SECOND * 60
-#define	ITEM_INTERVAL	1.0f / ( 3 * MINUTE )
+#define	ITEM_INTERVAL	1.0f / ( MINUTE + 30.0f )
 
 //----------------------------------------------------------------------------------------------
 //	èâä˙âªÅEâï˙

@@ -23,6 +23,7 @@
 #include	"UpGradeUI.h"
 #include	"ScoreBoardUI.h"
 #include	"KillLogUI.h"
+#include	"Particle.h"
 
 //	class
 class UIManager : public Singleton<UIManager> 
