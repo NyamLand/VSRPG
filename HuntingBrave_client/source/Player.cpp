@@ -466,7 +466,7 @@ namespace
 		default:
 			if ( gameParam->GetPlayerParam( id ).effParam < 1.0f )
 			{
-				lifeInfo.active = true;
+				lifeInfo.active = false;
 			}
 			else lifeInfo.active = true;
 		}
