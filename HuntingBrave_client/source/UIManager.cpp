@@ -170,7 +170,7 @@ void	UIManager::Render( void )
 	hpUI->Render();
 	expUI->Render();
 	itemUI->Render();
-	//mapUI->Render();
+	mapUI->Render();
 	killLogUI->Render();
 	scoreUI->Render();
 	boardUI->Render();
