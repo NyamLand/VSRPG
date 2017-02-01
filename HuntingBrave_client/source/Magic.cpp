@@ -15,7 +15,7 @@
 //	グローバル
 //----------------------------------------------------------------------------------------------
 
-#define	MAGIC_RADIUS	1.25f
+#define	MAGIC_RADIUS	2.5f
 
 //----------------------------------------------------------------------------------------------
 //	初期化・解放
@@ -104,4 +104,38 @@
 	int			Magic::GetID( void )const
 	{
 		return	id;
+	}
+
+	//	行列取得
+	Matrix	Magic::GetMatrix(void)const
+	{
+		return	obj->TransMatrix;
+	}
+
+
+	//	前方取得
+	Vector3	Magic::GetFront(void)const
+	{
+		Matrix mat = GetMatrix();
+		Vector3	front = Vector3(mat._31, mat._32, mat._33);
+		front.Normalize();
+		return	front;
+	}
+
+	//	上方取得
+	Vector3	Magic::GetUp(void)const
+	{
+		Matrix mat = GetMatrix();
+		Vector3	up = Vector3(mat._21, mat._22, mat._23);
+		up.Normalize();
+		return	up;
+	}
+
+	//	右方取得
+	Vector3	Magic::GetRight(void)const
+	{
+		Matrix mat = GetMatrix();
+		Vector3	right = Vector3(mat._11, mat._12, mat._13);
+		right.Normalize();
+		return	right;
 	}

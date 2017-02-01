@@ -39,11 +39,6 @@
 
 #define	BLACK_WHITE_SPEED		0.01f
 
-#define	MAP_SIZE		250
-#define	MAP_POS_X		1150
-#define	MAP_POS_Y		130
-#define	MAP_SRC_SIZE	720
-
 bool	sceneMain::threadState;
 
 //*****************************************************************************************************************************
@@ -102,6 +97,9 @@ bool	sceneMain::Initialize( void )
 	//	collision初期化
 	collision->Initialize(gameParam->GetMyIndex(), "DATA/BG/stage_atari.IMO" );
 
+	//	particle初期化
+	particle->Initialize();
+
 	//	送信
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
@@ -133,6 +131,7 @@ sceneMain::~sceneMain( void )
 	magicManager->Release();
 	playerManager->Release();
 	effectManager->Release();
+	particle->Release();
 	collision->Release();
 	sound->StopBGM();
 }
@@ -181,6 +180,9 @@ void	sceneMain::Update( void )
 	//	collision
 	collision->AllCollision();
 
+	//	particle
+	particle->Update();
+
 	//	スクリーン制御
 	screen->Update();
 	DeadScreen();
@@ -222,15 +224,12 @@ void	sceneMain::Render( void )
 	//	effect描画
 	effectManager->Render();
 
-
-	stage->GetTexture()->Render(IMAGE_MODE::NORMAL,MAP_POS_X, MAP_POS_Y, MAP_SIZE, MAP_SIZE,
-		280, 0, MAP_SRC_SIZE, MAP_SRC_SIZE);
+	//	particle描画
+	particle->Render();
 
 	//	ui描画
 	uiManager->Render();
 	
-
-
 	screen->Render();
 
 	//	各プレイヤー座標表示

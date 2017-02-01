@@ -26,6 +26,7 @@ namespace
 			SUCK,
 			FLOWER = 8,
 			COIN,
+			SMOG = 12,
 		};
 
 		enum EFF_TIMER
@@ -86,12 +87,9 @@ public:
 
 	//	動作関数
 	void	BlueFlame( const Vector3& pos, const float& scale =  DEF_SCALE);																										//	青炎
-	void	Spark( const Vector3& pos, const float& scale = DEF_SCALE );																											//	火花
 	void	Hit( const Vector3& pos, const float& scale = DEF_SCALE, const int& time = STAR_TIME );																				//	星
-	void	Smoke( const Vector3& pos, const float& scale = DEF_SCALE, const int& time = SMOKE_TIME );																			//	煙
 	void	PowerUp( const Vector3& pos, const float& scale = DEF_SCALE, const int& move = DEF_MOVE, const int& time = POWER_UP_TIME );												//	矢印UP
 	void	SpeedUp( const Vector3& pos, const float& scale = DEF_SCALE, const int& move = DEF_MOVE, const int& time = SPEED_UP_TIME );												//	矢印DOWN
-	void	Dust( const Vector3& pos, const Vector3& back, const Vector3& side, const float& scale = DEF_SCALE, const int& time = DUST_TIME );									//	砂埃
 	void	Suck( const Vector3& pos, const Vector3& target, const Vector3& side, const float& length, const float& scale = DEF_SCALE, const int& time = SUCK_TIME );		//	吸い込み
 	void	Bom( const Vector3& pos, const float& move, const float& scale = DEF_SCALE, const int& time = BOM_TIME );															//	爆発
 	void	Flower( const Vector3& pos, const float& scale = DEF_SCALE, const Vector3& color = DEF_COLOR );																								//	花
@@ -103,10 +101,13 @@ public:
 	void	Death( const Vector3& pos, const float& scale = DEF_SCALE, const Vector3& color = DEF_COLOR );																									//	死亡エフェクト
 	void	FireBall( const Vector3& pos, const float& scale = DEF_SCALE, const Vector3& color = DEF_COLOR );																								//	魔女ファイアー
 	void	BombFireBall( const Vector3& pos, const float& scale = DEF_SCALE, const Vector3& color = DEF_COLOR );
-	void	Semicircle( const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float& scale = DEF_SCALE );										//	突進時の風を切る	
+	void	Semicircle( const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float radius, const float& scale = DEF_SCALE );										//	突進時の風を切る	
 	void	CannonSmoke( const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float& scale = DEF_SCALE );									//	大砲を打った時の煙
 
 
+	void	SwordDamage( const Vector3& pos, const float& scale = DEF_SCALE );																											//	剣ダメージ
+	void	MagicDamage( const Vector3& pos, const Vector3& back, const Vector3& side, const float& scale = DEF_SCALE, const int& time = DUST_TIME );									//	魔法ダメージ
+	void	Smoke( const Vector3& pos, const float& scale = DEF_SCALE, const int& time = SMOKE_TIME );																					//	変身時の煙
 
 	//	情報取得
 	static	Particle*	GetInstance( void );

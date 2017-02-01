@@ -7,6 +7,7 @@
 #include	"PlayerManager.h"
 #include	"UIManager.h"
 #include	"NetEnemyManager.h"
+#include	"InputManager.h"
 #include	"GameParam.h"
 #include	"PointManager.h"
 #include	"LevelManager.h"
@@ -140,13 +141,27 @@ void	UIManager::Update( void )
 	upGradeUI->Update();
 	killLogUI->Update();
 	
-	
 	//	値セット
 	scoreUI->SetScore( pointManager->GetPoint( p_num ) );
 	expUI->SetExp(levelManager->GetExp());
 	hpUI->SetMaxHp(gameParam->GetPlayerStatus().maxLife);
 	hpUI->SetHp(gameParam->GetPlayerParam(p_num).life);
 
+	//	debug用
+	//	剣ダメージ
+	//if (KEY(KEY_TYPE::SELECT) == 3){
+	//	particle->SwordDamage(gameParam->GetPlayerParam(p_num).pos + Vector3(0.0f, 2.0f, 0.0f) , 0.3f);
+	//}
+
+	//	変身煙
+	//if (KEY(KEY_TYPE::SELECT) == 1){
+	//	particle->Smoke(gameParam->GetPlayerParam(p_num).pos ,1.0f);
+	//}
+
+	//	魔法ダメージ
+	//if (KEY(KEY_TYPE::SELECT) == 3){
+	//	particle->MagicDamage(gameParam->GetPlayerParam(p_num).pos + Vector3(0.0f, 2.0f, 0.0f), -(playerManager->GetPlayer(p_num)->GetFront()), playerManager->GetPlayer(p_num)->GetRight(), 1.0f);
+	//}
 
 	if (KEY_Get(KEY_SPACE) == 3 && random->GetInt(0, 30000) == 1)	check = true;
 	if (check){
