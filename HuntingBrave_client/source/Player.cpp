@@ -27,6 +27,7 @@
 #define	PLAYER_HEIGHT		2.5f
 #define	PLAYER_RADIUS		1.5f
 #define	ATTACK_RADIUS		0.5f
+#define ATTACK_RADIUS_		1.5f	//アサシン、プリースト用
 
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED	0.3f
@@ -283,6 +284,8 @@ namespace
 
 		//	モデル描画
 		BaseChara::Render( shader, technique );	
+		//drawShape->DrawCapsule(GetBonePos(BONE_NUM::RIGHT_HAND)+GetFront(), GetBonePos(BONE_NUM::RIGHT_HAND), ATTACK_RADIUS, 0xFF000000);
+
 	}
 
 //------------------------------------------------------------------------------------
@@ -296,19 +299,53 @@ namespace
 		switch ( playerParam.motion )
 		{
 		case MOTION_NUM::ATTACK1:
-			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
-			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
-			gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::HAND );
-			gameParam->GetAttackInfo( id ).vec2 = GetBonePos( BONE_NUM::SWORD );
-			break;
-
+			if (curClass == CLASS_TYPE::PRIEST)
+			{
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(16);
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos(15);
+				break;
+			}
+			else if (curClass == CLASS_TYPE::ASSASSIN)
+			{
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::SWORD);
+				break;
+			}
+			else{
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS;
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::HAND);
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::SWORD);
+				break;
+			}
 		case MOTION_NUM::ATTACK2:
-			gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
-			gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS;
-			gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::HAND);
-			gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::SWORD);
-			break;
-
+			if ( curClass == CLASS_TYPE::ASSASSIN)
+			{
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::LEFT_HAND);
+				break;
+			}
+			else if (curClass == CLASS_TYPE::KNIGHT)
+			{
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::SPHERE;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
+				gameParam->GetAttackInfo(id).vec2 = GetFront();
+				break;
+			}
+			else{
+				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS;
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::HAND);
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::SWORD);
+				break;
+			}
 		case MOTION_NUM::MAGIC_ACTUATION:
 			gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
 			gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS;
