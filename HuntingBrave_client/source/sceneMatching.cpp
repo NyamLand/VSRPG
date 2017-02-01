@@ -143,11 +143,7 @@ bool	sceneMatching::threadState;
 			{
 				step = MATCHING_MODE::SIGN_UP;
 			}
-			if ( nameInput->GetCancelState() )
-			{
-				screen->SetScreenMode( SCREEN_MODE::WHITE_OUT, 0.01f );
-				nextScene = SCENE::TITLE;
-			}
+
 			break;
 
 		case MATCHING_MODE::SIGN_UP:

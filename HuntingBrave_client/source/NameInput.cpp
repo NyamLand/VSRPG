@@ -260,12 +260,12 @@ namespace
 					nameCursor--;
 				}
 			}
-			else
-			{
-				gameManager->SetChangeSceneFrag( true );
-				nameImage[nameCursor]->renderflag = false;
-				cancelState = true;
-			}
+			//else
+			//{
+			//	gameManager->SetChangeSceneFrag( true );
+			//	nameImage[nameCursor]->renderflag = false;
+			//	cancelState = true;
+			//}
 		}
 	}
 

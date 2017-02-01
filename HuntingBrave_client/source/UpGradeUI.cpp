@@ -260,6 +260,11 @@ namespace
 	{
 		if ( levelManager->GetLevel( select ) != levelManager->LEVEL_MAX )
 		{
+			if ( levelManager->GetLevel( select ) == levelManager->LEVEL_MAX - 1 )
+			{
+				if ( playerManager->GetPlayer( gameParam->GetMyIndex() )->GetCurClass() != CLASS_TYPE::NORMAL )
+					return;
+			}
 			if ( levelManager->GetExp() < ( 30 + level * 5 ) ) return;
 
 			levelManager->SendLevel( select );

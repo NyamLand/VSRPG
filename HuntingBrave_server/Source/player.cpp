@@ -6,6 +6,7 @@
 #include	"GameManager.h"
 #include	"InputManager.h"
 #include	"MagicManager.h"
+#include	"Interpolation.h"
 #include	"Collision.h"
 #include	"Player.h"
 
@@ -31,6 +32,7 @@
 #define	ANGLE_ADJUST_MOVE_SPEED		0.3f
 #define	MOVE_SPEED		0.2f
 #define	STEP_SPEED		0.5f
+#define	EFF_SPEED		0.05f
 
 namespace
 {
@@ -240,6 +242,8 @@ namespace
 		//	情報受け取り
 		pParam = param;
 
+		EffectUpdate();
+
 		//	モード別動作関数
 		( this->*ModeFunction[mode] )();
 
@@ -256,6 +260,7 @@ namespace
 	//	通常移動
 	void	Player::ModeMove( void )
 	{
+
 		//	移動
 		Move();
 
@@ -649,6 +654,19 @@ namespace
 		//	キャラクターの向きがPI以上にならないようにする
 		if ( pParam.angle >= 1.0f * D3DX_PI )		pParam.angle -= 2.0f * D3DX_PI;
 		if ( pParam.angle <= -1.0f * D3DX_PI )		pParam.angle += 2.0f * D3DX_PI;
+	}
+
+	//	エフェクト更新
+	void	Player::EffectUpdate( void )
+	{
+		if ( pParam.effParam >= 1.0f )	return;
+		bool	state = Interpolation::PercentageUpdate( pParam.effParam, EFF_SPEED );
+		
+		if ( !state )
+		{
+			gameParam->GetLifeInfo( index ).active = false;
+		}
+		else gameParam->GetLifeInfo( index ).active = true;
 	}
 
 //----------------------------------------------------------------------------------------------

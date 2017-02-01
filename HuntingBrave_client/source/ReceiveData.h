@@ -45,6 +45,7 @@
 		int			motion;
 		Vector3	pos;
 		float			angle;
+		float			effParam;
 	};
 
 	//	クラスチェンジ情報

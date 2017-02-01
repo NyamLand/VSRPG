@@ -15,7 +15,7 @@
 
 #define	MAGIC_ACTIVE_TIME		0.5f
 #define	MAGIC_SPEED		20.0f
-#define	MAGIC_RADIUS	1.25f
+#define	MAGIC_RADIUS	2.5f
 
 //----------------------------------------------------------------------------------------------
 //	‰Šú‰»E‰ğ•ú

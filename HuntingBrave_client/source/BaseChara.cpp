@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
 #include	"Camera.h"
+#include	"Interpolation.h"
 #include	"BaseChara.h"
 
 //***************************************************************
@@ -13,6 +14,7 @@
 
 //	定数値
 #define	MOVE_RESISTANCE	0.9f
+#define	DAMAGE_EFFECT_SPEED	0.05f
 
 //------------------------------------------------------------------------------------
 //	グローバル
@@ -25,12 +27,11 @@
 	//	コンストラクタ
 	BaseChara::BaseChara(void) : obj(nullptr), bar(nullptr),
 		pos( 0.0f, 0.0f, 0.0f ), move( 0.0f, 0.0f, 0.0f ),
-		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ),
-		mode( 0 )
+		angle( 0.0f ), scale( 1.0f ), speed( 0.0f ), damageEffPercentage( 1.0f ),
+		mode( 0 ), effState( false )
 	{
 		ZeroMemory( &lifeInfo, sizeof( LifeInfo ) );
 		ZeroMemory( &collisionInfo, sizeof( CollisionInfo ) );
-		
 	}
 
 	//	デストラクタ

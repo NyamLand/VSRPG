@@ -81,7 +81,7 @@ namespace
 			"DATA/CHR/Fighter/face.png",
 			"DATA/CHR/Magician/face.png",
 			"DATA/CHR/Knight/face.png",
-			"DATA/CHR/Prist/face2.png"
+			"DATA/CHR/Prist/face2.png",
 			"DATA/CHR/Assasin/face.png"
 		};
 
@@ -92,7 +92,7 @@ namespace
 			"DATA/CHR/Fighter/face_damage.png",
 			"DATA/CHR/Magician/face_damage.png",
 			"DATA/CHR/Knight/face_damage.png",
-			"DATA/CHR/Prist/face_damage.png"
+			"DATA/CHR/Prist/face_damage.png",
 			"DATA/CHR/Assasin/face_damage.png"
 		};
 
@@ -103,7 +103,7 @@ namespace
 			"DATA/CHR/Fighter/face_koueki.png",
 			"DATA/CHR/Magician/face_koueki.png",
 			"DATA/CHR/Knight/face_koueki.png",
-			"DATA/CHR/Prist/face_koueki.png"
+			"DATA/CHR/Prist/face_koueki.png",
 			"DATA/CHR/Assasin/face_koueki.png"
 		};
 	}
@@ -388,8 +388,8 @@ namespace
 				obj->SetTexture( 2, normalFaceFile[curClass] );
 			else if (curClass == CLASS_TYPE::ASSASSIN)
 			{
-				obj->SetTexture( 2, normalFaceFile[curClass] );
 				obj->SetTexture( 0, normalFaceFile[curClass] );
+				//obj->SetTexture( 2, normalFaceFile[curClass] );
 			}
 			else
 				obj->SetTexture( 1, normalFaceFile[curClass] );
@@ -400,8 +400,8 @@ namespace
 				obj->SetTexture( 2, damageFaceFile[curClass] );
 			else if (curClass == CLASS_TYPE::ASSASSIN)
 			{
-				obj->SetTexture( 2, damageFaceFile[curClass] );
 				obj->SetTexture( 0, damageFaceFile[curClass]);
+				//obj->SetTexture( 2, damageFaceFile[curClass] );
 			}
 			else
 				obj->SetTexture( 1, damageFaceFile[curClass] );
@@ -412,8 +412,8 @@ namespace
 				obj->SetTexture( 2, attackFaceFile[curClass] );
 			else if (curClass == CLASS_TYPE::ASSASSIN)
 			{
-				obj->SetTexture( 2, attackFaceFile[curClass] );
 				obj->SetTexture( 0, attackFaceFile[curClass] );
+				//obj->SetTexture( 2, attackFaceFile[curClass] );
 			}
 			else
 				obj->SetTexture(1, attackFaceFile[curClass]);
@@ -462,8 +462,13 @@ namespace
 			break;
 
 		default:
-			lifeInfo.active = true;
+			if ( gameParam->GetPlayerParam( id ).effParam < 1.0f )
+			{
+				lifeInfo.active = true;
+			}
+			else lifeInfo.active = true;
 		}
+
 	}
 
 //------------------------------------------------------------------------------------

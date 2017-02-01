@@ -117,7 +117,7 @@ namespace SE_TYPE
 		ReceiveCharaData	receiveCharaData;
 		if ( receive( ( LPSTR )&receiveCharaData, sizeof( receiveCharaData ) ) <= 0 )	return	false;
 		SetPlayerParam( myIndex, 
-			receiveCharaData.pos, receiveCharaData.angle, 
+			receiveCharaData.pos, receiveCharaData.angle, receiveCharaData.effParam,
 			receiveCharaData.motion, receiveCharaData.life );
 
 		//	初期パラメータ受信
@@ -150,10 +150,10 @@ namespace SE_TYPE
 		SendInputInfo();
 
 		//	debug用
-		//if (KEY(KEY_TYPE::SELECT) == 3){
-		//	char debug = COMMANDS::DEBUG;
-		//	send(&debug, 1);
-		//}
+		if (KEY(KEY_TYPE::SELECT) == 3){
+			char debug = COMMANDS::DEBUG;
+			send(&debug, 1);
+		}
 	}
 
 	//	データ受信
@@ -358,6 +358,7 @@ namespace SE_TYPE
 			receiveCharaData->id, 
 			receiveCharaData->pos, 
 			receiveCharaData->angle, 
+			receiveCharaData->effParam,
 			receiveCharaData->motion,
 			receiveCharaData->life );
 	}
@@ -481,11 +482,12 @@ namespace SE_TYPE
 	}
 
 	//	プレイヤーパラメータ設定
-	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life )
+	void	GameParam::SetPlayerParam( int id, const Vector3& pos, float angle, float effParam, int motion, int life )
 	{
 		playerParam[id].pos = pos;
 		playerParam[id].angle = angle;
 		playerParam[id].motion = motion;
+		playerParam[id].effParam = effParam;
 		playerParam[id].life = life;
 	}
 

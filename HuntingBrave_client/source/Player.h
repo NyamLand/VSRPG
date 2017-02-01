@@ -113,4 +113,7 @@ public:
 	void	SetPlayerParam( const PlayerParam& playerParam );
 	void	SetCollisionShape( const PlayerParam& playerParam );
 	void	SetMotion( int motion ) override;
+
+	//	î•ñæ“¾
+	char	GetCurClass( void )const{ return curClass; }
 };

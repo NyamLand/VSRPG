@@ -73,8 +73,9 @@
 		int			motion;
 		Vector3	pos;
 		float			angle;
-		SendCharaData( int id, char attackParam, const Vector3& pos, float angle, int motion, int life ) : 
-			id( id ), attackParam( attackParam ), pos( pos ), angle( angle ), motion( motion ), life( life ){}
+		float			effParam;
+		SendCharaData( int id, char attackParam, const Vector3& pos, float angle, float effParam, int motion, int life ) : 
+			id( id ), attackParam( attackParam ), pos( pos ), angle( angle ), effParam( effParam ), motion( motion ), life( life ){}
 	};
 
 	//	クラスチェンジ情報

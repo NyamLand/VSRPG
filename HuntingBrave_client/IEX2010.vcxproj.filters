@@ -277,6 +277,12 @@
     <ClCompile Include="source\Particle.cpp">
       <Filter>Source\Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="source\shadow.cpp">
+      <Filter>Source\Enemy\Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TestResult.cpp">
+      <Filter>Source\Scene\sceneResult</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -518,6 +524,12 @@
     </ClInclude>
     <ClInclude Include="source\Particle.h">
       <Filter>Source\Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shadow.h">
+      <Filter>Source\Enemy\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TestResult.h">
+      <Filter>Source\Scene\sceneResult</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -796,6 +808,9 @@
     </Filter>
     <Filter Include="Source\Effect\Particle">
       <UniqueIdentifier>{1c5bc496-b735-4aea-ad9e-87e19dfc3d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\Shadow">
+      <UniqueIdentifier>{b82150f9-d918-47b6-b285-20ef0a12ea36}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

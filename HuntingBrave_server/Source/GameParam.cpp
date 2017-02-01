@@ -36,7 +36,6 @@ GameParam*	gameParam = nullptr;
 	{
 		playerName = new PlayerName();
 		InitializeGame();
-
 	}
 
 	//	デストラクタ
@@ -181,17 +180,17 @@ GameParam*	gameParam = nullptr;
 
 		case COMMANDS::DEBUG:
 		{
-								collision->SendHitSE( 0 );
-								//	ライフ計算
-								int damage = 50;
-								if (damage <= 0)	damage = 5;
-								bool isAlive = gameParam->GetLifeInfo(0).CulcLife(-damage);
-								if (isAlive)playerManager->GetPlayer(0)->SetMode(MODE::DAMAGE);
-								else
-								{
-									//	プレイヤーを死亡させる
-									playerManager->GetPlayer(0)->SetDeath();
-								}
+				collision->SendHitSE( 0 );
+				//	ライフ計算
+				int damage = 50;
+				if ( damage <= 0 )	damage = 5;
+				bool isAlive = gameParam->GetLifeInfo( client ).CulcLife(-damage);
+				if ( isAlive ) gameParam->GetPlayerParam( client ).effParam = 0.0f;
+				else
+				{
+					//	プレイヤーを死亡させる
+					playerManager->GetPlayer(0)->SetDeath();
+				}
 		}
 			break;
 
@@ -209,10 +208,11 @@ GameParam*	gameParam = nullptr;
 	void	GameParam::SendCharaInfo( int client, int player )
 	{
 		//	情報設定
-		SendCharaData sendCharaData( player, 
+		SendCharaData sendCharaData(player,
 			attackInfo[player].attackParam,
-			playerParam[player].pos, 
+			playerParam[player].pos,
 			playerParam[player].angle,
+			playerParam[player].effParam,
 			playerParam[player].motion,
 			lifeInfo[player].life );
 
@@ -475,7 +475,7 @@ GameParam*	gameParam = nullptr;
 			//	初期情報設定
 			SendCharaData	sendCharaData( client,
 				AttackInfo::NO_ATTACK,
-				initParam.pos, initParam.angle, initParam.motion,
+				initParam.pos, initParam.angle, initParam.effParam, initParam.motion,
 				lifeInfo[client].life );
 
 			//	初期情報送信

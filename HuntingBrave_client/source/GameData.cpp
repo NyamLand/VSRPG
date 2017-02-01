@@ -39,17 +39,18 @@
 //----------------------------------------------------------------------------------------------	
 
 	//	コンストラクタ
-	PlayerParam::PlayerParam( const Vector3& pos, float angle, int motion, int frame, int life )
+	PlayerParam::PlayerParam( const Vector3& pos, float angle, float effParam, int motion, int frame, int life )
 	{
-		Set( pos, angle, motion, frame, life );
+		Set( pos, angle, effParam, motion, frame, life );
 	}
 
 	//	情報設定
-	void	PlayerParam::Set( const Vector3& pos, float angle, int motion, int frame, int life )
+	void	PlayerParam::Set( const Vector3& pos, float angle, float effParam, int motion, int frame, int life )
 	{
 		this->pos = pos;
 		this->angle = angle;
 		this->motion = motion;
+		this->effParam = effParam;
 		this->frame = frame;
 		this->life = life;
 	}

@@ -28,6 +28,9 @@ protected:
 	CollisionInfo	collisionInfo;
 	LifeInfo			lifeInfo;
 
+	bool	effState;
+	float	damageEffPercentage;
+
 public:
 	//	‰Šú‰»E‰ğ•ú
 	BaseChara( void );
@@ -40,6 +43,7 @@ public:
 	virtual void	Render( iexShader* shader = nullptr, LPSTR technique = nullptr );
 	void	BarRender( void );
 	void	UpdateInfo( void );
+	void	DamageEffectUpdate( void );
 	void	AddMove( void );
 
 	//	“®ìŠÖ”

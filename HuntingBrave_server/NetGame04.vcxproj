@@ -150,6 +150,7 @@
     <ClInclude Include="Source\HealItem.h" />
     <ClInclude Include="Source\IEX_RayMesh.h" />
     <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\Interpolation.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ItemManager.h" />
     <ClInclude Include="Source\SpeedItem.h" />

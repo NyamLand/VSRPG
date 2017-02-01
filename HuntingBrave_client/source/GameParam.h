@@ -68,7 +68,7 @@ public:
 
 	//	î•ñİ’è
 	void	SetPlayerParam( int id, const PlayerParam& param );
-	void	SetPlayerParam( int id, const Vector3& pos, float angle, int motion, int life );
+	void	SetPlayerParam( int id, const Vector3& pos, float angle, float effParam, int motion, int life );
 	void	SetPlayerInfo( int id, char* name, char frontTItle, char backTitle );
 	void	SetPointInfo( int id, int addPoint );
 	void	SetMatchingInfo( int id, bool isComplete );

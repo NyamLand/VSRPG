@@ -36,13 +36,14 @@
 	struct PlayerParam
 	{
 		Vector3 pos;
-		float	angle; 
+		float	angle;
+		float effParam;
 		int	motion;
 		int	frame;
 		int	life;
 		PlayerParam( void ){};
-		PlayerParam( const Vector3& pos, float angle, int motion, int frame, int life );
-		void Set( const Vector3& pos, float angle, int motion, int frame, int life );
+		PlayerParam( const Vector3& pos, float angle, float effParam, int motion, int frame, int life );
+		void Set( const Vector3& pos, float angle, float effParam, int motion, int frame, int life );
 	};
 
 	//	プレイヤーステータス
