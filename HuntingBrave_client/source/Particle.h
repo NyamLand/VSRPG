@@ -71,7 +71,8 @@ private:
 		Par1 = 1,
 		Par2 = 5,
 		Par3 = 10,
-		Par4 = 20
+		Par4 = 20,
+		Par5 = 50
 	};
 
 	

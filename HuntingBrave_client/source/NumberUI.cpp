@@ -35,7 +35,7 @@ NumberUI::NumberUI(int x, int y, int w, int h, int digit)
 	numbox.resize(digit);
 
 	DIGIT_MAX = digit;
-
+	slide_state = true;
 	//	経験値の値
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
@@ -103,6 +103,8 @@ void	NumberUI::NumberManager(void)
 	{
 		numbox[i] = -1;
 	}
+
+	if (!slide_state)	digit = DIGIT_MAX;
 	//-------------------------------------------------------
 	//	もし、最大桁数を超えた値の場合最大桁数の最大数を表示
 	//-------------------------------------------------------
@@ -189,12 +191,12 @@ void	NumberUI::NumberSet(Image* img, const int num, const int digit, int color)
 //	描画
 //---------------------------------------------------------------------------------------
 
-void	NumberUI::Render(void)
+void	NumberUI::Render(int mode)
 {
 
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
-		number[i]->Render(IMAGE_MODE::ADOPTPARAM);
+		number[i]->Render(mode);
 	}
 }
 
@@ -226,6 +228,16 @@ void	NumberUI::SetNum(int n)
 void	NumberUI::SetColor(int c)
 {
 	color = c;
+}
+
+void	NumberUI::SetSlide(bool state)
+{
+	slide_state = state;
+}
+
+Image*	NumberUI::GetNumber(int num)
+{
+	return number[num];
 }
 
 void	NumberUI::SetColor(float r, float g, float b)

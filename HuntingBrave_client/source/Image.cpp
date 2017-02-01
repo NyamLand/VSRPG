@@ -18,8 +18,8 @@
 //---------------------------------------------------------------------------------------
 
 	//	コンストラクタ
-	Image::Image() : x(0), y(0), w(0), h(0), sx(0), sy(0), sw(0), sh(0), alpha(1.0f), angle(0.0f), renderflag(true),
-	waveSpeed(0.0f), waveState(false), flashSpeed(0.0f), flashParam(0.0f), scalingFlag(false), scalingSpeed(0.0f), scalingState(0)
+	Image::Image() : x(0), y(0), w(0), h(0), sx(0), sy(0), sw(0), sh(0), alpha(1.0f), angle(0.0f), renderflag(true), t(0),
+		waveSpeed(0.0f), waveState(false), flashSpeed(0.0f), flashParam(0.0f), scalingFlag(false), scalingSpeed(0.0f), scalingState(0), plusScaleX(0), plusScaleY(0)
 	{
 		this->color = Vector3(1.0f, 1.0f, 1.0f);
 		this->p = GetPoint(this->x, this->y);
@@ -179,23 +179,25 @@
 	}
 
 	//
-	void	Image::FlashUpdate()
+	bool	Image::FlashUpdate()
 	{
 		flashParam += flashSpeed;
 
 		if (flashParam >= 6.0f)
 		{
 			flashParam = 0.0f;
+			return true;
 		}
 
 		alpha = 0.5f + 0.5f * sinf(flashParam);
 
+		return false;
 	}
 
 	//	拡大縮小更新
-	void	Image::ScalingUpdate( int max_scale)
+	bool	Image::ScalingUpdate( int max_scale)
 	{
-		if (!scalingFlag) return;
+		if (!scalingFlag) return false;
 
 		//	パラメータ加算
 		t += scalingSpeed;
@@ -235,15 +237,72 @@
 			break;
 		}
 
-		if (t >= 1.0f)		t = 0.0f;
+		if (t >= 1.0f)
+		{
+			t = 0.0f;
+			return true;
+		}
+
+		return false;
 	}
 
+	//	拡大更新
+	bool	Image::ScalingBigUpdate(int max_scale)
+	{
+		if (!scalingFlag) return false;
+
+		//	パラメータ加算
+		t += scalingSpeed;
+
+			//	パラメータ上限設定
+			if (t >= 1.0f)
+			{
+				t = 1.0f;
+				scalingFlag = false;
+				return true;
+			}
+
+			Interpolation::LinearInterpolation(plusScaleX, 0, max_scale, t);
+			Interpolation::LinearInterpolation(plusScaleY, 0, max_scale, t);
+
+			
+			return false;
+	}
+
+	//	縮小更新
+	bool	Image::ScalingMinUpdate(int max_scale)
+	{
+		if (!scalingFlag) return false;
+
+		//	パラメータ加算
+		t += scalingSpeed;
+
+		
+		//-------------------------
+		//	縮小
+		//-------------------------
+		
+		//	パラメータ上限設定
+		if (t >= 1.0f)
+		{
+			t = 1.0f;
+			scalingFlag = false;
+			return true;
+		}
+
+		Interpolation::LinearInterpolation(plusScaleX, max_scale, 0, t);
+		Interpolation::LinearInterpolation(plusScaleY, max_scale, 0, t);
+
+		
+		return false;
+	}
 
 //---------------------------------------------------------------------------------------
 //	情報設定
 //---------------------------------------------------------------------------------------
 	void	Image::SetWave(float speed)
 	{
+		if (waveState) return;
 		plusScaleX = 0;
 		plusScaleY = 0;
 		t = 0;
@@ -260,14 +319,15 @@
 		flashSpeed = speed;
 	}
 
-	void	Image::SetScaling(float speed)
+	void	Image::SetScaling(float speed, int mode)
 	{
+		if (scalingFlag) return;
 		plusScaleX = 0;
 		plusScaleY = 0;
 		t = 0.0f;
 		alpha = 1.0f;
 		scalingFlag = true;
-		scalingState = IMAGE_SCALING::BIG;
+		scalingState = mode;
 		scalingSpeed = speed;
 	}
 //---------------------------------------------------------------------------------------

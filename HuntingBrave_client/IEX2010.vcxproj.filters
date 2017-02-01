@@ -283,6 +283,9 @@
     <ClCompile Include="source\TestResult.cpp">
       <Filter>Source\Scene\sceneResult</Filter>
     </ClCompile>
+    <ClCompile Include="source\TimeUpUI.cpp">
+      <Filter>Source\UI\TimeUpUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IEX\iextreme.h">
@@ -530,6 +533,9 @@
     </ClInclude>
     <ClInclude Include="source\TestResult.h">
       <Filter>Source\Scene\sceneResult</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TimeUpUI.h">
+      <Filter>Source\UI\TimeUpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -811,6 +817,9 @@
     </Filter>
     <Filter Include="Source\Enemy\Shadow">
       <UniqueIdentifier>{b82150f9-d918-47b6-b285-20ef0a12ea36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\TimeUpUI">
+      <UniqueIdentifier>{a145281b-a6cd-4705-a05d-5b0b21934e93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

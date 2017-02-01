@@ -120,6 +120,7 @@
 		ReceiveClassChangeData* receiveData = 
 			( ReceiveClassChangeData* )data;
 		ClassChange( receiveData->id, receiveData->nextClass );
+		particle->Smoke(gameParam->GetPlayerParam(receiveData->id).pos, 1.0f);
 	}
 
 //-------------------------------------------------------------------------------------

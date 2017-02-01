@@ -26,6 +26,7 @@ private:
 //	Image* icon;
 	std::vector<Image*> number;
 	std::vector<int>	numbox;
+	bool	slide_state;
 	int	num, digit, DIGIT_MAX;
 	int	color;
 	int	posx, posy, size;
@@ -45,6 +46,8 @@ public:
 	void	SetNum(int n);
 	void	SetColor(int c);
 	void	SetColor(float r, float g, float b);
-	void	Render(void);
+	void	SetSlide(bool state);
+	Image*	GetNumber(int num);
+	void	Render(int mode = IMAGE_MODE::ADOPTPARAM);
 };
 

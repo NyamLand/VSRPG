@@ -16,6 +16,7 @@
 #include	"GameParam.h"
 #include	"GameManager.h"
 #include	"UIManager.h"
+#include	"TimeUpUI.h"
 #include	"Camera.h"
 #include	"PlayerManager.h"
 #include	"EnemyManager.h"
@@ -120,6 +121,9 @@ bool	sceneMain::Initialize( void )
 
 	_beginthread( ThreadFunction, 0, nullptr );
 	threadState = false;
+
+	//	タイムアップ用
+	timeUp = new TimeUpUI();
 	return true;
 }
 
@@ -128,6 +132,7 @@ sceneMain::~sceneMain( void )
 	SafeDelete( mainView );
 	SafeDelete( stage );
 	SafeDelete( mainScreen );
+	SafeDelete( timeUp );
 	backBuffer->Release();
 	enemyManager->Release();
 	netEnemyManager->Release();
@@ -192,8 +197,9 @@ void	sceneMain::Update( void )
 	DeadScreen();
 
 	//	シーン切り替え
-	if ( threadState )
-		gameManager->ChangeScene( SCENE::RESULT );
+	if ( threadState ){
+		if (timeUp->Update())	gameManager->ChangeScene( SCENE::RESULT );
+	}
 }
 
 //*****************************************************************************************************************************
@@ -243,6 +249,8 @@ void	sceneMain::Render( void )
 	DebugRender();
 
 	MyInfoRender();
+
+	timeUp->Render();
 
 	//	フレームバッファへ切り替え
 	iexSystem::GetDevice()->SetRenderTarget( 0, backBuffer );
