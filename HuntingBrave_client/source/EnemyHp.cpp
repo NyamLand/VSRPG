@@ -70,7 +70,10 @@ void	EnemyHpUI::Initilaize(int type, int maxhp)
 //	XV
 void	EnemyHpUI::Update( void )
 {
-	
+	if ( mode_type == HPUI_TYPE::PLAYER )
+	{
+		maxHp = gameParam->GetPlayerParam(id).maxLife;
+	}
 }
 
 //	•`‰æ

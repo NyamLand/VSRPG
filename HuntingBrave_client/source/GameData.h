@@ -41,6 +41,7 @@
 		int	motion;
 		int	frame;
 		int	life;
+		int	maxLife;
 		PlayerParam( void ){};
 		PlayerParam( const Vector3& pos, float angle, float effParam, int motion, int frame, int life );
 		void Set( const Vector3& pos, float angle, float effParam, int motion, int frame, int life );

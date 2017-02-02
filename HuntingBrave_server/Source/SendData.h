@@ -23,6 +23,7 @@
 			STATUS_INFO,
 			CLASS_CHANGE_INFO,
 			ENEMY_INFO,
+			MAX_LIFE_INFO,
 		};
 	}
 

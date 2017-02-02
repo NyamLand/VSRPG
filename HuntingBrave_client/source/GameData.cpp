@@ -53,6 +53,7 @@
 		this->effParam = effParam;
 		this->frame = frame;
 		this->life = life;
+		this->maxLife = life;
 	}
 
 //----------------------------------------------------------------------------------------------

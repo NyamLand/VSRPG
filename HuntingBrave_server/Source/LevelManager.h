@@ -66,6 +66,7 @@ public:
 	void	SendClassChange( int id, char nextClass );
 	void	SendAllStatus( int id );
 	void	SendStatus( int id, char paramType, float status );
+	void	SendMaxLife( int id );
 
 	//	óMŠÖ”
 	void	ReceiveHuntInfo( int client, const LPSTR& data );

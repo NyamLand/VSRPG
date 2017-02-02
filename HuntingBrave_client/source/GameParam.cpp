@@ -201,6 +201,19 @@ namespace SE_TYPE
 				//netEnemyManager->Receive( data );
 				break;
 
+			case RECEIVE_COMMAND::MAX_LIFE_INFO:
+				{
+					struct MaxLifeInfo
+					{
+						char com;
+						int id;
+						int maxLife;
+					}*receiveData = ( MaxLifeInfo* )data;
+
+					playerParam[receiveData->id].maxLife = receiveData->maxLife;
+				}
+				break;
+
 			case COMMANDS::MATCHING:
 				ReceiveMatching( data );
 				break;

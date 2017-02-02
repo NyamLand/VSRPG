@@ -167,6 +167,7 @@ namespace
 
 		//	ステータス計算
 		CulcStatus( id, levelType );
+		SendMaxLife( id );
 	}
 
 	//	経験値計算
@@ -277,6 +278,27 @@ namespace
 
 		//	送信
 		gameParam->send( id, ( LPSTR )&sendStatus, sizeof( sendStatus ) );
+	}
+
+	//	HP最大値送信
+	void	LevelManager::SendMaxLife( int id )
+	{
+		static	struct
+		{
+			char		com;
+			int		id;
+			int		maxLife;
+		}sendData;
+
+		sendData.com = SEND_COMMAND::MAX_LIFE_INFO;
+		sendData.id = id;
+		sendData.maxLife = gameParam->GetPlayerStatus( id ).maxLife;
+
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			if ( gameParam->GetPlayerActive( i ) == false )	continue;
+			gameParam->send( i, ( LPSTR )&sendData, sizeof( sendData ) );
+		}
 	}
 	
 //----------------------------------------------------------------------------------------------

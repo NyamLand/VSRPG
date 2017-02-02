@@ -267,6 +267,7 @@ namespace
 		//	ƒT[ƒo[‚©‚ç‚Ìî•ñ‚ð”½‰f
 		SetPlayerParam( playerParam );
 
+		bar->Update();
 
 		//	–‚–@‰r¥’†‚È‚ç•`‰æ
 		if (obj->GetMotion() == MOTION_NUM::MAGIC_CHANT)
@@ -534,6 +535,7 @@ namespace
 		pos = playerParam.pos;
 		angle = playerParam.angle;
 		SetMotion( playerParam.motion );
+		lifeInfo.maxLife = ( playerParam.maxLife );
 		lifeInfo.life = ( playerParam.life );
 	}
 
