@@ -152,57 +152,58 @@ sceneMain::~sceneMain( void )
 //*****************************************************************************************************************************
 void	sceneMain::Update( void )
 {
-	//	送信
-	//if (!threadState){
-		gameParam->Send();
-	//}
-
-	//	経過時間取得
-	float elapseTime = GetElapseTime();
-
-	//	GameManager更新
-	gameManager->Update();
-
-	//	player更新
-	playerManager->Update();
-
-	//	enemy更新
-	enemyManager->Update();
-
-	//	netEnemy更新
-	netEnemyManager->Update();
-
-	//	magic更新
-	magicManager->Update();
-
-	//	item更新
-	itemManager->Update();
-
-	//	ui更新
-	uiManager->Update();
-
-	//	Effect更新
-	effectManager->Update();
-
-	//	camera更新
-	int index = gameParam->GetMyIndex();
-	mainView->Update( playerManager->GetPlayer( index )->GetPos() );
-
-	//	collision
-	collision->AllCollision();
-
-	//	particle
-	particle->Update();
-
-	//	スクリーン制御
-	screen->Update();
-	DeadScreen();
 
 	//	シーン切り替え
 	if ( threadState ){
-	//	sound->PlaySE(SE::TIME_END);
-	//	if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	
+		sound->PlaySE(SE::TIME_END);
+		if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	
 		gameManager->ChangeScene(SCENE::RESULT);
+	}
+	else{
+		//	送信
+		gameParam->Send();
+		//}
+
+		//	経過時間取得
+		float elapseTime = GetElapseTime();
+
+		//	GameManager更新
+		gameManager->Update();
+
+		//	player更新
+		playerManager->Update();
+
+		//	enemy更新
+		enemyManager->Update();
+
+		//	netEnemy更新
+		netEnemyManager->Update();
+
+		//	magic更新
+		magicManager->Update();
+
+		//	item更新
+		itemManager->Update();
+
+		//	ui更新
+		uiManager->Update();
+
+		//	Effect更新
+		effectManager->Update();
+
+		//	camera更新
+		int index = gameParam->GetMyIndex();
+		mainView->Update(playerManager->GetPlayer(index)->GetPos());
+
+		//	collision
+		collision->AllCollision();
+
+		//	particle
+		particle->Update();
+
+		//	スクリーン制御
+		screen->Update();
+		DeadScreen();
 	}
 }
 
