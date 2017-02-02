@@ -51,4 +51,7 @@ public:
 
 	//	î•ñİ’è
 	void	SetBigIconSrcPos( void );
+
+	//	î•ñæ“¾
+	int		GetNeedExp( void );
 };

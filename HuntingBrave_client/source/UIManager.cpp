@@ -146,6 +146,7 @@ void	UIManager::Update( void )
 	expUI->SetExp(levelManager->GetExp());
 	hpUI->SetMaxHp(gameParam->GetPlayerStatus().maxLife);
 	hpUI->SetHp(gameParam->GetPlayerParam(p_num).life);
+	expUI->SetNeedExp(upGradeUI->GetNeedExp());
 
 	//	debug用
 	//	剣ダメージ

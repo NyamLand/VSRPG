@@ -188,6 +188,10 @@ namespace
 	//	更新
 	void	UpGradeUI::Update( void )
 	{
+		//	必要経験値
+		needExpUI->SetLevel( level );
+		needExpUI->Update();
+
 		if ( gameParam->GetPlayerParam( id ).motion != MOTION_NUM::MENU )		return;
 		
 		//	読み込み位置設定
@@ -197,8 +201,7 @@ namespace
 		expUI->SetExp( levelManager->GetExp() );
 		expUI->Update();
 
-		needExpUI->SetLevel( level );
-		needExpUI->Update();
+		
 
 		//	拡大縮小補間
 		bool	lerpState = IconScaling();
@@ -351,3 +354,8 @@ namespace
 //	情報取得	
 //---------------------------------------------------------------------------------------
 
+	//	必要経験値の値を取得
+	int		UpGradeUI::GetNeedExp( void )
+	{
+		return needExpUI->GetExp();
+	}

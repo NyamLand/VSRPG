@@ -26,7 +26,7 @@ class ExpUI
 protected:
 	Image* icon;
 	NumberUI*	number;
-	int	posx, posy, size;
+	int	posx, posy, size, need_exp;
 
 public:
 	//	‰Šú‰»E‰ğ•ú
@@ -39,6 +39,7 @@ public:
 	void	SetParam( int x, int y, int w, int h );
 	void	SetRenderFlag( bool c );
 	void	SetExp( int e );
+	void	SetNeedExp( int e );
 	void	NumberSet( Image* img, const int num, const int digit );
 	Image*	GetImageExp( void ){ return icon; }
 	void	Render( void );
@@ -59,6 +60,8 @@ public:
 
 	//	î•ñİ’èEæ“¾
 	void	SetLevel( int level ){ this->level = level; }
+
+	int		GetExp(){ return number->GetNum(); }
 };
 
 
