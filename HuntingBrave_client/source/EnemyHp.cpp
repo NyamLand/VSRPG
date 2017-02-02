@@ -60,6 +60,7 @@ void	EnemyHpUI::Initilaize(int type, int maxhp)
 
 	mode_type = type;
 	maxHp = maxhp;
+
 }
 
 //---------------------------------------------------------------------------------------
@@ -69,7 +70,6 @@ void	EnemyHpUI::Initilaize(int type, int maxhp)
 //	XV
 void	EnemyHpUI::Update( void )
 {
-	
 	
 }
 
@@ -82,11 +82,11 @@ void	EnemyHpUI::Render(float hp,const Vector3& pos,const Vector3& up)
 	BarPos = pos + up * 5.0f;
 	WorldToClient(BarPos, out, matView * matProjection);
 	out.x -= 60;
-	int maxhp = gameParam->GetPlayerStatus().maxLife;
-	if (maxHp <= maxhp)
-	{
-		maxHp = maxhp;
-	}
+	//int maxhp = gameParam->GetPlayerStatus().maxLife;
+	//if (maxHp <= maxhp)
+	//{
+	//	maxHp = maxhp;
+	//}
 	float	parsent = (float)hp / (float)maxHp;
 	int w = (int)((float)width * parsent);
 	int	sx = (int)((float)HP_MAX::WIDTH * parsent);

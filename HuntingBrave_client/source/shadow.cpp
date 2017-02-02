@@ -94,7 +94,7 @@ bool	Shadow::Initialize(int life)
 
 	//	HPバー初期化
 	bar = new EnemyHpUI();
-	bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
+	bar->Initilaize(HPUI_TYPE::ENEMY, life);
 
 	//	情報更新
 	UpdateInfo();

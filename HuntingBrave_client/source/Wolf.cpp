@@ -82,7 +82,7 @@ namespace
 		collisionInfo.Set(SHAPE_TYPE::CAPSULE, WOLF_HEIGHT, WOLF_RADIUS);
 
 		bar = new EnemyHpUI();
-		bar->Initilaize(HPUI_TYPE::ENEMY, GetLifeInfo().maxLife);
+		bar->Initilaize(HPUI_TYPE::ENEMY, life);
 		//	î•ñXV
 		UpdateInfo();
 

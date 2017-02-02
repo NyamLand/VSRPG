@@ -119,7 +119,7 @@ namespace
 
 		//	HPバー初期化
 		bar = new EnemyHpUI();
-		bar->Initilaize( HPUI_TYPE::ENEMY, GetLifeInfo().maxLife );
+		bar->Initilaize( HPUI_TYPE::ENEMY, life );
 		
 		//	テクスチャ差し替え
 		texType = random->GetInt( 0, MOFUMOFU::MOFU_MAX - 1 );
