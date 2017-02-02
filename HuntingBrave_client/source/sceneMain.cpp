@@ -153,7 +153,7 @@ sceneMain::~sceneMain( void )
 void	sceneMain::Update( void )
 {
 	//	‘—M
-	if (threadState){
+	if (!threadState){
 		gameParam->Send();
 	}
 
