@@ -155,11 +155,11 @@ void	sceneMain::Update( void )
 
 	//	シーン切り替え
 	if ( threadState ){
-		sound->PlaySE(SE::TIME_END);
-		if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	
+		//sound->PlaySE(SE::TIME_END);
+		//if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	
 		gameManager->ChangeScene(SCENE::RESULT);
 	}
-	else{
+	//else{
 		//	送信
 		gameParam->Send();
 		//}
@@ -204,7 +204,7 @@ void	sceneMain::Update( void )
 		//	スクリーン制御
 		screen->Update();
 		DeadScreen();
-	}
+//	}
 }
 
 //*****************************************************************************************************************************
