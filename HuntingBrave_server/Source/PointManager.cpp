@@ -70,7 +70,7 @@ PointManager*	pointManager = nullptr;
 		huntInfo = ( HuntInfo* )data;
 
 		//	ŒvZA•ÔM
-		CalcPoint( client, 100 );
+		CalcPoint( client, 10 );
 		SendPoint( client );
 	}
 

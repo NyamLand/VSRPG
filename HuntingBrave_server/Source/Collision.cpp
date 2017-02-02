@@ -6,6 +6,7 @@
 #include	"EnemyManager.h"
 #include	"PlayerManager.h"
 #include	"MagicManager.h"
+#include	"PointManager.h"
 #include	"LevelManager.h"
 
 #include	"Collision.h"
@@ -154,6 +155,8 @@ namespace SE_TYPE
 				playerManager->GetPlayer( target )->SetDeath();
 				
 				//	ŒoŒ±’l‰ÁŽZ
+				pointManager->CalcPoint( player, levelManager->GetTotalLevel( target ) * 20 );
+				pointManager->SendPoint( player );
 				levelManager->CalcExpPlayer( player, target );
 				levelManager->SendExp( player );
 
