@@ -29,18 +29,24 @@ NumberUI::NumberUI(int x, int y, int w, int h, int digit)
 	posx = x;
 	posy = y;	//	height / 6 = アイコンサイズの1/6分余白を空ける
 	number.clear();
+	number_wave.clear();
 	numbox.clear();
 
 	number.resize(digit);
+	number_wave.resize(digit);
 	numbox.resize(digit);
 
 	DIGIT_MAX = digit;
 	slide_state = true;
+	wave_state = false;
 	//	経験値の値
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		number[i] = new Image();
 		number[i]->Initialize("DATA/UI/main_UI/Number.png", posx, posy, size, size, 0, 0, 0, 0);	//	初期化
+		//	演出用
+		number_wave[i] = new Image();
+		number_wave[i]->Initialize("DATA/UI/main_UI/Number.png", posx, posy, size, size, 0, 0, 0, 0);	//	初期化
 
 		numbox[i] = -1;
 	}
@@ -55,6 +61,7 @@ NumberUI::~NumberUI(void)
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		SafeDelete(number[i]);
+		SafeDelete(number_wave[i]);
 	}
 }
 
@@ -76,6 +83,7 @@ void	NumberUI::Update(const Image* icon)
 	{
 		for (int i = 0; i < DIGIT_MAX; i++){
 			NumberSet(number[i], numbox[i], i, icon, color);
+			if (wave_state)	NumberSet(number_wave[i], numbox[i], i, icon, color);
 		}
 	}
 	//	アイコンなし
@@ -83,9 +91,16 @@ void	NumberUI::Update(const Image* icon)
 	{
 		for (int i = 0; i < DIGIT_MAX; i++){
 			NumberSet(number[i], numbox[i], i, color);
+			if (wave_state)	NumberSet(number_wave[i], numbox[i], i, color);
 		}
 	}
-
+	if (wave_state)
+	{
+		for (int i = 0; i < DIGIT_MAX; i++){
+			number_wave[i]->SetWave(0.02f);
+			if (number_wave[i]->WaveUpdate(number_wave[i]->w / 2, 1.0f)) wave_state = false;
+		}
+	}
 }
 
 //---------------------------------------------------------------------------------------
@@ -197,6 +212,7 @@ void	NumberUI::Render(int mode)
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		number[i]->Render(mode);
+		if (wave_state)	number_wave[i]->Render(IMAGE_MODE::WAVE);
 	}
 }
 
@@ -217,12 +233,18 @@ void	NumberUI::SetRenderFlag(bool c)
 	for (int i = 0; i < DIGIT_MAX; i++)
 	{
 		number[i]->renderflag = c;
+		number[i]->renderflag = c;
 	}
 }
 
 void	NumberUI::SetNum(int n)
 {
 	num = n;
+}
+
+int		NumberUI::GetNum(void)
+{
+	return num;
 }
 
 void	NumberUI::SetColor(int c)
@@ -233,6 +255,11 @@ void	NumberUI::SetColor(int c)
 void	NumberUI::SetSlide(bool state)
 {
 	slide_state = state;
+}
+
+void	NumberUI::SetWaveState(bool state)
+{
+	wave_state = state;
 }
 
 Image*	NumberUI::GetNumber(int num)
