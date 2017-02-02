@@ -31,7 +31,7 @@ namespace
 //---------------------------------------------------------------------------------------
 
 //	コンストラクタ
-ExpUI::ExpUI(int x, int y, int w, int h)
+ExpUI::ExpUI(int x, int y, int w, int h) : need_exp(INT_MAX)
 {
 	//	座標、サイズ情報格納
 	size = w;	posx = x;	posy = y;
@@ -62,6 +62,11 @@ void	ExpUI::Update(void)
 {
 	number->SetColor(NUM_COLOR::GREEN);
 	number->Update(icon);
+
+	if (number->GetNum() >= need_exp)
+	{
+		number->SetWaveState(true);
+	}
 	
 }
 
@@ -106,6 +111,11 @@ void	ExpUI::SetRenderFlag(bool c)
 void	ExpUI::SetExp(int e)
 {
 	number->SetNum(e);
+}
+
+void	ExpUI::SetNeedExp(int e)
+{
+	need_exp = e;
 }
 
 //***************************************************************
