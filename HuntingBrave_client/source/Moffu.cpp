@@ -20,7 +20,7 @@
 //------------------------------------------------------------------------------------
 
 //	ƒ‚ƒbƒt
-#define	MOFFU_SCALE		0.1f
+#define	MOFFU_SCALE		0.12f
 #define	MOFFU_HEIGHT	0.125f
 #define	MOFFU_RADIUS	1.0f
 

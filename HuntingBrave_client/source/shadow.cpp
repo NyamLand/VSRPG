@@ -20,7 +20,7 @@
 //------------------------------------------------------------------------------------
 
 //	ƒVƒƒƒhƒE
-#define	Shadow_SCALE		0.1f
+#define	Shadow_SCALE	0.15f
 #define	Shadow_HEIGHT	0.125f
 #define	Shadow_RADIUS	1.0f
 
