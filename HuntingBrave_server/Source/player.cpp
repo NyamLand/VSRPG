@@ -245,6 +245,9 @@ namespace
 		//	モード別動作関数
 		( this->*ModeFunction[mode] )();
 
+		//	無敵状態チェック
+		CheckUnrivaled();
+
 		EffectUpdate();
 
 		//	計算後情報反映
@@ -353,7 +356,6 @@ namespace
 		if ( pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::STEP_END])
 		{
 			SetMode( MODE::MOVE );
-			gameParam->GetLifeInfo( index ).active = true;
 		}
 	}
 
@@ -450,7 +452,6 @@ namespace
 		
 		if (pParam.frame == motionFrame[pParam.charType][FRAME_TYPE::MAGIC_ATTACK_START])
 		{
-			int a = 0;
 			magicManager->Append( index, 
 				gameParam->GetAttackInfo( index ).vec1,
 				gameParam->GetAttackInfo( index ).vec2 );
@@ -530,12 +531,10 @@ namespace
 	//	ダメージ
 	void	Player::Damage( void )
 	{
-		gameParam->GetLifeInfo( index ).active = false;
 		SetMotion( PLAYER_MOTION::KNOCKBACK1 );
 
 		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::DAMAGE1_END])
 		{
-			gameParam->GetLifeInfo( index ).active = true;
 			SetMode( MODE::MOVE );
 		}
 	}
@@ -667,6 +666,27 @@ namespace
 			gameParam->GetLifeInfo( index ).active = false;
 		}
 		else gameParam->GetLifeInfo( index ).active = true;
+	}
+
+	//	無敵状態チェック
+	void	Player::CheckUnrivaled( void )
+	{
+		switch ( pParam.motion )
+		{
+		case PLAYER_MOTION::KNOCKBACK1:
+		case PLAYER_MOTION::FALL:
+		case PLAYER_MOTION::STEP:
+		case PLAYER_MOTION::DEAD:
+			gameParam->GetLifeInfo( index ).active = false;
+			break;
+
+		default:
+			if ( pParam.effParam < 1.0f )
+			{
+				gameParam->GetLifeInfo( index ).active = false;
+			}
+			else gameParam->GetLifeInfo( index ).active = true;
+		}
 	}
 
 //----------------------------------------------------------------------------------------------

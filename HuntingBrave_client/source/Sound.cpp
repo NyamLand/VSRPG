@@ -21,6 +21,7 @@
 				"DATA/Sound/BGM/title.ogg",
 				"DATA/Sound/BGM/menu.ogg",
 				"DATA/Sound/BGM/fight.ogg",
+				"DATA/Sound/BGM/fight1.ogg",
 				"DATA/Sound/BGM/iiwake.ogg",
 				"DATA/Sound/BGM/Result.ogg",
 				"DATA/Sound/BGM/dead.ogg"

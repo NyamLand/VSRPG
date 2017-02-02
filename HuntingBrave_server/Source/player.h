@@ -56,6 +56,7 @@ public:
 	void	MagicChantRoll( void );
 	void	MagicChantStart( void );
 	void	EffectUpdate( void );
+	void	CheckUnrivaled( void );
 
 	//	Œü‚«’²®
 	void	AngleAdjust( const Vector3& moveVec, float adjustSpeed );

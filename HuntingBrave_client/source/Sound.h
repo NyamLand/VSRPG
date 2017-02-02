@@ -57,6 +57,7 @@ namespace
 			TITLE,
 			MENU,
 			MAIN,
+			MAIN_2,
 			IIWAKE,
 			RESULT,
 			DEAD,

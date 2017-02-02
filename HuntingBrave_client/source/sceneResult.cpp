@@ -132,10 +132,16 @@ Vector3	pos[] =
 			scoreUI[i] = nullptr;
 			playerNumUI[i] = nullptr;
 			if ( gameParam->GetPlayerActive( i ) == false )	continue;
+
+			//	クラス取得
 			char classType = playerManager->GetPlayer( i )->GetCurClass();
+
+			//	モデル初期化
 			obj[i] = new iex3DObj( fileName[classType] );
 			obj[i]->SetScale( scale[classType] );
 			playerManager->GetPlayer( i )->ChangeTexture( obj[i], classType, i );
+
+			//	ランク初期化
 			rankUI[i] = new RankUI( RESULT_POS_X, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), RANK_SIZE_X, RANK_SIZE_Y );
 			playerNumUI[i] = new PlayerNumUI( pointManager->GetPlayer(i), RESULT_POS_X + PLAYER_NUM_DIST, RESULT_POS_Y + (RESULT_DIST_HEIGHT * i ), PLAYER_NUM_SIZE, PLAYER_NUM_SIZE );
 			scoreUI[i] = new ScoreUI( RESULT_POS_X + PLAYER_NUM_DIST + SCORE_DIST, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), SCORE_SIZE, RANK_SIZE_Y ) ;
@@ -186,7 +192,7 @@ Vector3	pos[] =
 			if ( obj[i] == nullptr )	continue;
 			obj[i]->Animation();
 			obj[i]->Update();
-			if( rankUI[i] != nullptr )rankUI[i]->Update( i );
+			if( rankUI[i] != nullptr )rankUI[i]->Update( pointManager->GetPlayer( i ) );
 			if( scoreUI[i] != nullptr )scoreUI[i]->SetScore( pointManager->GetPoint( i ) );
 			if( scoreUI[i] != nullptr )scoreUI[i]->Update();
 		}
@@ -212,19 +218,10 @@ Vector3	pos[] =
 		for ( int i = 0; i < PLAYER_MAX; i++ )
 		{
 			int player = pointManager->GetPlayer( i );
-			//sprintf(str, "%d位	    %dP	   score : %d", i + 1, player + 1, pointManager->GetPoint( player ) );
-			//IEX_DrawText( str, 600, 300 + i * 50, 200, 200, 0xFFFFFFFF );
 			if ( obj[i] != nullptr )	obj[i]->Render();
 
 			if( rankUI[i] != nullptr )rankUI[i]->Render();
 			if( playerNumUI[i] != nullptr )playerNumUI[i]->Render();
 			if( scoreUI[i] != nullptr )scoreUI[i]->Render();
 		}
-
-		////	座標表示
-		//sprintf( str, "pos.x = %2f\npos.y = %2f\npos.z = %2f", playerPos[index].x, playerPos[index].y, playerPos[index].z );
-		//IEX_DrawText( str, 20, 600, 200, 200, 0xFFFFFF00 );
-
-		//sprintf( str, "viewPos.x = %2f\nviewPos.y = %2f\nviewPos.z = %2f", viewPos.x, viewPos.y, viewPos.z );
-		//IEX_DrawText( str, 20, 200, 200, 200, 0xFFFFFF00 );
 	}
