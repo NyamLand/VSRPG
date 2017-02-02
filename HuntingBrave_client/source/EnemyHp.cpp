@@ -94,6 +94,7 @@ void	EnemyHpUI::Render(float hp,const Vector3& pos,const Vector3& up)
 	int w = (int)((float)width * parsent);
 	int	sx = (int)((float)HP_MAX::WIDTH * parsent);
 
+	printf("id:%d  maxlife:%d\n", id, maxHp);
 	//----------------------
 	//	HPÉoÅ[
 	//----------------------
