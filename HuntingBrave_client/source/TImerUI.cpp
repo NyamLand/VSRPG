@@ -100,7 +100,7 @@ void	TimerUI::Render(void)
 {
 	char str[64];
 	sprintf_s( str, "timer = %f•b",timer );
-	IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
+	//IEX_DrawText( str, 600, 100, 400, 100, 0xFF00FF00 );
 
 	period->Render(IMAGE_MODE::ADOPTPARAM);
 	number[TIME::MIN]->Render();

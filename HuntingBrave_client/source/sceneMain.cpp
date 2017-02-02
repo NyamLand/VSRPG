@@ -247,9 +247,9 @@ void	sceneMain::Render( void )
 	screen->Render();
 
 	//	各プレイヤー座標表示
-	DebugRender();
+	//DebugRender();
 
-	MyInfoRender();
+	//MyInfoRender();
 
 	timeUp->Render();
 
