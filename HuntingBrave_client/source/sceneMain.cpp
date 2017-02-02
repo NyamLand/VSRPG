@@ -153,10 +153,8 @@ sceneMain::~sceneMain( void )
 void	sceneMain::Update( void )
 {
 
-	//else{
 		//	送信
 		gameParam->Send();
-		//}
 
 		//	経過時間取得
 		float elapseTime = GetElapseTime();
@@ -201,11 +199,9 @@ void	sceneMain::Update( void )
 	
 		//	シーン切り替え
 		if ( threadState ){
-		//sound->PlaySE(SE::TIME_END);
-		//if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	
-		gameManager->ChangeScene( SCENE::RESULT );
-	}
-//	}
+			sound->PlaySE(SE::TIME_END);
+			if (timeUp->Update() == true && sound->GetSEState(SE::TIME_END) == true)	gameManager->ChangeScene( SCENE::RESULT );
+		}
 }
 
 //*****************************************************************************************************************************

@@ -137,15 +137,20 @@ Vector3	pos[] =
 			obj[i] = new iex3DObj( fileName[classType] );
 			obj[i]->SetScale( scale[classType] );
 			playerManager->GetPlayer( i )->ChangeTexture( obj[i], classType, i );
-			obj[pointManager->GetPlayer(i)]->SetAngle(angle[i]);
-			obj[pointManager->GetPlayer(i)]->SetMotion(motion[i]);
-			obj[pointManager->GetPlayer(i)]->SetPos(pos[i]);
-			obj[i]->Update();
 			rankUI[i] = new RankUI( RESULT_POS_X, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), RANK_SIZE_X, RANK_SIZE_Y );
 			playerNumUI[i] = new PlayerNumUI( pointManager->GetPlayer(i), RESULT_POS_X + PLAYER_NUM_DIST, RESULT_POS_Y + (RESULT_DIST_HEIGHT * i ), PLAYER_NUM_SIZE, PLAYER_NUM_SIZE );
 			scoreUI[i] = new ScoreUI( RESULT_POS_X + PLAYER_NUM_DIST + SCORE_DIST, RESULT_POS_Y + ( RESULT_DIST_HEIGHT * i ), SCORE_SIZE, RANK_SIZE_Y ) ;
 		}
 
+		for ( int i = 0; i < PLAYER_MAX; i++ )
+		{
+			int num = pointManager->GetPlayer(i);
+			if ( gameParam->GetPlayerActive( num ) == false )	continue;
+			obj[num]->SetAngle(angle[i]);
+			obj[num]->SetMotion(motion[i]);
+			obj[num]->SetPos(pos[i]);
+			obj[num]->Update();
+		}
 		//	サインアウト
 		gameParam->CloseClient();
 
