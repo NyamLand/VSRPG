@@ -133,7 +133,6 @@ Vector3	pos[] =
 			playerNumUI[i] = nullptr;
 			if ( gameParam->GetPlayerActive( i ) == false )	continue;
 			char classType = playerManager->GetPlayer( i )->GetCurClass();
-			playerPos[i] = Vector3( 0.0f, 0.0f, 250.0f );
 			obj[i] = new iex3DObj( fileName[classType] );
 			obj[i]->SetScale( scale[classType] );
 			playerManager->GetPlayer( i )->ChangeTexture( obj[i], classType, i );
