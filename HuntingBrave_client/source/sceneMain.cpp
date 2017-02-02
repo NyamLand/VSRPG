@@ -109,7 +109,7 @@ bool	sceneMain::Initialize( void )
 	gameParam->SendResponseInfo( RESPONSE_COMMAND::GAME_START );
 
 	//	戦闘BGM
-	sound->PlayBGM( BGM::MAIN_2 );
+	sound->PlayBGM( BGM::MAIN );
 
 	//	バックバッファポインタ退避
 	iexSystem::GetDevice()->GetRenderTarget( 0, &backBuffer );
