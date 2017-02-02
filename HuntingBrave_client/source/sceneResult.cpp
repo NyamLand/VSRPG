@@ -193,7 +193,7 @@ Vector3	pos[] =
 			obj[i]->Animation();
 			obj[i]->Update();
 			if( rankUI[i] != nullptr )rankUI[i]->Update( pointManager->GetPlayer( i ) );
-			if( scoreUI[i] != nullptr )scoreUI[i]->SetScore( pointManager->GetPoint( i ) );
+			if( scoreUI[i] != nullptr )scoreUI[i]->SetScore( pointManager->GetPoint( pointManager->GetPlayer( i ) ) );
 			if( scoreUI[i] != nullptr )scoreUI[i]->Update();
 		}
 
