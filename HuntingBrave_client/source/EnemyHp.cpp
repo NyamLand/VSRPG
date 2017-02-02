@@ -108,7 +108,7 @@ void	EnemyHpUI::Render(float hp,const Vector3& pos,const Vector3& up)
 		break;
 
 	case HPUI_TYPE::PLAYER:
-
+		printf("id:%d  maxlife:%d\n", id, maxHp);
 		if (gameParam->GetMyIndex() == id)break;
 		hpFrame_obj->Render((int)out.x, (int)out.y, width, height, 0, HP_MAX::HEIGHT * 3, HP_MAX::WIDTH, HP_MAX::HEIGHT);	//	ƒtƒŒ[ƒ€
 		hp_obj->Render((int)out.x, (int)out.y, w, height, 0, HP_MAX::HEIGHT * 4, sx, HP_MAX::HEIGHT);		//	HPŽc—Ê
