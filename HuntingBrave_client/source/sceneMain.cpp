@@ -153,7 +153,9 @@ sceneMain::~sceneMain( void )
 void	sceneMain::Update( void )
 {
 	//	‘—M
-	gameParam->Send();
+	if (threadState){
+		gameParam->Send();
+	}
 
 	//	Œo‰ßŽžŠÔŽæ“¾
 	float elapseTime = GetElapseTime();

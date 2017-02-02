@@ -184,7 +184,7 @@ namespace
 		}
 
 
-		killLogImage->renderflag = true;
+		//killLogImage->renderflag = true;
 	}
 
 //-------------------------------------------------------------------------------------
