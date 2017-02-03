@@ -91,7 +91,7 @@
 	//	HPƒo[•`‰æ
 	void	PlayerManager::RenderHp( void )
 	{
-		//return;
+		return;
 		for ( int p = 0; p < PLAYER_MAX; p++ )
 		{
 			if ( gameParam->GetPlayerActive( p ) == false )	continue;

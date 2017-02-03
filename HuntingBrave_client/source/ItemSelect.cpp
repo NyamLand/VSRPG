@@ -73,6 +73,10 @@ namespace
 			checkImage[i] = new Image();
 		}
 
+		result.resultImage = nullptr;
+		result.resultImage = new Image();
+
+
 		selectItem[ITEM_POS::LEFT_ITEM] = 0;
 		selectItem[ITEM_POS::RIGHT_ITEM] = 0;
 	}
@@ -85,9 +89,50 @@ namespace
 			SafeDelete( itemIcon[i].itemImage );
 			SafeDelete( checkImage[i] );
 		}
+
+		SafeDelete(result.resultImage);
 	}
 
 	//	初期化
+	bool	ItemSelect::Initialize()
+	{
+		posX = (int)(iexSystem::ScreenWidth / 4);
+		posY = (int)(iexSystem::ScreenHeight * 0.7f);
+		for (int i = 0; i < ITEM_TYPE::TYPE_MAX; i++)
+		{
+			//	アイテムアイコン初期化
+			itemIcon[i].itemImage->Initialize(filename[i],
+				posX - (int)(IMAGE_SPACE * 1.5f) + (IMAGE_SPACE * i),
+				posY,
+				IMAGE_SIZE, IMAGE_SIZE,
+				0, 0, SRC_SIZE, SRC_SIZE);
+			itemIcon[i].checkState = false;
+
+			checkImage[i]->Initialize(
+				"DATA/UI/BackGround/matching_gamen_parts.png",
+				itemIcon[i].itemImage->x, itemIcon[i].itemImage->y,
+				IMAGE_SIZE, IMAGE_SIZE,
+				CHECK_SRC_POS_X, CHECK_SRC_POS_Y,
+				CHECK_SRC_SIZE_X, CHECK_SRC_SIZE_Y);
+
+			checkImage[i]->renderflag = false;
+			itemPos = ITEM_POS::LEFT_ITEM;
+
+
+
+			//アイテム最終確認決定
+			result.Width = 0;
+			result.Height = 0;
+			result.resultImage->Initialize("DATA/UI/menu_UI/last_understand.png",
+				iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight / 2, 512, 512,
+				0, 0, result.Width, result.Height);
+			result.checkState = false;
+
+		}
+
+		return	true;
+	}
+
 	bool	ItemSelect::Initialize( int id )
 	{
 		posX = ( int )( iexSystem::ScreenWidth / 4 );
@@ -111,6 +156,17 @@ namespace
 
 			checkImage[i]->renderflag = false;
 			itemPos = ITEM_POS::LEFT_ITEM;
+
+
+
+			//アイテム最終確認決定
+			result.Width = 0;
+			result.Height = 0;
+			result.resultImage->Initialize("DATA/UI/menu_UI/last_understand.png",
+				iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight / 2, 512, 512,
+				0, 0, result.Width, result.Height);
+			result.checkState = false;
+
 		}
 
 		return	true;
@@ -129,14 +185,21 @@ namespace
 
 		//	選択
 		bool dicisionState = false;
-		bool moveState = MoveInterpolation();
-		if ( moveState )
+		if (itemPos != ITEM_POS::ITEM_MAX)
 		{
-			//	カーソル移動
-			MoveCursor();
+			bool moveState = MoveInterpolation();
+			if (moveState)
+			{
+				//	カーソル移動
+				MoveCursor();
 
-			//	決定
-			if ( KEY( KEY_TYPE::A ) == 3 )	dicisionState = Dicision();
+				//	決定
+				if (KEY(KEY_TYPE::A) == 3)	dicisionState = Dicision();
+			}
+		}
+		else if (itemPos == ITEM_POS::ITEM_MAX)
+		{
+			dicisionState = ResultCheck();
 		}
 
 		return	dicisionState;
@@ -150,6 +213,10 @@ namespace
 			itemIcon[i].itemImage->Render( IMAGE_MODE::NORMAL );
 			checkImage[i]->Render( IMAGE_MODE::NORMAL );
 		}
+
+
+		result.resultImage->Render(IMAGE_MODE::ADOPTPARAM, iexSystem::ScreenWidth / 2, iexSystem::ScreenHeight / 2, result.Width, result.Height,
+			0, 0, 512, 512);
 	}
 
 //----------------------------------------------------------------------------------
@@ -247,21 +314,21 @@ namespace
 		selectItem[itemPos] = select;
 		itemPos++;
 
-		//	二つ選択で終了
-		if ( itemPos == ITEM_POS::ITEM_MAX )
-		{
-			itemManager->Initialize( 
-				selectItem[ITEM_POS::LEFT_ITEM], 
-				selectItem[ITEM_POS::RIGHT_ITEM] );
-			itemManager->SendItemSet( 
-				selectItem[ITEM_POS::LEFT_ITEM], 
-				selectItem[ITEM_POS::RIGHT_ITEM] );
+		////	二つ選択で終了
+		//if (itemPos == ITEM_POS::ITEM_MAX)
+		//{
+		//	itemManager->Initialize( 
+		//		selectItem[ITEM_POS::LEFT_ITEM], 
+		//		selectItem[ITEM_POS::RIGHT_ITEM] );
+		//	itemManager->SendItemSet( 
+		//		selectItem[ITEM_POS::LEFT_ITEM], 
+		//		selectItem[ITEM_POS::RIGHT_ITEM] );
 
-			sound->PlaySE(SE::IM_OK);
+		//	sound->PlaySE(SE::IM_OK);
 
-			return true;
-		}
-		else sound->PlaySE(SE::OK);
+		//	return true;
+		//}
+		/*else*/ sound->PlaySE(SE::OK);
 
 		
 		//	カーソルずらし
@@ -272,6 +339,56 @@ namespace
 		return	false;
 	}
 
+
+
+	bool	ItemSelect::ResultCheck(void)
+	{
+		static bool state = false;
+		static bool state2 = false;
+
+		if (state == false)
+		{
+			if (result.Width < 512) result.Width += 16;
+			if (result.Height < 512) result.Height += 16;
+			if (result.Width >= 512 && result.Height >= 512) state = true;
+		}
+
+
+
+		if (state == true)
+		{
+			if (KEY(KEY_TYPE::A) == 3)
+			{
+				itemManager->Initialize(
+					selectItem[ITEM_POS::LEFT_ITEM],
+					selectItem[ITEM_POS::RIGHT_ITEM]);
+				itemManager->SendItemSet(
+					selectItem[ITEM_POS::LEFT_ITEM],
+					selectItem[ITEM_POS::RIGHT_ITEM]);
+
+				sound->PlaySE(SE::IM_OK);
+				return true;
+			}
+			else if (KEY(KEY_TYPE::B) == 3)
+			{
+				state2 = true;
+
+			}
+			if (state2 == true)
+			{
+				if (result.Width > 0) result.Width -= 16;
+				if (result.Height > 0) result.Height -= 16;
+
+				if (result.Width <= 0 && result.Height <= 0)
+				{
+					state = false;
+					state2 = false;
+					Initialize();
+				}
+			}
+		}
+		return false;
+	}
 //----------------------------------------------------------------------------------
 //	情報設定
 //----------------------------------------------------------------------------------

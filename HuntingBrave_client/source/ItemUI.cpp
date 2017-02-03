@@ -55,11 +55,6 @@ namespace
 		//	アイコン初期化
 		IconInitialize();
 
-		//	アイテム背景初期化
-		obj = new Image();
-		obj->Initialize( "DATA/UI/main_UI/HP_item_UI.png", 
-			posx, posy, width, height, 
-			SPX, SPY, WIDTH, HEIGHT );
 	}
 
 	//	デストラクタ
@@ -73,6 +68,9 @@ namespace
 	//	アイコン初期化
 	void	ItemUI::IconInitialize( void )
 	{
+		obj = new Image();
+		obj->Initialize("DATA/UI/main_UI/HP_item_UI.png",
+			posx, posy, width, height, SPX, SPY, WIDTH, HEIGHT);
 		//	タイプ取得
 		char leftItem = itemManager->GetItemType( ITEM_POS::LEFT_ITEM );
 		char rightItem = itemManager->GetItemType( ITEM_POS::RIGHT_ITEM );
@@ -123,5 +121,6 @@ void	ItemUI::Render( void )
 		shader2D->SetValue( "radian", ( PI * 2 ) * itemInterval[i] - PI );
 		icon[i]->Render( IMAGE_MODE::NORMAL, shader2D, "circleShadow" );
 	}
+
 }
 

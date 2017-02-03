@@ -454,7 +454,7 @@ namespace
 		}
 		else
 		{
-			gameParam->GetAttackInfo( index ).Reset();
+			gameParam->GetAttackInfo(index).attackParam = AttackInfo::NO_ATTACK;
 		}
 	}
 
