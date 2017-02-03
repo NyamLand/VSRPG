@@ -27,7 +27,8 @@
 #define	PLAYER_HEIGHT		2.5f
 #define	PLAYER_RADIUS		1.5f
 #define	ATTACK_RADIUS		0.5f
-#define ATTACK_RADIUS_		1.5f	//アサシン、プリースト用
+#define ATTACK_RADIUS_P		1.5f	//プリースト用
+#define ATTACK_RADIUS_A		2.0f	//アサシン用
 
 //	動作スピード
 #define	ANGLE_ADJUST_MOVE_SPEED	0.3f
@@ -289,7 +290,7 @@ namespace
 
 		//	モデル描画
 		BaseChara::Render( shader, technique );	
-		//drawShape->DrawCapsule(GetBonePos(15), GetBonePos(16), ATTACK_RADIUS_, 0xFF000000);
+		drawShape->DrawCapsule(GetBonePos(BONE_NUM::RIGHT_HAND), GetBonePos(BONE_NUM::SWORD), ATTACK_RADIUS_A, 0xFF000000);
 
 	}
 
@@ -306,7 +307,7 @@ namespace
 		case MOTION_NUM::ATTACK1:
 			if (curClass == CLASS_TYPE::PRIEST)
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
 				gameParam->GetAttackInfo(id).vec1 = GetBonePos(16);
 				gameParam->GetAttackInfo(id).vec2 = GetBonePos(15);
@@ -314,7 +315,7 @@ namespace
 			}
 			else if (curClass == CLASS_TYPE::ASSASSIN)
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_A;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
 				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
 				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::SWORD);
@@ -330,7 +331,7 @@ namespace
 		case MOTION_NUM::ATTACK2:
 			if ( curClass == CLASS_TYPE::ASSASSIN)
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
 				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
 				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::LEFT_HAND);
@@ -338,7 +339,7 @@ namespace
 			}
 			else if (curClass == CLASS_TYPE::KNIGHT)
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::SPHERE;
 				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
 				gameParam->GetAttackInfo(id).vec2 = GetFront();
@@ -346,7 +347,7 @@ namespace
 			}
 			else if (curClass == CLASS_TYPE::PRIEST)
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_;
+				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
 				gameParam->GetAttackInfo(id).vec1 = GetBonePos(16);
 				gameParam->GetAttackInfo(id).vec2 = GetBonePos(15);

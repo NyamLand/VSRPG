@@ -20,9 +20,9 @@
 //------------------------------------------------------------------------------------
 
 //	モッフ
-#define	MOFFU_SCALE		0.2f
-#define	MOFFU_HEIGHT	0.25f
-#define	MOFFU_RADIUS	2.0f
+#define	MOFFU_SCALE		0.12f
+#define	MOFFU_HEIGHT	0.125f
+#define	MOFFU_RADIUS	1.0f
 
 //	動作スピード
 #define	ANGLE_ADJUST_SPEED	0.3f
@@ -153,8 +153,6 @@ namespace
 
 		//	描画
 		BaseChara::Render( shader, technique );
-
-		drawShape->DrawSphere(pos + Vector3( 0.0f, MOFFU_HEIGHT, 0.0f ), MOFFU_RADIUS, 0xFFFF0000);
 	}
 
 //------------------------------------------------------------------------------------
