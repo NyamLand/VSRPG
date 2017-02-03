@@ -84,9 +84,9 @@
 	//	‹…•`‰æ
 	void	DrawShape::DrawSphere( const Vector3& pos, float r, DWORD color )
 	{
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
+		//iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
 		DrawSphere(iexSystem::GetDevice(), D3DXVECTOR3(pos.x, pos.y, pos.z), r, color);
-		iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
+		//iexSystem::GetDevice()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 	}
 
 	//	ƒJƒvƒZƒ‹•`‰æ

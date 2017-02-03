@@ -13,7 +13,7 @@
 //	ÉOÉçÅ[ÉoÉã
 //----------------------------------------------------------------------------------------------
 
-#define	MAGIC_ACTIVE_TIME		0.5f
+#define	MAGIC_ACTIVE_TIME	2.0f
 #define	MAGIC_SPEED		20.0f
 #define	MAGIC_RADIUS	2.5f
 
