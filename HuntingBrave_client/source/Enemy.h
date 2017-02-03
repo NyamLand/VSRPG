@@ -11,6 +11,7 @@
 #include	"BaseChara.h"
 #include	"EnemyHp.h"
 #include	"CharaInfo.h"
+#include	"Particle.h"
 
 //	class
 class Enemy : public BaseChara
@@ -24,6 +25,7 @@ protected:
 	float		runLength;
 	char		enemyType;
 	int			cooltime;
+	int			frame;
 	AttackInfo	attackInfo;
 
 	int	count;		//仮多段ヒット用

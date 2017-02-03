@@ -30,8 +30,7 @@
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
 		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), runLength(0.0f),
-		count(40), 
-		cooltime(40)
+		count(40), cooltime(40), frame(0)
 	{
 	}
 
@@ -149,7 +148,7 @@
 //------------------------------------------------------------------------------------
 	void	Enemy::Update()
 	{
-		
+		frame = GetFrame();
 	}
 
 	void	Enemy::StageCheck()

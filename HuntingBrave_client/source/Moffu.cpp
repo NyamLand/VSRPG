@@ -141,6 +141,7 @@ namespace
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
 
+		Enemy::Update();
 		BaseChara::Update();
 	}
 
@@ -162,13 +163,14 @@ namespace
 	//	出現時モード動作
 	void	Moffu::EntryMode(void)
 	{
+
 		//	補間
 		bool	expantion = Interpolation::LinearInterpolation(
 			scale, 0.0f, MOFFU_SCALE, interpolationParam );
 
 		//	補間パラメータ更新
 		Interpolation::PercentageUpdate( interpolationParam, 0.01f );
-
+		
 		//	補間終了後移動
 		if ( expantion )
 		{
@@ -188,9 +190,6 @@ namespace
 	void	Moffu::AttackMode(void)
 	{
 		SetMotion( 2 );
-
-		//	フレーム取得
-		int frame = obj->GetFrame();
 
 		//	フレーム制御
 		if ( frame >= MOTION_FRAME::ATTACK_HIT_START 
@@ -215,9 +214,6 @@ namespace
 	{
 		SetMotion(3);
 		static float alpha = 1.0f;
-
-		//	フレーム取得
-		int frame = obj->GetFrame();
 
 		//	フレーム制御
 		if ( frame >= MOTION_FRAME::DEAD_START )

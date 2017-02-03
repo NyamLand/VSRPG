@@ -137,6 +137,29 @@
 		}
 	}
 
+	//	変身時の煙
+	void	Particle::EnemySmoke(const Vector3& pos, const float& scale, const int& time)
+	{
+		Vector3	Pos, Move, Power;
+		for (int j = 0; j<Par5; j++){
+			Pos.x = pos.x;
+			Pos.y = pos.y;
+			Pos.z = pos.z;
+
+			Move.x = random->GetFloat(-50.0f, 50.0f)* (scale * 0.0015f);
+			Move.y = 0;
+			Move.z = random->GetFloat(-50.0f, 50.0f)* (scale * 0.0015f);
+
+			Power.x = 0.0f;
+			Power.y = random->GetFloat(0.0f, 100.0f)* (scale * 0.000075f);
+			Power.z = 0.0f;
+
+
+			//	画像タイプ、出現フレーム、出現時透明度、最終フレーム、最終透明度、最高フレーム、最高透明度、出現位置、移動値、与力、	赤成分、緑成分、青成分、スケール、レンダーステート
+			pt->Set(ENEMY_SMOG, 0, 0.0f, 60, 0.0f, 40, 1.0f, &Pos, &Move, &Power, 0.5f, 0.8f, 0.5f, scale, RS_COPY);
+		}
+	}
+
 
 	//	突進時の風を切る
 	void	Particle::Semicircle(const Vector3& pos, const Vector3& front, const Vector3& right, const Vector3& up, const float radius, const float& scale)
