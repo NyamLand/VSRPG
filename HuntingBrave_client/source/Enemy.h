@@ -67,6 +67,7 @@ public:
 	//	“®ìŠÖ”
 	virtual void Update( void );
 	void	Move( float speed ) ;
+	void	AddMove(Vector3& move);
 	void	FacingPlayer( void );
 	void	Advance( float speed );
 	bool	DistCheck( float& length );

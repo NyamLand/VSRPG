@@ -336,6 +336,77 @@
 		return	collisionShape;
 	}
 
+	//--------------------------------------------------------------------------------------------
+	//	ステージモデルとの当たり判定
+	//--------------------------------------------------------------------------------------------
+
+	//	壁判定
+	bool	Collision::CheckWall(Vector3& pos, Vector3& move, float dist)
+	{
+		const	float	DIST = 2.0f;	//	壁との距離
+
+		Vector3	givePos = pos;
+		Vector3	giveVec(move.x, 1.0f, move.z);
+		giveVec.Normalize();
+		Vector3	takePos;
+
+		if (collisionMesh->RayPick(&takePos, &givePos, &giveVec, &dist) != -1)
+		{
+			float	disToWall = Vector3(Vector3(takePos.x, 0.0f, takePos.z) - Vector3(pos.x, 0.0f, pos.z)).Length();
+			if (disToWall <= DIST)
+			{
+				//	移動量
+				float	moveAmo = Vector3(move.x, 0.0f, move.z).Length();
+
+				//	プレイヤーからレイの交差点へのベクトル
+				Vector3	vPtoWall(takePos - pos);
+				vPtoWall.y = 0.0f;	vPtoWall.Normalize();
+				giveVec.y = 0.0f;	giveVec.Normalize();
+
+				//	法線の上方向を求める
+				Vector3	crossUp;
+				Vector3Cross(crossUp, giveVec, vPtoWall);
+				crossUp.Normalize();
+
+				//	法線の上方向と法線の外積から滑る方向を計算
+				Vector3	crossSide;
+				Vector3Cross(crossSide, crossUp, giveVec);
+				crossSide.Normalize();
+
+				//	法線とプレーヤーからレイの交差点へのベクトルの内積
+				float	dotNP(Vector3Dot(giveVec, vPtoWall));
+
+				//	移動量の調整
+				move.x = crossSide.x * moveAmo * (dotNP + 1.0f);
+				move.z = crossSide.z * moveAmo * (dotNP + 1.0f);
+
+				return	true;
+			}
+		}
+
+		return	false;
+	}
+
+	//	床判定
+	bool	Collision::CheckDown(Vector3& pos, Vector3& move)
+	{
+		Vector3	givePos(pos.x, pos.y + 1.5f, pos.z);
+		Vector3	giveVec(0.0f, -1.0f, 0.0f);
+		Vector3	takePos;
+		float	giveDist(100.0f);
+
+		if (collisionMesh->RayPick(&takePos, &givePos, &giveVec, &giveDist) != -1)
+		{
+			if (pos.y <= takePos.y)
+			{
+				pos.y = takePos.y;
+				move.y = 0.0f;
+				return	true;
+			}
+		}
+		return	false;
+	}
+
 //--------------------------------------------------------------------------------------------
 //	材質判定
 //--------------------------------------------------------------------------------------------
