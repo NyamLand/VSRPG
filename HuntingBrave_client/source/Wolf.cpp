@@ -102,6 +102,7 @@ namespace
 		//	各モードに応じた動作関数
 		( this->*ModeFunction[mode] )();
 
+		Enemy::Update();
 		//	情報更新
 		BaseChara::Update();
 	}
@@ -119,6 +120,7 @@ namespace
 
 		//	補間パラメータ更新
 		Interpolation::PercentageUpdate( interpolationParam, 0.01f );
+		//particle->EnemySmoke(pos, 1.0f);
 
 		//	補間終了後移動
 		if ( expantion )
@@ -140,8 +142,6 @@ namespace
 	{
 		SetMotion( 2 );
 
-		//	フレーム取得
-		int frame = obj->GetFrame();
 
 		//	フレーム制御
 		if ( frame >= MOTION_FRAME::ATTACK_HIT_START 
@@ -168,9 +168,6 @@ namespace
 	{
 		SetMotion(3);
 		static float alpha = 1.0f;
-
-		//	フレーム取得
-		int frame = obj->GetFrame();
 
 		//	フレーム制御
 		if (frame >= MOTION_FRAME::DEAD_START)

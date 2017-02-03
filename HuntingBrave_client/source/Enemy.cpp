@@ -29,9 +29,8 @@
 	//	コンストラクタ
 	Enemy::Enemy( void ):
 		targetPos( 0.0f, 0.0f, 0.0f ),
-		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), 
-		count(40), 
-		cooltime(40)
+		interpolationParam(0.0f), searchDist(0.0f), attackDist(0.0f), runLength(0.0f),
+		count(40), cooltime(40), frame(0)
 	{
 	}
 
@@ -54,9 +53,11 @@
 	{
 		float	length = 0.0f;
 		if ( DistCheck( length ) )	return;
+		runLength++;
 
-		if ( length <= searchDist )
+		if ( length <= searchDist && runLength<=20.0f )
 		{
+
 			//	プレイヤーの方を向く
 			FacingPlayer();
 
@@ -65,6 +66,7 @@
 		}
 		else
 		{
+			runLength = 0.0f;
 			//	モーション設定
 			SetMotion( 0 );	//	待機モーション
 		}
@@ -146,7 +148,7 @@
 //------------------------------------------------------------------------------------
 	void	Enemy::Update()
 	{
-
+		frame = GetFrame();
 	}
 
 	void	Enemy::StageCheck()
@@ -204,7 +206,7 @@
 	void	Enemy::AddMove(Vector3& move)
 	{
 		collision->CheckWall(pos, move, 100.0f);
-		collision->CheckDown(pos, move);
+		//pos.y = collision->CheckDown(pos);
 	}
 //------------------------------------------------------------------------------------
 //	情報設定

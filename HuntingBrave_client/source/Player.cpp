@@ -290,7 +290,7 @@ namespace
 
 		//	ƒ‚ƒfƒ‹•`‰æ
 		BaseChara::Render( shader, technique );	
-		drawShape->DrawCapsule(GetBonePos(BONE_NUM::RIGHT_HAND), GetBonePos(BONE_NUM::SWORD), ATTACK_RADIUS_A, 0xFF000000);
+		//drawShape->DrawCapsule(GetBonePos(BONE_NUM::RIGHT_HAND), GetBonePos(BONE_NUM::SWORD), ATTACK_RADIUS_A, 0xFF000000);
 
 	}
 

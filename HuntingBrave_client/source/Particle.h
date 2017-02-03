@@ -27,12 +27,13 @@ namespace
 			FLOWER = 8,
 			COIN,
 			SMOG = 12,
+			ENEMY_SMOG,
 		};
 
 		enum EFF_TIMER
 		{
-			//SPARK_TIME,
 			STAR_TIME = 5,
+			ENEMY_SMOKE_TIME=10,
 			SMOKE_TIME = 20,
 			POWER_UP_TIME = 10,
 			SPEED_UP_TIME = 11,
@@ -108,7 +109,9 @@ public:
 
 	void	SwordDamage( const Vector3& pos, const float& scale = DEF_SCALE );																											//	剣ダメージ
 	void	MagicDamage( const Vector3& pos, const Vector3& back, const Vector3& side, const float& scale = DEF_SCALE, const int& time = DUST_TIME );									//	魔法ダメージ
-	void	Smoke( const Vector3& pos, const float& scale = DEF_SCALE, const int& time = SMOKE_TIME );																					//	変身時の煙
+	void	Smoke( const Vector3& pos, const float& scale = DEF_SCALE, const int& time = SMOKE_TIME );	
+	void	EnemySmoke(const Vector3& pos, const float& scale = DEF_SCALE, const int& time = ENEMY_SMOKE_TIME);
+	//	変身時の煙
 
 	//	情報取得
 	static	Particle*	GetInstance( void );

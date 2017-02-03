@@ -57,6 +57,7 @@ public:
 	//	ステージモデルとの当たり判定
 	bool	CheckDown(Vector3& pos, Vector3& move);
 	bool	CheckWall(Vector3& pos, Vector3& move, float dist);
+	float	CheckDown(Vector3& pos);
 
 	//	材質判定
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );

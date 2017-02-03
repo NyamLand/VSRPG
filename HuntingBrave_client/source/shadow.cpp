@@ -112,7 +112,7 @@ void	Shadow::Update(void)
 {
 	//	各モードに応じた動作関数
 	(this->*ModeFunction[mode])();
-
+	Enemy::Update();
 	BaseChara::Update();
 }
 
@@ -151,8 +151,6 @@ void	Shadow::AttackMode(void)
 {
 	SetMotion(2);
 
-	//	フレーム取得
-	int frame = obj->GetFrame();
 
 	//	フレーム制御
 	if (frame >= MOTION_FRAME::ATTACK_HIT_START
@@ -178,8 +176,6 @@ void	Shadow::DeadMode(void)
 	SetMotion(4);
 	static float alpha = 1.0f;
 
-	//	フレーム取得
-	int frame = obj->GetFrame();
 
 	//	フレーム制御
 	if (frame >= MOTION_FRAME::DEAD_START)

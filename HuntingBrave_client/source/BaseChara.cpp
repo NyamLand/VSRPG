@@ -3,6 +3,7 @@
 #include	"GlobalFunction.h"
 #include	"DrawShape.h"
 #include	"Camera.h"
+#include	"Collision.h"
 #include	"Interpolation.h"
 #include	"BaseChara.h"
 
@@ -63,9 +64,10 @@
 	//	更新
 	void	BaseChara::Update( void )
 	{
+
 		//	各種処理
 		AddMove();
-
+		pos.y = collision->CheckDown(pos);
 		//	情報更新
 		UpdateInfo();
 	}
@@ -115,6 +117,7 @@
 	void	BaseChara::AddMove( void )
 	{
 		//	移動値加算
+		move.y = 0.0f;
 		pos += move;
 		
 		//	抵抗値計算
