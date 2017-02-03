@@ -305,7 +305,7 @@ namespace
 		switch ( playerParam.motion )
 		{
 		case MOTION_NUM::ATTACK1:
-			if (curClass == CLASS_TYPE::PRIEST)
+			if ( curClass == CLASS_TYPE::PRIEST )
 			{
 				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
@@ -313,7 +313,7 @@ namespace
 				gameParam->GetAttackInfo(id).vec2 = GetBonePos(15);
 				break;
 			}
-			else if (curClass == CLASS_TYPE::ASSASSIN)
+			else if ( curClass == CLASS_TYPE::ASSASSIN )
 			{
 				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_A;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
@@ -324,25 +324,25 @@ namespace
 			else{
 				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS;
 				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
-				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::HAND);
-				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::SWORD);
+				gameParam->GetAttackInfo(id).vec1 = GetBonePos( BONE_NUM::HAND );
+				gameParam->GetAttackInfo(id).vec2 = GetBonePos( BONE_NUM::SWORD );
 				break;
 			}
 		case MOTION_NUM::ATTACK2:
-			if ( curClass == CLASS_TYPE::ASSASSIN)
+			if ( curClass == CLASS_TYPE::ASSASSIN )
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
-				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::CAPSULE;
-				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
-				gameParam->GetAttackInfo(id).vec2 = GetBonePos(BONE_NUM::LEFT_HAND);
+				gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS_P;
+				gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::CAPSULE;
+				gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+				gameParam->GetAttackInfo( id ).vec2 = GetBonePos( BONE_NUM::LEFT_HAND );
 				break;
 			}
-			else if (curClass == CLASS_TYPE::KNIGHT)
+			else if ( curClass == CLASS_TYPE::KNIGHT )
 			{
-				gameParam->GetAttackInfo(id).radius = ATTACK_RADIUS_P;
-				gameParam->GetAttackInfo(id).shape = SHAPE_TYPE::SPHERE;
-				gameParam->GetAttackInfo(id).vec1 = GetBonePos(BONE_NUM::RIGHT_HAND);
-				gameParam->GetAttackInfo(id).vec2 = GetFront();
+				gameParam->GetAttackInfo( id ).radius = ATTACK_RADIUS_P;
+				gameParam->GetAttackInfo( id ).shape = SHAPE_TYPE::SPHERE;
+				gameParam->GetAttackInfo( id ).vec1 = GetBonePos( BONE_NUM::RIGHT_HAND );
+				gameParam->GetAttackInfo( id ).vec2 = GetFront();
 				break;
 			}
 			else if (curClass == CLASS_TYPE::PRIEST)

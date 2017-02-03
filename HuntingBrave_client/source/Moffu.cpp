@@ -206,7 +206,7 @@ namespace
 			attackInfo.attackParam = ATTACK_PARAM::NO_ATTACK;
 
 			//	’Êíƒ‚[ƒh‚ÖˆÚs
-			if (frame >= 170)
+			if ( frame >= 170 )
 				SetMode( MODE::WAIT );
 		}
 	}

@@ -248,6 +248,10 @@ namespace
 		//	無敵状態チェック
 		CheckUnrivaled();
 
+		//	地面チェック
+		pParam.pos.y= collision->CheckDown( pParam.pos );
+
+		//	ヒットエフェクト初期化
 		EffectUpdate();
 
 		//	計算後情報反映
@@ -263,12 +267,8 @@ namespace
 	//	通常移動
 	void	Player::ModeMove( void )
 	{
-
 		//	移動
 		Move();
-
-		//	重力加算
-		AddMove( Vector3( 0.0f, GRAVITY, 0.0f ) );
 
 		//	入力チェック
 		CheckInput();
@@ -597,8 +597,8 @@ namespace
 	//	移動値加算
 	void	Player::AddMove( Vector3& move )
 	{
+		move.y = 0.0f;
 		collision->CheckWall( pParam.pos, move, 100.0f );
-		collision->CheckDown( pParam.pos, move );
 		pParam.pos += move;
 	}
 

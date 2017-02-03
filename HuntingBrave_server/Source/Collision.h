@@ -52,6 +52,7 @@ public:
 	
 	//	ステージモデルとの当たり判定
 	bool	CheckDown( Vector3& pos, Vector3& move );
+	float	CheckDown( Vector3& pos );
 	bool	CheckWall( Vector3& pos, Vector3& move, float dist );
 
 	//	各形状当たり判定

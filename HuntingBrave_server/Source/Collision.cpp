@@ -148,7 +148,11 @@ namespace SE_TYPE
 
 			//	ライフ計算
 			bool isAlive = gameParam->GetLifeInfo( target ).CulcLife( -damage );
-			if( isAlive )playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
+			if ( isAlive )
+			{
+				playerManager->GetPlayer( target )->SetMode( MODE::DAMAGE );
+				gameParam->GetPlayerParam( target ).effParam = 0.0f;
+			}
 			else
 			{
 				//	プレイヤーを死亡させる
@@ -237,7 +241,11 @@ namespace SE_TYPE
 				int damage = gameParam->GetPlayerStatus( ( *it )->GetID() ).magicAttack - gameParam->GetPlayerStatus( player ).magicDefense;
 				if ( damage <= 0 )	damage = 5;
 				bool isAlive = gameParam->GetLifeInfo( player ).CulcLife( -damage );
-				if ( isAlive )playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
+				if ( isAlive )
+				{
+					playerManager->GetPlayer( player )->SetMode( MODE::DAMAGE );
+					gameParam->GetPlayerParam( player ).effParam = 0.0f;
+				}
 				else 
 				{
 					//	プレイヤーを死亡させる
@@ -467,6 +475,21 @@ namespace SE_TYPE
 			}
 		}
 		return	false;
+	}
+
+	//	床取得
+	float	Collision::CheckDown( Vector3& pos )
+	{
+		Vector3	givePos( pos.x, pos.y + 1.5f, pos.z );
+		Vector3	giveVec( 0.0f, -1.0f, 0.0f );
+		Vector3	takePos;
+		float	giveDist( 100.0f );
+
+		if ( collisionMesh->RayPick( &takePos, &givePos, &giveVec, &giveDist ) != -1 )
+		{
+			return	takePos.y;
+		}
+		return	-1000.0f;
 	}
 
 //--------------------------------------------------------------------------------------------
