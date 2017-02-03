@@ -248,6 +248,9 @@ namespace
 		//	無敵状態チェック
 		CheckUnrivaled();
 
+		//	攻撃判定チェック
+		CheckAttackParam();
+
 		//	地面チェック
 		pParam.pos.y= collision->CheckDown( pParam.pos );
 
@@ -404,17 +407,6 @@ namespace
 	//	剣攻撃その1
 	void	Player::SwordAttackFirst( void )
 	{
-		//	フレーム管理
-		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_HIT_START] &&
-			pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_HIT_END])
-		{
-			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK1;
-		}
-		else
-		{
-			gameParam->GetAttackInfo( index ).attackParam = AttackInfo::NO_ATTACK;
-		}
-
 		// 一定以上のフレームに達すると移動に戻す
 		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_END])
 		{
@@ -426,22 +418,46 @@ namespace
 	//	剣攻撃その2
 	void	Player::SwordAttackSecond(void)
 	{
-		//	フレーム管理
-		if ( pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
-			pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_END])
-		{
-			gameParam->GetAttackInfo(index).attackParam = AttackInfo::ATTACK2;
-		}
-		else
-		{
-			gameParam->GetAttackInfo(index).attackParam = AttackInfo::NO_ATTACK;
-		}
-
 		// 一定以上のフレームに達すると移動に戻す
 		if (pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_END])
 		{
 			SetMode(MODE::MOVE);
 			gameParam->GetAttackInfo(index).Reset();
+		}
+	}
+
+	//	攻撃判定設定
+	void	Player::CheckAttackParam( void )
+	{
+		if ( pParam.motion == PLAYER_MOTION::ATTACK2 )
+		{
+			//	フレーム管理
+			if ( pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_START] &&
+				pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_SECOND_HIT_END] )
+			{
+				gameParam->GetAttackInfo( index ).attackParam = AttackInfo::ATTACK2;
+			}
+			else
+			{
+				gameParam->GetAttackInfo(index).attackParam = AttackInfo::NO_ATTACK;
+			}
+		}
+		else if ( pParam.motion == PLAYER_MOTION::ATTACK1 )
+		{
+			//	フレーム管理
+			if ( pParam.frame >= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_HIT_START] &&
+				pParam.frame <= motionFrame[pParam.charType][FRAME_TYPE::ATTACK_HIT_END] )
+			{
+				gameParam->GetAttackInfo(index).attackParam = AttackInfo::ATTACK1;
+			}
+			else
+			{
+				gameParam->GetAttackInfo(index).attackParam = AttackInfo::NO_ATTACK;
+			}
+		}
+		else
+		{
+			gameParam->GetAttackInfo( index ).Reset();
 		}
 	}
 

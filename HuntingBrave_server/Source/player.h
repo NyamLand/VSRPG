@@ -48,7 +48,7 @@ public:
 	void	Move( void );
 	void	SwordAttackFirst(void);
 	void	SwordAttackSecond(void);
-	void	CheckAttackParam( void ){};
+	void	CheckAttackParam( void );
 	void	Damage( void );
 	void	CheckInput( void );
 	void	AddMove( Vector3& move );
