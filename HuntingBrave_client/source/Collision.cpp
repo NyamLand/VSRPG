@@ -117,7 +117,9 @@
 					//	ライフ計算
 					(*it)->SetMode((*it)->DAMAGE);
 					//	ライフ計算
-					(*it)->GetLifeInfo().CulcLife( -gameParam->GetPlayerStatus().power );
+					int power = gameParam->GetPlayerStatus().power;
+					if ( attackInfo.attackParam == ATTACK_PARAM::ATTACK2 )	power = ( int )( ( float )power * 1.2f );
+					(*it)->GetLifeInfo().CulcLife( -power );
 					(*it)->LifeCheck();
 				}
 			}
