@@ -86,7 +86,9 @@
 	{
 		SetMotion( 1 );
 		Vector3	moveVec = Vector3( sinf( angle ), 0.0f, cosf( angle ) );
+		AddMove(moveVec);
 		SetMove( moveVec * speed );
+
 	}
 
 	//	プレイヤーとの距離チェック
@@ -198,6 +200,12 @@
 		SetMode(MODE::MOVE);
 	}
 
+	//	移動値加算
+	void	Enemy::AddMove(Vector3& move)
+	{
+		collision->CheckWall(pos, move, 100.0f);
+		collision->CheckDown(pos, move);
+	}
 //------------------------------------------------------------------------------------
 //	情報設定
 //------------------------------------------------------------------------------------

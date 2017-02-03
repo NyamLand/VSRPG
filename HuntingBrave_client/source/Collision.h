@@ -54,6 +54,10 @@ public:
 	COLLISION_PAIR	GetCollisionPair( char type1, char type2 );
 	CollisionShape	SetCollisionShape( char shapeType, const Vector3& vec1, const Vector3& vec2, float radius );
 	
+	//	ステージモデルとの当たり判定
+	bool	CheckDown(Vector3& pos, Vector3& move);
+	bool	CheckWall(Vector3& pos, Vector3& move, float dist);
+
 	//	材質判定
 	int		GetMaterial( iexMesh* obj, const Vector3& pos );
 
