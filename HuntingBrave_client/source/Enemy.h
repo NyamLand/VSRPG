@@ -21,6 +21,7 @@ protected:
 	float		interpolationParam;
 	float		searchDist;
 	float		attackDist;
+	float		runLength;
 	char		enemyType;
 	int			cooltime;
 	AttackInfo	attackInfo;

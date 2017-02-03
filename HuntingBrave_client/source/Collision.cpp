@@ -407,6 +407,21 @@
 		return	false;
 	}
 
+	// è∞éÊìæ
+		float	Collision::CheckDown(Vector3& pos)
+	{
+			Vector3	givePos(pos.x, pos.y + 1.5f, pos.z);
+			Vector3	giveVec(0.0f, -1.0f, 0.0f);
+			Vector3	takePos;
+			float	giveDist(100.0f);
+
+			if (collisionMesh->RayPick(&takePos, &givePos, &giveVec, &giveDist) != -1)
+			{
+				return	takePos.y;
+			}
+			return	-1000.0f;
+		}
+
 //--------------------------------------------------------------------------------------------
 //	çﬁéøîªíË
 //--------------------------------------------------------------------------------------------
