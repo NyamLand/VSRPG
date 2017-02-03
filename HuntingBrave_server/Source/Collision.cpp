@@ -416,7 +416,7 @@ namespace SE_TYPE
 		const	float	DIST = 2.0f;	//	•Ç‚Æ‚Ì‹——£
 
 		Vector3	givePos = pos;
-		Vector3	giveVec( move.x, 1.0f, move.z );
+		Vector3	giveVec( move.x, 1.5f, move.z );
 		giveVec.Normalize();
 		Vector3	takePos;
 		

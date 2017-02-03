@@ -117,8 +117,11 @@ bool	sceneMain::Initialize( void )
 
 	screen->SetScreenMode( SCREEN_MODE::FADE_IN, 0.01f );
 
+	//	シェーダー初期化
 	blackWhitePercentage = 0.0f;
-
+	DifferedInitialize();
+	
+	//	thread開始
 	_beginthread( ThreadFunction, 0, nullptr );
 	threadState = false;
 
@@ -127,12 +130,31 @@ bool	sceneMain::Initialize( void )
 	return true;
 }
 
+//	初期化
+void	sceneMain::DifferedInitialize( void )
+{		
+	//	ディファード用
+	diffuse = new iex2DObj(1280, 720, IEX2D_RENDERTARGET);
+	specular = new iex2DObj(1280, 720, IEX2D_RENDERTARGET);
+	depth = new iex2DObj(1280, 720, IEX2D_FLOAT);
+	normal = new iex2DObj(1280, 720, IEX2D_RENDERTARGET);
+	light = new iex2DObj(1280, 720, IEX2D_RENDERTARGET);
+}
+
 sceneMain::~sceneMain( void )
 {
 	SafeDelete( mainView );
 	SafeDelete( stage );
 	SafeDelete( mainScreen );
 	SafeDelete( timeUp );
+	
+	//	ディファード用
+	SafeDelete(diffuse);		
+	SafeDelete(specular);	
+	SafeDelete(depth);		
+	SafeDelete(normal);		
+	SafeDelete(light);			
+
 	backBuffer->Release();
 	enemyManager->Release();
 	netEnemyManager->Release();

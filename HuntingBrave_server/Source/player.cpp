@@ -345,9 +345,6 @@ namespace
 	//	ステップ
 	void	Player::ModeStep( void )
 	{
-		//	非アクティブにする
-		gameParam->GetLifeInfo( index ).active = false;
-
 		//	移動値加算
 		Vector3	move = Vector3( sinf( pParam.angle ), 0.0f, cosf( pParam.angle ) ) * stepSpeed;
 		AddMove( move );
