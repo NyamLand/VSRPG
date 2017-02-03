@@ -26,6 +26,7 @@ private:
 		PARTS_MAX
 	};
 	iexMesh*	stage[PARTS_MAX];
+	iexMesh*	collisionMesh;
 	Image*			viewTex;
 	iexView*		view;
 	Surface*	backBuffer;

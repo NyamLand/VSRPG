@@ -1,6 +1,7 @@
 
 #include	"iextreme.h"
 #include	"GlobalFunction.h"
+#include	"system\System.h"
 #include	"Stage.h"
 
 //*************************************************************************
@@ -20,13 +21,13 @@ namespace
 {
 	const LPSTR fileName[] =
 	{
-		"DATA/BG/soto.IMO",
-		"DATA/BG/tree.IMO",
-		"DATA/BG/toride.IMO",
-		"DATA/BG/depari.IMO",
-		"DATA/BG/hei.IMO",
-		"DATA/BG/stage.IMO",
-		"DATA/BG/mountain.IMO"
+		"DATA/BG/soto.IMO",		//	外周
+		"DATA/BG/stage.IMO",		//	土台
+		"DATA/BG/tree.IMO",		//	木
+		"DATA/BG/toride.IMO",	//	砦
+		"DATA/BG/depari.IMO",	//	高台
+		"DATA/BG/hei.IMO",			//	塀
+		"DATA/BG/mountain.IMO"	//	山
 	};
 }
 
@@ -37,6 +38,8 @@ namespace
 	//	コンストラクタ
 	Stage::Stage( void ) : view( nullptr ), viewTex( nullptr )
 	{
+		collisionMesh = new iexMesh( "DATA/BG/stage_atari.IMO" );
+
 		//	各モデル調整
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
@@ -74,6 +77,7 @@ namespace
 			SafeDelete( stage[i] );
 		}
 
+		SafeDelete( collisionMesh );
 		SafeDelete( view );
 		SafeDelete( viewTex );
 		backBuffer->Release();
@@ -87,6 +91,7 @@ namespace
 	void	Stage::Render( void )
 	{
 		RenderTexture();
+		//collisionMesh->Render();
 
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
@@ -105,6 +110,7 @@ namespace
 		for ( int i = 0; i < PARTS_MAX; i++ )
 		{
 			stage[i]->Render();
+			if (i == 2)	stage[i]->Render( shader3D, "alpha" );
 		}
 
 		//	フレームバッファへ切り替え

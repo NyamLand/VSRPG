@@ -67,6 +67,7 @@ public:
 	void	SetMotion( int motion );
 	void	SetPos( const Vector3& pos );
 	void	SetDeath( void );
+	void	SetDamage( const Vector3& attackPos );
 };
 
 
